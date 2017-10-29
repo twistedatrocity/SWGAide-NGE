@@ -98,6 +98,12 @@ public final class SWGCraft {
      */
     private static final String schematicsXmlPath =
             "/dev/sendfile.php?file=schematics.xml.gz";
+			
+	/**
+     * The path and file name to the servers XML file at SWGCraft.org.
+     */
+    private static final String serversXmlPath =
+            "/dev/sendfile.php?file=servers_detailed.xml";
 
     /**
      * The path to the SOAP server.
@@ -221,6 +227,16 @@ public final class SWGCraft {
      */
     static String getCategoriesPath() {
         return categoriesXmlPath;
+    }
+	
+	/**
+     * Returns path and file name to the servers XML file at SWGCraft.org.
+     * This is the default value {@link #categoriesXmlPath}.
+     * 
+     * @return path to the servers XML file
+     */
+    static String getServersPath() {
+        return serversXmlPath;
     }
 
     /**

@@ -58,6 +58,14 @@ public final class SWGCraftCache {
      * The abstract file for the categories XML file.
      */
     private static final File catXML = new File("crafting", "categories.xml");
+	
+	/**
+     * The abstract file for the servers XML file.
+     */
+    private static final File serversXML = new File("crafting", "servers.xml");
+    
+    private static final List<UpdateSubscriber> serversSubscribers =
+            new ArrayList<UpdateSubscriber>();
 
     /**
      * A list of clients which subscribe for notifications regarding profession
@@ -128,6 +136,11 @@ public final class SWGCraftCache {
         } else if (type == UpdateType.PROF_LEVELS) {
             synchronized (profLevelSubscribers) {
                 profLevelSubscribers.add(subscriber);
+            }
+        }
+		else if (type == UpdateType.SERVERS) {
+            synchronized (serversSubscribers) {
+                serversSubscribers.add(subscriber);
             }
         }
     }
@@ -322,6 +335,11 @@ public final class SWGCraftCache {
                 for (UpdateSubscriber s : profLevelSubscribers)
                     s.handleUpdate(up);
             }
+		} else if (type == UpdateType.SERVERS) {
+            synchronized (serversSubscribers) {
+                for (UpdateSubscriber s : serversSubscribers)
+                    s.handleUpdate(up);
+            }
         }
     }
 
@@ -348,6 +366,10 @@ public final class SWGCraftCache {
         } else if (type == UpdateType.PROF_LEVELS) {
             synchronized (profLevelSubscribers) {
                 profLevelSubscribers.remove(subscriber);
+            }
+        } else if (type == UpdateType.SERVERS) {
+            synchronized (serversSubscribers) {
+                serversSubscribers.remove(subscriber);
             }
         }
     }
@@ -425,6 +447,14 @@ public final class SWGCraftCache {
                             catUpdated = true; // notifyCatSubscribers();
                     } catch (MalformedURLException e) {
                         SWGAide.printError("SWGCraftCache:updatCache:cat", e);
+                    }
+                    try {
+						if(update(serversXML, urlServers(), false))
+                        {
+                        	notifySubscribers(UpdateType.SERVERS);
+                        }
+                    } catch (MalformedURLException e) {
+                        SWGAide.printError("SWGCraftCache:updatCache:servers", e);
                     }
                     try {
                         if (update(schemXML, urlSchematics(), true)
@@ -508,6 +538,18 @@ public final class SWGCraftCache {
     private static URL urlCategories() throws MalformedURLException {
         return new URL(SWGCraft.getBaseURL() + SWGCraft.getCategoriesPath());
     }
+	
+	/**
+     * Helper method which returns an URL for the servers XML file at
+     * SWGCraft.org.
+     * 
+     * @return a servers URL
+     * @throws MalformedURLException
+     *             if there is an error
+     */
+    private static URL urlServers() throws MalformedURLException {
+        return new URL(SWGCraft.getBaseURL() + SWGCraft.getServersPath());
+     }
 
     /**
      * Helper method which returns an URL for the professions XML file at
@@ -582,7 +624,12 @@ public final class SWGCraftCache {
             /**
              * Denotes that the notification pertains to schematics.
              */
-            SCHEMATICS;
+            SCHEMATICS,
+            
+            /**
+             * Denotes that the notification pertains to servers.
+             */
+            SERVERS;
         }
     }
 }

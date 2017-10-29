@@ -172,7 +172,7 @@ public final class SWGResourceTab extends JTabbedPane implements
         galaxy = ch != null
                 ? ch.gxy()
                 : SWGCGalaxy.fromName((String) SWGFrame.getPrefsKeeper().get(
-                        "optionMainGalaxy", SWGCGalaxy.SWGCRAFT_CO_UK.getName()));
+                		"optionMainGalaxy", SWGCGalaxy.defaultGalaxy().getName()));
         // XXX: replace galaxy-name in DAT file with galaxy-enum
         // 4 locations where optionMainGalaxy occurs
 

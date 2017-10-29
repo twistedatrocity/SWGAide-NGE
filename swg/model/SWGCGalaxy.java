@@ -1,163 +1,93 @@
 package swg.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import swg.SWGConstants;
+import javax.xml.parsers.ParserConfigurationException;
 
-/**
- * This constant uniquely identifies a galaxy within SWG. Compare with
- * {@link SWGGalaxy} which is a wrapper type which contains characters for a
- * specific {@link SWGStation}.
- * 
- * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
- *         Europe-Chimaera.Zimoon
- */
-public enum SWGCGalaxy {
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-    // Do not sort this type, the order of the constants is important
+import swg.crafting.UpdateNotification;
+import swg.crafting.UpdateSubscriber;
+import swg.swgcraft.SWGCraftCache;
+import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
+import swg.tools.ZXml;
 
-    /**
-     * A constant for Ahazi.
-     */
-    AHAZI("Ahazi", 1, true),
-
-    /**
-     * A constant for Bloodfin.
-     */
-    BLOODFIN("Bloodfin", 2, true),
-
-    /**
-     * A constant for Bria.
-     */
-    BRIA("Bria", 3, true),
-
-    /**
-     * A constant for Chilastra.
-     */
-    CHILASTRA("Chilastra", 4, true),
-
-    /**
-     * A constant for Chimaera.
-     */
-    CHIMAERA("Chimaera", 5, true),
-
-    /**
-     * A constant for Corbantis.
-     */
-    CORBANTIS("Corbantis", 6, false),
-
-    /**
-     * A constant for Eclipse
-     */
-    ECLIPSE("Eclipse", 7, true),
-
-    /**
-     * A constant for FarStar.
-     */
-    FARSTAR("FarStar", 8, true),
-
-    /**
-     * A constant for Flurry
-     */
-    FLURRY("Flurry", 9, true),
-
-    /**
-     * A constant for Gorath.
-     */
-    GORATH("Gorath", 10, true),
-
-    /**
-     * A constant for Infinity.
-     */
-    INFINITY("Infinity", 11, false),
-
-    /**
-     * A constant for Intrepid.
-     */
-    INTREPID("Intrepid", 12, false),
-
-    /**
-     * A constant for Kauri.
-     */
-    KAURI("Kauri", 13, false),
-
-    /**
-     * A constant for Kettemoor.
-     */
-    KETTEMOOR("Kettemoor", 14, false),
-
-    /**
-     * A constant for Lowca.
-     */
-    LOWCA("Lowca", 15, false),
-
-    /**
-     * A constant for Naritus.
-     */
-    NARITUS("Naritus", 16, false),
-
-    /**
-     * A constant for Radiant.
-     */
-    RADIANT("Radiant", 17, true),
-
-    /**
-     * A constant for Scylla.
-     */
-    SCYLLA("Scylla", 18, false),
-
-    /**
-     * A constant for Shadowfire.
-     */
-    SHADOWFIRE("Shadowfire", 19, true),
-
-    /**
-     * A constant for Starsider.
-     */
-    STARSIDER("Starsider", 20, true),
-
-    /**
-     * A constant for Sunrunner.
-     */
-    SUNRUNNER("Sunrunner", 21, true),
-
-    /**
-     * A constant for Tarquinas.
-     */
-    TARQUINAS("Tarquinas", 22, false),
-
-    /**
-     * A constant for Tempest.
-     */
-    TEMPEST("Tempest", 23, false),
-
-    /**
-     * A constant for Valcyn.
-     */
-    VALCYN("Valcyn", 24, false),
-
-    /**
-     * A constant for Wanderhome.
-     */
-    WANDERHOME("Wanderhome", 25, false),
-
-    /**
-     * A constant for SWGCraft.co.uk.
-     */
-    SWGCRAFT_CO_UK("SWGCraft.co.uk", 99, false),
-
-    /**
-     * A constant for TCPrime.
-     */
-    TCPRIME("TCPrime", 100, true),
-
-    /**
-     * A constant for TestCenter.
-     */
-    TESTCENTER("TestCenter", 101, true);
+public class SWGCGalaxy implements Serializable {
+	
+	
+	private static ArrayList<SWGCGalaxy> servers = new ArrayList<SWGCGalaxy>();
+	
+	
+	static {
+		initializeServers();
+		
+		
+		
+	}
+	
+	private static void initializeServers()
+	{
+		servers.clear();
+		try
+		{
+			Document xml = ZXml.parse(new File("crafting/servers.xml"));
+			
+			Element main = (Element) xml.getElementsByTagName(
+                    "servers").item(0);
+			
+			//Loop through servers
+		      NodeList nl = main.getChildNodes();
+	            for (int j = 0; j < nl.getLength(); ++j) {
+	                Node n = nl.item(j);
+	                if (n.getNodeType() == Node.ELEMENT_NODE
+	                        && n.getNodeName().equals("server"))
+	                {
+	                	Element cur = (Element) n;
+	                	//Initialize a server and throw it in our list
+	                	String name = cur.getAttribute("name");
+	                	int swgcraftID = ZXml.intFromAttr(cur, "swgcraft_id");
+	                	String swgcraftName = cur.getAttribute("swgcraft_name");
+	                	//System.out.println(cur);
+	                	Boolean active = ZXml.booleanFromAttr(cur, "active");
+	                	SWGCGalaxy galaxy = new SWGCGalaxy(name, swgcraftName, swgcraftID, active);
+	                	servers.add(galaxy);
+	                }
+	            }
+		}
+		catch(IOException e)
+		{
+			System.out.println("No server file found");
+			SWGCraftCache.addSubscriber(new UpdateSubscriber()
+				    {
+		    	public void handleUpdate(UpdateNotification u)
+		    	{
+		    		SWGCGalaxy.initializeServers();
+		    	}
+		    	
+		    
+		    }, UpdateType.SERVERS);
+			SWGCraftCache.updateCache();
+		}
+		catch(ParserConfigurationException e)
+		{
+			
+		}
+		catch(SAXException e)
+		{
+			
+		}
+		
+	}
 
     /**
      * A list of the planet names.
@@ -179,6 +109,11 @@ public enum SWGCGalaxy {
      * The name of this galaxy constant.
      */
     private final String name;
+	
+	/**
+    * The name of this galaxy constant on SWGCraft.
+    */
+    private final String swgcraftName;
 
     /**
      * @param name
@@ -188,8 +123,9 @@ public enum SWGCGalaxy {
      * @param active
      *            {@code false} if the galaxy is closed down
      */
-    private SWGCGalaxy(String name, int id, boolean active) {
+    private SWGCGalaxy(String name, String swgcraftName, int id, boolean active) {
         this.name = name;
+		this.swgcraftName = swgcraftName;
         this.id = id;
         this.active = active;
     }
@@ -202,7 +138,7 @@ public enum SWGCGalaxy {
      * @return the name
      */
     public String getName() {
-        return name;
+        return swgcraftName;
     }
 
     /**
@@ -212,12 +148,6 @@ public enum SWGCGalaxy {
      * @return the full name
      */
     public String getNameComplete() {
-        if (this == CHIMAERA)
-            return "Europe-Chimaera";
-        if (this == FARSTAR)
-            return "Europe-Farstar";
-        if (this == INFINITY)
-            return "Europe-Infinity";
         return name;
     }
 
@@ -256,15 +186,15 @@ public enum SWGCGalaxy {
      *             if the argument is not valid
      */
     public static SWGCGalaxy fromID(int id) {
-        // first handle the irregular ID numbers
-        if (id == 99)
-            return SWGCRAFT_CO_UK;
-        if (id == 100)
-            return TCPRIME;
-        if (id == 101)
-            return TESTCENTER;
-
-        return values()[id - 1];
+		//Inefficient, yes
+    	for(SWGCGalaxy server : servers)
+    	{
+    		if(server.id() == id)
+    		{
+    			return server;
+    		}
+    	}
+    	throw new IndexOutOfBoundsException("Invalid ID");
     }
 
     /**
@@ -279,22 +209,15 @@ public enum SWGCGalaxy {
      *             if the argument is {@code null}
      */
     public static SWGCGalaxy fromName(String galaxy) {
-
-        String g = galaxy.toUpperCase(Locale.ENGLISH);
-
-        // handle variations first
-        if (g.equals("EUROPE-CHIMAERA"))
-            return CHIMAERA;
-        if (g.equals("EUROPE-FARSTAR"))
-            return FARSTAR;
-        if (g.equals("EUROPE-INFINITY"))
-            return INFINITY;
-        if (g.startsWith("SWGCRAFT"))
-            return SWGCRAFT_CO_UK;
-        if (g.startsWith("TEST"))
-            return TESTCENTER;
-
-        return valueOf(g);
+		//Inefficient, yes
+    	for(SWGCGalaxy server : servers)
+    	{
+    		if(server.getName().equals(galaxy) || server.getNameComplete().equals(galaxy))
+    		{
+    			return server;
+    		}
+    	}
+    	throw new IllegalArgumentException("Invalid name");
     }
 
     /**
@@ -307,19 +230,14 @@ public enum SWGCGalaxy {
      *         name of a galaxy, {@code false} otherwise
      */
     public static boolean isNameValid(String name) {
-        if (name != null) {
-            if (name.equals("Europe-Chimaera") //
-                || name.equals("Europe-FarStar") //
-                || name.equals("Europe-Infinity") //
-                || name.equals("SWGCraft.co.uk") //
-                || name.equals("Test Center") //
-                || name.equals("TestCenter"))
-                return true;
-            for (SWGCGalaxy g : values())
-                if (name.equals(g.name))
-                    return true;
-        }
-        return false;
+        for(SWGCGalaxy server : servers)
+    	{
+    		if(server.getName().equals(name) || server.getNameComplete().equals(name))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -331,10 +249,11 @@ public enum SWGCGalaxy {
      */
     public static List<String> names() {
         if (names == null) {
-            List<String> l = new ArrayList<String>(28);
-            for (SWGCGalaxy g : values())
-                if (g != SWGCRAFT_CO_UK || SWGConstants.DEV_DEBUG)
-                    l.add(g.name);
+            List<String> l = new ArrayList<String>();
+            for (SWGCGalaxy g : servers)
+            {
+            	l.add(g.getName());
+            }
             names = Collections.unmodifiableList(l);
         }
         return names;
@@ -347,10 +266,12 @@ public enum SWGCGalaxy {
      * @return a list of names of galaxies that are active
      */
     public static List<String> namesActive() {
-        List<String> ret = new ArrayList<String>(16);
-        for (SWGCGalaxy g : values())
-            if (g.active || (g == SWGCRAFT_CO_UK && SWGConstants.DEV_DEBUG))
-                ret.add(g.name);
+        List<String> ret = new ArrayList<String>();
+        for (SWGCGalaxy g : servers)
+        {
+            if (g.isActive())
+                ret.add(g.getName());
+        }
         return ret;
     }
 
@@ -385,4 +306,31 @@ public enum SWGCGalaxy {
         }
         return ret;
     }
+	
+	public static SWGCGalaxy defaultGalaxy()
+    {
+    	if(isNameValid("SWGCraft.co.uk"))
+    	{
+    		return fromName("SWGCraft.co.uk");
+    	}
+    	else
+    	{
+    		SWGCGalaxy defaultGalaxy = new SWGCGalaxy("SWGCraft.co.uk", "SWGCraft.co.uk", 99, true);
+    		servers.add(defaultGalaxy);
+    		return defaultGalaxy;
+    	}
+    }
+    
+    public static Object[] values()
+    {
+    	return servers.toArray();
+    }
+    
+   /* public static void main(String[] args)
+    {
+    	//Do nothing
+    	System.out.println("Hej");
+    	
+    	System.out.println(names());
+    }*/
 }

@@ -43,7 +43,7 @@ public class SWGConstants {
      */
     // DEVELOPER_NOTE: set this flag true while developing, to get the output
     // from stdout and stderr to the console in Eclipse rather than to file.
-    public static final boolean DEV_DEBUG = true;
+    public static final boolean DEV_DEBUG = false;
 
     /**
      * The relative path to crafting related files within the SWGAide directory.
@@ -55,7 +55,7 @@ public class SWGConstants {
      * The URL to the SWGAide home and download page.
      */
     public static final String swgAideURL = 
-        "http://sites.google.com/site/simongronlund/";
+        "";
 
     /**
      * The text file containing version information.
@@ -65,7 +65,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.8";
+    public static final String version = "0.9.9";
 
     /**
      * Returns the cache directory.

@@ -1886,7 +1886,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
     /**
      * Returns the galaxy constant for the currently selected character, or
-     * {@link SWGCGalaxy#SWGCRAFT_CO_UK}. If the user selects a galaxy node
+     * {@link SWGCGalaxy#defaultGalaxy()}. If the user selects a galaxy node
      * which is not for the current character this value is not changed; is
      * short for {@code getSelectedCharacter().getGalaxy().getGalaxy()}. If no
      * character is even selected this method returns the constant for SWGCraft.
@@ -1896,7 +1896,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     public static SWGCGalaxy getSelectedGalaxy() {
         SWGCharacter c = getSelectedCharacter();
         return c == null
-                ? SWGCGalaxy.SWGCRAFT_CO_UK
+        		? SWGCGalaxy.defaultGalaxy()
                 : c.gxy();
     }
 }

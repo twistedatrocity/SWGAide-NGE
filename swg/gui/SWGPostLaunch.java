@@ -468,6 +468,7 @@ final class SWGPostLaunch {
      * @return a version string, or {@code null}
      */
     private String existsUpdate(URL url) {
+    	return null;/*
         try {
             ZReader bin = ZReader.newTextReader(url.openStream());
             if (bin != null) {
@@ -481,7 +482,7 @@ final class SWGPostLaunch {
         } catch (Exception e) {
             SWGAide.printDebug("post", 1, "SWGPostLaunch:existsUpdate: " + e);
         }
-        return null;
+        return null;*/
     }
 
     /**

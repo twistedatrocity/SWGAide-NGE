@@ -465,7 +465,7 @@ public class SWGCraftOptionsPanel extends JDialog {
             }
         });
         String glx = (String) SWGFrame.getPrefsKeeper().get(
-            "optionMainGalaxy", SWGCGalaxy.SWGCRAFT_CO_UK.getName());
+            "optionMainGalaxy", SWGCGalaxy.defaultGalaxy().getName());
         galaxyList.setSelectedItem(glx);
         glxPanel.add(galaxyList);
 

@@ -967,7 +967,7 @@ public final class SWGResController implements UpdateSubscriber {
         if (gxy != SWGResourceTab.galaxy()
                 && gxy != SWGCGalaxy.fromName((String)
                         SWGFrame.getPrefsKeeper().get("optionMainGalaxy",
-                                SWGCGalaxy.SWGCRAFT_CO_UK.getName())))
+                        		SWGCGalaxy.defaultGalaxy().getName())))
             return 0; // only continue if current gxy or if default gxy
 
         SWGResourceSet resources = SWGResourceManager.getSpawning(gxy);
