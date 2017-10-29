@@ -296,10 +296,10 @@ public final class SWGInitialize extends JPanel {
         fc.setSelectedFile(swgDir);
         String msg = "Select folder for StarWarsGalaxy (step 1)";
 
-        while (swgDir == null
+        while ((swgDir == null
                 || (fc.getSelectedFile() != null
                     && fc.getSelectedFile().getName().equals("testcenter"))
-                || !SWGUniverse.isValidSWGPath(fc.getSelectedFile())) {
+				) && !(fc.getSelectedFile() != null && SWGUniverse.isValidSWGPath(fc.getSelectedFile()))) {
 
             if (swgDir != null) fc.setSelectedFile(swgDir);
             int retVal = fc.showDialog(this, msg);
