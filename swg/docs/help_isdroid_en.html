@@ -1,0 +1,903 @@
+<html>
+<head>
+<title>
+Help - ISDroid Reports
+</title>
+</head>
+
+<body bgcolor="#ffffff">
+<blockquote>
+
+<p><font face="Arial" size="+1"><b>
+Help &mdash; ISDroid Reports
+</b></font></p>
+
+<p><font face="Arial" size="-1">
+This panel presents you with features to manage reports
+from <u>Interplanetary Survey Droids</u> (aka ISDroids)
+and to upload resource data to SWGCraft.org. In summary,
+SWGAide scans the ISDroid reports and compares them with
+resources that are listed at SWGCraft.org and determines
+which resources that are new or depleted, or if they can
+be complemented with stats or planets. Then the result is
+displayed at the GUI elements and you select appropriate
+actions; first you submits depleted resources and planet
+availability; second you write resources to a notes file
+and in-game edit the file with stats; finally you submit
+new and complemented resources to SWGCraft.org which also
+makes it available in SWGAide. 
+</b></font></p>
+
+<font face="Arial"><b>
+Content:
+</b></font>
+
+<ul>
+<li><font face="Arial" size="-1">
+The ISDroid panel
+</font>
+</li>
+
+<ul>
+<li><font face="Arial" size="-1">
+Setup and Options
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Initializing this panel
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Submit, Write, (in-game) and Submit
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Error dialogs
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+The "res.txt" notes file
+</font>
+</li>
+</ul>
+
+<li><font face="Arial" size="-1">
+In-game &ndash; update the notes file
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Similar names dialog
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Black-list
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Limitations
+</font>
+</li>
+
+<ul>
+<li><font face="Arial" size="-1">
+1 &ndash; content retention
+</font>
+</li>
+
+<ul>
+<li><font face="Arial" size="-1">
+Force a content update
+</font>
+</li>
+</ul>
+
+<li><font face="Arial" size="-1">
+2 &ndash; Superfluous planets
+</font>
+</li>
+</ul>
+
+<li><font face="Arial" size="-1">
+Manual submission
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+ISDroids &ndash; what are they
+</font>
+</li>
+
+<ul>
+<li><font face="Arial" size="-1">
+Creature resources, Kashyyyk, and Mustafar
+</font>
+</li>
+</ul>
+
+<li><font face="Arial" size="-1">
+How to fix old, wrong resources
+</font>
+</li>
+</ul>
+
+<br/><br/><br/>
+
+<font face="Arial"><b>
+Setup
+</b></font>
+
+<p><font face="Arial" size="-1">
+<b>SWGCraft.org</b>
+&ndash; to be able to submit resources to SWGCraft.org you
+must register yourself at the site and you must let SWGAide
+know user-name and password; open the SWGCraft dialog via
+menu <b>Options &raquo; SWGCraft... </b>. SWGAide stores
+the password in encrypted form in the DAT file and it is
+never sent anywhere but only used when communicating with
+SWGCraft, and also then it is strongly encrypted.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Options</b>
+&ndash; at menu <b>Options &raquo; ISdroid</b> you specify
+your preferences:
+</font>
+
+<ul>
+<li><font face="Arial" size="-1">
+<b>Allow w/o stats</b>
+&ndash; allow submission of new resources without stats,
+this is recommended. Resources submitted without stats are
+made visible for more players who can complement them at any
+convenient date; conversely, not submitted resources cannot
+be augmented and possibly they do not trigger depletion of
+older resources (this is Organics).  
+</font></li>
+
+<li><font face="Arial" size="-1">
+<b>Long list</b>
+&ndash; write to the notes file as one continuous list. The
+list is ordered for convenient browsing of the "30k veteran
+resource crate". Otherwise the output is "planetary", the
+list is written planet by planet, this is for players who
+hand sample for stats.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+<b>Skip duplicates</b>
+&ndash; do not double resources that are already written to
+the notes file (only in "planetary" mode). Otherwise doubled
+resources are marked with trailing stars (**); you add stats
+just to one of the doubled resources.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+<b>Auto-delete</b>
+&ndash; allow SWGAide to automatically erase content of the
+notes file after error-free submission to SWGCraft.org. If
+there is an error the file is retained; a backup is always
+created in the "backups" folder.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+<b>Single report</b>
+&ndash; select this option to manage ISDroid reports one by
+one rather than all reports in one batch. Default is all in
+one batch which also is safer and a lot faster.
+</font>
+</li>
+
+<!--
+<li><font face="Arial">
+<b>GUI input: 
+</b>Enable the GUI input feature, not yet implemented. </font>
+</li>
+-->
+
+<li><font face="Arial" size="-1">
+<b>Help text</b>
+&ndash; always append a help text to the notes file.
+</font>
+</li>
+</ul>
+</p>
+
+<br/><br/>
+
+<p><font face="Arial"><b>
+Initializing the ISDroid panel
+</b></font></p>
+
+<font face="Arial" size="-1">
+This panel populates itself when it is opened. However,
+because ISDroid reports arrive as in-game mails you must
+first have done
+<font color="blue"><tt>/mailsave</tt></font> as for any
+other mail. Then, when opening this panel, if a report is
+older than 4 hours SWGAide displays a warning dialog with
+the options:
+</font>
+
+<ul>
+<li><font face="Arial" size="-1">
+delete the report
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+delete <i>all</i> old reports
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+continue, which is OK if you know that the data is still
+valid. In fact, a slightly aged report makes no harm, at
+most a few new or a few depleted resources are omitted.
+</font>
+</li>
+</ul>
+
+<p><font face="Arial" size="-1">
+However, if you realize that you must refresh this panel,
+first see limitation one further down.
+</font></p>
+
+<br/>
+
+<p><font face="Arial" size="-1"><b>
+GUI Elements
+</b></font></p>
+
+<p><font face="Arial" size="-1">
+This panel displays four lists of resources that are up for
+action and buttons for these actions. Lists 1 and 2 can be
+submitted right away, without further ado. Lists 3 and 4
+display resources that you are welcomed to update with
+stats before submission (optional); you can also submit
+them without stats right away.
+</font></p>
+
+<blockquote>
+<p><font face="Arial" size="-1">
+<b>List 1</b>
+&ndash; resources which are already listed at SWGCraft.org
+but your reports add one or several planets to them.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>List 2</b>
+&ndash; resources which are depleted from the galaxy.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>List 3</b>
+&ndash; new resources which are not yet reported to
+SWGCraft.org.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>List 4</b>
+&ndash; resources which are listed at SWGCraft.org without
+stats; you are welcomed to complement them with stats.
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+<b>Submit 1 & 2</b>
+&ndash; press this button to submit everything displayed in
+lists 1 and 2.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Write to "res.txt"</b>
+&ndash; press this button to write the content of lists 3
+and 4 to the "res.txt" notes file; select output style as
+described above. If the notes file is not empty SWGAide
+displays a dialog with the options to erase the content,
+or to cancel; a backup is always created in "backups".
+</font></p>
+
+<blockquote><font face="Arial" size="-1">
+&mdash; Before you press next button, switch to SWG to add
+stats to the resources in the notes file; this is optional
+and if you cannot complement the resources now it is better
+to submit them right away without stats. This way you notify
+others that these resources exist and you also records the
+earliest possible date for their spawn. Otherwise these
+resources are available but nobody knows about them and
+the recorded spawn date is the worse.
+</font></blockquote>
+
+<p><font face="Arial" size="-1">
+<b>Submit "res.txt"</b> 
+&ndash; </b>press this button to submit the data from lists
+3 and 4 together with the stats you optionally have added
+to the notes file. If there are errors in the notes file
+SWGAide displays a dialog:
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Errors</b> 
+&ndash; when SWGAide reads the updated notes file, but
+before submitting anything to SWGCraft, if there is an
+error it is displayed at a GUI dialog with the options
+to Abort, Edit the line, or Skip the line. If there are
+several error this dialog is displayed for each of them,
+unless you select Abort. 
+</font>
+
+<ul>
+<li><font face="Arial" size="-1">
+<b>Abort</b>
+&ndash; terminate the process so that you can manually
+edit the "res.txt" notes file. Perhaps you can edit the
+file at SWGAide's Main panel, or you may have to find some
+data in SWG. Once you have corrected the error you press
+the submit button once again. Use this option if an error
+cannot be solved by the other options. 
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+<b>Edit now</b>
+&ndash; open another dialog at which you can edit the line
+right away, if that is possible. 
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+<b>Skip line</b>
+&ndash; ignore whatever you wrote at this line and if it is
+possible SWGAide submits the resource as-is. This usually
+means that SWGAide submits the resource for all planets but
+without stats. 
+</font>
+</li>
+</ul>
+
+<font face="Arial" size="-1">
+A few other dialogs are possible, they are self-explaining.
+</font></p>
+
+<font face="Arial" size="-1">
+After submission SWGAide sometimes displays another dialog
+about similarly named resources, see further down.  
+</font></p>
+</blockquote>
+
+<br/>
+
+<font face="Arial" size="-1"><b>
+"res.txt" notes file</b>
+&ndash; the way it looks depends on the options described
+above; this sample of a <b><i>planetary output </i></b>
+covers the important parts:
+</font>
+
+<blockquote>
+<pre>
+Chimaera / Lok / 1234567890
+swgcraft_start
+Alpha,Desh Copper,
+Beta,Colat Iron,
+swgcraft_end
+
+Chimaera / Tatooine / 1234567890
+swgcraft_start
+Sigma,Kelsh Copper,
+Delta,Dolovite Iron,90,89,78,67,56,45,34,23
+Alpha,Desh Copper,**
+swgcraft_end</pre></p>
+
+<p><font face="Arial" size="-1">
+Notice the two blocks of resources, one for each planet the
+ISDroid reports pertain to. The first line reads the galaxy
+and planet, plus a time stamp of the report. The block is
+delimited by the lines "swgcraft_start" and "swgcraft_end",
+you <u>must <b>not</b> edit these lines</u>. Such a block
+contains just resources that should be complemented with
+stats; each line read a name and a resource class. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+Notice in the second block, the last resource reads some
+trailing ** after the resource class. Compare the blocks
+and see that this Desh Copper was already listed, the stars
+is just a reminder and doubles are always listed last. See
+the option "skip duplicates".
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Long list</b>
+&ndash; provides a similar list but it is sorted for ease
+of use together with the "30k Veteran Resource Crate" and
+SWGAide keeps track of the planets.
+</font></p>
+
+<p><font face="Arial" size="-1">
+SWGAide always keeps track of planets, this is true also
+for the planetary style, hence you can manually delete
+doubles if you want to. However, see limitations 2. 
+</font></p>
+</blockquote>
+
+<br/><br/>
+
+<p><font face="Arial" size="-1">
+<b>In-game</b>
+&ndash; within SWG you open a basic notepad by the
+command<font color="blue"><b><tt> /note&nbsp;res
+</tt></b></font>
+&ndash; notice that you do not type the</font><tt>
+.txt</tt><font face="Arial" size="-1">. For each resource,
+append the stats at the end of the line in the same order
+as stats are read in-game. As delimiter between stats, use
+any of 
+&nbsp;"</font><tt>,.;: </tt><font face="Arial" size="-1">"
+(white space is OK but quotes are excluded).
+Notice, for manual submission at SWGCraft only comma signs
+and no white spaces whatsoever works as delimiters; see the
+example above, the Dolovite Iron in the second block. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+You obtain resource stats either by hand sampling and read
+their stats at the examine window. However, it is more
+convenient to use a "30k Veteran Reward Resource Crate",
+its correct name is "A&nbsp;crate of free resources". This
+reward is indeed a <b><i>galaxy-wide sampling device</i></b>;
+for each resource class, the most recent resource is almost
+always listed bottommost. Select a resource and the next
+window reads its stats; you back out with Cancel or the
+Escape button of the keyboard; otherwise a confirm dialog
+prevents you from the mishaps we had in the past.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Once you are done in-game you must close the notepad which
+also saves the notes file to disk so that SWGAide can read
+your notes. Do not have this file open in-game while you
+edit it elsewhere because your edits are overwritten by SWG
+when you close the notepad.
+</font></p>
+
+<br/><br/>
+
+<font face="Arial" size="-1">
+<b>Similar resource names &mdash; Dialog</b>
+</font></p>
+
+<font face="Arial" size="-1">
+After SWGAide has submitted resources to SWGCraft,
+sometimes this dialog is displayed; this section explains
+why, false alerts, and how to act:
+</font>
+
+<blockquote>
+<font face="Arial" size="-1">
+To prevent that you submit resources that double resources
+that are already listed at SWGCraft.org SWGAide determines
+how similar the names of your resources are with all other
+resources. A <b>spelling error</b> is so easily done, this
+is without competition the most common mistake, either by
+you or another player. If such names are found SWGAide
+displays a dialog with some options.
+</font>
+
+<p><font face="Arial" size="-1">
+Remember that ISDroids in themselves contain no spelling
+errors, but if a resource is already submitted manually,
+either via SWGAide or at SWGCraft, it may be in error. If
+you then try to upload a report, with a correct name, you
+are about to submit a double. 
+
+<blockquote><b><i>
+In this case you should not submit but correct the existing
+entry.
+</i></b></blockquote></font></p>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+If a resource is <b>similar to several</b> other resources
+you see a cluster of your resource and those with similar
+names. Please, <i>review all </i> alerts in that cluster
+before you decide how to proceed and select at most one of
+the options. 
+</font></p>
+
+<font face="Arial" size="-1">
+Each entry at the dialog has two buttons; to send your
+resource, or to send a name correction, but you can of
+course decide to do nothing.
+</font>
+
+<blockquote>
+<p><font face="Arial" size="-1">
+<b>Submit new</b>
+&mdash; press this button to send your resource as-is;
+see "false alert" below. If your resource is in a cluster,
+review all alerts before you decide how to proceed.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Submit name</b>
+&mdash; press this button to send a name correction for the
+existing resource; the other resource is correct except for
+its name &mdash; both your and the older resource must be
+identical except for the names. If your resource is in a
+cluster, review all other alerts.
+</font></p>
+</blockquote>
+
+<p><font face="Arial" size="-1">
+Other errors are not handled by this dialog.
+If the resource class is in error you must visit SWGCraft
+to edit the class, or to report the error at the resource
+forum. 
+If planets are in error you must report that at the
+resource forum at SWGCraft; only moderators can resolve
+such errors
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>False alerts</b>
+&mdash; the algorithm to determine if names are similar
+is called the Levenshtein distance; it is quite simple and
+measures how many edits it takes to change one name to the
+other, the edits being replace, add, or erase. Thus, it is
+a fair risk for false alerts every now and then, certainly
+so for the shorter names. 
+To prevent too many false alerts SWGAide also tests the
+resource classes against each other, a quite simple test.
+However, please report your experience so that we can
+improve the logic.
+</font></p>
+</blockquote>
+
+<br/><br/>
+
+<p><font face="Arial" size="-1">
+<b>Black-list</b>
+&ndash; to prevent unwanted clutter in the "res.txt" notes
+file you can create a file named "isdroid_blacklist.txt" in
+the "misc" folder. Type the resource class that you want to
+hide, one class per line; you must spell exactly as the
+classes are read elsewhere in SWGAide.
+</font></p>
+
+<br/><br/>
+
+<font face="Arial" size="-1">
+<font color="red"><b>
+Limitation 1 
+</b></font>
+&mdash; the ISDroid panel retains its content as long as
+you do not switch to another character to view its ISDroid
+panel or as long as you do not exit SWGAide.
+<br/>
+<b>pros</b>: resource data is not compromised by some other
+action and you can safely submit the content without further
+verification.
+<br/>
+<b>cons</b>: new data from SWGCraft.org does not update the
+content of the panel, neither does new ISDroid reports.
+</font>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Force an update of this panel</b>
+&ndash; switch to any other character and view its ISDroid
+panel and then switch back. This resets all internal states
+and refreshes all lists for ISDroid reports but it does not
+overwrite the "res.txt" notes file.
+</font>
+
+<p><font face="Arial" size="-1">
+While you are updating the "res.txt" notes file you <u>do
+not</u> want to switch to another character in SWGAide and
+view the ISDroid panel. If you did, to be able to continue
+must copy or save the content of the file somehow; then you
+press "write to file" to generate an updated file. Notice,
+the new output may be different than the old file: if the
+resources of the two files are identical you can replace
+the content with what you had; otherwise you must line by
+line replace only equal resources, update new resources,
+and not add resources that are missing in the new file. 
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+<font color="red"><b>
+Limitation 2
+</b></font>
+&mdash; it happens that somebody wrongly enters a resource
+for a planet where it is not spawning. Assume that someone
+reported a resource for Lok, it is not available there but
+it is available at several other planets, this will happen:
+When SWGAide reads the ISDroid report for Lok it does not
+find this resource in the report and concludes that it is
+is depleted. Unless SWGAide finds a trace of this resource
+at any other planet it is impossible to realize the error.
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Conclusion</b>
+&ndash; it is always best to cover all ten core planets at
+a time, then SWGAide will find a trace.  
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Fix errors</b>
+&ndash; quickly make the resource available (if it became
+depleted) and <u>remove</u> the resource from the erratic
+planet; notice that remove <i>is not </i> the same as mark
+unavailable. Or, post at the resource forum with info on
+its galaxy, resource class, name, and which is the wrong
+planet. 
+</font></p>
+</blockquote>
+
+<br/><br/>
+
+<p><font face="Arial"><b>
+Manual submission 
+</b></font></p>
+ 
+<font face="Arial" size="-1">
+You can manually submit resource data via a web form at
+SWGCraft.org, this is best supported by the "planetary"
+output ("long list" is not selected):</font>
+<ul>
+<li><font face="Arial" size="-1">
+At SWGAide's Main panel, open the "res.txt" notes file;
+select and copy the two lines "swgcraft_start" and
+"swgcraft_end" and all the resources between the two.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+At SWGCraft,
+<br/>
+&ndash; navigate to "Current Resources" for the correct
+galaxy and planet
+<br/>
+&ndash; find a text input field at the bottom of the
+planetary page that is named "Add resources for: ..."
+<br/>
+&ndash; paste into that text field and click "Add Resources"
+<br/>
+&ndash; verify names, classes, stats, and galaxy/planet and
+click "Add resources".
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Rinse and repeat for each planetary block.
+</font>
+</li>
+</ul>
+
+<!--
+##############
+This block is not yet implemented and hence it is not
+part of the documentation
+##############
+
+<br/>
+<HR>
+<br/>
+
+<p><font face="Arial" size="-1">
+The following options and features will be implemented over time to the 
+ISDroid panel (not considering any other features planned for that is not
+about ISDroids):
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Mark completed</b>marks the processed resource classes as fully completed,
+planet by planet, at SWGCraft. This button will be only enabled when/if all 
+resources have been marked available, marked as depleted, and uploaded with 
+their stats, since the resource class is not complete otherwise.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>GUI input: 
+</b>, if you play SWG in "windowed mode", as opposed to full-screen mode, 
+it is possible to use a GUI panel for input of stats, one resource at a 
+time. 
+</font></p>
+
+################## end of block
+-->
+
+<br/>
+<HR>
+<br/>
+
+<p><font face="Arial" size="+1"><b>
+Interplanetary Survey Droids (ISDroids)
+</b></font></p>
+
+<p><font face="Arial" size="-1">
+This kind of droids are consumables and they do not appear
+in the worlds. They are manufactured by Droid Engineers and
+are sold in factory crates, found at Bazaar &raquo; Misc
+&raquo; Factory&nbsp;crates &raquo; Interplanetary Survey
+Droid. ISdroids cannot be used for Kashyyyk and Mustafar.
+</font></p>
+
+<p><font face="Arial" size="-1">
+A droid has two qualities: "charges" (uses per droid), and
+"mechanism quality" (response time). An optimal ISDroid has
+10 uses and high "mechanism quality" (~15 minutes and one
+use per planet); a more economical droid has maybe 15 uses
+and ~30 minutes. The trade-off is between uses and response
+time.
+</font></p>
+
+<p><font face="Arial" size="-1">
+You must have survey devices in your inventory for the
+resource class to survey for; ten devices per class, one
+devices per planet. Such devices are made at a negligible
+cost by the cheapest, or recycled, metal. To cover all ten
+planets and all resource classes you need 50 devices and
+ISDroids with totally 50 uses. When you dispatch a droid
+one use and one survey device is consumed, none of them
+is returned.
+</font></p>
+
+<ul>
+<li><font face="Arial" size="-1">
+Double click an ISDroid in your inventory
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Select a planet
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Select a survey device
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+A system message reads how many minutes until the report
+is returned.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Rinse and repeat for all resource classes and planets
+</font>
+</li>
+</ul>
+
+<font face="Arial" size="-1">
+After the specified time an in-game mail is generated*
+and one mail per droid is delivered into your mail-box.
+Each mail lists all resources that are in spawn for the
+resource class and the planet the report pertains to.
+Once all reports have arrived you<font color="blue"><tt>
+/mailsave </tt></font>so that SWGAide can find the mails. 
+<blockquote>
+* <i>It is verified that the report is generated at the
+specified time and not at a much later time; it is not
+generated when you log into game to read mails. 
+</i></blockquote>
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Comment</b>
+&ndash; it is true that ISDroid reports do not read stats
+nor way-points, however, together with SWGAide they are
+highly useful to help you to stay on top with all current
+resources, for all resource classes at the entire galaxy;
+see paragraph on Creature Resources. This means, you will
+always know about new and depleted resources, and you
+can manage your fleet of harvesters most efficiently.
+</font></p>
+
+<br/>
+
+<p><font face="Arial"><b>
+Creature Resources, Kashyyyk, and Mustafar
+</b></font></p>
+
+<p><font face="Arial" size="-1">
+ISDroids do not cover Creature Resources or the planets
+Kashyyyk and Mustafar. However, SWGAide provides you with
+support also for these resources, see the panel Resources
+&raquo; Submit&nbsp;Resources. At that panel you write a
+filtered output of resources to the "rem.txt" notes file
+and in-game you use the "30k veteran resource crate" to
+determine if they are still in spawn or if you can update
+them; see help text for that panel. 
+</font></p>
+
+<br/>
+<HR>
+<br/>
+
+<p><font face="Arial" size="+1"><b>
+How to "fix" an old resource which is wrongly reported at
+SWGCraft.org 
+</b></font></p>
+
+<font face="Arial" size="-1">
+Sometimes a resource is reported with a misspelled name.
+Then, if a resource spawns with that name, when and you
+try to submit this new resource there is a name clash and
+submission fails. The old, faulty resource must be fixed,
+partly for its own sake but mainly to make room for the
+new resource. Editing a name of an old resource is done
+at SWGCraft.org: 
+</font>
+
+<ol>
+<li><font face="Arial" size="-1">
+Use "Find Resources" to find the faulty resource
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Click its name to continue to the page where its details
+are read; there is a link to "edit" the resource.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Try to find the resource with the help if your "30k Veteran
+Resource Crate"; usually the resource class is correct, or
+almost correct and possible to guess, so skim through the
+resources to find its name, most often only one or a few
+letters are wrong and hence easy to find &gt;&gt;&gt;
+rectify the name.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Otherwise, rename the erratic resource to something such as
+"Yodaerror", if "Yoda" is the faulty name. Then post at the
+resource and include galaxy, resource class, and what you
+changed the name to; now other players can chime in.
+Mention also the new (the old faulty) name for reference.
+</font>
+</li>
+
+<li><font face="Arial" size="-1">
+Now you can submit the new, correct resource.
+</font>
+</li>
+</ol>
+
+<font face="Arial" size="-1">
+If there is any other problems with old or new resources,
+post at the resource forum so that players, moderators, or
+administrators can pitch in to help; always be as detailed
+as possible.
+</font></p>
+
+<br/><br/>
+
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<html>
+<head>
+<title>
+Help: Schematics &mdash; Resource Class Use
+</title>
+</head>
+
+<body bgcolor="#ffffff">
+<blockquote>
+
+<p><font face="Arial" size="+1"><b>
+Help: Schematics &mdash; Resource Class Use
+</b></font></p>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+This panel presents you with resource class usage. For a
+selected profession or schematic this panel displays all
+resource classes that are called for by name, and all the
+sub-classes that can be used for such a required resource
+class. Also the other way around, for a selected resource
+class this panel displays all schematics in which it can
+be used.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Schematic data are obtained from
+<nobr><b>www.SWGCraft.org</b></nobr>, information that is
+submitted and updated by players like you and me.
+</font></p>
+
+<br/>
+
+<blockquote>
+<p><font face="Arial" size="-1">
+When &mdash; not if but when &mdash; you find anything to add,
+complement, or correct, post it in <nobr><font color="blue">
+http://www.swgcraft.org/forums/viewforum.php?f=18</font></nobr>.
+Or add a note to the comment field at the schematic's web page
+at SWGCraft. Or, even better, post an application to become a 
+<i>schematics maintainer </i> to help the community in SWG. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+In SWGAide, often a mouse right-click at a GUI element displays
+a popup dialog with various options and features. 
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial">
+<b>Resource Class Use </b>
+</font></p>
+
+<p><font face="Arial" size="-1">
+This panel contains five elements which are updated when you
+select one thing or the other. They are a profession chooser,
+a list of schematics, a weight display, a list of resource
+classes, and a tree of resource classes. The following text
+describes them in order of use, not their position.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Profession Chooser: </b><br/>
+Select the profession of interest; this updates the list
+and the tree of resource classes, see details further down. 
+Or select "All" for all resource classes. If you at another
+element select something that filters the display, press the
+button next to this chooser, or press Alt-X, to <b>reset</b>
+to the selected profession and the display.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Notice:</b>
+resource classes are <i>not listed </i> for schematics with
+</font><font face="Arial" size="-2" color="red"><b>
+UNKNOWN 
+</b></font><font face="Arial" size="-1">
+profession level. That is, if nobody has reported either
+profession or level to SWGCraft.org then SWGAide should not
+wrongly list resource classes that a profession cannot use.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Resource Classes called for by name: </b><br/>
+The center list display all those resource classes which
+at least one schematic calls for by name. This list displays
+only the <i>required </i> resource classes, not sub-classes
+that are possible to use in the place of the class that is
+called for. Of course, sub-classes which are called for by
+name are listed. The list is sorted in the same order as the
+resource classes are usually listed in SWGAide.
+</font></p>
+
+<p><font face="Arial" size="-1">
+As an alert, if a resource class is missing in your resource
+inventory it is displayed at a colored background.
+</font></p>
+
+<blockquote>
+<p><font face="Arial" size="-1">
+<b><i>Required resource class</i></b>, this is the class that
+a schematic calls for. For example, if a schematic calls for
+Metal, then Metal is the <i>required </i> resource class. The
+schematic's resource slot accepts any kind of metal you have
+at hand, but Metal is the <i>required </i> resource class and
+Metal sets the rules for caps and the math for this resource
+slot while crafting.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b><i>Named resource class</i></b>, this term denotes a 
+resource class that spawns in the worlds. The resource classes
+of the resources you harvest have specific class names, but a
+generic resource class denotes a group of several sub-classes
+which are yet another less generic class or a named class.
+</font></p>
+</blockquote>
+
+<p><font face="Arial" size="-1">
+<b>Resource Classes... &mdash; Popup dialog: </b>
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Filter inventory </b> 
+&ndash; filters the resource inventory for the selected
+resource class.
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Filter current </b> 
+&ndash; filters the table of currently spawning resources
+for the selected resource class.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Plain guard... </b>
+&ndash; creates a plain guard that alerts whenever the
+specified resource class spawns. The new guard is named "Any
+spawn" and it is set to OQ = 1 &ndash; such a guard alerts
+whenever the resource class spawns, no matter the quality.
+If a similar guard exist you are notified and can abort.
+Its notes is initiated with a few of the listed schematics. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Quality guard... </b>
+&ndash; opens the usual dialog for creating resource guards
+and with some values pre-filled. For the selected resource
+class, if the listed schematics provides for more than one
+weight-entry SWGAide selects one at random. Hence, you may
+have to edit the dialog for the schematic of interest. This
+also means that if the option is selected to disable this
+option if matching guards exist then this option may wrongly
+be disabled; first,
+try to select a schematic to narrow the possibilities,
+otherwise disable the other option temporarily.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Disable guard menu </b>
+&ndash; select this option to disable guard menus if an
+identical guard already exist; this is default. This option
+affects the options for both plain and quality guards; see
+above for details on a limitation in this feature where it
+may wrongly disable the option for quality guards.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Write to file </b>
+&ndash; writes the names of required resource classes to file.
+All resource classes that are displayed at at the center list
+are written to file; disabled if "All" is selected. The file
+is named after the selected profession and is put into the 
+"crafting" folder, for example
+</font><br/><tt>
+[SWGAide]\crafting\Entertainer_res_class_use.txt
+</tt>
+</p>
+</blockquote>
+
+<p><font face="Arial" size="-1">
+<b>Resource Class Tree: </b><br/>
+To the right is a tree of resource classes which displays not
+only those classes which are called for by name but also all
+the sub-classes that the can be used for a required class.
+<font color="blue"><b>
+Blue text
+</b></font>
+denotes required resource classes.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Resource Class Tree &mdash; Popup dialog: <b/>
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<font face="Arial" size="-1">
+<b>Filter inventory </b> 
+&ndash; filters the resource inventory for the selected
+resource class.
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Filter current </b> 
+&ndash; filters the table of currently spawning resources for
+the selected resource class.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>More schematics </b>
+&ndash; toggles an option to display schematics that <i>can
+use </i> a selected resource class, rather than just the 
+schematics that call for a selected resource class by name.
+Even if this option is turned off (default) you can see which
+resource classes that can be used, those under any blue node.
+With this option on, when you select a non-blue node the
+closest named resource class is selected at the center list. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Collapse/Expand tree </b>
+&ndash; toggles an option to limit the size of the resource
+class tree for the current session. This just affects the
+visual display and does not affect any logic.
+</font></p>
+</blockquote>
+
+<p><font face="Arial" size="-1">
+<b>Schematics: </b><br/>
+The left-hand list displays a list of schematics. <br/>
+Select a resource class at the center list or at the tree
+to populate this list with those schematics that call for
+the selected resource class by name.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Select a schematic at this list to display only those
+resource classes that the schematic calls for by name. This
+updates the list and the tree of resource classes. This also
+updates the field for experimental weights; a schematic which
+is tagged as low-quality reads "n/a", otherwise its
+experimental weights are displayed. 
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Schematics &mdash; Popup dialog: </b>
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Select schematic</b>
+&ndash; use this option to select the current schematic at
+other GUI panels as a convenience. This overrides but does
+not modify possible filters that would hinder the display.
+If <i>Always select </i> at the Options menu is enabled
+there is no need to invoke this option.
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Only HQ/LQ or All </b> 
+&ndash; select one of the options to filter the list of
+schematics that are displayed for a selected resource class,
+default is "All". This option is for the current session,
+and it affects only the list of schematics. Notice that as
+LQ counts any schematic that is tagged as LQ or is without
+experimenting properties, otherwise, if its quality level
+is HQ, mixed, or unknown it counts as HQ.
+</font></p>
+</blockquote>
+
+<p><font face="Arial" size="-1">
+<b>Experimental Weights: </b><br/>
+Bottom left is an element that displays the variations of
+experimental weights for the selected schematic. They are
+listed in the order they are read at a schematic, not by
+any other preference such as order of importance.
+</font></p>
+
+<br/>
+
+</blockquote>
+</body>
+</html>

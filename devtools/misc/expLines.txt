@@ -1,0 +1,101 @@
+
+Action
+Arc Projector
+Armor
+Armor Effectiveness
+Armor Integrity
+Armor Module Rating
+Armor Toughness
+Auto-Repair Power
+Battery module
+Booster Acceleration
+Booster Energy
+Booster Energy Consumption
+Booster Recharge Rate
+Booster Speed
+Capability Level
+Capacitor Energy
+Capacitor Recharge Rate
+Chaff Maximum Effectiveness
+Chaff Minimum Effectiveness
+Charge
+Charges
+Combat Module Rating
+Condition
+Cybernetic Acid Resistance
+Cybernetic Cold Resistance
+Cybernetic Electrical Resistance
+Cybernetic Heat Resistance
+Decay Rate
+Detonation Power
+Droid Command Speed
+Droid Count
+Dump Capacitors
+Elemental Damage Amount
+Energy
+Energy Generation
+Energy Maintenance
+Energy/Shot
+Engine Pitch
+Engine Roll
+Engine Speed
+Engine Yaw
+Entertainment Area Module
+Enzyme Purity
+Experience Bonus
+Experimental Chassis Hitpoints
+Experimental Hitpoints
+Experimental Mass
+Extraction Rate
+Filling
+Fire Potency
+Fire Rate
+Flavor
+Flavor Bonus
+Gas Max Damage Modifier
+Gas Min Damage Modifier
+General Protection
+Harvest Bonus
+Health
+Hit Points
+Hitpoints
+Hopper Size
+Imperial Recruiter Module
+Lifespan
+Lifetime
+Mass
+Max Capacitor Energy
+Max Capacity
+Max Damage Modified
+Maximum Ammunition
+Maximum Damage
+Maximum Hitpoints
+Maximum Hold Capacity
+Maximum Mass
+Mechanism Quality
+Min Damage Modified
+Minimum Damage
+Mutagen Potential
+Nutrition Bonus
+Nutritional Value
+Pain Inducer
+Power
+Quality
+Quantity
+Quantity Bonus
+Quickset Metal
+Rebel Recruiter Module
+Recharge Rate
+Refire Rate
+Repair Charges
+Sampling Power
+Shield Effectiveness
+Shield Heatsink
+Shield Maximum Back Hitpoints
+Shield Maximum Front Hitpoints
+Shield Recharge Rate
+Special Protection
+Storage Module Rating
+Structure Maintenance Rate
+Unit Integrity
+count=100

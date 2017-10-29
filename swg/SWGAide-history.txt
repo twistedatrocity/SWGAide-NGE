@@ -1,0 +1,661 @@
+This file displays major and minor changes to SWGAide since it went public.
+
+Please report bugs at http://www.swgcraft.org/forums/viewforum.php?f=43. There
+I also welcome enhancement requests, suggestions, and whatever you come up with.
+
+Also, see LIMITATIONS at the end of this file.
+
+Greetings
+
+Zimoon @ Chimaera
+Oarun @ Chilastra
+
+0.9.9 Beta, ???????
+Now the Harvesting panel displays and adds no more units than hopper size.
+
+0.9.8 Beta, April 30
+Added option that copies a resource inventory from one galaxy to another.
+Fixed an issue that made Schematics Viewer sometimes miss new inventory items.
+
+0.9.7 Beta, April 26
+Added option to list LQ schematics for named res-classes to Schematics Viewer.
+At The Laboratory all occurrences of a selected resource is now highlighted.
+Fixed a bug that crashed Today's Alert when starting with very old DAT file.
+Fixed two bugs with import-from-notes-file at resource inventory.
+
+0.9.6 Beta, March 27
+Fixed display and sorting errors at Harvesting panel.
+Fixed an error that made the Trade-Customers panel crash.
+Fixed filtering problems and improved logic at Trade tables.
+Fixed a bug that sometimes caused race-conditions at Trade Statistics.
+Updated the Trade-Customers panel so that filters apply as you type.
+The tabs for Schematics and Today's Alert now alerts with a color.
+Corrected a display issue and improvement at Today's Alert.
+Fixed a bug with lost mail menu options when navigating.
+Fixed a bug with ISDroids and unreported-for-planet.
+
+0.9.5 Beta, Feb 20
+Added a schematic's Test-Bench to The Laboratory for testing resource qualities.
+Now Draft Schematics display which schematics lacks screenshot at SWGCraft.org.
+Simplified several routines all over the place for performance and maintenance.
+Now SWGAide properly identifies itself while communicating with SWGCraft.org.
+Made numbers to be displayed according to the computer's locale.
+
+0.9.4 Beta, January 9, 2011
+Added viewer for resource-quality versus schematics for resource panels.
+Added option to ignore Creature Resources for Organic at Today's Alert.
+Added dialog about which creatures that drop what to schematics panels.
+Added option to merge inventory entries/amount to selected assignee.
+Added option to move inventory entries from one to another assignee.
+Fixed several bugs introduced by making SWGAide host independent.
+Fixed several bugs with notes files, same cause as above.
+Fixed a flaw with "Filter current" at Schematics panels.
+Simplified several internal logics in schematics panels.
+
+0.9.3 Beta, Dec 19
+Completed the half-fixed bug with incompatible versions loading the DAT file.
+Simplified internal mail handling which corrected errors for ISDroid reports.
+
+0.9.2 Beta, Dec 16
+Fixed a bug with incompatible versions while loading the DAT file.
+Fixed a bug that made the ISDroid panel not populating itself.
+
+0.9.1 Beta, Dec 15
+SWGAide is now host independent and possible to move between computers.
+SWGAide no longer moves any mails away from SWG profiles to the "mails" folder.
+SWGAide no longer requires SWG to be installed, except during installation.
+Improved and reduced content of the SWGAide.DAT file for speed and size.
+The screenshot Album is simplified and no longer provides sub-albums.
+Fixed a bug that ignored Alarm for guards so that it was ignored.
+Improved the logic for submitting similar names and enhanced the dialog.
+Added info about food&drink buffs to Draft Schematics' middle-bottom section.
+Added all professions to list of assignees at Today's Alert for massive display.
+Added inventory amount column to The Laboratory's table of matching resources.
+Added option to The Laboratory to adjust max amount of displayed resources.
+
+0.8.16 Beta, Oct 16
+Added support for user notes to the Draft Schematics panel.
+Added dialog about which creatures drop what to resource panels.
+Improved scanning of resource name similarities, not yet finished though.
+Added dialog to ISDroid and Submit panels to manage similar resource names.
+Fixed null pointer error at launch if a hidden notes file was selected.
+Improved error handling for some Internet-SWGCraft mishaps.
+
+0.8.15 Beta, Sept 12
+Added various minor options to Draft Schematics.
+Added find-schematic menu to the Laboratory panel.
+Added create-guard to more panels at the schematics section.
+Added option to filter schematics on HQ/LO/All at some schematics panels.
+Added option to correct resource names via Submit Resources, see help text.
+Added select and filtering options to more panels at the schematics section.
+Added so navigating to component for a schematics and back scales batch size.
+Added so submit-resource aborts if a cached resource exists with similar name.
+Fixed an issue with coloring of stats for JTL resources that surpassed a cap.
+Fixed an error at update-inventory-from-notes which could add double entries.
+Fixed a nasty error for resources which are removed-and-replaced at SWGCraft.
+Fixed so a backup is made before writing inventory to in-game notes file.
+Current resources without stats are now rendered at a red background.
+Current resource that is being harvested no longer triggers a guard.
+Made space resources static, as for recycled resources.
+
+0.8.14 Beta, Aug 18
+Fixed an error that could lock SWGAide during start.
+Fixed a bug at resource inventory table related to editing a cell.
+Added option for notes at resource monitors; auto-added if a guard is selected.
+
+0.8.13 Beta, Aug 11
+Fixed a bug with sorting table columns at Today's Alert.
+Fixed a character limitation related to non-English Windows installations.
+Fixed a bug so the schematics list only displays for the selected assignee.
+Fixed a bug at resource inventory when selecting an entry from other panels.
+At resources and schematics sections, added select-x options to popup dialogs.
+Initiated relaxed file paths to soon make SWGAide movable between computers.
+Fixed several minor bugs and glitches.
+
+0.8.12 Beta, July 18
+At Today's Alert selected entries now stay selected.
+At Today's Alert, added some new options to different GUI elements.
+At Today's Alert, added option to ignore resources from Kashyyyk and Mustafar.
+At Draft Schematics, profession and level filters now apply to Add Category...
+Fixed a reset error at the inventory-dialog after adding recycled resources.
+Fixed a bug with parsing integer during some communication with SWGCraft.
+Fixed a bug in resource cache so unused resources now really are purged.
+
+0.8.11 Beta, June 30
+Fixed a bug with coloring at the Current Resources table.
+Fixed a bug so an idling harvester always paints the knobs red.
+Fixed an issue so now the table of guards update itself promptly.
+Added option to mute all sound alerts/alarms for resource guards.
+Fixed an issue so now sound alerts, alarms and warnings play their full length.
+Added option to Inventory to create a plain guard based on a selected entry. 
+Added a panel for current resources which outshines resource inventory.
+
+0.8.10 Beta, June 9
+Added improved hover-over text to the schematics Laboratory panel.
+Disabled reg-exp filtering at Trade Sales panel so text with * works.
+Now help files exist in SWGAide's docs folder and language support is possible.
+Relaxed control of resource stats at Inventory so Musty-outside-stats will pass.
+Rewrote the help text for Current Resources and fixed a bug with "allow-zeroes".
+Added option to the resource class tree to momentarily disable default coloring.
+Made resource guards and details the top displayed panels at Current Resources.
+Now SWGAide colors the Resources tab if there is an alarm, alert, or warning.
+Relocated several internal collections for improved future accessibility.
+Added popup dialog for resource details at The Laboratory panel.
+Improved fly-over text for resources at The Laboratory panel.
+Improved logging for the ISDroid submit logic.
+
+0.8.9 Beta, May 25
+Added panel Resource Info and Caps to the Resources panel, just caps yet.
+Activating a harvester now adds one unit to inventory to make it visible there.
+Added option to write inventory to notes file for in-game updates of the amount.
+Improved Laboratory panel so spawns better than inventory render at great color.
+Added option to Resource Class Use to display all schematics that use a class.   
+
+0.8.8 Beta, May 21
+Improved the help texts for the schematics section. 
+Added dialog to Schematics for managing assignees and favorites, see Edit menu.
+Added features to Inventory import from notes so it updates existing resources.
+Added small info box to Resource Class Use to display experimentation weights.
+Added more options at Draft Schematics to conveniently add to favorite lists.
+Fixed a bug with the resource-inventory dialog to lookup resource data. 
+Fixed a bug with complementing planetary info for known resources.
+Added various items here and there for convenience reasons only.
+Improved how the navigation buttons work at Draft Schematics.
+Fixed minor, older bugs and issues of more cosmetic kind. 
+
+0.8.7 Beta, May 10
+Added options at Resource Class Use to create plain or quality guards.
+
+0.8.6 Beta, May 10
+Added panel for resource class usage per profession, and more.
+Added option to laboratory panel to filter the list of schematics.
+Fixed a bug where help pages did not update properly while navigating.
+Added option to harvester dialog to adjust a characters harvester fair buff.
+Added so filtering inventory from other panels also selects specified resource.
+Added options to current resources panel to write/append resource data to notes.
+
+0.8.5 Beta, April 30
+Added panel named Depleted Resources at Resources section.
+Improved display at the Draft Schematics panel to be more smooth.
+Corrected import to Resource Inventory so it does not hog the GUI.
+Added more file formats for import to Resource Inventory.
+
+0.8.4 Beta, April 19
+Fixed the broken age column at Current Resources panel.
+Fixed broken handling of recycled resources for LQ schematics.
+Fixed the misleading rating of resources for schematics that use LQ-stuff. 
+Added resources-in-stock to the laboratory table as tool-tip fly-over text.
+
+0.8.3 Beta, April 18
+Improved scheduling startup background tasks.
+Added favorite list and dialog to define/select assignees and add schematics.
+Added schematics laboratory panel that lists best resources, notes field, etc.
+Clicking at a component that is hidden now displays an informative dialog.
+Improved table cell rendering for resources and other panels.
+
+0.8.2 Beta, March 26
+Clicking at a component in the details view now navigates to the selected item.
+Added buttons to navigate back and forward on the trace of selected schematics.
+Added keys Alt+left and Alt+right for navigating back and forward respectively. 
+Added a feature to find schematics with some text in their names. 
+
+0.8.1 Beta, March 21
+Added drop down list with schematics in alphabetical order, filters apply.
+Empty category nodes are no longer visible, added option to display all.
+Added shopping list with factory batch size multiplier.
+Added popup dialog for write/append to notes file.
+Added popup dialog for copy to clip board.
+Added used-in schematics list.
+
+0.8.0 Beta, March 7
+Added a plain schematics browser without bells or whistles. 
+Closed down galaxies no longer show up at the SWGCraft options panel.  
+Any error during launch now raises an error dialog, not only writes to log file.
+Fixed a bug affecting resources with unknown ID, that is unknown at SWGCraft.
+Fixed a bug the made SWGAide not find aliases files.
+
+0.7.87 Beta, Febr 22
+Reworked scheduling and execution of post-launch background tasks.
+Reworked parts of first-time initialization and error handling of SWG oddities.
+Now SWGAide bail out early if there is mail problems in Windows Vista/Windows 7.
+
+0.7.86 Beta, Febr 18
+Fixed a bug when SWGAide tried to backup non-existing files.
+
+0.7.85 Beta, Febr 17
+Augmented error handling for write/read to/from the DAT file.
+Fixed a bug where ultra-rare but serious exceptions were not caught.
+Fixed minor issues in submit resources for entries reported in parallel.
+Now the harvester table properly supports sorting of all tables.
+
+0.7.84 Beta, Jan 17, 2010
+Fixed a bug that caused trailing help text in ISDroid-notes-file to fail.
+Fixed a bug if guards should ignore resources from Kashyyyk and Mustafar. 
+Fixed a bug if an inventory item is selected and switching main panels.
+Disabled sorting at active harvester table until bug is fixed.
+
+0.7.83 Beta, Dec 27
+Active harvesters now alerts when they idle within specified warning time.
+Fixed a bug at submit-resources panel plus improved error its handling.
+Modified harvester warnings, now only one time governs all reminders.
+Fixed a null pointer bug in ISDroid notes-file reader.
+Added safety check against open-missing file errors.
+Fixed a bug with filtering at inventory panel.
+
+0.7.82 Beta, Dec 21
+Made it so the resource manager log errors rather than stop SWGAide.
+At submit-resources, added another filter which lists stat-less resources. 
+At submit-resources, added so stat-less resources are included and tagged.
+Fixed so a selected guard and its selection is retained when switching tabs.
+Added popup option to all possible tables at all panels to filter inventory.
+Added warning for profanity filter that alerts aborts parsing of ISDroid mails.
+
+0.7.81 Beta, Dec 17
+If a guard is selected, activating a harvester sets the guard's name as notes.
+Fixed a bug with weighed filtering resources if a resource class is selected.
+
+0.7.80 Beta, Dec 16
+Hot-fix: a bug related to aliases which stopped SWGAide from launching.
+
+0.7.79 Beta, Dec 15
+Fixed a bug with resource guards that sometimes made an older resource trigger.
+Adjusted initialization so that characters who are bugged in SWG do not block 
+   existing characters from being found and displayed in SWGAide.
+Now at the Current Resources panel:
+   Details view, now inventory notes are displayed.
+   If a guard is selected, adding to inventory adds the guard's name as notes.
+   Adding to inventory always opens a dialog which allows for editing.
+   Added popup option to filter the inventory based on the selected resource.
+   Improved rendering, selected entry is retained, and more small-stuff.
+
+0.7.78 Beta, Dec 5 
+Now it is possible to mark a resource depleted at the harvesting table.
+Removed harvesting warning with percent, alerts are expressed in hours.
+Fixed many small bugs, most of them mentioned at the forum at SWGCraft.org.
+Changed default sort order for guards to from most recent resource to oldest.  
+Reinstated coloring of current resources which are stocked in inventory plus to
+   show the amount in stock, now formatted by the user's locale.
+
+0.7.77 TEST-Beta, Nov 25
+Fixed a bug with galaxy name when installing without older SWGAide.DAT file.
+
+0.7.76 TEST-Beta, Nov 24
+Fixed an issue which made it impossible to activate harvesters.
+
+0.7.75 TEST-Beta, Nov 24
+
+                  *** ATTENTION *** 
+   This is a first drop, find important information at 
+   http://www.swgcraft.org/forums/viewforum.php?f=29
+
+Major redesign of SWGAide's resource management and consequential code editing.
+Reviewed and updated help text and documentation, press F1 for help everywhere.
+Inventory and guards support columns in any order during import, details in doc.
+Harvesting tab now has new minor features, plus export/import.
+
+0.7.33 Beta, July 20
+The folder "backups" now includes SWGAide.DAT and other files.
+Backup notes files are now found in "backups", up to 10 of each notes file.
+Edit/create dialog for resource inventory is now working as expected.
+Galaxy-transferred resources can now be added to inventory via the GUI 
+    edit/create dialog, via import file, or via import notes file.
+Inventory notes can now be correctly edited directly at its table cell.
+
+0.7.32 Beta, May 24
+Now guards may optionally disregard resources from Kashyyyk and Mustafar.
+Now guards may optionally alert a sound only once per session.
+The Submit Resources now works as expected also for planet(s).
+Dialog for creating/editing inventory resource entries now works as expected.
+Submitting resources to SWGCraft now checks guards and monitors instantly.
+Names of guards may now contain comma signs; exported guards have comma signs
+   replaced with a similarly looking symbol, maintaining CVS file format.
+
+0.7.31 Beta, May 3
+Now filtering on Trade Sales screen works also with parentheses (){}[].
+Import from notes file no longer requires amount to be specified.
+Updating mails should no longer cause SWGAide to choke.
+Changed base URL for SWGCraft to the .org domain.
+Added better error reporting for "unknown host".
+Warning colors at the harvesting panel should work now.
+Clarified and edited documentation for current resources.
+
+0.7.30 Beta, March 23
+Filtering with experimental weights added to the resource inventory screen. 
+
+0.7.29 Beta, March 15
+Now Gorath should work again.
+
+0.7.28 Beta, March 14, 2009
+Numerous minor and medium bug fixes, no severe bug reported.
+Enhanced performance at start-up, and at the list of guards.
+Minor features added, mainly new options to various right-click-popup-dialogs.
+
+0.7.27 Beta, Dec 4
+SWGAide now optionally supports submission of data for resource that are only
+   possible to obtain from the 30k veteran rewards resource crate.
+Fixed some bugs and minor things.
+
+0.7.26 Beta, Nov 29 
+Relaxed the requirement of a file header in the notes file "rem.txt".
+Fixed a few bug affecting selecting things in the GUI.
+Made the notes file "rem.txt" easier to read.
+Added possibility to use a blacklist for unwanted resource classes for the
+   manual submission feature, see help file for the submission screen.
+
+0.7.25 Beta, Nov 23
+Added feature to manually submit resources to SWGCraft, single and multiple,
+   optionally using an in-game notes file.
+Fixed different bugs and issues.
+
+0.7.24 Beta, Nov 6
+Now out of bounds for capped stats will warn while uploading ISDroid reports.
+Now harvesters that need attention will alert also by audio.
+Added initial feature to manually upload resources, a new panel.
+Fixed different bugs and issues.
+
+0.7.23 Beta, Oct 18
+Now fly-over text and resource details show possible amount in inventory.
+Now guards do not alert for aged resources if "Max hours" is selected.
+Improved syntax control and error logging for importing inventory resources.
+Fixed different bugs and issues.
+
+0.7.22 Beta, Oct 16
+Replaced logic for import of inventory (see help documentation, F1).
+Fixed different bugs.
+
+0.7.21 Beta, Oct 13
+Fixed the null pointer problem with old, local resources.
+Now inventory resources are optionally listed when using guards.
+Added features to the harvester tab.
+Fixed different bugs.
+
+
+0.7.20 Beta, Oct 8
+Added a harvester tab, thanks Oarun.
+
+0.7.19 Beta, Oct 7
+Fixed a null pointer error in resource age comparator.
+Fixed a loophole in mail handling when other programs locks a mail file.
+
+0.7.18 Beta, Oct 6
+Fixed several bugs and issues regarding ISDroids and Current Resource table.
+
+0.7.17 Beta, Sep 28
+Fixed a nasty bug affecting ISDroids handling.
+
+0.7.16 Beta, Sep 28
+Fixed a bug with finding depleted resources.
+
+0.7.15 Beta, Sep 28
+Added Monitors that will alarm if monitored resources are depleted.
+Added coloring to resource Inventory, Rating, and Age.
+Fixed several bugs and issues.
+
+0.7.14 Beta, Sep 19
+At Current Resources:
+   Now the upper panel is more dynamically resized.
+   Now it is possible to edit the colors and their limits.  
+   Removed the checkbox named "Exp wgt" and made the logic discern between 
+      filtering vs. weighed ordering.
+Fixed several issues with filtering, guards, and inventory.
+
+0.7.13 Beta, Sep 17
+Added a column displaying resource rating.
+Fixed several bugs and added several features to the inventory panel.
+
+0.7.12 Beta, Sep 7
+Added beginning of resource inventory, more to come.
+Fixed an issue with weighed values not working properly for capped stats.
+Welcome jt26077 aka Chilastra.Oarun to the developer team!!! :) 
+
+0.7.11 Beta, Aug 17
+Now editing a filter will change it between weighed and plain guards properly.
+Fixed several minor issues for guards, such as coloring relative caps, etc.
+Added several features to the guards management.
+Weighed guards now respect the caps also for JTL resource classes.
+
+0.7.10 Beta, Aug 12
+Added resource guards to the Resource tab that works as filters and that
+   optionally will alert when one or more resources meet the guard. 
+Updated image album to recognize the change to screenshots that was introduced
+   with GU 4, and now screenshots are no longer moved into SWGAide.
+Fixed an issue so SWGAide does not forget options.
+Some dialogs can now be suppressed.
+ISDroid reports can now be uploaded successfully for Kettemoor. 
+
+0.7.9 Beta, July 10
+Fixed an error that caused SWGAide to stop uploading resource data and possibly 
+   delete the file "res.txt" if a resource already existed at SWGCraft. 
+
+0.7.8 Beta, July 6
+Added help text for the Resources panel. 
+Now SWGAide handles erratic stats correctly, that is stats out of bounds, etc.
+Minor fixes regarding error handling and dialog windows.
+
+0.7.7 Beta, June 8
+Fixed an issue with de/selecting "Caps" at the current resource screen.
+Added display options to the current resources screen.
+Added feature to filter on experimental weights to the current resources screen.
+Now SWGAide remembers most recently selected character, no annoying dialogs.
+
+0.7.6 Beta, May 31
+Fixed the coloring of stats based on caps for the resource class tree.
+Fixed an error that happened when folding the resource class tree. 
+
+0.7.5 Beta, May 30
+Added resource class tree and filtering at the panel for current resources.
+
+0.7.4 Beta, May 25
+Added filtering on plain stats to the panel for current resources.
+
+0.7.2 Beta, May 21
+Corrected the error dialog handling and dialog messages.
+Now Ahazi is used as default galaxy for the resource view until one is chosen.
+
+0.7.1 Beta, May 19
+SWGAide will not crash at start when a player/galaxy was not selected at exit.
+Enhanced error logging for when SWGCraft is down.
+
+0.7.0 Beta, May 18
+Added feature for resource browsing, only current resources will be visible plus
+   uploads to SWGCraft.
+Reduced the number of unnecessary calls to SWGCraft.
+Fixed a number of smaller bugs.
+
+0.6.17 Beta, May 10
+Slightly enhanced error messages for the GUI dialog.
+It is now possible to press submit buttons several times if a few resources
+   were not uploaded error-free the first time.
+
+0.6.16 Beta, May 5
+Now the file "res.txt" is not deleted when not opted to.
+The progress meter for ISDroid uploads now counts correctly.
+Now all communication errors should propagate to some kind of GUI dialog.
+Trade sales table now retains names when prices map to empty strings.
+
+0.6.15 Beta, April 14
+Added feature to optionally write resources to "res.txt" as one long list
+   conveniently ordered, rather than planet by planet.
+Added progress meter for uploading data to SWGCraft.
+Enhanced the error handling a tad further for communication with SWGCraft.
+Now SWGAide will correctly retain "res.txt" while aborting.
+
+0.6.14 Beta, April 6
+Changed the name to Bilal gas Inert Gas to conform to the ISDroid text. 
+
+0.6.13 Beta, April 6
+All prices at the Trader screens can now be greater than 2,147,483,648 credits, 
+   current limit is 2^63 (larger than 9 with 18 trailing zeros, beat that).  
+Fixed an issue causing the content of "res.txt" not to emptied as wanted.
+Added dialog asking to empty a non-empty "res.txt".
+
+0.6.12 Beta, March 25
+Added a missing "i" to Oridum making it Oridium Intrusive Ore.
+
+0.6.11 Beta, March 24
+Fixed an issue where old ISDroid reports were deleted when discarding dialog.
+SWGAide no longer marks as depleted a resource that is wrongly marked as 
+   available at some planet if there is a trace of it in another ISDroid report.  
+Reworked the connection error handling for resource updates to raise a plain 
+   dialogue, still a work in progress though.
+SWGAide now removes from the GUI view stations, galaxies, and characters that
+   have been manually deleted from harddisk.
+
+0.6.10 Beta, March 9
+Color codes are now erased from item names at Trade screen and the CSV file.   
+Changed how the "blacklist" feature works, now all subclasses from the entered 
+   resource classes are not written to "res.txt".
+Resource classes in res.txt are now sorted as read in the veteran reward crate.
+
+0.6.9 Beta, March 2
+Added an option to always map price to name to overwrite the names of the items.
+Fixed a bug freezing SWGAide during initialization due to image file errors. 
+Fixed a bug where erratic resource data caused an anonymous error.
+Fixed several bugs where void data caused errors and/or error messages that
+   should have been handled more nicely.
+
+0.6.8 Beta, February 24
+Fixed a nasty bug affecting use of ISDroids at European galaxies.
+
+0.6.7 Beta, February 24
+Single report mode works as intended now. 
+Will not fix limitation for changing mode from single to multiple since it is 
+   seldom done and workaround is to view ISDroid panel at other character once. 
+Added "Delete all old" reports to the dialog warning for old reports.
+Added the possibility to blacklist resource classes unwanted in "res.txt", see
+   the last paragraphs of the help text (F1).
+
+0.6.6 Beta, February 9
+Some small bug fixes mainly for ISDroid handling.
+Added a few more messages when something goes wrong.
+
+0.6.5 Beta, January 20, 2008
+Safety precautions where files/directories may be missing.
+Fixed an issue regarding importing and restoring trade mails.
+Fixed an issue when cached erratic user-name/passwords did stick. 
+Now Trader views can handle sums higher than 2,147,483,647 credits.
+ISDroid reports: New resources can now be uploaded to SWGCraft after user has 
+   added their stats in the "res.txt" file, see help text (F1) at ISDroid panel.
+
+0.6.4 Beta, December 27
+Added support for the new authentication and encryption scheme used by SWGCraft.
+Added support for processing multiple ISDroid reports in one batch.
+Addressed a multi-threading issue affecting the ISDroid GUI. 
+Moved ISDroid options to menu bar Options and limited the in-game notes file 
+   name for ISDroid to "res.txt".
+
+0.6.3 Beta, December 10
+Added write-to-notes-file for new resources and resources without stats, for now
+  only one report at a time. The data can be used for direct submissions to 
+  SWGCraft.
+Added "Netto" to the Trade - Statistics - Metrics view. 
+Fixed a number of bugs related to incomplete Testcenter installations and/or
+  empty folders.
+
+0.6.2 Beta, November 27
+Added more filters for the Trade/Customer panel:
+  Max number of days from today; Only new customers
+Fixed an issue with galaxy names not working with galaxy file names at SWGCraft.
+Changed a common network error to a plain log message and GUI a status note.
+
+0.6.1 Beta, November 25
+Fixed ISDroid list No 1 to show resources with stats rather than those without.
+Corrected a misspelled name on Tertian Siliclastic Ore.
+
+0.6.0 Beta, November 24
+Added initial features for ISDroid submissions to SWGCraft: depleted resources
+  and "known resources new to planet" are supported. SEE the checkbox named 
+  "ISDroidPanel" at the mail details panel.
+Overhaul on the Internet communication with SWGCraft and handling export files.
+Ground up overhaul on the support for SWG resource handling.
+Revamped the Help system.
+
+0.5.18 Beta, November 14
+Added SWGCraft Options page (for use in v. 0.6.0).
+Added missing mail classes (I am sorry).
+Fixed an issue where missing mandatory files in SWG could spam the error log.
+
+0.5.17 Beta, November 14
+Added misc minor options to the Trade tab.
+Import auction mails (Trade view) now only imports mails for the same galaxy as
+  the currently selected character. If you already have imported blended mails,
+  refer to the paragraph on Auction Mails at the end of this file.
+Fixed an issue when SWGAide never initialized while having SWG at D:, E:, ...
+Fixed a misspelled Europe-FarStar that made it never show up.
+
+0.5.16 Beta, October 26
+Now number of customer visits is computed correctly.
+
+0.5.15 Beta, October 26
+Completed the "Trade" tab: Archiving, Import auction mails, Map "blank names" to
+  prices, and more that makes it a good replacement for Merchant's Friend.
+Fixed an issue with reading empty files that choked SWGAide. 
+
+0.5.14 Beta, October 20
+Fixed the sorting order of all table columns for integers.
+Added more features to the Trade tab.
+
+0.5.13 Beta, October 17
+Added the Customer tab to the Trade tab.
+Fixed an issue when tampered mails would cause the mail client to choke. Now
+  they are really moved to an ERRORS folder within each the character's mail 
+  folder at the hard disk, manually edit the mail so it looks as other mails. 
+  The error is read in the log file and the user gets a dialog notice.
+Minor performance tuning.
+
+0.5.12 Beta, October 14
+Added a feature to automatically open an email upon errors, just click the 
+  red light bulb in the lower right corner if it lights up.
+Fixed an issue where images manually removed from the image album folder will 
+  not freeze SWGAide at startup.
+Fixed an issue where the image album consumed excessive memory. Now the album 
+  is slower but do not freeze the application (interim).
+Added a feature so that mails with header errors are moved to an ERROR folder
+  and an information dialogue tells the fact. 
+Fixed an issue with filtering sales mails.
+Removed a mail debug printout that should not have made it into public.
+
+0.5.11 Beta, October 14
+Fixed a bug where exact prices did not filter properly.
+Fixed the Trade view so that characters without sales mail will not show the
+  previous character's mails.
+
+0.5.1 Beta, October 13
+Added feature to open browser at SWGAide web page.
+Added Purchase mails tab to the Trade tab 
+
+0.5.0 Beta, October 12
+The "update available" dialog is enhanced.
+Dates in tables now are sorted correctly.
+Added a first attempt for a "Trade" tab, for vendor and auction mails, á la 
+  Merchants Friend.
+
+0.4.1 Beta, September 24
+Added version stamp to error log.
+Added "New notes" to Edit menu.
+Added update lookup, using a tiny file at SWGAide's home page. This feature will
+  raise a notification popup dialog when an update is available.
+Added this history file to SWGAide.jar so that it will be copied to harddisk the
+  first time SWGAide is launched after download/update.
+
+0.4.0 Beta, September 21, 2007
+First public beta version. Known issues none.
+
+
+NOTICE: Version numbering is as follows:
+X.Y.Z where
+  X are major updates
+  Y are normal updates where an even number is a stable update while an odd 
+    number is not yet considered fully stable
+  Z are minor updates targeting bug fixes and adjustments but no new features
+
+  
+LIMITATIONS:
+
+Currently only mails ending in ".mail" is considered mails to be managed by this
+application. Either rename them so their file ending is ".mail" or let them be
+as is.   
+
+Users must be in administrator mode at Windows Vista for SWGAide to have all
+features enabled. For example SWGAide cannot write to notes files if not in
+administrator mode.

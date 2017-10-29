@@ -1,0 +1,118 @@
+
+SWGAide prides itself with quite a good help system, but Zimoon only
+speaks Swedish and English. To overcome this limitation features are
+added to SWGAide to support for any language. To begin with only the
+help texts are supported, more will come over time.
+
+This file reads the rules for translated help files.
+
+
+
+General Info
+============
+
+It is of course good that You are familiar with SWGAide and how it
+is thought to work. If you are uncertain of a feature, ask first and
+translate second. Probably the confusion is an indication that my
+English needs to be improved.
+
+It is OK to translate just one file or one at a time over a period.
+At the forum at SWGCraft.org, communicate what you are doing to avoid
+double work with other players.
+
+Do not change the HTML tags in the files, just translate the text in
+a fashion you find most user friendly. The HTML tags may be replaced
+by machine scripts, hence they must look as is.
+
+You can add comments in English for future maintainers. Use the HTML
+tag <!-- your comment /Zimoon --> for this.
+
+
+
+Original Files Names - Information
+==================================
+
+File names must always be lower case.
+See next section on how to map file names to the visible text.
+
+Examples:
+help_schematics__en.html
+help_schematics_laboratory_en.html
+help_schematics_many_words_for_sub_feature_en.html
+
+The first part tells the context, if it is "help", "info", or
+anything else.
+
+The second part tells the major feature, such "schematics". The
+sub-features are grouped under he main feature.
+
+The third part tells the minor feature, for example "laboratory".
+
+The _xx language part tells the language.
+
+File names for the translated text MUST BE IDENTICAL with their
+English counterparts, only the language code is changed;
+for example English to French:
+help_schematics__en.html
+help_schematics__fr.html
+
+You must include a index_xx.txt file for the mapping between file
+name and the title for the HTML index file that SWGAide creates.
+Inside SWGAide your translated file is used as is, the help system
+does not use the index_xx.txt file, but the outside files in the
+docs folder do.
+
+
+
+Initiate -- Engage -- Finish
+============================
+
+A) Announce your intent at SWGAide's forum at SWGCraft.org
+
+B) You will work with three files at a time:
+   1) The original English file
+   2) Your translated file
+   3) a file named index_xx.txt which is described soon
+
+C) If there is a change to the original file while you are 
+   translating we will communicate the changed text to you, this
+   means that you must announce what you are doing at SWGAide's
+   forum at SWGCraft.org, otherwise we cannot tell you.
+
+D) Send the translated file and the index_xx.txt file to Zimoon. 
+
+
+
+The index_xx.txt
+================
+
+You must provide a file named index_xx.txt, where xx is a
+language code. This file maps file names to titles, and it
+is written on the format:
+
+#file_name_xx.html                    Title
+help_schematics__en.html              Schematics
+help_schematics_laboratory_en.html    The Laboratory
+help_schematics_a_b_c_d_en.html       A Silly Example
+
+Each mapping on its own line.
+The first white space is the delimiter, it can be one or several.
+This is a plain text file, not a word document.
+
+The file should also have a mapping for the title and language:
+main_title      Index of Help Files &mdash; English
+
+For a comment in this file, begin the line with a dash, such as
+# this is a comment anywhere in the file and it is ignored
+# empty lines are also OK
+
+In the index_xx.txt file, sub-features are grouped under the
+main feature. Hence the titles of sub-features must not read
+"Schematics -- The Laboratory" but just "The Laboratory".
+
+
+
+
+
+Greetings
+Zimoon @ Chimaera

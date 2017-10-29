@@ -1,0 +1,157 @@
+Keys for SWGAide.DAT
+
+This file is for recording the keys used in the prefsKeeper in SWGAide.
+This file is not machine read so it is not sensitive to text format or syntax.
+Keep content logically organized, grouped for the package or even smaller scope.
+
+Key							Serializable  Comments
+
+frameDimension				Dimension
+frameMaximized				Boolean
+frameLocation				Point
+
+colorChooserDialogLocation  Point
+
+helpScreenLocation          Point
+helpScreenSize              Dimension
+
+optionsGeneralLocation      Point
+optionMainGalaxy            String
+optionAutoUpdate            Boolean
+optionUserName              String
+optionPassWord              String
+optionTimeZone              String
+optionTimeZoneValue         Double
+
+optionBaseURL               String        # this should have been named 
+optionResourcePath          String        # swgcraftOptionXXX
+optionStatusFile            String
+optionSOAPpath              String
+
+prefsFileBackupNumber		Integer
+prefsKeeperBackupDate		Long
+prefsKeeperBackupRepeatDays	Integer
+
+swgUniverse					SWGUniverse
+swgTestCenter				SWGUniverse
+swgClientPaths              ArrayList<File> # a list of previous client paths
+
+selectedTab					Integer
+
+mainTabDividerLocation      Integer
+mainTabSelectedNode         Serializable    # a node's userObject
+mainTabHiddenNodes          Hashtable       # a map of hidden notes
+mainTabHiddenNodesUpdated   String          # a version string, recent update
+
+currentlySelectedCharacter  SWGCharacter
+
+mailBodyFontSize            Integer
+mailClientDividerLocation   Integer
+mailClientDividerLocationUp Integer
+mailClientColumnSize[0 3]   Integer
+mailISDroidPanel            Boolean
+mailCopyToSWGAide           Boolean          # copy mails to within SWGAiden
+mailDeleteAfterCopy         Boolean          # delete from SWG after copy
+
+ISDroidNotesFileName        String
+ISDroidUseGUIPanel          Boolean
+ISDroidAllowStatless        Boolean
+ISDroidSingleSelection      Boolean
+ISDroidFileSkipDuplicates   Boolean
+ISDroidFileAutoDelete       Boolean
+ISDroidFileDelete           Boolean       # used temporary 
+ISDroidFileHelpText         Boolean
+ISDroidFileContinuous       Boolean
+
+aliasPaneFontSize           Integer
+macrosPaneFontSize          Integer
+notesPaneFontSize           Integer
+
+auctionCSVFile              File
+tradeMiscSharedTOONNAME     Boolean
+tradeCustomersTOONNAME      HashSet
+tradeLatestTOONNAME         Long
+tradeMiscOverride           Boolean
+tradeAllowColorsInCSV       Boolean
+
+resourceAlertWarningMute    Integer       # mute time in minutes
+resourceFilterFieldCaps     Boolean       # resourceTab
+resourceFilterFieldExp      Boolean
+resourceConsiderNoStat      Boolean
+resourceXMLFileVersion      String
+resourceLimitFair           Integer
+resourceLimitGood           Integer
+resourceLimitGreat          Integer
+resourceColorFair           Color
+resourceColorGood           Color
+resourceColorGreat          Color
+resourceColorFairText       Color
+resourceColorGoodText       Color
+resourceColorGreatText      Color
+resourceFilterUseMaxAge     Boolean
+resourceFilterMaxHours      String
+resourceGuardMap            HashMap
+resourceMonitorMap          HashMap
+resourceGeneralMap          Map           # map of current resources / galaxy
+resourceGuardDialogLocation Point
+resourceGuardHideGuards     Boolean
+resourceGuardsMixInventory  Boolean
+resourceGuardAlertOnce      Boolean
+resourceGuardsDisregardMK   Boolean
+resourceGuardsMaxHours      Integer
+resourceInventoryMap        Hashtable
+inventoryAddDialogLocation  Point
+resourceInventoryImportFile File
+resourceInventoryNotesXXX   String        # recently used notes file (XXX=glxy)
+
+resourceSubmitNonHarvested  Boolean
+resourceSubmitSelectedClass String
+
+resourceHarvesterMap				HashMap
+resourceHarvesterUserMap			HashMap
+resourceHarvesterDialogLocation		Point
+resourceHarvesterUserDialogLocation Point
+resourceHarvesterHopperView			Boolean
+resourceHarvesterReminder           Integer # reminder within hours
+resourceHarvesterEndingView			Boolean
+
+resourceHarvesterActivateLocation   Point
+resourceHarvesterActivateMaint      String
+resourceHarvesterActivatePower      String
+
+resourceDepletedWriteFile           Boolean # write to file (vs. notes)
+resourceDepletedLimitDays           Integer # days for the limit
+resourceDepletedAutoWrite           Boolean # auto-write main galaxy
+
+schematicsMaxID                     Integer # max ID for a schematic
+
+schemAssignees                      List    # SWGSchematicAssignees
+schemAssigneeDialogLocation         Point   # the location for the dialog
+
+schemTodaysAlertMaxAge              Integer # max days for displayed resources
+schemTodaysMinInventory             Long    # min amount in inventory
+schemTodaysIgnoreKM                 Boolean # ignore KM resources
+schemTodaysOrganicDisCR             Boolean # Organics disregards Creature Res
+schemTodaysAlertDefaultAss          String  # name of a default assignee
+
+schemDraftSelectedProfession        String  # the selected profession
+schemDraftSelectedProfLevel         Integer # the selected profession level
+schemDraftSelectedSchematic         Integer # the selected schematic's ID
+
+schemExpGroupTitlesFirstPrio        List<String> # first prio experiment-groups
+
+schemLaboratoryFilterAll            Boolean # 'All' use filters from draft-schem
+schemLaboratoryReslimit             Integer # max number of displayed resources
+
+schemRCUseRelaxSchematicsView       Boolean # toggle display schematics vs RC
+schemRCHideForExistingGuard         Boolean # disable menu if guard exists
+schemSelectSchemAlways              Boolean # select schematic at other panels
+
+schemWrappers                       List    # SWGSchematicWrapper
+
+schemRes4SchemDialogLocation        Point   # location of best-for-schem viewer
+schemRes4SchemDialogDimension       Dimension # dimension of best-for-schem view
+schemRes4SchemNamedLQ               Boolean # display LQ schems for "named" rc 
+
+schemTestBenchLocation              Point   # location of test-bench-dialog
+schemTestBenchDimension             Dimension # dimension of test-bench-dialog

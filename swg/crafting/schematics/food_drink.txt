@@ -1,0 +1,75 @@
+# Based on SciGuy's FoodChart which is maintained by Senator Onyx
+#
+# Remember spelling for T'illa-T'ill, Con -> Constitution, remove trailing ;
+# 
+Accarragm  ;  Agility  ;  Movement
+Ahrisa  ;  Poison Absorb  ;  Poison Resist
+Air Cake  ;  Strength  ;  Precision
+Aitha  ;  Luck
+Almond-Kwevvu Crisp Munchies  ;  Agility  ;  Stamina
+Bespin Port  ;  Experimentation
+Bivoli Tempari  ;  Stamina  ;  Constitution
+Blob Candy  ;  Stamina
+Blood Chowder  ;  Con  ;  Stamina
+Blue Milk  ;  Stamina  ;  Constitution
+Bofa Treat  ;  Strength  ;  Constitution
+Breath of Heaven  ;  Con  ;  Dodge Chance
+Caf  ;  Strength  ;  Constitution
+Carmelized Pkneb  ;  Strength  ;  Precision
+Cavaellin Creams  ;  Quick Resucitation
+Chandad  ;  Surveying
+Cho-Nor-Hoola  ;  Luck
+Citros Snow Cake  ;  Luck  ;  Stamina
+Corellian Ale  ;  Strength  ;  Stamina
+Corellian Brandy  ;  Strength  ;  Constitution
+Crispic  ;  Precision  ;  Stamina
+Deneelian Fizz Pudding  ;  Luck  ;  Block Chance  ;  Block Value
+Deuterium-pyro  ;  Precision  ;  Stamina
+Durindfire  ;  Stamina  ;  Constitution
+Dustcrepe  ;  Luck  ;  Stamina
+Dweezel  ;  Stamina
+Elshandruu Pica Thundercloud  ;  Agility  ;  Con  ;  Stamina
+Exo-Protein Wafers  ;  Stamina  ;  Luck
+Flameout  ;  Agility  ;  Strikethrough Chance  ;  Strikethrough Value
+Garrmorl  ;  Constitution  ;  Strength  ;  Precision
+Gorrnar  ;  Stamina  ;  Constitution
+Gralinyn Juice  ;  Stamina
+Gruuvan Shaal  ;  Precision
+Havla  ;  Strength  ;  Stamina
+Ithorian Mist  ;  Fire Absorption  ;  Fire Resistance
+Jaar  ;  Agility  ;  Constitution
+Jawa Beer  ;  Agility  ;  Luck
+K-18 Rations  ;  Agility
+Kanali Wafers  ;  Constitution
+Karkan Ribenes  ;  Agility
+Kiwik Clusjo Swirl  ;  Agility  ;  Constitution
+Kommerken Steak  ;  Forage Bonus  ;  Treasure Map Foraging
+Mandalorian Wine  ;  Strength  ;  Constitution
+Meat Jerky  ;  Constitution
+Ormachek  ;  Precision  ;  Stamina
+Parwan Nutricake  ;  Con  ;  Heal Potency
+Pikatta Pie  ;  Con  ;  Precision
+Pyollian Cake  ;  Assembly
+Rakririan Burnout Sauce  ;  Strength  ;  Precision
+Rancor Aid  ;  Resist Snare
+Ruby Bliel  ;  Agility  ;  Stamina
+Scrimpi  ;  Heal Potency  ;  Stamina
+Smuggler's Delight  ;  Spice Downer Resistance
+Spiced Tea  ;  Precision  ;  Constitution
+Starshine Surprise  ;  Milk Quantity  ;  Exceptional Milk Chance  ;  Paralyze beast
+Synthsteak  ;  Luck  ;  Constitution
+T'illa-T'ill  ;  Stamina  ;  Precision
+T'ssolok  ;  Precision  ;  Constitution
+Teltier Noodles  ;  Luck  ;  Constitution
+Terratta  ;  Con  ;  Stamina
+Thakitillo  ;  Stamina  ;  Parry Chance
+Travel Biscuits  ;  Agility  ;  Movement
+Trimpian  ;  Heal Potency  ;  Constitution
+Vagnerian Canape  ;  Agility  ;  Stamina  ;  Constitution
+Vasarian Brandy  ;  Strength  ;  Constitution
+Vayerbok  ;  Agility  ;  Stamina
+Vegeparsine  ;  Agility  ;  Constitution
+Veghash  ;  Creature Harvesting
+Vercupti of Agazza Boleruuee  ;  Precision  ;  Evasion Chance  ;  Evasion Value
+Veronian Berry Wine  ;  Bleeding absorption  ;  Bleed resist
+Won-Won  ;  Agility  ;  Constitution

@@ -1,0 +1,214 @@
+# This file maps creature resources to the creature type it is harvested from.
+# The syntax is one-liners of "Resource Class : Foo, Baz, Bar..."
+# Only the main class should be mentioned, not Foo Kid, Foo Mother, etc.
+# Class name must be the correct name as it is listed in resourcetree.xml
+# Egg is not included, it is obtained from any lair
+# Seafood is not included, it is harvested in any waterpond
+
+Corellian Domesticated Milk : none
+Dantooine Domesticated Milk : Lesser Plains Bol
+Dathomirian Domesticated Milk : none
+Endorian Domesticated Milk : Bolle Bol Calf, Bordok
+Lokian Domesticated Milk : none
+Nabooian Domesticated Milk : none
+Rori Domesticated Milk : none
+Talusian Domesticated Milk : Docile Kahmurra
+Tatooinian Domesticated Milk : Domestic Eopie, Dwarf Bantha
+Yavinian Domesticated Milk : none
+Kashyyykian Domesticated Milk : none
+Mustafarian Domesticated Milk : none
+
+Corellian Wild Milk : Bageraset, Durni, Humbaba, Murra, Paralope, Sharnaff
+Dantooine Wild Milk : Bol, Piket, Thune
+Dathomirian Wild Milk : Bolma, Brackaset
+Endorian Wild Milk : Bolle Bol, Gurreck, Swirl Prong
+Lokian Wild Milk : Gurnaset, Snorbal
+Nabooian Wild Milk : Bolle Bol, Falumpaset, Fambaa, Gualama, Gungan <animal>, Ikopi, Kaadu
+Rori Wild Milk : Gualama, Ikopi, Vrobal
+Talusian Wild Milk : Humbaba, Kahmurra, Paralope
+Tatooinian Wild Milk : Bantha (not dwarf), Cu Pa, Eopie (not Domestic), Ronto
+Yavinian Wild Milk : Tybis
+Kashyyykian Wild Milk : Bantha, Uller
+Mustafarian Wild Milk : none
+
+Corellian Domesticated Meat : Humbaba
+Dantooine Domesticated Meat : none
+Dathomirian Domesticated Meat : none
+Endorian Domesticated Meat : none
+Lokian Domesticated Meat : none
+Nabooian Domesticated Meat : Gungan Falumpaset
+Rori Domesticated Meat : none
+Talusian Domesticated Meat : Humbaba
+Tatooinian Domesticated Meat : Domestic Eopie
+Yavinian Domesticated Meat : Mawgax
+Kashyyykian Domesticated Meat : none
+Mustafarian Domesticated Meat : none
+
+Corellian Wild Meat : Rat, Vrelt
+Dantooine Wild Meat : Huurton, Quenker
+Dathomirian Wild Meat : Baz Nitch, Bolma, Brackaset, Verne
+Endorian Wild Meat : Merek, Rat
+Lokian Wild Meat : none
+Nabooian Wild Meat : Gualama, Ikopi
+Rori Wild Meat : Gualama, Ikopi
+Talusian Wild Meat : none
+Tatooinian Wild Meat : Bocatt, Rat
+Yavinian Wild Meat : Mamien, Nexu, Reek
+Kashyyykian Wild Meat : Mouf
+Mustafarian Wild Meat : Tulrus
+
+Corellian Herbivore Meat : Bageraset, Durni, Kahmurra, Krahbu, Murra, Paralope, Vynock
+Dantooine Herbivore Meat : Bol, Piket, Thune
+Dathomirian Herbivore Meat : Kwi, Malkloc, Verne
+Endorian Herbivore Meat : Bolle Bol, Bordok, Jax, Lantern Bird, Squall, Swirl Prong
+Lokian Herbivore Meat : Gurk, Gurnaset, Salt Mynock, Snorbal
+Nabooian Herbivore Meat : Bolle Bol, Chuba, Falumpaset, Gnort, Gualama, Mott
+Rori Herbivore Meat : Gualama, Jax, Nudfuh, Squall
+Talusian Herbivore Meat : Huf Dun, Kahmurra, Kima, Paralope, Vynock
+Tatooinian Herbivore Meat : Bantha, Desert Razorback, Eopie, Gorg, Ronto, Tatooine Mynock, Zucca Boar
+Yavinian Herbivore Meat : Skreeg, Tybis, Thune
+Kashyyykian Herbivore Meat : Fern Bicker, Kashyyyk Bantha, Kkryytch, Ro-roo, Uller, Walluga, Webweaver
+Mustafarian Herbivore Meat : none
+
+Corellian Carnivore Meat : Canoid, Cat, Gronda, Gubbur, Gurrcat, Sharnaff, Slice Hound, Tabage, Voritor, Worm, Wrix
+Dantooine Carnivore Meat : Graul, Hawk Bat, Narglatch, Voritor, Worm
+Dathomirian Carnivore Meat : Foul Desecrator, Kamurith, Purbole, Rancor, Rhoa Kwi, Squill, Worm
+Endorian Carnivore Meat : Blurrg, Boar Wolf, Borgle, Desert Scavenger, Gurreck, Hanadak, Mantigrue, Remmer, Squill, Worm
+Lokian Carnivore Meat : Kimogila, Kusak, Langlatch, Worm
+Nabooian Carnivore Meat : Cat, Chuba, Narglatch, Plains Hunter, Shaupaut, Spitting Rawl, Veermok, Worm
+Rori Carnivore Meat : Borgle, Cat, Chuba, Kai Tok, Pugoriss, Torton, Vrobal, Worm
+Talusian Carnivore Meat : Mire Marauder, Sludge Panther, Tortur, Wrix, Worm
+Tatooinian Carnivore Meat : Dragonet, Dune Lizard, Krayt Dragon, Rill, Scyk, Squill, Worm
+Yavinian Carnivore Meat : Crystal Snake, Gackle Bat, Kliknik, Stintaril, Woolamander, Worm
+Kashyyykian Carnivore Meat : Minstyngar, Nestling, Sathog, Shadevale Venomsting, Urnsor'is, Worm
+Mustafarian Carnivore Meat : Worm
+
+Corellian Reptilian Meat : none
+Dantooine Reptilian Meat : none
+Dathomirian Reptilian Meat : none
+Endorian Reptilian Meat : none
+Lokian Reptilian Meat : Spined Snake, Vesp
+Nabooian Reptilian Meat : Fambaa, Krevol, Rawl
+Rori Reptilian Meat : none
+Talusian Reptilian Meat : Drolg
+Tatooinian Reptilian Meat : Bocatt, Cu Pa, Dewback, Sevorrt, Worrt
+Yavinian Reptilian Meat : Finned Blaggart, Spined Puc
+Kashyyykian Reptilian Meat : Bolotaur, Pug Jumper, Shadevale Stalker
+Mustafarian Reptilian Meat : Blistmok, Lava Runner, Plains Creeper, Tanray, Terroraptor
+
+Corellian Avian Meat : Carrion Spat, Gulginaw, Rasp
+Dantooine Avian Meat : none
+Dathomirian Avian Meat : Reptilian Flier
+Endorian Avian Meat : none
+Lokian Avian Meat : Flit, Perlek, Pharple
+Nabooian Avian Meat : Kaadu, Nuna, Peko Peko, Flewt
+Rori Avian Meat : Rasp, Toxic Slasher, Vir Vur
+Talusian Avian Meat : Fynock, Gulginaw, Painted Spat, Rasp
+Tatooinian Avian Meat : Nuna
+Yavinian Avian Meat : Choku, Whisper Bird
+Kashyyykian Avian Meat : Jagged Fang, Jyykle Vulture, Varactyl
+Mustafarian Avian Meat : none
+
+Corellian Insect Meat : Acklay, Butterfly, Dalyrake, Spider
+Dantooine Insect Meat : none
+Dathomirian Insect Meat : Mite, Spider
+Endorian Insect Meat : Arachne, Mite
+Lokian Insect Meat : none
+Nabooian Insect Meat : Flewt, Nightspider, Spider, Spineflap
+Rori Insect Meat : Flewt, Krevol, Mite, Nightspider, Spider, Spineflap
+Talusian Insect Meat : Arachne, Dalyrake, Mite
+Tatooinian Insect Meat : Bone Gnasher, Kreetle, Mite
+Yavinian Insect Meat : Angler, Mite, Spider
+Kashyyykian Insect Meat : Deathswarm, Khorrwot, Uwari Beetle, Webweaver
+Mustafarian Insect Meat : Jundak, Kubaza Beetle, Lava Flea, Lava Strider, Xandank
+
+Corellian Animal Bones : Bageraset, Canoid, Cat, Durni, Gronda, Gubbur, Gurrcat, Humbaba, Murra, Paralope, Rat, Slice Hound, Tabage, Vrelt, Wrix
+Dantooine Animal Bones : Bol, Graul, Huurton, Narglatch
+Dathomirian Animal Bones : Baz Nitch, Bolma, Brackaset, Kwi, Malkloc, Purbole, Rancor, Squill, Verne
+Endorian Animal Bones : Bolle Bol, Bordok, Hanadak, Jax, Roba, Squall, Swirl Prong
+Lokian Animal Bones : Gurk, Gurnaset, Kusak, Langlatch, Salt Mynock, Snorbal
+Nabooian Animal Bones : Bolle Bol, Cat, Falumpaset, Fambaa, Fanned Rawl, Gnort, Gualama, Ikopi, Krevol, Narglatch, Plains Hunter, Rabid Mott, Shaupaut, Veermok
+Rori Animal Bones : Cat, Gualama, Ikopi, Jax, Nudfuh, Pugoriss, Torton, Toxic Slasher, Squall, Vir Vur, Vrobal
+Talusian Animal Bones : Guf Drolg, Huf Dun, Humbaba, Kahmurra, Kima, Mire Marauder, Paralope, Roba, Sludge Panther, Tortur, Vynock, Wrix
+Tatooinian Animal Bones : Bantha, Bocatt, Cu Pa, Desert Squill, Dewback, Dragonet, Dune Lizard, Eopie, Gorg, Krayt Dragon, Mynock, Rat, Ronto, Razorback, Squill, Worrt
+Yavinian Animal Bones : Gackle Bat, Mamien, Nexu, Skreeg, Stintaril, Tybis, Woolamander
+Kashyyykian Animal Bones : Bolotaur, Fern Bicker, Kkryytch, Mouf, Nestling, Pug Jumper, Ro-roo, Sathog, Walluga
+Mustafarian Animal Bones : none
+
+Corellian Avian Bones : Carrion Spat, Gulginaw, Rasp, Voritor
+Dantooine Avian Bones : Hawk Bat, Voritor
+Dathomirian Avian Bones : Foul Desecrator, Kamurith, Reptilian Flier
+Endorian Avian Bones : Blurrg, Borgle, Desert Scavenger, Lantern Bird, Lantern Bird
+Lokian Avian Bones : Flit, Lethargic Behemoth, Perlek, Pharple
+Nabooian Avian Bones : Capper Spineflap, Flewt, Kaadu, Nuna, Peko Peko, Spineflap
+Rori Avian Bones : Borgle, Spineflap, Flewt, Kai Tok, Rasp, Spineflap
+Talusian Avian Bones : Fynock, Gulginaw, Painted Spat, Rasp
+Tatooinian Avian Bones : Dwarf Nuna
+Yavinian Avian Bones : Choku, Mawgax, Whisper Bird
+Kashyyykian Avian Bones : Jagged Fang, Jyykle Vulture, Varactyl
+Mustafarian Avian Bones : none
+
+Corellian Horn : none
+Dantooine Horn : none
+Dathomirian Horn : none
+Endorian Horn : none
+Lokian Horn : none
+Nabooian Horn : none
+Rori Horn : none
+Talusian Horn : none
+Tatooinian Horn : none
+Yavinian Horn : none
+Kashyyykian Horn : Bantha, Minstyngar, Uller
+Mustafarian Horn : none
+
+Corellian Wooly Hide : Durni, Paralope
+Dantooine Wooly Hide : Huurton, Thune
+Dathomirian Wooly Hide : none
+Endorian Wooly Hide : Gurreck, Mantigrue
+Lokian Wooly Hide : Langlatch
+Nabooian Wooly Hide : Gualama, Peko Peko
+Rori Wooly Hide : Gualama, Torton, Toxic Slasher, Vir Vur
+Talusian Wooly Hide : Paralope
+Tatooinian Wooly Hide : Bantha
+Yavinian Wooly Hide : Mamien, Thune, Woolamander (not Harrower)
+Kashyyykian Wooly Hide : Bantha, Mouf, Uller
+Mustafarian Wooly Hide : none
+
+Corellian Bristley Hide : Canoid, Cat, Gurrcat, Krahbu, Murra, Slice Hound, Tabage, Vrelt, Wrix
+Dantooine Bristley Hide : Unstable Cracktooth Narglatch
+Dathomirian Bristley Hide : Purbole
+Endorian Bristley Hide : Hanadak, Jax, Remmer, Squall
+Lokian Bristley Hide : Kusak, Pharple
+Nabooian Bristley Hide : Cat, Ikopi, Narglatch, Plains Hunter, Shaupaut, Spitting Rawl, Veermok
+Rori Bristley Hide : Cat, Jax, Ikopi, Mite, Squall
+Talusian Bristley Hide : Kahmurra, Kima, Wrix
+Tatooinian Bristley Hide : Cu Pa, Dragonet, Dune Lizard, Krayt Dragon, Rill, Scyk
+Yavinian Bristley Hide : Gackle Bat, Skreeg, Stintaril, Tybis, Unstable Nexu, Woolamander Harrower
+Kashyyykian Bristley Hide : Fern Bicker, Khorrwot, Kkryytch, Ro-roo, Sathog, Walluga, Webweaver
+Mustafarian Bristley Hide : none
+
+Corellian Leathery Hide : Bageraset, Gronda, Gubbur, Humbaba, Rat, Tabage, Vrelt, Vynock, Voritor
+Dantooine Leathery Hide : Bol, Graul, Hawk Bat, Voritor
+Dathomirian Leathery Hide : Baz Nitch, Bolma, Brackaset, Foul Desecrator, Kamurith, Kwi, Malkloc, Rancor, Reptilian Flier, Squill, Verne
+Endorian Leathery Hide : Blurrg, Boar Wolf, Bolle Bol, Bordok, Borgle Life Sapper, Desert Scavenger, Lantern Bird, Merek, Roba
+Lokian Leathery Hide : Gurk, Gurnaset, Kimogila, Mynok, Perlek, Snorbal, Spined Snake, Vesp
+Nabooian Leathery Hide : Bolle Bol, Chuba, Falumpaset, Fambaa, Gnort, Kaadu, Nuna, Rabid Mott, Starving Flewt
+Rori Leathery Hide : Borgle, Chuba, Kai Tok, Nudfuh, Pugoriss, Vrobal
+Talusian Leathery Hide : Fynock, Guf Drolg, Huf Dun, Humbaba, Mire Marauder, Sludge Panther, Tortur, Vynock
+Tatooinian Leathery Hide : Bocatt, Dewback, Desert Razorback, Dwarf Nuna, Eopie, Gorg, Mynock, Rat, Ronto, Sevorrt, Squill, Worrt, Zucca Boar
+Yavinian Leathery Hide : Finned Blaggart, Mawgax, Spined Puc, Unstable Reek
+Kashyyykian Leathery Hide : Jyykle Vulture, Minstyngar, Nestling, Pug Jumper
+Mustafarian Leathery Hide : Tulrus
+
+Corellian Scaley Hide : Butterfly, Dalyrake, Sharnaff
+Dantooine Scaley Hide : Piket, Quenker
+Dathomirian Scaley Hide : Shear Mite
+Endorian Scaley Hide : Mite, Mine Rat
+Lokian Scaley Hide : none
+Nabooian Scaley Hide : Fanned/Vine Rawl, Flewt, Krevol, Spineflap
+Rori Scaley Hide : Flewt, Krevol, Mite, Spineflap
+Talusian Scaley Hide : Dalyrake, Mite
+Tatooinian Scaley Hide : Beetle, Kreetle, Mite
+Yavinian Scaley Hide : Crystal Snake, Kliknik
+Kashyyykian Scaley Hide : Bolotaur, Deathswarm, Jagged Fang, Shadevale, Uwari Beetle, Varactyl
+Mustafarian Scaley Hide : Blistmok, Jundak, Kubaza Beetle, Lava xxx, Tanray, Xandank

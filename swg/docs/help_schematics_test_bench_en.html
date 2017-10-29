@@ -1,0 +1,249 @@
+<html>
+<head>
+<title>
+Help: Schematics &mdash; Test Bench
+</title>
+</head>
+
+<body bgcolor="#ffffff">
+<blockquote>
+
+<p><font face="Arial" size="+1"><b>
+Help: Schematics &mdash; Test Bench
+</b></font></p>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+This dialog makes it possible for to test which combination
+of resources that gives the best result. Fill a schematic's
+resource slots and per unique experimental "group" and for
+each required stat this dialog displays the quality of each
+resource, and it displays the intermediate result per line
+and the total result. Replace resources and results.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Intermediate values and/or results may be decent or bad but
+other resources and/or lines may compensate so that the end
+result becomes great. Thus, find a combination of resources
+that gives the best possible result: see section "Coloring"
+at the end of this help text.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Operate this dialog at Schematics &rArr; The Laboratory.
+<br/>
+The dialog stays open also if you switch to another panel
+of SWGAide, but it is operated only from The Laboratory.
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Open the dialog</b>
+&mdash; double click a schematic at the upper left list, or
+by a double click a resource at the table of best-matching
+resources.
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Fill resource slots</b>
+&mdash; double click  a resource at the table of best
+matching resources.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Resource slots are filled by the following:
+<div align="left">
+<ul>
+<li><font face="Arial" size="-1">
+if a resource slot is selected...
+</font>
+<ul>
+<li><font face="Arial" size="-1">
+if the resource matches the required resource class for
+that slot the resource fills it, potentially it replaces
+any previous resource
+</font></li>
+<li><font face="Arial" size="-1">
+otherwise nothing happens
+</font></li>
+</ul>
+</li>
+<li><font face="Arial" size="-1">
+if no resource slot is selected...
+</font>
+<ul>
+<li><font face="Arial" size="-1">
+determined by its resource class the resource fills the
+first empty resource slot it matches
+<li><font face="Arial" size="-1">
+otherwise nothing happens
+</font></li>
+</ul>
+</li>
+</ul></div>
+Hence, by selecting a resource slot you can try different
+matching resources for that slot.
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+Options at the dialog itself:
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+<b>Select/Deselect resource slots</b>
+&mdash; left-click a resource slot to select it, or to
+deselect it. See above on why it is good or not good to
+select a slot.
+</font>
+
+<p><font face="Arial" size="-1">
+<b>Empty a slot</b>
+&mdash; right-click a filled resource slot to empty it.
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+<b>Resource slots</b> are displayed in the same order as
+they are listed in the schematics export from SWGCraft.org.
+Report flaws and corrections at <nobr><font color="blue">
+http://www.swgcraft.org/forums/viewforum.php?f=18</font></nobr>.
+Notice that best-matching resources at The Laboratory are
+not listed per resource slot but by resource class <i>and 
+</i> by merged experimental groups. Some best-matching
+resources will fit several slots, others will fit just one.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Results</b> correspond to the merged experimental groups
+at The Laboratory, but just one per unique combination of
+required stats and weights.
+</font></p>
+
+<blockquote>
+<font face="Arial" size="-1">
+Results per unique "group" correspond to and are displayed
+in the same order as the merged experimental groups at The
+Laboratory's table of best-matching resources, though this
+dialog displays just one blurb per unique combination of
+required stats-and-weights &mdash; the table of 
+best-matching resources also splits on resource classes.
+</font>
+
+<p><font face="Arial" size="-1">
+Within each "group" the results are lined up per required
+stat-and-weight and this dialog displays the final result
+per stat-and-weight. This result is not adjusted anymore.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Within each line resources are displayed in the same order
+as the resource slots they pertain to. Each resource reads
+the values that it contributes toward that particular stat;
+an empty slot reads and contributes 0.0 and penalizes the
+result; a resource that does not have that stat reads and
+contributes nothing.
+</font></p>
+
+<p><font face="Arial" size="-1">
+The value that a resource contribute is better discussed in
+<i>Beginner's Guide for Traders</i>. Briefly though, it is
+the resource's value of that stat adjusted for the cap that
+is determined <i>by the schematic</i>; the value is reduced
+for the experimental weight of the stat; finally the value
+is reduced by its number of units relative the total amount
+of units that contributes to that stat (the latter is best
+explained by the examples in the guide). The formula is:
+</font><br/><tt>
+(resource_value / cap_of_schem_res_class * 1000) * 
+(weight_exp / 100) *
+(resource_units / contributed_units) </tt><br/>
+<font face="Arial" size="-1">
+For example (66% CD and the schematic's resource clot calls
+for 125 units of Steel; totally 225 units of resources has
+CD and thus contribute to CD; your have some steel with
+CD=645):
+</font><br/><tt>
+(645 / 650 * 1000) * (66 / 100) * (125 / 225) = 363.85
+</tt><br/>
+<font face="Arial" size="-1">
+As is described in the guide, a resource that contributes
+with a large amount of units versus other resources is more
+important than others.
+Also, a stat with a higher experimental weight is more
+important than a stat with a lower weight.
+</p>
+
+<p><font face="Arial" size="-1">
+The final line displays the end result which is the sum of
+the stats results; the closer to 1000 the better.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Coloring</b> is determined by the limits you have set
+up at Resources &rArr; Display Options for Good and Great.
+However, here
+<font color="red"><b>
+red
+</b></font>
+denotes a bad value, a value that is less than Good, and
+<font color=#FF8C00><b>
+orange
+</b></font>
+denotes a value that is less than Great; and <b>black</b>
+denotes a great value that together with resource refinery
+expertise will cap the item for the experimental group you
+are viewing &mdash; this is unless you have set a too low
+or a too high a limit for Great, 960 is recommended.
+</font></p>
+
+<p><font face="Arial" size="-1">
+Notice that intermediate results may con red or orange but
+other lines may compensate so that the end result becomes
+Great. Hence, this dialog helps you find a combination of
+resources that overcome flaws in one or a few resources.
+</font></p>
+</blockquote>
+
+<br/>
+
+<p><font face="Arial" size="-1">
+<b>Misc:</b><br/>
+&ndash; this dialog, as SWGAide at large, treats resources
+with a missing stat in the same way as in SWG: if it is met
+once by any resource the result is not penalized. Only if a
+stat is not met by any resource the end result is inferior.
+<br/>
+&ndash; intermediate values and results are computed in
+the same way as in SWG: "schematics is king" and determines
+which caps to use, from the resource classes the schematic
+calls for. All results (also intermediate) are the "weighed
+average result adjusted for caps" which is explained in
+detail in <i>The Beginner's Guide for Traders</i>,
+chapter 8.
+</font></p>
+
+<p><font face="Arial" size="-1">
+<b>Limitations:</b><br/>
+&ndash;
+it is unclear whether this dialog properly reduce the
+result for a stat if it is not met at least once; the
+result is penalized but SWG may do it differently.
+<br/>
+&ndash;
+this dialog does not always resize itself properly, this
+is for schematics with many slots and the lines of results
+grow very wide; you must manually resize the dialog. 
+</font></p>
+
+<br/>
+</blockquote>
+</body>
+</html>

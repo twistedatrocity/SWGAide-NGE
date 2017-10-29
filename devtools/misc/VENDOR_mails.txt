@@ -1,0 +1,52 @@
+620750749
+SWG.Europe-Chimaera.auctioner
+Instant Sale Item Purchased
+TIMESTAMP: 1155153992
+You have won the auction of "Carnivore Meat (Rismoh)   6057" from "Noovo Lightingdust" for 10000 credits.  See the attached waypoint for location.
+The sale took place at Nym's Stronghold, on Lok.
+
+768883038
+SWG.Europe-Chimaera.auctioner
+Vendor Sale Complete
+TIMESTAMP: 1182644085
+Vendor: Clearance Sale has sold Leather Gloves - yellow to Nojeedai Rha for 300 credits.
+The sale took place at Dantooine, on Dantooine.
+
+753927450
+SWG.Europe-Chimaera.auctioner
+Auction Item Expired
+TIMESTAMP: 1179499765
+Because you failed to pick it up in time, the "zim aur2" that you were auctioning has expired.
+
+698317885
+SWG.Europe-Chimaera.auctioner
+Auction Unsuccessful
+TIMESTAMP: 1168351173
+Your auction of Fanfar has been completed and has not been purchased.
+
+688391048
+SWG.Europe-Chimaera.auctioner
+Auction Won
+TIMESTAMP: 1166726806
+You have won the auction of "Modern Table Draft Schematic" from "Lethery Stouga" for 20000 credits.  See the attached waypoint for location.
+The sale took place at Keren, on Naboo.
+
+529034611
+SWG.Europe-Chimaera.auctioner
+Instant Sale Complete
+TIMESTAMP: 1135078303
+Your auction of Insect Meat (Oghaut)     37 has been sold to Robinul for 37 credits
+The sale took place at Mos Eisley, on Tatooine.
+
+697366491
+SWG.Europe-Chimaera.auctioner
+Instant Sale Item Purchased
+TIMESTAMP: 1168194988
+You have won the auction of "Processor Attachments" from "Amanita Muscaria" for 500 credits.  See the attached waypoint for location.
+The sale took place at Mos Eisley, on Tatooine.
+
+862428851
+SWG.Gorath.auctioner
+Auction Outbid
+TIMESTAMP: 1207992664
+You have been outbid on the "Schematic: Lightweight Military Pack" that you were bidding on.

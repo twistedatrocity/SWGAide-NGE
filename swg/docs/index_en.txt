@@ -1,0 +1,17 @@
+# map of file names to titles, first white space(s) after filename delimits
+# notice the main_title, use it for translated titles (main_title as is)
+# filename   title as one or several words
+
+main_title                                 Index of Help Files &mdash; English
+help_general_en.html                       General Help
+help_isdroid_en.html                       ISDroid Reports and Submissions
+help_resources__en.html                    Resources &amp; Current Resources
+help_resources_rinfo_en.html               Resource-Class Info and Caps
+help_resources_schematics_viewer_en.html   Resource used-by Schematics Viewer
+help_schematics_laboratory_en.html         The Laboratory
+help_schematics_todays_en.html             Today's Alert
+help_schematics_manage_assignees_en.html   Manage Assignees and Favorites
+help_schematics_res_class_use_en.html      Resource Class Use
+help_swgcraft-options_en.html              SWGCraft &mdash; Options Dialog
+help_trade__en.html                        Trade &mdash; Sales and General
+help_trade_misc_en.html                    Miscellaneous
