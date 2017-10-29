@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!--
+    Copy this file to for example  SWGAide.jardesc. Then search and replace all
+    P-r-O-j-E-c-T with the name you defined for the SWGAide project; that is the
+    folder which contains this and the DEVELOPER_README.txt files, the folder
+    "swg", etc. Use that file to generate the SWGAide.jar file.
+
+    NOTICE: There is a risk that this file is forgotten and not updated when a
+    new new version of SWGAide is made available. Then PM me and locally update
+    the SWGAide.jardesc file so it works for you.
+-->
+<jardesc>
+    <jar path="SWGAide-NGE/SWGAide.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/SWGAide-NGE/SWGAide.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" mainClassHandleIdentifier="=SWGAide-NGE/&lt;swg{SWGAide.java[SWGAide" manifestLocation="/SWGAide-NGE/MANIFEST.MF" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources.types"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.resources"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.images"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.trade"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common.images"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.schematics"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.docs"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.tree"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model.images"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.tools"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.schematics"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.docs"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.mail"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model.mail"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.swgcraft"/>
+    </selectedElements>
+</jardesc>
