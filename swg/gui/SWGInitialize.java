@@ -208,7 +208,7 @@ public final class SWGInitialize extends JPanel {
 
                     skip.setEnabled(false);
                     initLabel.setText(swgDir == null
-                            ? "Step 1: Could not find StarWarsGalaxy on C:\\         "
+                            ? "Step 1: Could not find StarWarsGalaxies on C:\\         "
                             : "Step 1: Found " + swgDir.getAbsolutePath()
                                     + "        ");
 
@@ -294,7 +294,7 @@ public final class SWGInitialize extends JPanel {
         JFileChooser fc = SWGFrame.getFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setSelectedFile(swgDir);
-        String msg = "Select folder for StarWarsGalaxy (step 1)";
+        String msg = "Select folder for StarWarsGalaxies (step 1)";
 
         while ((swgDir == null
                 || (fc.getSelectedFile() != null
