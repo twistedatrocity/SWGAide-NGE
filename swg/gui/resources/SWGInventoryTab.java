@@ -1469,8 +1469,10 @@ final class SWGInventoryTab extends JPanel {
         try {
             ZWriter wr = ZWriter.newTextWriterExc(file, false);
             fileWriteHeader(wr);
-            for (SWGInventoryWrapper w : wl)
+            for (SWGInventoryWrapper w : wl) {
                 fileWrite(w, wr);
+			}
+			wr.close();
 
         } catch (Throwable e) {
             if (SWGConstants.DEV_DEBUG) e.printStackTrace();
