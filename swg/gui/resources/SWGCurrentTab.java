@@ -1658,7 +1658,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         final Integer mh = (Integer) SWGFrame.getPrefsKeeper().get(
                 "resourceGuardsMaxHours");
         JMenuItem age = new JMenuItem(String.format("Set time%s", mh == null
-                ? "36"
+                ? ""
                 : String.format(" (%d h)", mh)));
         age.setToolTipText("Only display resources younger than X hours");
         age.addActionListener(new ActionListener() {
