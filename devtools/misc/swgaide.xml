@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.jar</jar>
+  <outfile>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\swgaide.manifest</manifest>
+  <icon>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\icon.ico</icon>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+</launch4jConfig>
