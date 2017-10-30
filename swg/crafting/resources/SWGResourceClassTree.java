@@ -357,7 +357,7 @@ public final class SWGResourceClassTree {
     private static void makeIcons() {
         rcIcons = new HashMap<SWGResourceClass, ImageIcon>();
         try {
-            for (String rn : ZReader.entries(new JarFile("SWGAide.jar"),
+			for (String rn : ZReader.entries(new JarFile(SWGAide.getFilename()),
                     "swg/gui/common/images/", ".gif")) {
 
                 if (rn.startsWith("rc_")) {

@@ -133,7 +133,7 @@ final class SWGPostLaunch {
             makeDirPath(dPath);
 
             List<String> fList = ZReader.entries(
-                    new JarFile("SWGAide.jar"), jPath, ".html", ".png");
+                    new JarFile(SWGAide.getFilename()), jPath, ".html", ".png");
             docsCopy(fList, jPath.substring(4), dPath);
 
             Map<String, String> iMap = docsIndexMap(

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -94,6 +95,23 @@ public final class SWGAide {
         printMessage(msg);
         displayExitDialog(msg.toString(), "Error", false);
     }
+/**
+     * Helper method which returns the filename of SWGAide. Usually SWGAide.jar or SWGAide-PreCU.jar, but the user may have changed the name for some reason.
+     * @return the filename of SWGAide
+     */
+    public static String getFilename() {
+        File filename;
+        try {
+            filename = new File(SWGAide.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            if(filename.isFile()) {
+                return filename.getName();
+            }
+            //Possibly running in developer mode, i.e. outside of a packaged file
+            return "SWGAide.jar";
+        } catch (URISyntaxException e) {
+            return "SWGAide.jar";
+        }
+    }
 
     /**
      * Helper method which determines that java is using the folder with
@@ -102,7 +120,7 @@ public final class SWGAide {
      * the working directory is elsewhere; hence SWGAide exits.
      */
     private static void checkJavaWorking() {
-        if ((new File("SWGAide.jar").exists())) return;
+        if (new File(getFilename()).exists()) return;
 
         String msg = "Java or Windows error\n" +
                 "There is an error that makes Java work in a folder\n" +
@@ -110,7 +128,8 @@ public final class SWGAide {
                 "The solution depends on your setup, the README file\n" +
                 "suggests one solution: ensure that javaw.exe is the\n" +
                 "selected file association for \".jar\" files\n\n" +
-                "Exiting";
+
+				"Exiting" + getFilename();
         displayExitDialog(msg, "Error", false);
     }
 
@@ -508,7 +527,7 @@ public final class SWGAide {
      * @return {@code false} if there is an error
      * @throws Exception if there is an error
      */
-    @SuppressWarnings("unused")
+
     public static boolean setLog(File file) throws Exception {
         synchronized (LOCK_LOG) {
             File f = file == null
