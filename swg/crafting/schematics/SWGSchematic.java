@@ -259,10 +259,11 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         int c = ZXml.intFromAttr(xml, "category");
         category = c > 0
                 ? c
-                : -1;
-        if (category <= 0)
+                : Integer.MAX_VALUE;
+        if (category == Integer.MAX_VALUE) {
             SWGAide.printDebug("scmc", 1,
-                    "SWGSchematic: missing category: " + name);
+                    "SWGSchematic: missing category: " + name + " SWGCRAFT_ID: " +id);
+		}
 
         List<String> cl = ZXml.commentsFromElem(xml);
         screen = cl.contains("Screenshot available");
@@ -387,10 +388,10 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     }
 
     /**
-     * Returns the category ID which this schematic pertains to, or -1 if it is
+     * Returns the category ID which this schematic pertains to, or Integer.MAX_VALUE if it is
      * unknown. The category is obtained from the schematics manager.
      * 
-     * @return the category ID, -1
+     * @return the category ID, Integer.MAX_VALUE
      */
     public int getCategory() {
         return category;
