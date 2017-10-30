@@ -357,6 +357,6 @@ public final class SWGUniverse implements Serializable, SWGGui {
      */
     public static boolean isValidSWGPath(File directory) {
         return directory != null
-                && new File(directory, "SwgClient_r.exe").exists();
+                && (new File(directory, "bottom.tre").exists() || new File(directory, "SwgClient_r.exe").exists() || new File(directory, "SWGEmu.exe").exists());
     }
 }
