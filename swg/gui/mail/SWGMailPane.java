@@ -274,7 +274,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontBigger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,
                     InputEvent.CTRL_MASK));
             fontBigger.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(1.2);
                 }
@@ -285,7 +284,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontLesser.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
                     InputEvent.CTRL_MASK));
             fontLesser.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(1 / 1.2);
                 }
@@ -296,7 +294,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             fontNormal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
                     InputEvent.CTRL_MASK));
             fontNormal.addActionListener(new ActionListener() {
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     mailBodyChangeFont(0);
                 }
@@ -1813,12 +1810,12 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return 
+            return columnIndex == 2 ? Date.class : String.class;
 
             // columnIndex == 2
             // ? Date.class
             // :
-                        String.class;
+                        //String.class;
         }
 
         @Override
@@ -1845,7 +1842,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             case 1:
                 return getFromString(msg.fromLine());
             case 2:
-                return getDateString(msg.date());
+                return msg.date()*1000;
             case 3:
                 return msg.getName();
             case 4:
