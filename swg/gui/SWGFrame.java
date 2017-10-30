@@ -1636,44 +1636,15 @@ public class SWGFrame extends JFrame implements ComponentListener,
         if (!dt.isSupported(Desktop.Action.MAIL))
             return;
 
-        final String[] args = {"Create mail", "No, I do it manually"};
+        final String[] args = {"", "OK"};
         final String msg =
             "An error has occured!\n"
-            + "Let SWGAide open a mail which you can send to Zimoon.\n"
-            + "Please attach or inline the error log with the mail";
+            + "Bug reports can be posted on github.\n"
+			+ "https://github.com/twistedatrocity/SWGAide-NGE/issues"
+            + "Please attach your error logs to the issue.\n";
 
-        SwingUtilities.invokeLater(new Runnable() {
-
-            public void run() {
-                int ret =
-                    JOptionPane.showOptionDialog(getGlassPane(), msg,
-                    "Compose error log mail", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, args, args[0]);
-                if (ret == JOptionPane.OK_OPTION) {
-                    String l =
-                        "Please, describe what you think caused the "
-                            + "problem and attach or inline the error log to "
-                            + "the mail.\nHopefully the error log opens in an "
-                            + "editor automatically. Otherwise it is located "
-                            + "in the folder wher you dropped SWGAide, in the "
-                            + "\"logs\" folder.\nYou may delete the error log "
-                            + "file once it is sent.\nThanks\nZimoon @ Europe-Chimaera";
-                    try {
-                        File fd = new File("logs", "SWGAide-ERROR.TXT");
-                        URI uri;
-                        uri =
-                            new URI("mailto", "simongronlund@gmail.com?"
-                            + "SUBJECT=SWGAide Bug Report&BODY=" + l, null);
-                        dt.mail(uri);
-
-                        dt.open(fd);
-                    } catch (Exception e) {
-                        SWGAide.printError(
-                            "SWGFrame:showErrorMailOption: " + l, e);
-                    }
-                }
-            }
-        });
+        return;
+        
     }
 
     /**
