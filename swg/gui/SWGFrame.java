@@ -871,7 +871,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         goWeb.setMnemonic('W');
         goWeb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ZHtml.browser(SWGConstants.swgAideURL + "swgaide");
+                ZHtml.browser(SWGConstants.swgAideURL);
             }
         });
         helpMenu.add(goWeb);
