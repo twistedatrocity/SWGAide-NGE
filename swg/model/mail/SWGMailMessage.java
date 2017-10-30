@@ -114,10 +114,9 @@ public final class SWGMailMessage
     private File file;
 
     /**
-     * The unique ID number that is read from header and the file name. XXX:
-     * make this final in a while, added in 0.9.0.
+     * The unique ID number that is read from header and the file name.
      */
-    private long id;
+    private final long id;
 
     /**
      * A field for ISDroid reports, or {@code null} if this is not an ISDroid
@@ -143,12 +142,6 @@ public final class SWGMailMessage
      * is perhaps sent to somebody else but a copy is sent to self.
      */
     private String messageFrom;
-
-    /**
-     * The message ID which also is this mail's file name. XXX: remove after a
-     * while, added in 0.9.0 and use ID.
-     */
-    private String messageID;
 
     /**
      * The subject of this mail.
@@ -417,7 +410,8 @@ public final class SWGMailMessage
      * @return a type
      */
     Type getType() {
-        if (fromLine().endsWith("interplanetary survey droid")) {
+        if (fromLine().endsWith("interplanetary survey droid") ||
+			fromLine().endsWith("Interplanetary Survey Droid")) {
             long now = System.currentTimeMillis() / 1000;
             now -= (60 * 60 * 20); // max 20 hours old
             return messageDate > now
@@ -511,10 +505,7 @@ public final class SWGMailMessage
         this.messageFrom = this.messageFrom.intern();
         this.messageSubject = this.messageSubject.intern();
 
-        if (this.id <= 0) {
-            this.id = Long.parseLong(messageID);
-            messageID = null;
-        }
+
         if (file != null && !file.getName().endsWith("mail")) {
             File f = new File(file.getParentFile(), getName());
             file.renameTo(f);
