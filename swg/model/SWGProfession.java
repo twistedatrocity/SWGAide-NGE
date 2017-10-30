@@ -80,7 +80,12 @@ public enum SWGProfession {
     /**
      * A constant for Spy.
      */
-    SPY("Spy", 12);
+    SPY("Spy", 12),
+	
+	/**
+	* A constant for Unknown
+	**/
+	UNKNOWN("Unknown", 13);
 
     /**
      * The ID used at SWGCraft.org for this profession.
