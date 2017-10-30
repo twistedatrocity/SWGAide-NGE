@@ -221,14 +221,14 @@ class SWGTradeSalesTab extends JPanel implements TableColumnModelListener {
      * Helper method which creates and returns a pattern for the specified
      * input. If there is an error this method returns a patterns for the empty
      * string, i.e. it matched anything. The pattern is compiled using the
-     * {@link Pattern#LITERAL} flag.
+     * {@link Pattern#LITERAL} and {@link Pattern#CASE_INSENSITIVE} flags.
      * 
      * @param input a string
      * @return an RE pattern
      */
     private Pattern filterPattern(String input) {
         try {
-            return Pattern.compile(input, Pattern.LITERAL);
+            return Pattern.compile(input, Pattern.LITERAL | Pattern.CASE_INSENSITIVE);
         } catch (PatternSyntaxException e) {
             return Pattern.compile("");
         }
