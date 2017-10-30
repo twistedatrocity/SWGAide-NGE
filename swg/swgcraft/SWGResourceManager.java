@@ -137,6 +137,11 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * is 0.
      */
     private static Long previousStatusTime = Long.valueOf(0);
+	
+	/**
+     * Denotes whether the last attempt at fetching the status time at SWGCraft.org was successful
+     */
+    private static boolean lastSuccessful = true;
 
     /**
      * A list of clients which are subscribing for update notifications. All
@@ -1466,11 +1471,18 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     String statusTime = ZReader.read(url.openStream());
                     previousStatusTime = Long.valueOf(statusTime);
                     previousStatusCheck = current;
+					lastSuccessful = true;
                 }
                 return previousStatusTime;
             }
         } catch (UnknownHostException e) {
+			//Making sure the unknown host dialog doesn't keep popping up on every attempt
+            if(lastSuccessful) {
             SWGCraft.showUnknownHostDialog(url, e);
+			lastSuccessful = false;
+            }
+            previousStatusCheck = current-SWGCraft.STATUS_CHECK_DELAY-90; //Do not check again for (at least) 90 seconds
+
         } catch (Throwable e) {
             SWGAide.printDebug("cmgr", 1,
                     "SWGResourceManager:statusSWGCraftTime:", e.toString());
@@ -1522,6 +1534,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         String gxy = galaxy.getName();
 
         gxy = gxy.toLowerCase(Locale.ENGLISH);
+		gxy = gxy.replace(' ', '_');
         if (gxy.startsWith("test"))
             gxy = "test_center"; // the form used for export files
 

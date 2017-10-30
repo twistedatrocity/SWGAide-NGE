@@ -64,6 +64,11 @@ public final class SWGCraftCache {
      */
     private static final File serversXML = new File("crafting", "servers.xml");
     
+	/**
+     * A list of clients which subscribe for notifications regarding server
+     * information. This static list is instantiated when this type is
+     * first loaded.
+     */
     private static final List<UpdateSubscriber> serversSubscribers =
             new ArrayList<UpdateSubscriber>();
 
