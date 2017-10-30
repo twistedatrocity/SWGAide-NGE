@@ -20,6 +20,7 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.schematics"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.docs"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;docs.EN"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model.mail"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources"/>
