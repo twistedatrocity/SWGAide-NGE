@@ -24,14 +24,19 @@ import javax.swing.SwingWorker;
 
 import swg.SWGAide;
 import swg.SWGConstants;
+import swg.crafting.UpdateNotification;
+import swg.crafting.UpdateSubscriber;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.model.SWGAliases;
+import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 import swg.model.SWGStation;
 import swg.model.SWGUniverse;
 import swg.model.mail.SWGMailMessage;
+import swg.swgcraft.SWGCraftCache;
+import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 
 /**
  * This class is used to initialize / updates SWGAide. Initialization is either
@@ -344,11 +349,19 @@ public final class SWGInitialize extends JPanel {
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
-                try {
-                    scanAll(universe, true);
-                } catch (Exception e) {
-                    SWGAide.printError("SWGInitialize:iniateUniverseReal", e);
-                }
+				SWGCraftCache.addSubscriber(new UpdateSubscriber()
+                {
+                    public void handleUpdate(UpdateNotification u)
+                    {
+						try {
+							scanAll(universe, true);
+						} catch (Exception e) {
+							SWGAide.printError("SWGInitialize:iniateUniverseReal", e);
+						}
+					}
+				}, UpdateType.SERVERS);
+                SWGCraftCache.updateCache();
+                frame.putToStatbar("Downloading remote files...");
                 return null;
             }
 
