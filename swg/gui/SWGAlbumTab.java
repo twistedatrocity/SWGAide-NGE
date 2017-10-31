@@ -52,8 +52,8 @@ import swg.gui.common.SWGListModel;
 import swg.model.SWGUniverse;
 import swg.model.images.SWGImage;
 import swg.model.images.SWGImageAlbum.SWGImageSubAlbum;
-import swg.tools.ZNumber;
 import swg.tools.SimplePrefsKeeper;
+import swg.tools.ZNumber;
 
 /**
  * This type is a simple image/screen-shot viewer. For a selected universe it

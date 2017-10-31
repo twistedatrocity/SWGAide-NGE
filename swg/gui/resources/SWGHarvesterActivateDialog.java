@@ -36,9 +36,9 @@ import swg.crafting.resources.SWGResourceClass;
 import swg.gui.SWGFrame;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
-import swg.tools.ZNumber;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.SpringUtilities;
+import swg.tools.ZNumber;
 
 /**
  * This type is the dialog for activating a defined harvester or editing one

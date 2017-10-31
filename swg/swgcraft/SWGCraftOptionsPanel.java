@@ -32,8 +32,8 @@ import swg.gui.SWGFrame;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
 import swg.model.SWGCGalaxy;
-import swg.tools.ZCrypto;
 import swg.tools.SimplePrefsKeeper;
+import swg.tools.ZCrypto;
 import swg.tools.ZString;
 
 /**

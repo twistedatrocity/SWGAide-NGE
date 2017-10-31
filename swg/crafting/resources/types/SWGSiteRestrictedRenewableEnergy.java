@@ -1,7 +1,5 @@
 package swg.crafting.resources.types;
 
-import swg.crafting.resources.SWGResourceClass;
-import swg.crafting.resources.types.SWGRenewableEnergy;
 import swg.crafting.Stat;
 
 /*

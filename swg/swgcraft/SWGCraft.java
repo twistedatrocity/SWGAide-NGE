@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 
 import swg.SWGAide;
 import swg.gui.SWGFrame;
-import swg.tools.ZCrypto;
 import swg.tools.SimplePrefsKeeper;
+import swg.tools.ZCrypto;
 
 /**
  * This class together with {@link SWGSoapManager} are the only communication

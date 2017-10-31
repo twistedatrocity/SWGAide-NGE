@@ -18,9 +18,9 @@ import swg.SWGConstants;
 import swg.crafting.UpdateNotification;
 import swg.crafting.UpdateSubscriber;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
-import swg.tools.ZXml;
 import swg.tools.ZReader;
 import swg.tools.ZWriter;
+import swg.tools.ZXml;
 
 /**
  * This type provides data blobs based on files which are downloaded from

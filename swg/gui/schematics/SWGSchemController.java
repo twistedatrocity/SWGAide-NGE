@@ -29,9 +29,9 @@ import swg.gui.common.SWGSac;
 import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
 import swg.model.SWGCharacter;
-import swg.swgcraft.SWGResourceManager;
 import swg.swgcraft.SWGCraftCache.CacheUpdate;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
+import swg.swgcraft.SWGResourceManager;
 
 /**
  * This type is meant as a controller and a hub for data structures related to

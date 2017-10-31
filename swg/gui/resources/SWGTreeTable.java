@@ -32,12 +32,12 @@ import swg.gui.common.AbstractCellEditor;
 import swg.gui.common.AbstractTreeTableModel;
 import swg.gui.common.JTreeTable;
 import swg.gui.common.SWGDecoratedTableCellRenderer;
+import swg.gui.common.SWGDecoratedTableCellRenderer.DecoratedTableModel;
+import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJTable;
 import swg.gui.common.TreeTableModel;
 import swg.gui.common.TreeTableModelAdapter;
-import swg.gui.common.SWGDecoratedTableCellRenderer.DecoratedTableModel;
-import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 
 /**
  * This type is a tree-table GUI element, see {@link JTreeTable}. This type

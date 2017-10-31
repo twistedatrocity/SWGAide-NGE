@@ -1,7 +1,5 @@
 package swg.crafting.resources.types;
 
-import swg.crafting.resources.SWGResourceClass;
-import swg.crafting.resources.types.SWGSeeds;
 import swg.crafting.Stat;
 
 /*

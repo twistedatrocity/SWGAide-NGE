@@ -28,6 +28,7 @@ import swg.SWGConstants;
 import swg.crafting.Stat;
 import swg.crafting.UpdateSubscriber;
 import swg.crafting.resources.ResourceUpdate;
+import swg.crafting.resources.ResourceUpdate.UpdateType;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGMutableResource;
 import swg.crafting.resources.SWGPlanetAvailabilityInfo;
@@ -37,18 +38,17 @@ import swg.crafting.resources.SWGResourceList;
 import swg.crafting.resources.SWGResourceMgr;
 import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.resources.SWGResourceStats;
-import swg.crafting.resources.ResourceUpdate.UpdateType;
 import swg.crafting.resources.types.SWGFiberplast;
 import swg.crafting.resources.types.SWGOrganic;
 import swg.gui.SWGFrame;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
-import swg.tools.ZString;
-import swg.tools.ZStuff;
-import swg.tools.ZXml;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.ZReader;
+import swg.tools.ZString;
+import swg.tools.ZStuff;
 import swg.tools.ZWriter;
+import swg.tools.ZXml;
 
 /**
  * This type is a sub-type to {@link SWGResourceMgr} and together they form an

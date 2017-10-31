@@ -25,8 +25,8 @@ import swg.SWGAide;
 import swg.gui.SWGFrame;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
-import swg.tools.ZNumber;
 import swg.tools.SpringUtilities;
+import swg.tools.ZNumber;
 
 /**
  * This type is the dialog for creating or editing a harvester.

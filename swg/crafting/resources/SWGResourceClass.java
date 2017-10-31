@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import devtools.SWGResourceClassGenerator;
-
 import swg.crafting.Stat;
 import swg.model.SWGPlanet;
 import swg.tools.ZString;

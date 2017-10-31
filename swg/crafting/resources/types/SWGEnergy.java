@@ -1,7 +1,7 @@
 package swg.crafting.resources.types;
 
-import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.Stat;
+import swg.crafting.resources.SWGResourceClass;
 
 /*
  * Represents a resource class of type "Energy"
