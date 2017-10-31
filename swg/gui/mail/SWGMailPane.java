@@ -88,7 +88,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * Regular expression used to split from lines
      */
     private static Pattern regexp = Pattern.compile("[SWG]*\\.([\\w\\-]*)\\.(.+)");
-
+    
     /**
      * The GUI list of mail folders
      */
@@ -594,6 +594,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             ff = "Structures Inc";
         else if (ff.startsWith("@veteran"))
             ff = "Veteran Union";
+
         ZString z = new ZString(ff);
         if(match.group(1).length() > 0) {
         	z.app('.').app(match.group(1));
@@ -1047,6 +1048,9 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 "mailCopyToSWGAide", Boolean.TRUE)).booleanValue();
         boolean d = ((Boolean) SWGFrame.getPrefsKeeper().get(
                 "mailDeleteAfterCopy", Boolean.FALSE)).booleanValue();
+        
+        boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "mailStripColor", Boolean.FALSE)).booleanValue();
 
         final JCheckBoxMenuItem del = new JCheckBoxMenuItem("Delete copied", d);
         del.setToolTipText("Delete mails in SWG after successful copy");
@@ -1078,9 +1082,23 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 del.setEnabled(v);
             }
         });
+        
+        final JCheckBoxMenuItem strip = new JCheckBoxMenuItem("Strip color codes", stripColor);
+        strip.setToolTipText("Strip color codes from mails");
+        strip.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean v = strip.isSelected();
+                SWGFrame.getPrefsKeeper().add(
+                        "mailStripColor", Boolean.valueOf(v));
+                mailModel.fireTableDataChanged();
+                
+            }
+        });
 
         opts.add(copy);
         opts.add(del);
+        opts.add(strip);
 
         return opts;
     }
@@ -1388,12 +1406,21 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             row = mailList.convertRowIndexToModel(row);
 
             msg = messages.get(row);
-            mailHeader.from.setText(getFromString(msg.fromLine()));
             mailHeader.date.setText(getDateString(msg.date()));
             mailHeader.filename.setText(msg.getName());
-            mailHeader.subject.setText(msg.subject());
+            
+            boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                    "mailStripColor", Boolean.FALSE)).booleanValue();
+            if(stripColor) {
+                mailHeader.from.setText(SWGGuiUtils.stripColorCodes(getFromString(msg.fromLine())));
+                mailHeader.subject.setText(SWGGuiUtils.stripColorCodes(msg.subject()));
+                mailBody.setText(SWGGuiUtils.stripColorCodes(msg.bodyText()));
+            } else {
+                mailHeader.from.setText(getFromString(msg.fromLine()));
+                mailHeader.subject.setText(msg.subject());
+                mailBody.setText(msg.bodyText());
+            }
 
-            mailBody.setText(msg.bodyText());
             mailBody.setCaretPosition(0);
         } else {
             mailHeader.from.setText("");
@@ -1836,10 +1863,18 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         public Object getValueAt(int row, int column) {
             if (messages == null) return "";
             SWGMailMessage msg = messages.get(row);
+            boolean stripColor = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                        "mailStripColor", Boolean.FALSE)).booleanValue();
             switch (column) {
             case 0:
+                if(stripColor) {
+                    return SWGGuiUtils.stripColorCodes(msg.subject());
+                }
                 return msg.subject();
             case 1:
+                if(stripColor) {
+                    return SWGGuiUtils.stripColorCodes(getFromString(msg.fromLine()));
+                }
                 return getFromString(msg.fromLine());
             case 2:
                 return msg.date()*1000;

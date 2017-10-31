@@ -498,7 +498,6 @@ public final class SWGMailMessage
         this.messageFrom = this.messageFrom.intern();
         this.messageSubject = this.messageSubject.intern();
 
-
         if (file != null && !file.getName().endsWith("mail")) {
             File f = new File(file.getParentFile(), getName());
             file.renameTo(f);
