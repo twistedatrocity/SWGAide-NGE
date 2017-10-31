@@ -391,7 +391,7 @@ public final class SWGMailBox implements Serializable {
                 if (m.getType() != Type.ISDroid) {
                     m.type(Type.Trash);
                     folderISDroid.remove(i);
-                    folderTrash.addInternal(m);
+                    folderTrash.add(m);
                 }
             }
         }
@@ -425,7 +425,7 @@ public final class SWGMailBox implements Serializable {
                     // some old suffixes, if any
                     else if (mail.type() == Type.Trash
                             || fn.endsWith(SWGMailMessage.Type.Trash.suffix))
-                        folderTrash.addInternal(mail);
+                        folderTrash.add(mail);
                     else if (mail.type() == Type.Sent
                             || fn.endsWith(SWGMailMessage.Type.Sent.suffix))
                         folderSent.add(mail);
