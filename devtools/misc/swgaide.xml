@@ -4,11 +4,11 @@
   <headerType>gui</headerType>
   <jar>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.jar</jar>
   <outfile>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.exe</outfile>
-  <errTitle></errTitle>
+  <errTitle>JRE 7 required</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
   <priority>normal</priority>
-  <downloadUrl>http://java.com/download</downloadUrl>
+  <downloadUrl>http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html</downloadUrl>
   <supportUrl></supportUrl>
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
