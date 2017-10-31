@@ -64,7 +64,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.9";
+    public static final String version = "0.9.9-MrMiagi-0.1.1";
 
     /**
      * Returns the cache directory.
