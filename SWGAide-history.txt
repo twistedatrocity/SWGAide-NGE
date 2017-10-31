@@ -1,0 +1,5 @@
+All changes can be viewed on github
+
+Please report bugs at https://github.com/twistedatrocity/SWGAide-NGE/issues
+
+Discussion of this tool can be made on the swgcraft forums: http://www.swgcraft.org/forums/viewforum.php?f=43

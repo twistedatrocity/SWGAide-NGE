@@ -21,7 +21,9 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.docs"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;docs.EN"/>
+        <file path="/SWGAide-NGE/SWGAide-history.txt"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model.mail"/>
+        <file path="/SWGAide-NGE/SWGAide_README.txt"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.schematics"/>
