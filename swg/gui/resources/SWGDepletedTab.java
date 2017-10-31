@@ -27,7 +27,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -50,6 +49,7 @@ import swg.gui.common.SWGDecoratedTableCellRenderer.DecoratedTableModel;
 import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.common.SWGJTable;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGNotes;
@@ -83,7 +83,6 @@ import swg.tools.ZWriter;
 @SuppressWarnings("serial")
 final class SWGDepletedTab extends JPanel {
 
-    // TODO: Replace JTable with SWGJTable
     
     /**
      * An age comparator to sort the set of depleted resources.
@@ -114,7 +113,7 @@ final class SWGDepletedTab extends JPanel {
     /**
      * The GUI table for depleted resources.
      */
-    private JTable table;
+    private SWGJTable table;
 
     /**
      * Creates an instance of this type.
@@ -533,7 +532,7 @@ final class SWGDepletedTab extends JPanel {
     @SuppressWarnings("synthetic-access")
     private Component makeMainTable() {
         DecoratedTableModel tableModel = new TableModel();
-        table = new JTable(tableModel);
+        table = new SWGJTable(tableModel);
 
         table.setDefaultRenderer(String.class,
                 new SWGResourceStatRenderer(tableModel));
