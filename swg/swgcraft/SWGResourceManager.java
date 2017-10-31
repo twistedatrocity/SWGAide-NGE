@@ -232,8 +232,8 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * rather disables auto-updating, writes a message to SWGAide's log file.
      */
     void updateMainGalaxy() {
-        String gxy = (String) SWGFrame.getPrefsKeeper().get("optionMainGalaxy");
-        if (gxy == null) {
+        Integer gid = (Integer) SWGFrame.getPrefsKeeper().get("optionMainGalaxy");
+        if (gid == 0) {
             stopAutoUpdate();
             SWGFrame.getPrefsKeeper().add("optionAutoUpdate", Boolean.FALSE);
             SWGAide.printDebug("cmgr", 1,
@@ -241,7 +241,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             return;
         }
 
-        SWGCGalaxy galaxy = SWGCGalaxy.fromName(gxy);
+        SWGCGalaxy galaxy = SWGCGalaxy.fromID(gid);
         downloadCurrent(galaxy);
     }
 

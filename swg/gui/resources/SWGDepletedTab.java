@@ -745,8 +745,8 @@ final class SWGDepletedTab extends JPanel {
     static void writeAuto(final SWGCGalaxy gxy) {
         if (!writeAuto()) return;
 
-        String gn = (String) SWGFrame.getPrefsKeeper().get("optionMainGalaxy");
-        if (gxy.getName().equals(gn)) {
+        Integer gid = (Integer) SWGFrame.getPrefsKeeper().get("optionMainGalaxy");
+        if (gxy.id() == gid) {
             synchronized (SWGDepletedTab.class) {
                 final ExecutorService ex = Executors.newSingleThreadExecutor();
                 ex.execute(new Runnable() {                    

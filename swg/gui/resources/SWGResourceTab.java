@@ -171,10 +171,8 @@ public final class SWGResourceTab extends JTabbedPane implements
         SWGCharacter ch = SWGFrame.getSelectedCharacter();
         galaxy = ch != null
                 ? ch.gxy()
-                : SWGCGalaxy.fromName((String) SWGFrame.getPrefsKeeper().get(
-                		"optionMainGalaxy", SWGCGalaxy.defaultGalaxy().getName()));
-        // XXX: replace galaxy-name in DAT file with galaxy-enum
-        // 4 locations where optionMainGalaxy occurs
+                : SWGCGalaxy.fromID((Integer) SWGFrame.getPrefsKeeper().get(
+                        "optionMainGalaxy", SWGCGalaxy.defaultGalaxy().id()));
 
         // create interior lazily, see this#focusGained()
         frame.getTabPane().addChangeListener(new ChangeListener() {

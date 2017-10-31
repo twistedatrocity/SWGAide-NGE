@@ -16,7 +16,7 @@ helpScreenLocation          Point
 helpScreenSize              Dimension
 
 optionsGeneralLocation      Point
-optionMainGalaxy            String
+optionMainGalaxy            Integer		  # ID of galaxy at SWGCraft
 optionAutoUpdate            Boolean
 optionUserName              String
 optionPassWord              String

@@ -220,7 +220,7 @@ public class SWGCraftOptionsPanel extends JDialog {
      */
     private void actionGalaxySelected() {
         String glx = (String) galaxyList.getSelectedItem();
-        SWGFrame.getPrefsKeeper().add("optionMainGalaxy", glx);
+        SWGFrame.getPrefsKeeper().add("optionMainGalaxy", SWGCGalaxy.fromName(glx).id());
     }
 
     /**
@@ -464,8 +464,8 @@ public class SWGCraftOptionsPanel extends JDialog {
                 actionGalaxySelected();
             }
         });
-        String glx = (String) SWGFrame.getPrefsKeeper().get(
-            "optionMainGalaxy", SWGCGalaxy.defaultGalaxy().getName());
+        String glx = SWGCGalaxy.fromID((Integer) SWGFrame.getPrefsKeeper().get(
+            "optionMainGalaxy", SWGCGalaxy.defaultGalaxy().id())).getName();
         galaxyList.setSelectedItem(glx);
         glxPanel.add(galaxyList);
 

@@ -29,6 +29,7 @@ import swg.crafting.UpdateSubscriber;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.model.SWGAliases;
+import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 import swg.model.SWGStation;
@@ -739,8 +740,8 @@ public final class SWGInitialize extends JPanel {
      * This method obtains any required objects by itself.
      */
     static void update() {
-        if (SWGFrame.getPrefsKeeper().getVersion().compareTo(
-                SWGConstants.version) >= 0) return;
+        /* if (SWGFrame.getPrefsKeeper().getVersion().compareTo(
+                SWGConstants.version) >= 0) return;*/
 
         SWGUniverse u, tc;
         u = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgUniverse");
@@ -749,6 +750,14 @@ public final class SWGInitialize extends JPanel {
         if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.0") < 0) {
             updateMails(u);
             updateMails(tc);
+        }
+		if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.8") < 0) {
+        	//Convert optionMainGalaxy name to ID instead as it is more robust
+	        	SWGCGalaxy glx = SWGCGalaxy.fromName((String)
+	                    SWGFrame.getPrefsKeeper().get("optionMainGalaxy",
+	                            SWGCGalaxy.defaultGalaxy().getName()));
+	            SWGFrame.getPrefsKeeper().add("optionMainGalaxy", glx.id());
+        	
         }
         // if...
     }
