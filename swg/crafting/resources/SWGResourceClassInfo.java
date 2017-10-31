@@ -682,6 +682,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Mustafarian Scaley Hide", sid);
       sid = Integer.valueOf( 13); swgTypeToInt.put("frs", sid);
                                   swgTypeToInt.put("Flora Resources", sid);
+								swgTypeToInt.put("Flora_resources", sid); //Temporary fix due to SWGEmu not following the correct format
       sid = Integer.valueOf( 49); swgTypeToInt.put("flf", sid);
                                   swgTypeToInt.put("Flora Food", sid);
       sid = Integer.valueOf( 94); swgTypeToInt.put("cer", sid);
