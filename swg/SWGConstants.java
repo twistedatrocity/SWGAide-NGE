@@ -43,7 +43,7 @@ public class SWGConstants {
      */
     // DEVELOPER_NOTE: set this flag true while developing, to get the output
     // from stdout and stderr to the console in Eclipse rather than to file.
-    public static final boolean DEV_DEBUG = true;
+    public static final boolean DEV_DEBUG = false;
 
     /**
      * The relative path to crafting related files within the SWGAide directory.
