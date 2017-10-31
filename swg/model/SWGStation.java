@@ -65,23 +65,14 @@ public final class SWGStation implements
 
     /**
      * The name of this station.
-     * <p>
-     * XXX: turn this field final, remove stationPath (r1970, July 16, 2010).
      */
-    private String name;
+    private final String name;
 
     /**
      * A list of notes files. These notes files pertains to this instance but
      * not notes files that are located outside this instance.
      */
     private final List<SWGNotes> notesList;
-
-    /**
-     * The absolute path to this station at the current file system. This is a
-     * session scope path that may differ between hosts. XXX make transient ---
-     * (r1970, July 16, 2010)
-     */
-    private File stationPath;
 
     /**
      * The universe that this instance pertains to.
@@ -338,18 +329,6 @@ public final class SWGStation implements
      * @return this
      */
     private Object readResolve() {
-        if (name == null) {
-            // XXX: remove -- introduced 0.8.11
-            name = stationPath.getName();
-            stationPath = null;
-        }
-
-        if (this.version == null) {
-            // first upgrade ever
-            // macros <= 0.8.16 had absolute file path, now they are transient
-            macros = null;
-        }
-
         this.version = SWGConstants.version;
         return this;
     }
@@ -389,10 +368,7 @@ public final class SWGStation implements
      * @return an absolute path for this station
      */
     public File swgPath() {
-        if (stationPath == null)
-            stationPath = new File(
-                    new File(universe.swgPath(), "profiles"), name);
-        return stationPath;
+        return new File(new File(universe.swgPath(), "profiles"), name);
     }
 
     @Override
@@ -420,7 +396,6 @@ public final class SWGStation implements
      * @serialData see method comment
      */
     private void writeObject(ObjectOutputStream oos) throws IOException {
-        stationPath = null;
         oos.defaultWriteObject();
     }
 
