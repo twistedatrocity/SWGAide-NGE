@@ -489,13 +489,6 @@ public final class SWGMailMessage
     }
 
     /**
-     * @param o the owner to set
-     */
-    void owner(SWGCharacter o) {
-        this.owner = o; // XXX: remove method after a while, added in 0.9.0
-    }
-
-    /**
      * Resolves this instance at deserialization and possibly updates member
      * fields.
      * 

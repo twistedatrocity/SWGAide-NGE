@@ -1725,26 +1725,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * after the GUI is visible.
      */
     private void updatePostLaunch() {
-        if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.0") < 0) {
-            // XXX: remove in a while, added with 0.9.0
-            String msg = "<html>Upgrade information<br/>" +
-                    "Now SWGAide does not move mails from SWG to itself." +
-                    "<br/><br/>" +
-                    "Do you want to COPY mails to SWGAide's " +
-                    "\"mails\" folder?</html>";
-            boolean b = displayConfirmDialog(msg, "Select option",
-                    JOptionPane.QUESTION_MESSAGE);
-            getPrefsKeeper().add("mailCopyToSWGAide", Boolean.valueOf(b));
-
-            if (!b) return;
-
-            msg = "<html>Optionally<br/>" +
-                    "After copy, should copied mails be<br/>" +
-                    "deleted from SWG's profiles folder?</html>";
-            b = displayConfirmDialog(msg, "Select option",
-                    JOptionPane.QUESTION_MESSAGE);
-            getPrefsKeeper().add("mailDeleteAfterCopy", Boolean.valueOf(b));
-        }
+        //Empty as the former necessary updates are very old
     }
 
     /**

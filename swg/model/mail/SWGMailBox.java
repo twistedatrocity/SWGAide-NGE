@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -639,42 +638,7 @@ public final class SWGMailBox implements Serializable {
      * mail-folders of this box are already up-to-date this method does nothing.
      */
     public void update() {
-        // move if-clause inside loop if future needs
-        if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.0") < 0) {
-            for (SWGMailFolder fld : folders()) {
-                List<SWGMailMessage> lst = fld.mails();
-                Iterator<SWGMailMessage> iter = lst.iterator();
-                for (; iter.hasNext();) {
-                    SWGMailMessage m = iter.next();
-                    if (m.owner() == null)
-                        m.owner(owner); // owner added in 0.9.0
-
-                    if (m.exists()) {
-                        if (m.type() == null) { // type added in 0.9.0
-                            // type added in 0.9.0
-                            if (fld == folderAuction)
-                                m.type(Type.Auction);
-                            else if (fld == folderISDroid)
-                                m.type(Type.ISDroid);
-                            else if (fld == folderSent)
-                                m.type(Type.Sent);
-                            else if (fld == folderTrash)
-                                m.type(Type.Trash);
-                            else
-                                m.type(Type.Any);
-                        }
-
-                        // auction data was made non-transient in 0.9.0
-                        m.auctionData(); // OK also if not auction mail
-
-                    } else {
-                        // remember, right now all known mails are in
-                        // "SWGAide\mails" and either exist, or not
-                        iter.remove();
-                    }
-                }
-            }
-        }
+        //Empty as the former necessary updates are very old
     }
 
     /**
