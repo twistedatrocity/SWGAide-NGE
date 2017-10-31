@@ -497,12 +497,18 @@ public final class SWGInitialize extends JPanel {
                 public void run() {
                     scanForMails(universe);
                     scanForMails(tc);
-                    if (SWGMailMessage.hasError)
+                    if (SWGMailMessage.hasError) {
                         JOptionPane.showMessageDialog(frame,
                                 "Problems reading some mails.\nSee the \"logs" +
                                         "\\mail-error.txt\" for details",
                                 "Error parsing mails",
                                 JOptionPane.ERROR_MESSAGE);
+					}
+					
+					scanForGalaxies(universe, 30, 35);
+					scanForGalaxies(tc, 35, 40);
+					scanForCharacters(universe, 40, 65);
+					scanForCharacters(tc, 65, 70);
 
                     frame.beginPostLaunchTasks();
                     exec.shutdown();
