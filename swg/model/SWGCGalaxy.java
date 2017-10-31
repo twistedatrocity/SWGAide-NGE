@@ -22,72 +22,78 @@ import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 import swg.tools.ZXml;
 
+/**
+ * This class handles the galaxies within SWG which are dynamically loaded from SWGCraft 
+ * (or a local cache) when the class is first loaded.
+ * Compare with {@link SWGGalaxy} which is a wrapper type which contains characters for a
+ * specific {@link SWGStation}. 
+ * 
+ * @author Jesper Madsen
+ *
+ */
 public class SWGCGalaxy implements Serializable {
-	
-	
-	private static ArrayList<SWGCGalaxy> servers = new ArrayList<SWGCGalaxy>();
-	
-	
-	static {
-		initializeServers();
-		
-		
-		
-	}
-	
-	private static void initializeServers()
-	{
-		servers.clear();
-		try
-		{
-			Document xml = ZXml.parse(new File("crafting/servers.xml"));
-			
-			Element main = (Element) xml.getElementsByTagName(
-                    "servers").item(0);
-			
-			//Loop through servers
-		      NodeList nl = main.getChildNodes();
-	            for (int j = 0; j < nl.getLength(); ++j) {
-	                Node n = nl.item(j);
-	                if (n.getNodeType() == Node.ELEMENT_NODE
-	                        && n.getNodeName().equals("server"))
-	                {
-	                	Element cur = (Element) n;
-	                	//Initialize a server and throw it in our list
-	                	String name = cur.getAttribute("name");
-	                	int swgcraftID = ZXml.intFromAttr(cur, "swgcraft_id");
-	                	String swgcraftName = cur.getAttribute("swgcraft_name");
-	                	//System.out.println(cur);
-	                	Boolean active = ZXml.booleanFromAttr(cur, "active");
-	                	SWGCGalaxy galaxy = new SWGCGalaxy(name, swgcraftName, swgcraftID, active);
-	                	servers.add(galaxy);
-	                }
-	            }
-		}
-		catch(IOException e)
-		{
-			System.out.println("No server file found");
-			SWGCraftCache.addSubscriber(new UpdateSubscriber()
-				    {
-		    	public void handleUpdate(UpdateNotification u)
-		    	{
-		    		SWGCGalaxy.initializeServers();
-		    	}
-		    	
-		    
-		    }, UpdateType.SERVERS);
-			SWGCraftCache.updateCache();
-		}
-		catch(ParserConfigurationException e)
-		{
-			
-		}
-		catch(SAXException e)
-		{
-			
-		}
-		
-	}
+
+    /**
+	 * 
+	 */
+    private static final long serialVersionUID = -5440534198982364860L;
+
+    /**
+     * A list for storing SWGCGalaxy servers
+     */
+    private static ArrayList<SWGCGalaxy> servers = new ArrayList<SWGCGalaxy>();
+
+    static {
+        initializeServers();
+
+    }
+
+    /**
+     * Creates entries for the servers from the servers.xml file in the data
+     * structure
+     */
+    private static void initializeServers() {
+        servers.clear();
+        try {
+            Document xml = ZXml.parse(new File("crafting/servers.xml"));
+
+            Element main =
+                    (Element) xml.getElementsByTagName("servers").item(0);
+
+            // Loop through servers
+            NodeList nl = main.getChildNodes();
+            for (int j = 0; j < nl.getLength(); ++j) {
+                Node n = nl.item(j);
+                if (n.getNodeType() == Node.ELEMENT_NODE
+                        && n.getNodeName().equals("server")) {
+                    Element cur = (Element) n;
+                    // Initialize a server and throw it in our list
+                    String name = cur.getAttribute("name");
+                    int swgcraftID = ZXml.intFromAttr(cur, "swgcraft_id");
+                    String swgcraftName = cur.getAttribute("swgcraft_name");
+                    // System.out.println(cur);
+                    boolean active = ZXml.booleanFromAttr(cur, "active");
+                    SWGCGalaxy galaxy =
+                            new SWGCGalaxy(name, swgcraftName, swgcraftID,
+                                    active);
+                    servers.add(galaxy);
+                }
+            }
+        } catch (IOException e) {
+            SWGCraftCache.addSubscriber(new UpdateSubscriber() {
+                public void handleUpdate(UpdateNotification u) {
+                    SWGCGalaxy.initializeServers();
+                }
+
+            }, UpdateType.SERVERS);
+            SWGCraftCache.updateCache();
+        } catch (ParserConfigurationException e) {
+        	/* ignore */
+        } catch (SAXException e) {
+        	/* Malformed XML, nothing we can do about it on our end */
+        }
+
+    }
 
     /**
      * A list of the planet names.
@@ -109,23 +115,21 @@ public class SWGCGalaxy implements Serializable {
      * The name of this galaxy constant.
      */
     private final String name;
-	
-	/**
-    * The name of this galaxy constant on SWGCraft.
-    */
+
+    /**
+     * The name of this galaxy constant on SWGCraft.
+     */
     private final String swgcraftName;
 
     /**
-     * @param name
-     *            the name of the galaxy
-     * @param id
-     *            the SWGCraft galaxy ID
-     * @param active
-     *            {@code false} if the galaxy is closed down
+     * @param name the name of the galaxy
+     * @param swgcraftName the name of the server as used on SWGCraft
+     * @param id the SWGCraft galaxy ID
+     * @param active {@code false} if the galaxy is closed down
      */
     private SWGCGalaxy(String name, String swgcraftName, int id, boolean active) {
         this.name = name;
-		this.swgcraftName = swgcraftName;
+        this.swgcraftName = swgcraftName;
         this.id = id;
         this.active = active;
     }
@@ -162,8 +166,8 @@ public class SWGCGalaxy implements Serializable {
     }
 
     /**
-     * Returns {@code true} if this galaxy constant is an active server, {@code
-     * false} if it is shut down by SOE.
+     * Returns {@code true} if this galaxy constant is an active server,
+     * {@code false} if it is shut down by SOE.
      * 
      * @return {@code false} if this galaxy is shut down
      */
@@ -176,68 +180,64 @@ public class SWGCGalaxy implements Serializable {
         return getName();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SWGCGalaxy) {
+            SWGCGalaxy other = (SWGCGalaxy) obj;
+            return this.getName().equals(other.getName())
+                    && this.getNameComplete().equals(other.getNameComplete())
+                    && this.id() == other.id()
+                    && this.isActive() == other.isActive();
+        }
+        return false;
+    }
+
     /**
      * Returns a galaxy constant for the specified SWGCraft galaxy ID.
      * 
-     * @param id
-     *            a SWGCraft galaxy ID
+     * @param id a SWGCraft galaxy ID
      * @return a galaxy constant
-     * @throws IndexOutOfBoundsException
-     *             if the argument is not valid
+     * @throws IndexOutOfBoundsException if the argument is not valid
      */
     public static SWGCGalaxy fromID(int id) {
-		//Inefficient, yes
-    	for(SWGCGalaxy server : servers)
-    	{
-    		if(server.id() == id)
-    		{
-    			return server;
-    		}
-    	}
-    	throw new IndexOutOfBoundsException("Invalid ID");
+        // Inefficient, yes
+        for (SWGCGalaxy server : servers) {
+            if (server.id() == id) { return server; }
+        }
+        throw new IndexOutOfBoundsException("Invalid ID");
     }
 
     /**
      * Returns the galaxy constant for the specified galaxy name.
      * 
-     * @param galaxy
-     *            a proper galaxy name
+     * @param galaxy a proper galaxy name
      * @return the galaxy constant for the specified name
-     * @throws IllegalArgumentException
-     *             if the name is invalid
-     * @throws NullPointerException
-     *             if the argument is {@code null}
+     * @throws IllegalArgumentException if the name is invalid
+     * @throws NullPointerException if the argument is {@code null}
      */
     public static SWGCGalaxy fromName(String galaxy) {
-		//Inefficient, yes
-    	for(SWGCGalaxy server : servers)
-    	{
-    		if(server.getName().equals(galaxy) || server.getNameComplete().equals(galaxy))
-    		{
-    			return server;
-    		}
-    	}
-    	throw new IllegalArgumentException("Invalid name");
+        // Inefficient, yes
+        for (SWGCGalaxy server : servers) {
+            if (server.getName().equals(galaxy)
+                    || server.getNameComplete().equals(galaxy)) { return server; }
+        }
+        throw new IllegalArgumentException("Invalid name");
     }
 
     /**
      * Determines whether the argument is a valid galaxy name in SWG. The
      * argument must be a proper, capitalized galaxy name.
      * 
-     * @param name
-     *            the name to check
+     * @param name the name to check
      * @return {@code true} if the argument is a valid and correctly capitalized
      *         name of a galaxy, {@code false} otherwise
      */
     public static boolean isNameValid(String name) {
-        for(SWGCGalaxy server : servers)
-    	{
-    		if(server.getName().equals(name) || server.getNameComplete().equals(name))
-    		{
-    			return true;
-    		}
-    	}
-    	return false;
+        for (SWGCGalaxy server : servers) {
+            if (server.getName().equals(name)
+                    || server.getNameComplete().equals(name)) { return true; }
+        }
+        return false;
     }
 
     /**
@@ -250,9 +250,8 @@ public class SWGCGalaxy implements Serializable {
     public static List<String> names() {
         if (names == null) {
             List<String> l = new ArrayList<String>();
-            for (SWGCGalaxy g : servers)
-            {
-            	l.add(g.getName());
+            for (SWGCGalaxy g : servers) {
+                l.add(g.getName());
             }
             names = Collections.unmodifiableList(l);
         }
@@ -267,10 +266,8 @@ public class SWGCGalaxy implements Serializable {
      */
     public static List<String> namesActive() {
         List<String> ret = new ArrayList<String>();
-        for (SWGCGalaxy g : servers)
-        {
-            if (g.isActive())
-                ret.add(g.getName());
+        for (SWGCGalaxy g : servers) {
+            if (g.isActive()) ret.add(g.getName());
         }
         return ret;
     }
@@ -284,15 +281,14 @@ public class SWGCGalaxy implements Serializable {
      *         none is found or if ambiguity is found
      */
     public static String properName(String abbreviation) {
-        if (abbreviation == null)
-            return null;
-    
+        if (abbreviation == null) return null;
+
         String abbr = abbreviation.toLowerCase(Locale.ENGLISH);
         List<String> gxyNames = names();
-    
+
         if (abbr.startsWith("euro"))
             abbr = abbr.substring(abbr.indexOf('-') + 1);
-    
+
         String ret = null;
         for (String gn : gxyNames) {
             String g = gn.toLowerCase(Locale.ENGLISH);
@@ -306,31 +302,31 @@ public class SWGCGalaxy implements Serializable {
         }
         return ret;
     }
-	
-	public static SWGCGalaxy defaultGalaxy()
-    {
-    	if(isNameValid("SWGCraft.co.uk"))
-    	{
-    		return fromName("SWGCraft.co.uk");
-    	}
-    	else
-    	{
-    		SWGCGalaxy defaultGalaxy = new SWGCGalaxy("SWGCraft.co.uk", "SWGCraft.co.uk", 99, true);
-    		servers.add(defaultGalaxy);
-    		return defaultGalaxy;
-    	}
+
+    /**
+     * Returns a galaxy to use as default. If no servers have been loaded for
+     * whatever reason, a dummy entry for SWGCraft.co.uk is used. Otherwise, the
+     * real entry for SWGCraft.co.uk is used
+     * 
+     * @return An SWGCGalaxy object for SWGCraft.co.uk
+     */
+    public static SWGCGalaxy defaultGalaxy() {
+        if (isNameValid("SWG Legends")) { 
+            return fromName("SWG Legends"); 
+        }
+        SWGCGalaxy defaultGalaxy =
+                new SWGCGalaxy("SWG Legends", "SWG Legends", 138, true);
+        servers.add(defaultGalaxy);
+        return defaultGalaxy;
     }
-    
-    public static Object[] values()
-    {
-    	return servers.toArray();
+
+    /**
+     * Returns an array of all servers
+     * 
+     * @return Object array of all servers
+     */
+    public static Object[] values() {
+        return servers.toArray();
     }
-    
-   /* public static void main(String[] args)
-    {
-    	//Do nothing
-    	System.out.println("Hej");
-    	
-    	System.out.println(names());
-    }*/
+
 }

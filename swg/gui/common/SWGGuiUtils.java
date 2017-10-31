@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -160,7 +161,7 @@ public final class SWGGuiUtils {
      * 
      * @param frame the frame for this application
      */
-    public SWGGuiUtils(@SuppressWarnings("unused") SWGFrame frame) {
+    public SWGGuiUtils(SWGFrame frame) {
         Font f = new JLabel().getFont();
         fontBold = new Font(f.getName(), Font.BOLD, f.getSize());
         fontItalic = new Font(f.getName(), Font.ITALIC, f.getSize());
@@ -506,5 +507,19 @@ public final class SWGGuiUtils {
             TableColumn col = tcm.getColumn(c);
             tableColumnSetWidth(col, width, width, max);
         }
+    }
+	
+	/**
+     * Strips SWG-style color codes (\#FFFFFF) from the given input
+     * @param input String to strip color codes from
+     * @return Cleansed string
+     */
+    public static String stripColorCodes(String input) {
+        /**
+         * Regular expression that matches color-tags
+         */
+        Pattern colorRegexp = Pattern.compile("\\\\(#[a-zA-z0-9]{6})\\\\?");
+        
+        return colorRegexp.matcher(input).replaceAll("");
     }
 }

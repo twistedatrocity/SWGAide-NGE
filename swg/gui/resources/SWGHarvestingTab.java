@@ -658,7 +658,6 @@ final class SWGHarvestingTab extends JPanel {
         JMenuItem edit = new JMenuItem("Edit active harvester");
         edit.setToolTipText("Edit the selected, active harvester");
         edit.addActionListener(new ActionListener() {
-            @SuppressWarnings("null")
             public void actionPerformed(ActionEvent e1) {
                 resourceTab.harvesterActivateDialog().showAndBegin(
                             hr, hr.getResource(), null);
@@ -748,7 +747,6 @@ final class SWGHarvestingTab extends JPanel {
         sendDepl.setToolTipText(
                 "Send message to SWGCraft.org that this resource is depleted");
         sendDepl.addActionListener(new ActionListener() {
-            @SuppressWarnings("null")
             public void actionPerformed(ActionEvent e1) {
                 resourceTab.actionSendDepleted(hr.getResource());
             }

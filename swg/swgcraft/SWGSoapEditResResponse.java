@@ -74,8 +74,9 @@ public final class SWGSoapEditResResponse extends SWGSoapResResponse {
                 return "Invalid data types";
             case 999:
                 return "User ID and password do not match";
-        }
-        return "Unknown status number: " + status;
+			default:
+				return "Unknown status number: " + status;
+		}
     }
 
     @Override

@@ -82,7 +82,7 @@ public final class SWGAlbumTab extends JPanel {
     /**
      * A list of the albums SWG and TC, or just SWG.
      */
-    private JList albums;
+    private JList<SWGImageSubAlbum> albums;
 
     /**
      * The current album, SWG or TC. This value is selected by the user.
@@ -171,7 +171,7 @@ public final class SWGAlbumTab extends JPanel {
      */
     private void actionAlbumSelect(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            SWGImageSubAlbum s = (SWGImageSubAlbum) albums.getSelectedValue();
+            SWGImageSubAlbum s = albums.getSelectedValue();
             if (s == null) return;
 
             currentAlbum = s;
@@ -238,7 +238,7 @@ public final class SWGAlbumTab extends JPanel {
      * 
      * @param e the event that triggers this call
      */
-    private void focusGained(@SuppressWarnings("unused") ChangeEvent e) {
+    private void focusGained(ChangeEvent e) {
         if (frame.getTabPane().getSelectedComponent() == this) {
             if (thumbModel == null)
                 make();
@@ -614,10 +614,10 @@ public final class SWGAlbumTab extends JPanel {
      * @return a GUI element
      */
     private Component makeSouthAlbumChooser() {
-        SWGListModel mm = new SWGListModel();
+        SWGListModel<SWGImageSubAlbum> mm = new SWGListModel<SWGImageSubAlbum>();
         mm.setElements(makeSouthAlbumChooserList());
 
-        albums = new JList(mm);
+        albums = new JList<SWGImageSubAlbum>(mm);
         albums.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         albums.addListSelectionListener(new ListSelectionListener() {
             @SuppressWarnings("synthetic-access")

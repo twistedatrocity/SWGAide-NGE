@@ -257,7 +257,6 @@ public final class SimplePrefsKeeper implements Serializable {
      * @return {@code true} if this instance was successfully written, {@code
      *         false} otherwise
      */
-    @SuppressWarnings("null")
     public synchronized boolean store(File target) {
         ObjectOutputStream out = null;
         try {
@@ -309,7 +308,6 @@ public final class SimplePrefsKeeper implements Serializable {
      * @throws IOException if there is any other I/O error
      * @throws Throwable if there is any other error
      */
-    @SuppressWarnings("null")
     public synchronized static SimplePrefsKeeper load(File source)
             throws Throwable {
 

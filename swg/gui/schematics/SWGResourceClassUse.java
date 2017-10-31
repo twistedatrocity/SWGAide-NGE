@@ -116,7 +116,7 @@ final class SWGResourceClassUse extends JPanel {
     /**
      * A combo box for the professions to select from.
      */
-    private JComboBox professionBox;
+    private JComboBox<Object> professionBox;
 
     /**
      * A list which displays resource classes which are called for by name by
@@ -127,7 +127,7 @@ final class SWGResourceClassUse extends JPanel {
      * this list only displays the resource classes called for <i>by name</i>,
      * not possible sub-classes.
      */
-    private JList resClassList;
+    private JList<SWGResourceClass> resClassList;
 
     /**
      * A list model for the list of resource classes.
@@ -166,7 +166,7 @@ final class SWGResourceClassUse extends JPanel {
      * A list which displays schematics that makes use of a specified resource
      * class.
      */
-    private JList schematicsList;
+    private JList<Object> schematicsList;
 
     /**
      * A list model for the list of schematics.
@@ -228,8 +228,8 @@ final class SWGResourceClassUse extends JPanel {
         else {
             // ignore selection in tree
             // if not required and -> off is OK, otherwise always OK
-            Object s = resClassList.getSelectedValue();
-            actionResClassSelected((SWGResourceClass) s, false);
+            SWGResourceClass s = resClassList.getSelectedValue();
+            actionResClassSelected(s, false);
         }
     }
 
@@ -278,7 +278,7 @@ final class SWGResourceClassUse extends JPanel {
 
             SWGResourceClass rc;
             int row = resClassList.locationToIndex(e.getPoint());
-            rc = (SWGResourceClass) resClassListModel.getElementAt(row);
+            rc = resClassListModel.getElementAt(row);
 
             SWGWeights wgs = guardWeights();
 
@@ -651,19 +651,19 @@ final class SWGResourceClassUse extends JPanel {
      */
     private Component makeCenterList() {
         resClassListModel = new ResClassListModel();
-        resClassList = new JList(resClassListModel);
+        resClassList = new JList<SWGResourceClass>(resClassListModel);
         resClassList.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
         
-        resClassList.setCellRenderer(new SWGListCellRenderer(
+        resClassList.setCellRenderer(new SWGListCellRenderer<SWGResourceClass>(
                 SWGGuiUtils.fontBold(), SwingConstants.LEADING, 3) {
             @Override
-            protected void colorBackground(JList list, Object value, int index,
+            protected void colorBackground(JList<? extends SWGResourceClass> list, SWGResourceClass value, int index,
                     boolean isSelected, boolean cellHasFocus) {
 
                 // TODO: make this coloring ignore schematics which are not in
                 // the lists of favorites
 
-                SWGResourceClass rc = (SWGResourceClass) value;
+                SWGResourceClass rc = value;
                 if (!SWGResController.inventoryExists(
                         rc, SWGFrame.getSelectedGalaxy(), false)) {
                     label.setBackground(isSelected
@@ -675,10 +675,10 @@ final class SWGResourceClassUse extends JPanel {
             }
 
             @Override
-            protected String labelString(Object value) {
+            protected String labelString(SWGResourceClass value) {
                 return value == null
                         ? ""
-                        : ((SWGResourceClass) value).rcName();
+                        : value.rcName();
             }
         });
 
@@ -919,7 +919,7 @@ final class SWGResourceClassUse extends JPanel {
         pl.set(0, "<select a profession>");
         pl.add(all); // Have "All" last
 
-        professionBox = new JComboBox(pl.toArray());
+        professionBox = new JComboBox<Object>(pl.toArray());
         professionBox.setToolTipText(
                 "Select a profession updates the resource classes");
 
@@ -1000,7 +1000,7 @@ final class SWGResourceClassUse extends JPanel {
      */
     private Component makeWestSchematicsList() {
         schematicsListModel = new SchemListModel();
-        schematicsList = new JList(schematicsListModel);
+        schematicsList = new JList<Object>(schematicsListModel);
         schematicsList.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 0));
         schematicsList.setToolTipText(
                 "Schematics which use the selected resource class");
@@ -1235,7 +1235,7 @@ final class SWGResourceClassUse extends JPanel {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    private final class ResClassListModel extends AbstractListModel {
+    private final class ResClassListModel extends AbstractListModel<SWGResourceClass> {
 
         /**
          * A list of resource classes for this model. This list is updated when
@@ -1251,7 +1251,7 @@ final class SWGResourceClassUse extends JPanel {
         }
 
         @Override
-        public Object getElementAt(int index) {
+        public SWGResourceClass getElementAt(int index) {
             return (elems.isEmpty())
                     ? null
                     : elems.get(index);
@@ -1532,7 +1532,7 @@ final class SWGResourceClassUse extends JPanel {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    private final class SchemListModel extends AbstractListModel {
+    private final class SchemListModel extends AbstractListModel<Object> {
 
         /**
          * A list of schematics for this model. This list is updated when the

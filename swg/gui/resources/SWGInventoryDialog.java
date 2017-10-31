@@ -97,7 +97,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * A component for assignees. This component is editable to allow users to
      * add custom assignees.
      */
-    private JComboBox assigneeList;
+    private JComboBox<String> assigneeList;
 
     /**
      * The galaxy constant which is specified when this dialog is opened.
@@ -109,7 +109,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * <p>
      * <b>Note: </b>This field is disabled while editing a wrapper.
      */
-    private JComboBox galaxyList;
+    private JComboBox<Object> galaxyList;
 
     /**
      * A helper flag which denotes if GUI action listeners should ignore an
@@ -142,7 +142,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * <p>
      * <b>Note: </b>This field is disabled while editing a wrapper.
      */
-    private JComboBox resourceClassNameList;
+    private JComboBox<SWGResourceClass> resourceClassNameList;
 
     /**
      * An input field for the name of the resource. This component is also used
@@ -150,7 +150,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * <p>
      * <b>Note: </b>This field is disabled while editing a wrapper.
      */
-    private JComboWiderPopup resourceNameList;
+    private JComboWiderPopup<String> resourceNameList;
 
     /**
      * A GUI check box which the user can toggle to create entries for space or
@@ -605,7 +605,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         Dimension dn = new Dimension(200, 26);
         Dimension dg = new Dimension(100, 26);
 
-        JComboWiderPopup rnl = new JComboWiderPopup();
+        JComboWiderPopup<String> rnl = new JComboWiderPopup<String>();
         rnl.setEditable(true);
         rnl.setToolTipText("Enter a name for a resource, or its first letters");
         rnl.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -631,7 +631,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         box.add(rnb);
 
         // all historical galaxies because of cross-server resources
-        JComboBox gxys = new JComboBox(SWGCGalaxy.values());
+        JComboBox<Object> gxys = new JComboBox<Object>(SWGCGalaxy.values());
         gxys.setPreferredSize(dg);
         gxys.setMaximumSize(dg);
         gxys.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -700,7 +700,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         makeResourceClasses();
 
-        JComboBox rcnl = new JComboBox();
+        JComboBox<SWGResourceClass> rcnl = new JComboBox<SWGResourceClass>();
         rcnl.setPreferredSize(new Dimension(200, 26));
         rcnl.setAlignmentX(Component.LEFT_ALIGNMENT);
         rcnl.setEnabled(false);
@@ -800,7 +800,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         ha.add(al);
         amount = amt;
 
-        JComboBox cnbl = new JComboBox();
+        JComboBox<String> cnbl = new JComboBox<String>();
         cnbl.setEditable(true);
         cnbl.setPreferredSize(new Dimension(124, 26));
         cnbl.setMaximumSize(new Dimension(124, 26));

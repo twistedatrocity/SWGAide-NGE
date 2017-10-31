@@ -49,7 +49,6 @@ public class SearchFiles {
      * @throws IOException
      *             if anything happened
      */
-    @SuppressWarnings("null")
     public static boolean containsString(File file, String str,
             boolean ignoreCase) throws IOException {
         String st = str;

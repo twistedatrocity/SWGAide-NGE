@@ -129,7 +129,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
     /**
      * List of defined harvesters to select from.
      */
-    private JComboBox harvesterList;
+    private JComboBox<String> harvesterList;
 
     /**
      * A label to display current details for the selected harvester.
@@ -189,7 +189,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
     /**
      * List of defined owners to select from
      */
-    private JComboBox ownerList;
+    private JComboBox<String> ownerList;
 
     /**
      * A text input field for the harvesters power value.
@@ -783,7 +783,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
     private Component makeTopRow() {
         Box top = Box.createHorizontalBox();
 
-        harvesterList = new JComboBox();
+        harvesterList = new JComboBox<String>();
         harvesterList.setPreferredSize(new Dimension(175, 26));
         harvesterList.setAlignmentX(Component.LEFT_ALIGNMENT);
         harvesterList.setToolTipText("Select a harvester");
@@ -813,7 +813,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         tn.add(harvesterList);
         top.add(tn);
 
-        ownerList = new JComboBox();
+        ownerList = new JComboBox<String>();
         ownerList.setPreferredSize(new Dimension(175, 26));
         ownerList.setAlignmentX(Component.LEFT_ALIGNMENT);
         ownerList.setToolTipText("Select a owner");

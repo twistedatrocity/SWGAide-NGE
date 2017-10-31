@@ -101,7 +101,7 @@ final class SWGLaboratoryTab extends JPanel {
     /**
      * A combo box at which to select an assignee.
      */
-    private JComboBox assigneeCombo;
+    private JComboBox<SWGSchematicAssignee> assigneeCombo;
 
     /**
      * A menu item used in SWGAide's frame, the Edit menu.
@@ -153,7 +153,7 @@ final class SWGLaboratoryTab extends JPanel {
     /**
      * A list at which to select a schematic.
      */
-    private JList schematicList;
+    private JList<SWGSchematic> schematicList;
 
     /**
      * A flag that denotes if the list of schematics should display HQ, LQ, or
@@ -219,7 +219,7 @@ final class SWGLaboratoryTab extends JPanel {
         SWGSchematicAssignee ass = assignee;
         if (ass == null) {
             ass = SWGSchematicAssignee.DEFAULT; // set default assignee
-            ((SWGListModel) assigneeCombo.getModel()).setSelectedItem(ass);
+            ((SWGListModel<SWGSchematicAssignee>) assigneeCombo.getModel()).setSelectedItem(ass);
         }
 
         List<SWGSchematic> sl = getSchematics(ass);
@@ -290,11 +290,11 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private void actionPopulateAssignees() {
         Object prv =
-                ((SWGListModel) assigneeCombo.getModel()).getSelectedItem();
+                ((SWGListModel<SWGSchematicAssignee>) assigneeCombo.getModel()).getSelectedItem();
 
         List<SWGSchematicAssignee> as = SWGSchematicTab.assignees();
         as.add(SWGSchematicAssignee.DEFAULT);
-        ((SWGListModel) assigneeCombo.getModel()).setElements(as);
+        ((SWGListModel<SWGSchematicAssignee>) assigneeCombo.getModel()).setElements(as);
 
         assigneeCombo.setSelectedItem(prv); // restore, if possible
     }
@@ -312,7 +312,7 @@ final class SWGLaboratoryTab extends JPanel {
     private void actionPopulateSchematics(List<SWGSchematic> sl) {
         schematicList.setValueIsAdjusting(true); // prevent event triggering
 
-        SWGListModel model = ((SWGListModel) schematicList.getModel());
+        SWGListModel<SWGSchematic> model = ((SWGListModel<SWGSchematic>) schematicList.getModel());
         SWGSchematic prev = (SWGSchematic) model.getSelectedItem();
 
         schematicList.clearSelection();
@@ -371,8 +371,7 @@ final class SWGLaboratoryTab extends JPanel {
                     ? kr.rc()
                     : erp.wrapper.rc();
         SWGWeights wgs = erp.wrapper.weights();
-        String nts = ((SWGSchematic)
-                    schematicList.getSelectedValue()).getName();
+        String nts = schematicList.getSelectedValue().getName();
 
         JPopupMenu popup = new JPopupMenu();
 
@@ -413,7 +412,7 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private void actionSchematicSelected(SWGSchematic s) {
         selectedResource = null;
-        ((SWGListModel) schematicList.getModel()).setSelectedItem(s);
+        ((SWGListModel<SWGSchematic>) schematicList.getModel()).setSelectedItem(s);
 
         if (s != null) {
             List<SWGSchematicWrapper> wl = SWGSchemController.wrappers(s);
@@ -975,13 +974,13 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWAssigneeChooser() {
-        assigneeCombo = new JComboBox(new SWGListModel());
+        assigneeCombo = new JComboBox<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
         assigneeCombo.setToolTipText("Select assignee for favorite schematics");
-        assigneeCombo.setRenderer(new SWGListCellRenderer() {
+        assigneeCombo.setRenderer(new SWGListCellRenderer<SWGGui>() {
 
             @Override
-            protected String labelString(Object value) {
-                SWGGui ass = (SWGGui) value;
+            protected String labelString(SWGGui value) {
+                SWGGui ass = value;
                 return ass != null
                         ? ass.getName()
                         : null;
@@ -1028,12 +1027,12 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWSchemChooser() {
-        schematicList = new JList(new SWGListModel());
+        schematicList = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
         schematicList.setToolTipText("Select a schematic");
-        schematicList.setCellRenderer(new SWGListCellRenderer() {
+        schematicList.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
-            protected String labelString(Object value) {
-                SWGSchematic schem = (SWGSchematic) value;
+            protected String labelString(SWGSchematic value) {
+                SWGSchematic schem = value;
                 return schem != null
                         ? schem.getName()
                         : null;
@@ -1084,7 +1083,7 @@ final class SWGLaboratoryTab extends JPanel {
      * @param popup a popup dialog
      */
     private void schemSelectAddMenu(JPopupMenu popup) {
-        SWGSchematic s = (SWGSchematic) schematicList.getSelectedValue();
+        SWGSchematic s = schematicList.getSelectedValue();
         popup.add(schemTab.schematicSelectMenu(s, this));
     }
 

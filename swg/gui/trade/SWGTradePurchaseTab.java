@@ -155,7 +155,7 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
      * Sets the specified seller to the {@link #filterSellers} field. This method
      * first resets all filter fields and finally triggers filtering.
      * 
-     * @param buyer the name of a buyer
+     * @param seller the name of a seller
      */
     void filterForSeller(String seller) {
         resetGUI();

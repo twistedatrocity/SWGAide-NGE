@@ -49,8 +49,9 @@ public class SWGSoapStatusResponse extends SWGSoapResponse {
                 return "Success";
             case 999:
                 return "User ID and password do not match";
-        }
-        return "Unknown status number: " + status;
+			default:
+				return "Unknown status number: " + status;
+		}
     }
 
     /**

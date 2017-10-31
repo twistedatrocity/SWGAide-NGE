@@ -111,7 +111,7 @@ public final class SWGGuardDialog extends SWGJDialog implements ActionListener {
     /**
      * A GUI combo box for choosing resource class names.
      */
-    private JComboBox resourceClassNameList;
+    private JComboBox<String> resourceClassNameList;
 
     /**
      * The input text input field for the guard's threshold, if the instance is
@@ -443,7 +443,7 @@ public final class SWGGuardDialog extends SWGJDialog implements ActionListener {
 
         List<String> nameL = SWGResourceClass.rcNames();
         Vector<String> nameV = new Vector<String>(nameL);
-        resourceClassNameList = new JComboBox(nameV);
+        resourceClassNameList = new JComboBox<String>(nameV);
         resourceClassNameList.setPreferredSize(new Dimension(230, 25));
         resourceClassNameList.setAlignmentX(Component.LEFT_ALIGNMENT);
         resourceClassNameList.setAutoscrolls(true);

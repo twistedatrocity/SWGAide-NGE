@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-public class SWGListCellRenderer implements ListCellRenderer {
+public class SWGListCellRenderer<T> implements ListCellRenderer<T> {
 
     /**
      * The label for this renderer.
@@ -65,8 +65,7 @@ public class SWGListCellRenderer implements ListCellRenderer {
      * @param isSelected {@code true} if the specified cell is selected
      * @param cellHasFocus {@code true} if the specified cell has the focus
      */
-    @SuppressWarnings("unused")
-    protected void colorBackground(JList list, Object value, int index,
+    protected void colorBackground(JList<? extends T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
         if (isSelected)
@@ -86,8 +85,8 @@ public class SWGListCellRenderer implements ListCellRenderer {
      * @param isSelected {@code true} if the specified cell is selected
      * @param cellHasFocus {@code true} if the specified cell has the focus
      */
-    @SuppressWarnings("unused")
-    protected void colorForeground(JList list, Object value, int index,
+
+    protected void colorForeground(JList<T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
         if (isSelected)
@@ -97,8 +96,8 @@ public class SWGListCellRenderer implements ListCellRenderer {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list,
-            Object value, int index, boolean isSelected,
+    public Component getListCellRendererComponent(JList<? extends T> list,
+            T value, int index, boolean isSelected,
             boolean cellHasFocus) {
 
         label.setText(labelString(list, value, index, isSelected, cellHasFocus));
@@ -122,8 +121,8 @@ public class SWGListCellRenderer implements ListCellRenderer {
      * @param cellHasFocus {@code true} if the specified cell has the focus
      * @return the string to render
      */
-    @SuppressWarnings("unused")
-    protected String labelString(JList list, Object value, int index,
+
+    protected String labelString(JList<? extends T> list, T value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
         return labelString(value);
@@ -137,7 +136,7 @@ public class SWGListCellRenderer implements ListCellRenderer {
      * @param value the object to render as text
      * @return the string to render
      */
-    protected String labelString(Object value) {
+    protected String labelString(T value) {
         return value == null
                 ? ""
                 : value.toString();

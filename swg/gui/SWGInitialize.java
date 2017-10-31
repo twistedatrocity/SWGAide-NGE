@@ -29,7 +29,6 @@ import swg.crafting.UpdateSubscriber;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.model.SWGAliases;
-import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 import swg.model.SWGStation;

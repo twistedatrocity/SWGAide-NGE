@@ -69,7 +69,7 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
     /**
      * A drop down for the owner name
      */
-    private JComboBox ownerName;
+    private JComboBox<String> ownerName;
 
     /**
      * A text input field for the storage value
@@ -270,7 +270,7 @@ final class SWGHarvesterOwnerDialog extends SWGJDialog implements ActionListener
         JPanel content = new JPanel();
         content.setLayout(new SpringLayout());
 
-        ownerName = new JComboBox();
+        ownerName = new JComboBox<String>();
         ownerName.setPreferredSize(new Dimension(150, 24));
         ownerName.setAlignmentX(Component.LEFT_ALIGNMENT);
         ownerName.setToolTipText("Select a character");

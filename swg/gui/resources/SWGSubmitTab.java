@@ -174,7 +174,7 @@ final class SWGSubmitTab extends JPanel {
     /**
      * The GUI component for multiple resources.
      */
-    private JList multipleGUIList;
+    private JList<Object> multipleGUIList;
 
     /**
      * The model for the multiple resources GUI component.
@@ -228,7 +228,7 @@ final class SWGSubmitTab extends JPanel {
     /**
      * The list to filter for resource classes written to the notes file.
      */
-    private JComboBox resourceClassFilter;
+    private JComboBox<String> resourceClassFilter;
 
     /**
      * The GUI component which contains this object, the parent of this
@@ -1231,7 +1231,7 @@ final class SWGSubmitTab extends JPanel {
      * @return the main GUI component
      */
     private Component makeMainPanel() {
-        multipleGUIList = new JList();
+        multipleGUIList = new JList<Object>();
         multipleGUIList
                 .setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         multipleGUIList.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -1312,7 +1312,7 @@ final class SWGSubmitTab extends JPanel {
 
         ls.add("Stat-less");
 
-        resourceClassFilter = new JComboBox(ls.toArray());
+        resourceClassFilter = new JComboBox<String>((String[]) ls.toArray());
         resourceClassFilter.setPreferredSize(new Dimension(250, 26));
         resourceClassFilter.setMaximumSize(new Dimension(300, 26));
         resourceClassFilter.setToolTipText(toolTip);
@@ -2616,7 +2616,7 @@ final class SWGSubmitTab extends JPanel {
      *         Chimaera.Zimoon
      */
     static class MultipleResCellRenderer
-            extends JLabel implements ListCellRenderer {
+            extends JLabel implements ListCellRenderer<Object> {
 
         /**
          * The color for depleted resources.
@@ -2654,7 +2654,7 @@ final class SWGSubmitTab extends JPanel {
         }
 
         @SuppressWarnings("synthetic-access")
-        public Component getListCellRendererComponent(JList list, Object val,
+        public Component getListCellRendererComponent(JList<?> list, Object val,
                 int index, boolean isSelected, boolean cellHasFocus) {
 
             if (isSelected)
@@ -2715,7 +2715,7 @@ final class SWGSubmitTab extends JPanel {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    class MultiResourceModel extends DefaultListModel {
+    class MultiResourceModel extends DefaultListModel<Object> {
 
         /**
          * A convenience dispatcher to

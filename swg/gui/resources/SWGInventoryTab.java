@@ -123,7 +123,7 @@ final class SWGInventoryTab extends JPanel {
      * called from locations where only in-game characters are known, such as
      * the harvesting table.
      */
-    private JComboBox assigneeCombo;
+    private JComboBox<String> assigneeCombo;
 
     /**
      * The bottom-most panel for this GUI component.
@@ -209,7 +209,7 @@ final class SWGInventoryTab extends JPanel {
     /**
      * The GUI component which is used to filter on resource class.
      */
-    private JComboBox resourceClassCombo;
+    private JComboBox<String> resourceClassCombo;
 
     /**
      * The GUI component which contains this object.
@@ -1838,7 +1838,7 @@ final class SWGInventoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeAssigneeComboBox() {
-        assigneeCombo = new JComboBox();
+        assigneeCombo = new JComboBox<String>();
         assigneeCombo.setToolTipText("Select an assignee to filter the view");
         resetAssigneeCombo();
 
@@ -2011,7 +2011,7 @@ final class SWGInventoryTab extends JPanel {
         resCls.add("All");
         resCls.addAll(SWGResourceClass.rcNames());
 
-        resourceClassCombo = new JComboBox(resCls);
+        resourceClassCombo = new JComboBox<String>(resCls);
         resourceClassCombo.setToolTipText(
                 "Select a resource class to filter the view");
 
@@ -3167,8 +3167,9 @@ final class SWGInventoryTab extends JPanel {
             }
             case 16:
                 return wrapper.getNotes();
+			default:
+				return null;
             }
-            return null;
         }
 
         @Override

@@ -115,8 +115,9 @@ public final class SWGSoapNOResResponse extends SWGSoapResResponse {
                     + resource.rc();
         case 999:
             return "User ID and password do not match";
-        }
-        return "Unknown status number: " + status;
+        default:
+			return "Unknown status number: " + status;
+		}
     }
 
     @Override

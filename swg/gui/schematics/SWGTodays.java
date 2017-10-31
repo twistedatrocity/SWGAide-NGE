@@ -139,7 +139,7 @@ class SWGTodays extends JPanel {
     /**
      * A list at which to select an assignee.
      */
-    private JList assigneeList;
+    private JList<SWGSchematicAssignee> assigneeList;
 
     /**
      * A convenience constant array of stats in game order.
@@ -186,7 +186,7 @@ class SWGTodays extends JPanel {
      * A list which displays the schematics that pertain to a selected
      * {@link SWGRCWPair}.
      */
-    private JList schematics;
+    private JList<SWGSchematic> schematics;
 
     /**
      * The component which is the parent for this instance, the tabbed pane.
@@ -270,11 +270,11 @@ class SWGTodays extends JPanel {
      */
     @SuppressWarnings("synthetic-access")
     private void actionAssigneeSelected() {
-        Object o = assigneeList.getSelectedValue();
+        SWGSchematicAssignee o = assigneeList.getSelectedValue();
         Triplet tri = selectedAssignee == o
                 ? todaysTableSelection()
                 : null;
-        selectedAssignee = (SWGSchematicAssignee) o;
+        selectedAssignee = o;
 
         if (selectedAssignee == null) {
             guiClear();
@@ -339,7 +339,7 @@ class SWGTodays extends JPanel {
             if (src == schematics) {
                 schematics.setSelectedIndex(
                             schematics.locationToIndex(e.getPoint()));
-                SWGSchematic s = (SWGSchematic) schematics.getSelectedValue();
+                SWGSchematic s = schematics.getSelectedValue();
 
                 ppp.add(schemTab.schematicSelectMenu(s, this));
 
@@ -384,7 +384,7 @@ class SWGTodays extends JPanel {
      * {@link SWGSchematicTab#schematicSelect(SWGSchematic, JComponent)}.
      */
     private void actionSchematicSelected() {
-        SWGSchematic s = (SWGSchematic) schematics.getSelectedValue();
+        SWGSchematic s = schematics.getSelectedValue();
         schemTab.schematicSelect(s, this);
     }
 
@@ -403,7 +403,7 @@ class SWGTodays extends JPanel {
         rcwPairDetails.setCaretPosition(0);
 
         schematics.clearSelection();
-        ((SWGListModel) schematics.getModel()).setElements(
+        ((SWGListModel<SWGSchematic>) schematics.getModel()).setElements(
                 schematics(tri, selectedAssignee));
         if (updateViewer)
             updateViewer = SWGSchemResViewer.updateDisplay(
@@ -422,7 +422,7 @@ class SWGTodays extends JPanel {
      * @return a menu item
      */
     private JMenuItem assigneeDefaultMenu(int idx) {
-        final String an = ((SWGGui) assigneeList.getModel().getElementAt(idx)).
+        final String an = assigneeList.getModel().getElementAt(idx).
                 getName();
 
         String pn = (String) SWGFrame.getPrefsKeeper().get(
@@ -479,7 +479,7 @@ class SWGTodays extends JPanel {
     private void guiClear() {
         rcwPairDetails.setText("");
         schematics.clearSelection();
-        ((SWGListModel) schematics.getModel()).setElements(null);
+        ((SWGListModel<SWGSchematic>) schematics.getModel()).setElements(null);
         todaysModel.setElements(null);
     }
 
@@ -494,15 +494,15 @@ class SWGTodays extends JPanel {
 
         // Keep for later selection restore
         Triplet tri = todaysTableSelection();
-        Object prv = assigneeList.getSelectedValue();
-        Object sch = schematics.getSelectedValue();
+        SWGSchematicAssignee prv = assigneeList.getSelectedValue();
+        SWGSchematic sch = schematics.getSelectedValue();
 
         assigneeList.clearSelection();
 
         List<SWGSchematicAssignee> as = SWGSchematicTab.assignees();
         as.addAll(assigneeProfession());
 
-        ((SWGListModel) assigneeList.getModel()).setElements(as);
+        ((SWGListModel<SWGSchematicAssignee>) assigneeList.getModel()).setElements(as);
 
         assigneeList.setSelectedValue(prv, true); // restore, if possible
         todaysTableSelect(tri);
@@ -525,7 +525,7 @@ class SWGTodays extends JPanel {
         this.getActionMap().put("keystrokeAltC", new AbstractAction() {
             @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent actionEvent) {
-                Object as = assigneeList.getSelectedValue();
+                SWGSchematicAssignee as = assigneeList.getSelectedValue();
                 assigneeList.clearSelection();
                 todaysTable.getRowSorter().setSortKeys(null);
                 assigneeList.setSelectedValue(as, true);
@@ -580,12 +580,12 @@ class SWGTodays extends JPanel {
      * @return a GUI component
      */
     private Component makeNorthASList() {
-        assigneeList = new JList(new SWGListModel());
+        assigneeList = new JList<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
         assigneeList.setToolTipText("Select assignee for favorite schematics");
-        assigneeList.setCellRenderer(new SWGListCellRenderer() {
+        assigneeList.setCellRenderer(new SWGListCellRenderer<SWGGui>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGGui) value).getName();
+            protected String labelString(SWGGui value) {
+                return value.getName();
             }
         });
 
@@ -862,11 +862,11 @@ class SWGTodays extends JPanel {
      * @return a GUI component
      */
     private Component makeNorthSchematicsList() {
-        schematics = new JList(new SWGListModel());
-        schematics.setCellRenderer(new SWGListCellRenderer() {
+        schematics = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
+        schematics.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
-            protected String labelString(Object value) {
-                return ((SWGSchematic) value).getName();
+            protected String labelString(SWGSchematic value) {
+                return value.getName();
             }
         });
 
@@ -1602,8 +1602,9 @@ class SWGTodays extends JPanel {
             }
             case 15:
                 return Long.valueOf(triplet.current.age()); // age
+			default:
+				return null;
             }
-            return null;
         }
 
         /**

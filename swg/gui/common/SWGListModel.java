@@ -15,13 +15,13 @@ import javax.swing.JList;
  *         Chimaera.Zimoon
  */
 @SuppressWarnings("serial")
-public final class SWGListModel extends AbstractListModel implements
-        ComboBoxModel {
+public final class SWGListModel<T> extends AbstractListModel<T> implements
+        ComboBoxModel<T> {
 
     /**
      * The current list of schematics.
      */
-    private List<? extends Object> elements;
+    private List<T> elements;
 
     /**
      * The selected item, or {@code null}.
@@ -36,7 +36,7 @@ public final class SWGListModel extends AbstractListModel implements
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public T getElementAt(int index) {
         return elements != null
                 ? elements.get(index)
                 : null;
@@ -60,7 +60,7 @@ public final class SWGListModel extends AbstractListModel implements
      * 
      * @param list a list of schematics
      */
-    public void setElements(List<? extends Object> list) {
+    public void setElements(List<T> list) {
         elements = list;
         super.fireContentsChanged(this, 0, getSize() - 1);
     }

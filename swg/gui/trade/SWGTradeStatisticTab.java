@@ -469,9 +469,8 @@ class SWGTradeStatisticTab extends JPanel {
             super();
         }
 
-        @SuppressWarnings("unchecked")
         @Override
-        public Class getColumnClass(int columnIndex) {
+        public Class<?> getColumnClass(int columnIndex) {
             if (columnIndex == 0) return String.class;
             return Long.class;
         }

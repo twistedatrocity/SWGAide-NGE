@@ -79,8 +79,9 @@ public final class SWGSoapAvailResResponse extends SWGSoapResResponse {
                         "first marked available";
         case 999:
             return "User ID and password do not match";
-        }
-        return "Unknown status code: " + status;
+        default:
+			return "Unknown status code: " + status;
+		}
     }
 
     @Override
