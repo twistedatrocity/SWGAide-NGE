@@ -789,7 +789,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
                 updateInstance(kr, mr, true);
                 return kr;
             }
-            if (kr.galaxy() == mr.galaxy())
+            if (kr.galaxy().equals(mr.galaxy()))
                 return kr;
             else if (kr.isDepleted())
                 SWGResourceMgr.remove(kr); // remove from general map
@@ -1243,7 +1243,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         // from SWGCraft.org
         kr = getKnown(mr);
 
-        if (mr.galaxy() != kr.galaxy()) {
+        if (mr.galaxy().equals(kr.galaxy()) == false) {
             // trust the caller to be sending for the proper galaxy
             kr = getKnownTrusted(mr);
         }

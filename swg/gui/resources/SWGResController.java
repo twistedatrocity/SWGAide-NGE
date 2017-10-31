@@ -2082,7 +2082,7 @@ public final class SWGResController implements UpdateSubscriber {
      */
     public static void resourceDetails(SWGKnownResource kr, ZString z) {
         SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
-        if (kr.galaxy() != gxy) z.app('(').app(gxy.getName()).app(')');
+		if (kr.galaxy().equals(gxy) == false) z.app('(').app(gxy.getName()).app(')');
         z.appnl(kr.getName()).app(kr.rc().rcName());
         z.app("\tAge: ").appnl( SWGResController.dateString(kr.age()));
         kr.stats().toString(z, true);

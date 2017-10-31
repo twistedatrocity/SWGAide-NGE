@@ -1134,7 +1134,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
             SWGKnownResource kr = wrap.getResource();
             if (!kr.rc().isSpaceOrRecycled()) {
                 SWGCGalaxy gxy = getGalaxy();
-                if (kr.id() <= 0 && gxy != null && kr.galaxy() != gxy) {
+                 if (kr.id() <= 0 && gxy != null && kr.galaxy().equals(gxy) == false) {
                     SWGMutableResource mr = new SWGMutableResource(kr);
                     mr.galaxy(gxy);
                     SWGResourceManager.updateInstance(kr, mr);

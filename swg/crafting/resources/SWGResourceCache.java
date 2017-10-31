@@ -164,7 +164,7 @@ final class SWGResourceCache {
             throw new NullPointerException("An argument is null");
 
         for (SWGKnownResource kr : cache) {
-            if (kr.galaxy() == galaxy && kr.getName().equals(name))
+            if (kr.galaxy().equals(galaxy) && kr.getName().equals(name))
                 return kr;
         }
         return null;
@@ -225,7 +225,7 @@ final class SWGResourceCache {
 
         SWGResourceSet ret = new SWGResourceSet(cache.size());
         for (SWGKnownResource kr : cache) {
-            if (kr.galaxy() == galaxy)
+            if (kr.galaxy().equals(galaxy))
                 ret.privateAdd(kr); // we are sure kr is valid
         }
         return ret.get();
@@ -256,7 +256,7 @@ final class SWGResourceCache {
 
         SWGResourceSet ret = new SWGResourceSet(cache.size());
         for (SWGKnownResource kr : cache) {
-            if (kr.galaxy() == galaxy && !kr.isDepleted())
+            if (kr.galaxy().equals(galaxy) && !kr.isDepleted())
                 ret.privateAdd(kr); // we are sure kr is valid
         }
         return ret.get();
@@ -283,7 +283,7 @@ final class SWGResourceCache {
         SWGResourceSet ret = new SWGResourceSet(cache.size());
         Class<? extends SWGResourceClass> c = type.getClass();
         for (SWGKnownResource kr : cache) {
-            if (kr.galaxy() == galaxy && kr.rc().isSub(c))
+            if (kr.galaxy().equals(galaxy) && kr.rc().isSub(c))
                 ret.privateAdd(kr); // we are sure kr is valid
         }
         return ret.get();
@@ -347,7 +347,7 @@ final class SWGResourceCache {
                 return kr;
             if (id > 0 && id == kr.id())
                 return kr;
-            if (gx == kr.galaxy() && name.equals(kr.getName()))
+            if (gx.equals(kr.galaxy()) && name.equals(kr.getName()))
                 return kr;
         }
         return null;

@@ -1103,7 +1103,7 @@ class SWGTodays extends JPanel {
             z.app("<tr><td>").app(FS);
             z.app("<b>Inventory: </b></font></td><td>").app(FS);
             SWGKnownResource kr = tri.inventory.getResource();
-            if (kr.galaxy() != SWGFrame.getSelectedGalaxy())
+            if (kr.galaxy().equals(SWGFrame.getSelectedGalaxy()) == false)
                 z.app('(').app(kr.galaxy().getName()).app(')');
             z.app(kr.getName()).app(" --- ");
             z.app(tri.inventory.getResource().rc().rcName());

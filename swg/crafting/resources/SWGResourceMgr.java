@@ -680,7 +680,7 @@ public class SWGResourceMgr {
         // finally, if the former instance is --replaced-- at SWGCraft
         if (isTrusted
                 && known.getName().equals(other.getName())
-                && known.galaxy() == other.galaxy()
+                && known.galaxy().equals(other.galaxy())
                 && other.id() > 0
                 && known.id() < other.id()) {
             // is-trusted: name and galaxy equals but known is older than other

@@ -246,7 +246,7 @@ public final class SWGResourceList implements List<SWGResource> {
                 + galaxy);
 
         for (SWGResource r : storage)
-            if (r.galaxy() == galaxy && r.getName().equals(name))
+            if (r.galaxy().equals(galaxy) && r.getName().equals(name))
                 return r;
 
         return null;

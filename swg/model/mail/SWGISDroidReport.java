@@ -127,7 +127,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
      */
     @SuppressWarnings("synthetic-access")
     public List<Wrapper> depleted(SWGResourceSet inSpawn) {
-        if (!inSpawn.isEmpty() && inSpawn.get(0).galaxy() != gxy())
+		if (!inSpawn.isEmpty() && inSpawn.get(0).galaxy().equals(gxy()) == false)
                 throw new IllegalArgumentException("Wrong galaxy");
 
         // reduce the collection -> planet -> resource class
@@ -486,7 +486,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
             if (obj instanceof Wrapper) {
                 Wrapper o = (Wrapper) obj;
                 return mutable.getName().equals(o.mutable.getName())
-                        && mutable.galaxy() == o.mutable.galaxy();
+						&& mutable.galaxy().equals(o.mutable.galaxy());
             }
             return false;
         }

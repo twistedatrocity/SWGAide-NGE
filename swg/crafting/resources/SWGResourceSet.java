@@ -228,7 +228,7 @@ public final class SWGResourceSet implements Set<SWGKnownResource>,
                 + galaxy);
 
         for (SWGKnownResource kr : storage)
-            if (kr.galaxy() == galaxy && kr.getName().equals(name))
+            if (kr.galaxy().equals(galaxy) && kr.getName().equals(name))
                 return kr;
 
         return null;

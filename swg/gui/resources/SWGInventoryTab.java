@@ -2313,7 +2313,7 @@ final class SWGInventoryTab extends JPanel {
      */
     private void notesWrite(SWGInventoryWrapper w, ZString z) {
         if (!w.getResource().rc().isSpaceOrRecycled()
-                && w.getResource().galaxy() != recentGalaxy) {
+                && w.getResource().galaxy().equals(recentGalaxy) == false) {
             SWGCGalaxy g = w.getResource().galaxy();
             z.app("(").app(g != null
                     ? g.getName()
@@ -3119,7 +3119,7 @@ final class SWGInventoryTab extends JPanel {
                 return wrapper.getAssignee();
             case 1: {
                 SWGCGalaxy g = kr.galaxy();
-                return g != recentGalaxy && g != null
+                return g.equals(recentGalaxy) == false && g != null
                         ? String.format(gxyfmt, g.getName(), kr.getName())
                         : kr.getName();
             }
