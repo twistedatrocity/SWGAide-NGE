@@ -293,7 +293,12 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
         int start = m.fromLine().indexOf('.') + 1;
         int end = m.fromLine().lastIndexOf('.');
         tmp = m.fromLine().substring(start, end);
-        SWGCGalaxy g = SWGCGalaxy.fromName(tmp);
+        SWGCGalaxy g;
+        if(tmp.length() > 0) { //Fix for '..interplanetary survey droid' instead of 'SWG.<servername>.interplanetary survey droid'
+        	g = SWGCGalaxy.fromName(tmp);	
+        } else {
+        	g = m.owner().gxy(); //Set the galaxy to the galaxy of the owner of the mail
+        }
 
         // Planet
         // Interplanetary Survey: Rori - Flora Resources
