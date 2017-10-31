@@ -87,7 +87,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     /**
      * Regular expression used to split from lines
      */
-    private static Pattern regexp = Pattern.compile("SWG\\.([\\w\\-]+)\\.(.+)");
+    private static Pattern regexp = Pattern.compile("[SWG]*\\.([\\w\\-]*)\\.(.+)");
 
     /**
      * The GUI list of mail folders
@@ -594,8 +594,10 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             ff = "Structures Inc";
         else if (ff.startsWith("@veteran"))
             ff = "Veteran Union";
-
-        ZString z = new ZString(ff).app('.').app(match.group(1));
+        ZString z = new ZString(ff);
+        if(match.group(1).length() > 0) {
+        	z.app('.').app(match.group(1));
+        }
         return z.toString();
     }
 
