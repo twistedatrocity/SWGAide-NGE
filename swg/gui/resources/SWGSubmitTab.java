@@ -1311,8 +1311,9 @@ final class SWGSubmitTab extends JPanel {
         ls.addAll(SWGPlanet.names());
 
         ls.add("Stat-less");
-
-        resourceClassFilter = new JComboBox<String>((String[]) ls.toArray());
+        String[] lsArr = new String[ls.size()];
+        lsArr = ls.toArray(lsArr);
+        resourceClassFilter = new JComboBox<String>( lsArr);
         resourceClassFilter.setPreferredSize(new Dimension(250, 26));
         resourceClassFilter.setMaximumSize(new Dimension(300, 26));
         resourceClassFilter.setToolTipText(toolTip);
