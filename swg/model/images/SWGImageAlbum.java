@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import swg.gui.common.SWGGui;
@@ -47,12 +46,6 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
     private final SWGImageSubAlbum defaultList;
 
     /**
-     * A list of sub-albums, sub-lists with images. This list is retained for
-     * backward//forward compatibility. TODO: remove sometimes 2011.
-     */
-    private final ArrayList<SWGImageSubAlbum> subAlbums;
-
-    /**
      * The universe in SWG to which this album pertains.
      */
     private final SWGUniverse universe;
@@ -66,9 +59,7 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
     public SWGImageAlbum(SWGUniverse univ) {
         universe = univ;
 
-        subAlbums = new ArrayList<SWGImageSubAlbum>();
         defaultList = new SWGImageSubAlbum(this, univ.getName());
-        subAlbums.add(defaultList);
     }
 
     /**
@@ -135,40 +126,6 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
         return ret;
     }
 
-    /**
-     * This method transforms this instance to conform to the new album setup,
-     * that it populates itself on demand. Hence this method moves all images to
-     * {@link #defaultList}, if an image does not exist it is ignored. Except
-     * for the default list any previous sub-albums are removed.
-     * <p>
-     * Hence this method executes just the first time a user launches SWGAide
-     * after that these changes are released, in the future an album instance
-     * from the DAT file is empty and this method does nothing.
-     * 
-     * @return {@code this}
-     */
-    private Object readResolve() {
-        if (subAlbums.size() > 1) {
-            // XXX: remove sometimes 2011
-
-            // sanity, clean the default list
-            for (Iterator<SWGImage> iter = defaultList.iterator(); iter.hasNext();)
-                if (!iter.next().exists())
-                    iter.remove();
-
-            // move all others that exist to default list
-            for (SWGImageSubAlbum isa : subAlbums)
-                if (isa != defaultList)
-                    for (SWGImage i : isa)
-                        if (i.exists() && !defaultList.contains(i))
-                            defaultList.add(i);
-
-            // remove all but the default list
-            subAlbums.clear();
-            subAlbums.add(defaultList);
-        }
-        return this;
-    }
 
     /**
      * Refresh the album. This implementation scans this screen-shot album for
