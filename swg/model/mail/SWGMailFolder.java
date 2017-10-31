@@ -37,17 +37,10 @@ public final class SWGMailFolder
     private static final long serialVersionUID = -4923003421490979054L;
 
     /**
-     * The type of this folder; see the constants of this class. Defaults to the
-     * general type. XXX: remove after a while and make isDefaul final, obsolete
-     * from in 0.9.0
-     */
-    private int folderType = 0;
-
-    /**
      * A flag that denotes if this folder is one of the default folder types or
      * not. A default folder must not be erased from a mail-box.
      */
-    private boolean isDefault;
+    private final boolean isDefault;
 
     /**
      * A list of mails contained by this folder.
@@ -336,7 +329,6 @@ public final class SWGMailFolder
      * @return this
      */
     private Object readResolve() {
-        isDefault = folderType != 0; // the old TYPE_GENERAL
         return this;
     }
 
