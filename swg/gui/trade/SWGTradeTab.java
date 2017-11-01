@@ -253,7 +253,7 @@ public class SWGTradeTab extends JTabbedPane {
         archive.setMnemonic('A');
         archive.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 archiveAuctionMails();
             }

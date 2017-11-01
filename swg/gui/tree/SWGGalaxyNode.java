@@ -52,7 +52,7 @@ public class SWGGalaxyNode extends SWGTreeNode {
                 JMenuItem hide = new JMenuItem("Hide", KeyEvent.VK_H);
                 hide.setToolTipText("Hide this node from the view");
                 hide.addActionListener(new ActionListener() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     public void actionPerformed(ActionEvent e) {
                         if (JOptionPane.OK_OPTION
                                 == JOptionPane.showConfirmDialog(

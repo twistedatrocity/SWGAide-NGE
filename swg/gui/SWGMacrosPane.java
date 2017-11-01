@@ -169,7 +169,6 @@ public class SWGMacrosPane extends JTextArea {
                     InputEvent.CTRL_MASK));
             fontBigger.addActionListener(new ActionListener() {
 
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1.2);
                 }
@@ -181,7 +180,6 @@ public class SWGMacrosPane extends JTextArea {
                     InputEvent.CTRL_MASK));
             fontLesser.addActionListener(new ActionListener() {
 
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1 / 1.2);
                 }
@@ -193,7 +191,6 @@ public class SWGMacrosPane extends JTextArea {
                     InputEvent.CTRL_MASK));
             fontNormal.addActionListener(new ActionListener() {
 
-                @SuppressWarnings("hiding")
                 public void actionPerformed(ActionEvent e) {
                     changeFont(0);
                 }

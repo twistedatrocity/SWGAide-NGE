@@ -252,7 +252,7 @@ public final class SWGResController implements UpdateSubscriber {
         SWGResourceManager.addSubscriber(this);
 
         SWGAide.frame().addExitCallback(new SWGDoTask(new TaskCallback() {
-            @SuppressWarnings("synthetic-access")
+            
             public void execute() {
                 doExit();
             }
@@ -287,7 +287,7 @@ public final class SWGResController implements UpdateSubscriber {
     private void alarm(final String kind, final boolean useAlarm) {
         final Timer t = new Timer(6000, new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 if (kind.equals("harvester"))
                     alertGUI("Harvester alarm", "aa0000", useAlarm
@@ -362,7 +362,7 @@ public final class SWGResController implements UpdateSubscriber {
             isScanning = true;
             SwingUtilities.invokeLater(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     int g = guardsCheck(galaxy);
                     if (g != 0) {
@@ -634,7 +634,7 @@ public final class SWGResController implements UpdateSubscriber {
         JMenuItem mi = new JMenuItem("Harvested from...");
         mi.setToolTipText(tt);
         mi.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 creatureHarvDialog(cr, c);
@@ -832,7 +832,7 @@ public final class SWGResController implements UpdateSubscriber {
 
         boolean b = rc != null && comp != null;
         if (b) grd.addActionListener(new ActionListener() {
-            @SuppressWarnings( { "synthetic-access" })
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 String msg = String.format(
@@ -881,7 +881,7 @@ public final class SWGResController implements UpdateSubscriber {
 
         boolean b = rc != null && wgs != null && comp != null;
         if (b) grd.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardMenuAction(rc, wgs, gxy, "HQ missing", notes, comp);
@@ -1857,7 +1857,7 @@ public final class SWGResController implements UpdateSubscriber {
         JMenuItem mm = new JMenuItem("Add monitor");
         mm.setToolTipText("Add selected resource to the list of monitors");
         mm.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 monitorAddAction(kr, s);
                 SWGResourceTab.currentUpdateGUI();

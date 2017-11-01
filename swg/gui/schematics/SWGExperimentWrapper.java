@@ -232,7 +232,7 @@ final class SWGExperimentWrapper implements SWGGui {
                 handleResSlot(rs, null, false, false, ret); // only res slots
 
         Collections.sort(ret, new Comparator<SWGExperimentWrapper>() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public int compare(SWGExperimentWrapper o1, SWGExperimentWrapper o2) {
                 if (o1.isPrio == o2.isPrio) {

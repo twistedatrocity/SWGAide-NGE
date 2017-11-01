@@ -60,7 +60,7 @@ final class SWGTreeTable extends SWGJTable {
      * creates a tree-table model using {@link SWGResourceClassTree} as the
      * backing root.
      */
-    @SuppressWarnings("synthetic-access")
+    
     SWGTreeTable() {
         super();
 
@@ -281,7 +281,7 @@ final class SWGTreeTable extends SWGJTable {
          * 
          * @return an instance of ListSelectionHandler
          */
-        @SuppressWarnings("synthetic-access")
+        
         private ListSelectionListener createListSelectionListener() {
             return new ListSelectionHandler();
         }
@@ -322,7 +322,7 @@ final class SWGTreeTable extends SWGJTable {
          * If {@code updatingListSelectionModel} is false, this will reset the
          * selected paths from the selected rows in the list selection model.
          */
-        @SuppressWarnings("synthetic-access")
+        
         private void updateSelectedPathsFromSelectedRows() {
             if (!updatingListSelectionModel) {
                 updatingListSelectionModel = true;
@@ -356,7 +356,7 @@ final class SWGTreeTable extends SWGJTable {
         private final class ListSelectionHandler implements
                 ListSelectionListener {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void valueChanged(ListSelectionEvent e) {
                 updateSelectedPathsFromSelectedRows();
             }
@@ -476,13 +476,13 @@ final class SWGTreeTable extends SWGJTable {
     private final class TreeTableCellEditor extends AbstractCellEditor
             implements TableCellEditor {
 
-        @SuppressWarnings("synthetic-access")
+        
         public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int r, int c) {
             return tree;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public boolean isCellEditable(EventObject e) {
             if (e instanceof MouseEvent) {

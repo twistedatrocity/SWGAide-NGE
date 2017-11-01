@@ -372,7 +372,7 @@ final class SWGSubmitTab extends JPanel {
      * </OL>
      * The communication with SWGCraft.org executes on a worker thread.
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void actionSubmitMulti() {
 
         if (multipleResources == null || multipleResources.size() <= 0) {
@@ -1154,7 +1154,7 @@ final class SWGSubmitTab extends JPanel {
 
         clearButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionClearAndReset();
             }
@@ -1215,7 +1215,7 @@ final class SWGSubmitTab extends JPanel {
         noteFileLoadButton.setToolTipText(toolTip);
 
         noteFileLoadButton.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionLoadNotes();
             }
@@ -1247,7 +1247,7 @@ final class SWGSubmitTab extends JPanel {
 
         multipleGUIList.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionTableClicked(e);
@@ -1276,7 +1276,7 @@ final class SWGSubmitTab extends JPanel {
 
         multiSubmitButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionSubmitMulti();
             }
@@ -1380,7 +1380,7 @@ final class SWGSubmitTab extends JPanel {
         singleResourceNameInput = makeTextField(nt);
         ((AbstractDocument) singleResourceNameInput.getDocument())
                 .setDocumentFilter(new SWGDocFilter() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     protected boolean isValid(String s) {
                         if (s == null || s.isEmpty() || ZString.isAlpha(s)) {
@@ -1426,7 +1426,7 @@ final class SWGSubmitTab extends JPanel {
         resetSingleSubmitButton();
         singleSubmitButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionSubmitSingle();
             }
@@ -1463,7 +1463,7 @@ final class SWGSubmitTab extends JPanel {
         write.setToolTipText(toolTip);
 
         write.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionWriteNotes(write);
             }
@@ -1490,7 +1490,7 @@ final class SWGSubmitTab extends JPanel {
         del.setToolTipText("Delete selected entry, does not affect the file");
         del.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent ev) {
                 actionDelete(row);
             }
@@ -1886,7 +1886,7 @@ final class SWGSubmitTab extends JPanel {
             final SWGCGalaxy g, final String err, final List<Wrapper> sim) {
         
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 if (!err.isEmpty()) showErrorDialog(
@@ -2110,7 +2110,7 @@ final class SWGSubmitTab extends JPanel {
         final ExecutorService exec = Executors.newSingleThreadExecutor();
         exec.execute(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 String error = "";
                 try {
@@ -2210,7 +2210,7 @@ final class SWGSubmitTab extends JPanel {
         // sort in 30k-deed-wise
         Collections.sort(mand, new Comparator<Object>() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public int compare(Object o1, Object o2) {
                 return getResourceClass(o1).compareTo(getResourceClass(o2));
             }
@@ -2654,7 +2654,7 @@ final class SWGSubmitTab extends JPanel {
             selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 1);
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Component getListCellRendererComponent(JList<?> list, Object val,
                 int index, boolean isSelected, boolean cellHasFocus) {
 
@@ -2726,7 +2726,7 @@ final class SWGSubmitTab extends JPanel {
             super.fireContentsChanged(this, 0, getSize() - 1);
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public Object getElementAt(int index) {
             return (multipleResources == null
@@ -2734,7 +2734,7 @@ final class SWGSubmitTab extends JPanel {
                     : multipleResources.get(index));
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public int getSize() {
             return (multipleResources == null
@@ -2754,17 +2754,17 @@ final class SWGSubmitTab extends JPanel {
      */
     class PlanetFieldListener implements DocumentListener {
 
-        @SuppressWarnings("synthetic-access")
+        
         public void changedUpdate(DocumentEvent e) {
             singleParsePlanets();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public void insertUpdate(DocumentEvent e) {
             singleParsePlanets();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public void removeUpdate(DocumentEvent e) {
             singleParsePlanets();
         }
@@ -2793,7 +2793,7 @@ final class SWGSubmitTab extends JPanel {
          * Helper method which nullifies some input fields and sets {code
          * resourceClass} to {@code null}.
          */
-        @SuppressWarnings("synthetic-access")
+        
         private void nullifyFields() {
             singleResourceClassDisplay.setText("  ");
             singleResourceStatsDisplay.setText("  ");
@@ -2807,7 +2807,7 @@ final class SWGSubmitTab extends JPanel {
          * then a message is displayed at the error label. If the input is valid
          * this method updates {code resourceClass} accordingly.
          */
-        @SuppressWarnings("synthetic-access")
+        
         private void processInput() {
             String input = singleResourceClassInput.getText().trim();
 
@@ -2888,17 +2888,17 @@ final class SWGSubmitTab extends JPanel {
      */
     class ResourceStatsFieldListener implements DocumentListener {
 
-        @SuppressWarnings("synthetic-access")
+        
         public void changedUpdate(DocumentEvent e) {
             statsParse();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public void insertUpdate(DocumentEvent e) {
             statsParse();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public void removeUpdate(DocumentEvent e) {
             statsParse();
         }

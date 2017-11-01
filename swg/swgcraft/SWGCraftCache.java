@@ -438,7 +438,6 @@ public final class SWGCraftCache {
             final ExecutorService exec = Executors.newSingleThreadExecutor();
             exec.execute(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
                 public void run() {
                     try {
                         if (update(profXML, urlProfLevels(), false))

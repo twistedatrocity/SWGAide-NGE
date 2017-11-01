@@ -268,7 +268,7 @@ class SWGTodays extends JPanel {
      * updates the table model with the result which in its turn updates the
      * table. If the argument is {@code null} this method resets this GUI.
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void actionAssigneeSelected() {
         SWGSchematicAssignee o = assigneeList.getSelectedValue();
         Triplet tri = selectedAssignee == o
@@ -475,7 +475,7 @@ class SWGTodays extends JPanel {
     /**
      * 
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void guiClear() {
         rcwPairDetails.setText("");
         schematics.clearSelection();
@@ -523,7 +523,7 @@ class SWGTodays extends JPanel {
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK),
                 "keystrokeAltC");
         this.getActionMap().put("keystrokeAltC", new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent actionEvent) {
                 SWGSchematicAssignee as = assigneeList.getSelectedValue();
                 assigneeList.clearSelection();
@@ -590,7 +590,7 @@ class SWGTodays extends JPanel {
         });
 
         assigneeList.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -599,7 +599,7 @@ class SWGTodays extends JPanel {
             }
         });
         assigneeList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionAssigneeMouse(e);
@@ -639,7 +639,7 @@ class SWGTodays extends JPanel {
         rcwPairDetails.setEditable(false);
 
         rcwPairDetails.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionMouse(e);
@@ -726,7 +726,7 @@ class SWGTodays extends JPanel {
         ageSpinner.setToolTipText(tt);
 
         ageSpinner.addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void stateChanged(ChangeEvent e) {
                 Integer a = (Integer) ageSpinner.getValue();
@@ -776,7 +776,7 @@ class SWGTodays extends JPanel {
             /* Remember old great-value until next click */
             boolean oldGreat;
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 isWorking = true;
@@ -816,7 +816,7 @@ class SWGTodays extends JPanel {
         invSpinner.setToolTipText(tt);
 
         invSpinner.addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void stateChanged(ChangeEvent e) {
                 Integer u = (Integer) invSpinner.getValue();
@@ -840,7 +840,7 @@ class SWGTodays extends JPanel {
         kmCheck = new JCheckBox();
         kmCheck.setToolTipText(tt);
         kmCheck.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 SWGFrame.getPrefsKeeper().add("schemTodaysIgnoreKM",
@@ -871,7 +871,7 @@ class SWGTodays extends JPanel {
         });
 
         schematics.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -880,7 +880,7 @@ class SWGTodays extends JPanel {
             }
         });
         schematics.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionMouse(e);
@@ -888,7 +888,7 @@ class SWGTodays extends JPanel {
         });
 
         Box hb = new Box(BoxLayout.LINE_AXIS) {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -936,7 +936,7 @@ class SWGTodays extends JPanel {
      * 
      * @return a GUI component
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Component makeTable() {
         todaysModel = new TodaysTableModel();
         todaysTable = new SWGJTable(todaysModel);
@@ -1049,7 +1049,7 @@ class SWGTodays extends JPanel {
      * 
      * @param tri a triplet, or {@code null}
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void todaysTableSelect(Triplet tri) {
         if (tri == null) return;
         int i = 0;
@@ -1071,7 +1071,7 @@ class SWGTodays extends JPanel {
      * 
      * @return a selected element, or {@code null}
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Triplet todaysTableSelection() {
         int row = todaysTable.getSelectedRow();
         if (row < 0) return null;
@@ -1470,7 +1470,7 @@ class SWGTodays extends JPanel {
          */
         private List<Triplet> elements;
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(
                 int row, int column, Object value) {
@@ -1568,7 +1568,7 @@ class SWGTodays extends JPanel {
                     : 0;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Object getValueAt(int rowIndex, int columnIndex) {
             Triplet triplet = getElement(rowIndex);
             if (triplet == null) return null;

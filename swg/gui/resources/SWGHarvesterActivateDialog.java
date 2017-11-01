@@ -296,7 +296,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
      * 
      * @param e the event which triggered this action
      */
-    private void actionOwnerSelected(@SuppressWarnings("unused") ItemEvent e) {
+    private void actionOwnerSelected(ItemEvent e) {
         String sel = (String) ownerList.getSelectedItem();
         if (sel == null || isWorking) return;
 
@@ -719,7 +719,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
 
         east.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionResetHarvester(e);
@@ -790,7 +790,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         harvesterList.setAutoscrolls(true);
         harvesterList.addItemListener(new ItemListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     actionHarvesterSelected();
@@ -799,7 +799,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         });
         harvesterList.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionResetHarvester(e);
@@ -820,7 +820,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         ownerList.setAutoscrolls(true);
         ownerList.addItemListener(new ItemListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     actionOwnerSelected(e);

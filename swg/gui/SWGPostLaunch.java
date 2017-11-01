@@ -429,7 +429,7 @@ final class SWGPostLaunch {
                 // we touch Swing GUI, hence a swing safe thread
                 SwingUtilities.invokeLater(new Runnable() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void run() {
                         String u = SWGConstants.swgAideURL + "swgaide";

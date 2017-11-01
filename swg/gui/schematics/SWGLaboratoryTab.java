@@ -453,7 +453,7 @@ final class SWGLaboratoryTab extends JPanel {
         popup.addSeparator();
 
         ActionListener ac = new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent ee) {
                 String c = ee.getActionCommand();
@@ -598,7 +598,7 @@ final class SWGLaboratoryTab extends JPanel {
     private Action makeActionNotesSave() {
         if (actionNotesSave == null)
             actionNotesSave = new AbstractAction() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!notesFieldIsEdited) return;
@@ -632,7 +632,7 @@ final class SWGLaboratoryTab extends JPanel {
 
         TableCellRenderer dr =
                 new SWGDecoratedTableCellRenderer(resourceModel) {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     protected void myBackground(JTable table, Object value,
                             boolean isSelected, boolean hasFocus, int row,
@@ -684,7 +684,7 @@ final class SWGLaboratoryTab extends JPanel {
 
         resourceTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
@@ -704,7 +704,7 @@ final class SWGLaboratoryTab extends JPanel {
                 });
         
         resourceTable.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionResourceTableMouse(e);
@@ -734,7 +734,7 @@ final class SWGLaboratoryTab extends JPanel {
         fltd.setToolTipText("Let \"All\" use the filters from Draft Schematics");
         fltd.setSelected(bf);
         fltd.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 SWGFrame.getPrefsKeeper().add("schemLaboratoryFilterAll",
@@ -755,7 +755,7 @@ final class SWGLaboratoryTab extends JPanel {
     private JMenuItem makeMenuFindSchem() {
         final JMenuItem find = SWGSchematicTab.findSchematicMenu();
         find.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent ee) {
                 findSchematic(find.getToolTipText());
@@ -775,7 +775,7 @@ final class SWGLaboratoryTab extends JPanel {
         JMenuItem sl = new JMenuItem("Resource amount...");
         sl.setToolTipText("Adjust the max amount of resources to display");
         sl.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionReslimitSlider();
@@ -836,7 +836,7 @@ final class SWGLaboratoryTab extends JPanel {
         JButton tb = new JButton("Test Bench");
         tb.setToolTipText("Open the Test Bench window");
         tb.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object o = schematicList.getSelectedValue();
@@ -867,7 +867,7 @@ final class SWGLaboratoryTab extends JPanel {
         SWGGuiUtils.tableColumnSetWidth(it, 1, 10, 50, 70);
         it.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting())
@@ -914,26 +914,26 @@ final class SWGLaboratoryTab extends JPanel {
                 makeActionNotesSave());
 
         notesField.getDocument().addDocumentListener(new DocumentListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void changedUpdate(DocumentEvent e) {
                 actionNotesEdited();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void insertUpdate(DocumentEvent e) {
                 actionNotesEdited();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void removeUpdate(DocumentEvent e) {
                 actionNotesEdited();
             }
         });
         notesField.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionNotesMouse(e);
@@ -987,7 +987,7 @@ final class SWGLaboratoryTab extends JPanel {
             }
         });
         assigneeCombo.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object o = assigneeCombo.getSelectedItem();
@@ -995,7 +995,7 @@ final class SWGLaboratoryTab extends JPanel {
             }
         });
         assigneeCombo.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionAssigneeMouse(e);
@@ -1039,7 +1039,7 @@ final class SWGLaboratoryTab extends JPanel {
             }
         });
         schematicList.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -1049,7 +1049,7 @@ final class SWGLaboratoryTab extends JPanel {
             }
         });
         schematicList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionSchematicsMouse(e);
@@ -1304,7 +1304,7 @@ final class SWGLaboratoryTab extends JPanel {
             super();
         }
         
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {

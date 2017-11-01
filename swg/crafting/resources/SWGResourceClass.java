@@ -76,7 +76,7 @@ public abstract class SWGResourceClass implements Serializable,
      * A helper instance that represents the abstract top resource class. This
      * instance must only be used in GUI trees and their models.
      */
-    @SuppressWarnings("synthetic-access")
+    
     public static final SWGResourceClass INSTANCE = new SWGResourceClassRoot();
 
     /**

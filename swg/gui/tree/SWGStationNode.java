@@ -59,7 +59,7 @@ public final class SWGStationNode extends SWGTreeNode {
         a.setToolTipText("Add another notes file to the selected station");
         a.setMnemonic(KeyEvent.VK_N);
         a.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 addNotesObject();
             }
@@ -99,7 +99,7 @@ public final class SWGStationNode extends SWGTreeNode {
                     JMenuItem hide = new JMenuItem("Hide", KeyEvent.VK_H);
                     hide.setToolTipText("Hide this node from the view");
                     hide.addActionListener(new ActionListener() {
-                        @SuppressWarnings("synthetic-access")
+                        
                         public void actionPerformed(ActionEvent e) {
                             if (JOptionPane.OK_OPTION
                                     == JOptionPane.showConfirmDialog(
@@ -174,7 +174,7 @@ public final class SWGStationNode extends SWGTreeNode {
         refresh.setToolTipText("Check for new notes files for this station");
         refresh.setMnemonic('R');
         refresh.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 refreshNotes();
             }

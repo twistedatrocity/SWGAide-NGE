@@ -270,7 +270,7 @@ final class SWGInventoryTab extends JPanel {
      * 
      * @param e the event which triggered the call
      */
-    private void actionAssigneDelete(@SuppressWarnings("unused") ActionEvent e) {
+    private void actionAssigneDelete(ActionEvent e) {
         if (isWorking)
             return;
 
@@ -738,7 +738,7 @@ final class SWGInventoryTab extends JPanel {
         add.setToolTipText("Define and add an assignee");
         add.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionAssigneeAdd(e);
             }
@@ -751,7 +751,7 @@ final class SWGInventoryTab extends JPanel {
         del.setToolTipText("Delete an assignee, in-game characters excluded");
         del.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionAssigneDelete(e1);
             }
@@ -885,7 +885,7 @@ final class SWGInventoryTab extends JPanel {
         final SWGCGalaxy currentGxy = recentGalaxy;
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 List<SWGInventoryWrapper> wl = fileReadWorker(
                         file, order, assignee, currentGxy, isJNF);
@@ -1643,7 +1643,7 @@ final class SWGInventoryTab extends JPanel {
      */
     private void importDone() {
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 frame.putToStatbar("Done");
                 frame.putToLogbar_2(null);
@@ -1850,7 +1850,7 @@ final class SWGInventoryTab extends JPanel {
         });
         assigneeCombo.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!isWorking && e.getModifiers() == InputEvent.BUTTON3_MASK) {
@@ -1892,7 +1892,7 @@ final class SWGInventoryTab extends JPanel {
         clearButton.setMnemonic('C');
 
         clearButton.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionResetBottomPanel();
             }
@@ -1948,14 +1948,14 @@ final class SWGInventoryTab extends JPanel {
 
         table.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting())
                             actionTableSelect();
                     }
                 });
         table.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionTableMouse(e);
@@ -1969,7 +1969,7 @@ final class SWGInventoryTab extends JPanel {
                     public void columnAdded(TableColumnModelEvent e) { /* pass */
                     }
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     public void columnMarginChanged(ChangeEvent e) {
                         resizeBottomPanel();
                     }
@@ -1991,7 +1991,7 @@ final class SWGInventoryTab extends JPanel {
 
         // also listen to mouse clicks at an empty table
         jsp.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionTableMouse(e);
@@ -2133,7 +2133,7 @@ final class SWGInventoryTab extends JPanel {
         final SWGCGalaxy g = recentGalaxy;
 
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 List<SWGInventoryWrapper> lst = notesReadWorker(notes, a, g);
                 SWGResController.inventoryAdd(lst, g);
@@ -2445,7 +2445,7 @@ final class SWGInventoryTab extends JPanel {
             return;
 
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 resizeComponent(assigneeCombo, 0, 20);
                 resizeComponent(bottomPanel.getComponent(1), 1, -20);
@@ -2611,7 +2611,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem dupl = new JMenuItem("Find duplicates");
         dupl.setToolTipText("Filter to find duplicate resource entries");
         dupl.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e1) {
                 resetBottomPanel();
@@ -2629,7 +2629,7 @@ final class SWGInventoryTab extends JPanel {
         merg.setToolTipText(String.format(
                 "Merge all duplicate resource entries to \"%s\"", s));
         merg.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e1) {
                 actionDuplicatesMerge(s, dl);
@@ -2642,7 +2642,7 @@ final class SWGInventoryTab extends JPanel {
         move.setToolTipText(String.format(
                 "Move visible resource entries from \"%s\" to...", s));
         move.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e1) {
                 actionMove(s);
@@ -2659,7 +2659,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem create = new JMenuItem("Create guard...");
         create.setToolTipText("Create a guard based in the selected entry");
         create.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionGuardCreate(row);
             }
@@ -2672,7 +2672,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem exp = new JMenuItem("File export...");
         exp.setToolTipText("Export the current view to CSV file");
         exp.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionExportToFile();
             }
@@ -2683,7 +2683,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem impf = new JMenuItem("File import...");
         impf.setToolTipText("Import inventory from CSV file");
         impf.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionImportFile();
             }
@@ -2697,7 +2697,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem impn = new JMenuItem("Notes import / update...");
         impn.setToolTipText("Import / Update inventory from in-game notes file");
         impn.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionImportNotes(toon);
             }
@@ -2708,7 +2708,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem expn = new JMenuItem("Notes export...");
         expn.setToolTipText("Export current display to in-game notes file");
         expn.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionExportNotes(toon);
             }
@@ -2721,7 +2721,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem copy = new JMenuItem("Galaxy copy...");
         copy.setToolTipText("Copy this inventory to another galaxy");
         copy.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionCopyAll();
             }
@@ -2734,7 +2734,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem delall = new JMenuItem("Delete all");
         delall.setToolTipText("Delete all entries of the current view");
         delall.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionDeleteEntries();
             }
@@ -2745,7 +2745,7 @@ final class SWGInventoryTab extends JPanel {
         JMenuItem del = new JMenuItem("Delete entry");
         del.setToolTipText("Delete the selected entry");
         del.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionDeleteEntry(row);
             }
@@ -2961,7 +2961,7 @@ final class SWGInventoryTab extends JPanel {
         if (filter != null && filter instanceof SWGWeights
                 && resourceClass != null)
             comp = new Comparator<SWGInventoryWrapper>() {
-                @SuppressWarnings( { "synthetic-access" })
+                
                 final SWGWeightComparator cmp = new SWGWeightComparator(
                         (SWGWeights) filter, resourceClass, true);
 
@@ -3004,10 +3004,10 @@ final class SWGInventoryTab extends JPanel {
         Comparator<SWGInventoryWrapper> comp =
                 new Comparator<SWGInventoryWrapper>() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     SWGResourceClass cls = resourceClass;
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     SWGWeights wgt = (SWGWeights) filter;
 
                     public int compare(SWGInventoryWrapper w1,
@@ -3049,7 +3049,7 @@ final class SWGInventoryTab extends JPanel {
          */
         private final String gxyfmt = "(%s)%s";
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -3094,13 +3094,13 @@ final class SWGInventoryTab extends JPanel {
             return columnNames[column];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public int getRowCount() {
             if (!isGuiCreated) return 0;
             return wrappersFiltered().size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Object getValueAt(int row, int col) {
             int sz = wrappersFiltered().size();
             if (sz <= row || (isWorking && SWGConstants.DEV_DEBUG)) {
@@ -3180,7 +3180,7 @@ final class SWGInventoryTab extends JPanel {
             return false;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public void setValueAt(Object value, int rowIndex, int columnIndex) {
             SWGInventoryWrapper wr = wrappersFiltered().get(rowIndex);

@@ -70,7 +70,7 @@ public final class SWGResourceClassTree {
     /**
      * Creates an instance of this type and initiates the static tree structure.
      */
-    @SuppressWarnings("synthetic-access")
+    
     public SWGResourceClassTree() {
         if (root != null)
             throw new IllegalStateException("Instance exists already");
@@ -91,7 +91,7 @@ public final class SWGResourceClassTree {
      * 
      * @param p a node in this tree
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void populate(RCNode p) {
         Class<? extends SWGResourceClass> c = p.resClass.getClass();
         for (int i = 1; i < SWGResourceClassInfo.swgIDtoInstance.size(); ++i) {
@@ -118,7 +118,7 @@ public final class SWGResourceClassTree {
      * 
      * @param r the root of this tree
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void populateRoot(RCNode r) {
         populate(new RCNode(r, SWGEnergy.getInstance()));
         populate(new RCNode(r, SWGOrganic.getInstance()));
@@ -422,7 +422,7 @@ public final class SWGResourceClassTree {
          * @param rc a resource class
          * @throws NullPointerException if {@code rc} is {@code null}
          */
-        @SuppressWarnings("synthetic-access")
+        
         private RCNode(RCNode p, SWGResourceClass rc) {
             parent = p;
             level = p == null

@@ -201,14 +201,14 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 Integer.valueOf(100))).intValue());
 
         mailSaveAs = new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 mailSaveAs();
             }
         };
 
         frame.addExitCallback(new SWGDoTask(new SWGDoTask.TaskCallback() {
-            @SuppressWarnings("synthetic-access")
+            
             public void execute() {
                 doExit();
             }
@@ -254,7 +254,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * 
      * @param e the mouse event causing this action
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void actionMailBody(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) {
             JPopupMenu popup = new JPopupMenu();
@@ -410,7 +410,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem folderAdd = new JMenuItem("Add folder...");
         folderAdd.setToolTipText("Add another folder");
         folderAdd.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 folderAddFolder();
             }
@@ -458,7 +458,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem folderDelete = new JMenuItem("Delete folder");
         folderDelete.setToolTipText("Delete selected folder");
         folderDelete.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 folderDelete();
             }
@@ -529,7 +529,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem folderRename = new JMenuItem("Rename folder...");
         folderRename.setToolTipText("Rename selected folder");
         folderRename.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 folderRename();
             }
@@ -645,7 +645,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         md.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, InputEvent.CTRL_MASK));
         md.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 mailBody.copy();
             }
@@ -809,7 +809,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem mv = new JMenuItem("Move mails...");
         mv.setToolTipText("Move selected mails to another folder");
         mv.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 mailMove();
             }
@@ -873,7 +873,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem mv = new JMenuItem("Save mail as...");
         mv.setToolTipText("Save selected mail to another file");
         mv.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 mailSaveAs();
             }
@@ -916,7 +916,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem ms = new JMenuItem("Search mails...");
         ms.setToolTipText("Search this character's folders for mails with text");
         ms.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 mailSearch();
             }
@@ -927,7 +927,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     /**
      * Creates key actions for the mail body font size
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void makeKeyActions() {
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, InputEvent.CTRL_MASK),
@@ -974,7 +974,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         folderScroll.setColumnHeaderView(lab);
 
         folderList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionFolderList(e);
@@ -1001,7 +1001,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
      * @return the mail clients uppermost pane containing a list of folders and
      *         a list (table) of mails for the selected folder
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Component makeNorthPanel() {
         upperSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         upperSplitPane.setDividerSize(5);
@@ -1302,7 +1302,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 "ISDroidSingleSelection", Boolean.FALSE)).booleanValue());
 
         single.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 SWGFrame.getPrefsKeeper().add("ISDroidSingleSelection",
                         Boolean.valueOf(single.isSelected()));
@@ -1522,7 +1522,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             this.setLayoutOrientation(JList.VERTICAL);
 
             this.addListSelectionListener(new ListSelectionListener() {
-                @SuppressWarnings("synthetic-access")
+                
                 public void valueChanged(ListSelectionEvent e) {
                     if (!e.getValueIsAdjusting()) {
                         String s = folderList.getSelectedValue();
@@ -1554,7 +1554,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
             this.addMouseListener(new MouseAdapter() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     actionMailBody(e);
@@ -1609,7 +1609,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
          * 
          * @return the lower component
          */
-        @SuppressWarnings("synthetic-access")
+        
         private Component lowerRow() {
             JPanel p = new JPanel();
             BoxLayout bl = new BoxLayout(p, BoxLayout.X_AXIS);
@@ -1714,7 +1714,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                         }
                     });
             this.addMouseListener(new MouseAdapter() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
@@ -1775,7 +1775,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
          * 
          * @param mailBox the mail box to scan
          */
-        @SuppressWarnings("synthetic-access")
+        
         void startDialogue(SWGMailBox mailBox) {
             if (mailBox == null) return;
 
@@ -1850,7 +1850,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             return columnNames.length;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public int getRowCount() {
             return messages == null
@@ -1858,7 +1858,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                     : messages.size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public Object getValueAt(int row, int column) {
             if (messages == null) return "";

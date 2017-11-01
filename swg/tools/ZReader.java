@@ -58,7 +58,6 @@ public final class ZReader {
      * @param text {@code true} for character stream
      * @throws Exception if there is an error
      */
-    @SuppressWarnings("unused")
     private ZReader(InputStream in, boolean text) throws Exception {
         bin = new BufferedInputStream(in);
         txt = text

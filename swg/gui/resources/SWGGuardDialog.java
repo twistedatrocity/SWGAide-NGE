@@ -392,7 +392,7 @@ public final class SWGGuardDialog extends SWGJDialog implements ActionListener {
      * @param txt the text for the tool tip
      * @return a GUI component
      */
-    @SuppressWarnings("synthetic-access")
+    
     private JTextField makeFieldTextField(String txt) {
         final JTextField fld = new JTextField();
         fld.setToolTipText(txt);
@@ -451,7 +451,7 @@ public final class SWGGuardDialog extends SWGJDialog implements ActionListener {
                 "Select a resource class for the guard");
         
         resourceClassNameList.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 resourceClassNameSelected();
             }

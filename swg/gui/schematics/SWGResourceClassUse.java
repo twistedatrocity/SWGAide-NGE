@@ -684,7 +684,7 @@ final class SWGResourceClassUse extends JPanel {
 
         resClassList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         resClassList.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -695,7 +695,7 @@ final class SWGResourceClassUse extends JPanel {
             }
         });
         resClassList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionResClassListMouse(e);
@@ -707,7 +707,7 @@ final class SWGResourceClassUse extends JPanel {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         Box bp = new Box(BoxLayout.Y_AXIS) {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -737,7 +737,7 @@ final class SWGResourceClassUse extends JPanel {
         resClassTree = new JTree(resClassTreeModel);
 
         resClassTree.setCellRenderer(new DefaultTreeCellRenderer() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Component getTreeCellRendererComponent(JTree tree,
                     Object value, boolean sel, boolean expanded, boolean leaf,
@@ -754,7 +754,7 @@ final class SWGResourceClassUse extends JPanel {
         });
 
         resClassTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath p = resClassTree.getSelectionPath();
@@ -769,7 +769,7 @@ final class SWGResourceClassUse extends JPanel {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         MouseListener ml = new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionResClassTreeMouse(e);
@@ -779,7 +779,7 @@ final class SWGResourceClassUse extends JPanel {
         jsp.addMouseListener(ml);
 
         Box bp = new Box(BoxLayout.Y_AXIS) {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -808,7 +808,7 @@ final class SWGResourceClassUse extends JPanel {
                 "More schematics", displayMoreSchems);
         cb.setToolTipText("Display also schematics that can use selected class");
         cb.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionDisplayMoreSchematics(cb.isSelected());
@@ -841,7 +841,7 @@ final class SWGResourceClassUse extends JPanel {
         fold.setEnabled(resClassTreeModel.elementCount() > 0);
 
         fold.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 expandTree = !expandTree; // toggle
@@ -869,7 +869,7 @@ final class SWGResourceClassUse extends JPanel {
         write.setEnabled(enable);
 
         write.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionWriteResourceClasses();
@@ -890,7 +890,7 @@ final class SWGResourceClassUse extends JPanel {
      */
     private Component makeWest() {
         JPanel wp = new JPanel(new BorderLayout()) {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -930,7 +930,7 @@ final class SWGResourceClassUse extends JPanel {
         resetProf.setEnabled(false);
         resetProf.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 String s = (String) professionBox.getSelectedItem();
@@ -945,7 +945,7 @@ final class SWGResourceClassUse extends JPanel {
 
             Object prevProf = null;
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 String s = (String) professionBox.getSelectedItem();
@@ -1007,7 +1007,7 @@ final class SWGResourceClassUse extends JPanel {
 
         schematicsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         schematicsList.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -1019,7 +1019,7 @@ final class SWGResourceClassUse extends JPanel {
             }
         });
         schematicsList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionSchematicMouse(e);
@@ -1176,7 +1176,7 @@ final class SWGResourceClassUse extends JPanel {
         popup.addSeparator();
 
         ActionListener ac = new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent ee) {
                 String c = ee.getActionCommand();
@@ -1270,7 +1270,7 @@ final class SWGResourceClassUse extends JPanel {
          * 
          * @param resClasses a list of resource classes, or {@code null}
          */
-        @SuppressWarnings("synthetic-access")
+        
         void setContent(List<SWGResourceClass> resClasses) {
             resClassList.clearSelection();
             if (resClasses == null)
@@ -1460,7 +1460,7 @@ final class SWGResourceClassUse extends JPanel {
          * 
          * @param resClasses a list of resource classes, or {@code null}
          */
-        @SuppressWarnings("synthetic-access")
+        
         void setElements(List<SWGResourceClass> resClasses) {
             resClassTree.clearSelection();
 
@@ -1582,7 +1582,7 @@ final class SWGResourceClassUse extends JPanel {
          * 
          * @param schems a list of schematics, or {@code null}
          */
-        @SuppressWarnings("synthetic-access")
+        
         void setContent(List<SWGSchematic> schems) {
             schematicsList.clearSelection();
             this.schems = schems;

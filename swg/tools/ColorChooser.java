@@ -173,7 +173,6 @@ public class ColorChooser extends JDialog {
          * 
          * @param color the initial color to use at the preview panel
          */
-        @SuppressWarnings("synthetic-access")
         public BottomPanel(Color color) {
             super(new FlowLayout(FlowLayout.TRAILING));
 
@@ -243,7 +242,6 @@ public class ColorChooser extends JDialog {
             this.setPreferredSize(d);
         }
 
-        @SuppressWarnings("synthetic-access")
         public void stateChanged(ChangeEvent e) {
             Color tmpColor = colorChooser.getColor();
 

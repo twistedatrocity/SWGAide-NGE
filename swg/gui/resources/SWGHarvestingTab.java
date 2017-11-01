@@ -393,7 +393,7 @@ final class SWGHarvestingTab extends JPanel {
         neww.setToolTipText("Create a new harvester for this galaxy");
         neww.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 harvesterCreateDialog().showAndBegin(null, false);
             }
@@ -404,7 +404,7 @@ final class SWGHarvestingTab extends JPanel {
         edit.setToolTipText("Edit the description of the selected harvester");
         edit.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 SWGHarvester hr = getHarvesters().get(rw);
                 harvesterCreateDialog().showAndBegin(hr, false);
@@ -418,7 +418,7 @@ final class SWGHarvestingTab extends JPanel {
                 "define a unique description");
         clone.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 SWGHarvester hr = getHarvesters().get(rw);
                 harvesterCreateDialog().showAndBegin(hr, true);
@@ -441,7 +441,7 @@ final class SWGHarvestingTab extends JPanel {
         del.setToolTipText("Permanently delete the selected harvester");
         del.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionHarvesterDelete(rw);
             }
@@ -507,7 +507,7 @@ final class SWGHarvestingTab extends JPanel {
         neww.setToolTipText("Create a new harvester owner at this galaxy");
         neww.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 ownerCreateDialog().showAndBegin(null);
             }
@@ -518,7 +518,7 @@ final class SWGHarvestingTab extends JPanel {
         edit.setToolTipText("Edit the selected owner");
         edit.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 SWGHarvesterOwner hr = getOwners().get(rw);
                 ownerCreateDialog().showAndBegin(hr);
@@ -541,7 +541,7 @@ final class SWGHarvestingTab extends JPanel {
         del.setToolTipText("Permanently delete the selected owner");
         del.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionOwnerDelete(rw);
             }
@@ -647,7 +647,7 @@ final class SWGHarvestingTab extends JPanel {
         update.setToolTipText(
                 "Refresh: empty hopper and replenish maintenance and power");
         update.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionActiveRefresh(hr);
             }
@@ -684,7 +684,7 @@ final class SWGHarvestingTab extends JPanel {
         JMenuItem newh = new JMenuItem("Create harvester");
         newh.setToolTipText("Create a new harvester at this galaxy");
         newh.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 harvesterCreateDialog().showAndBegin(null, false);
             }
@@ -694,7 +694,7 @@ final class SWGHarvestingTab extends JPanel {
         JMenuItem newu = new JMenuItem("Create owner");
         newu.setToolTipText("Create a new harvester owner at this galaxy");
         newu.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 ownerCreateDialog().showAndBegin(null);
             }
@@ -709,7 +709,7 @@ final class SWGHarvestingTab extends JPanel {
         hopper.setSelected(((Boolean) SWGFrame.getPrefsKeeper().get(
                     "resourceHarvesterHopperView", Boolean.TRUE)).booleanValue());
         hopper.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 SWGFrame.getPrefsKeeper().add("resourceHarvesterHopperView",
                         Boolean.valueOf(hopper.isSelected()));
@@ -725,7 +725,7 @@ final class SWGHarvestingTab extends JPanel {
         dates.setSelected(((Boolean) SWGFrame.getPrefsKeeper().get(
                     "resourceHarvesterEndingView", Boolean.TRUE)).booleanValue());
         dates.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 SWGFrame.getPrefsKeeper().add("resourceHarvesterEndingView",
                         Boolean.valueOf(dates.isSelected()));
@@ -760,7 +760,7 @@ final class SWGHarvestingTab extends JPanel {
         staysPut.setToolTipText(
                 "Deactivate harvester, it stays put (retains modifiers)");
         staysPut.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionActiveDeactivate(hr, false);
             }
@@ -772,7 +772,7 @@ final class SWGHarvestingTab extends JPanel {
         staysPut.setToolTipText(
                 "Deactivate harvester, it is pulled (revokes owner modifiers)");
         redeed.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionActiveDeactivate(hr, true);
             }
@@ -1016,7 +1016,7 @@ final class SWGHarvestingTab extends JPanel {
      * 
      * @return a GUI component
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Component makeActiveHarvesterPanel() {
         activeHarvModel = new ActiveModel();
         activeHarvTable = new SWGJTable(activeHarvModel) {
@@ -1187,7 +1187,7 @@ final class SWGHarvestingTab extends JPanel {
         exp.setToolTipText("Export harvesters and owners to file");
         exp.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionExport();
             }
@@ -1203,7 +1203,7 @@ final class SWGHarvestingTab extends JPanel {
      * 
      * @return a GUI component
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Component makeHarvesterPanel() {
         harvModel = new SWGHarvesterModel();
         harvTable = new SWGJTable(harvModel);
@@ -1276,7 +1276,7 @@ final class SWGHarvestingTab extends JPanel {
         imp.setToolTipText("Import harvesters and owners from file");
         imp.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e1) {
                 actionImport();
             }
@@ -1300,7 +1300,7 @@ final class SWGHarvestingTab extends JPanel {
                 KeyStroke.getKeyStroke(
                         KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK), "harvAltC");
         this.getActionMap().put("harvAltC", new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent actionEvent) {
                 activeHarvTable.clearSelection();
                 harvTable.clearSelection();
@@ -1333,7 +1333,7 @@ final class SWGHarvestingTab extends JPanel {
             protected JTableHeader createDefaultTableHeader() {
                 return new JTableHeader(columnModel) {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public String getToolTipText(MouseEvent e) {
                         int i = columnModel.getColumnIndexAtX(e.getPoint().x);
@@ -1351,7 +1351,7 @@ final class SWGHarvestingTab extends JPanel {
         ownerTable.getTableHeader().setReorderingAllowed(false);
         ownerTable.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
@@ -1368,7 +1368,7 @@ final class SWGHarvestingTab extends JPanel {
                         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         jsp.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3)
@@ -1406,17 +1406,17 @@ final class SWGHarvestingTab extends JPanel {
         // integers
         reminderTime.getDocument().addDocumentListener(new DocumentListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void changedUpdate(DocumentEvent e) {
                 actionReminderLimitModified();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void insertUpdate(DocumentEvent e) {
                 actionReminderLimitModified();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void removeUpdate(DocumentEvent e) {
                 actionReminderLimitModified();
             }
@@ -1439,7 +1439,7 @@ final class SWGHarvestingTab extends JPanel {
                 return component.getText();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Component getTableCellEditorComponent(JTable table,
                     Object value, boolean isSelected, int row, int col) {
@@ -1457,7 +1457,7 @@ final class SWGHarvestingTab extends JPanel {
     private void makeTimer() {
         timer = new Timer(1000, new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent arg0) {
                 // ignore this if we don't have active harvesters
                 if (!isGuiCreated || !isShowing() || isWorking)
@@ -1677,7 +1677,7 @@ final class SWGHarvestingTab extends JPanel {
                         "Current fullness or amount at hopper, and full date",
                         null };
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -1766,12 +1766,12 @@ final class SWGHarvestingTab extends JPanel {
             return colNames[column];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public int getRowCount() {
             return activeHarvs().size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Object getValueAt(int row, int column) {
             SWGHarvester harv = activeHarvs().get(row);
 
@@ -1816,7 +1816,7 @@ final class SWGHarvestingTab extends JPanel {
             return false;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public void setValueAt(Object value, int row, int column) {
             SWGHarvester hv = activeHarvs().get(row);
@@ -1868,12 +1868,12 @@ final class SWGHarvestingTab extends JPanel {
             return colNames[column];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public int getRowCount() {
             return getHarvesters().size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Object getValueAt(int row, int column) {
             SWGHarvester harvester = getHarvesters().get(row);
 

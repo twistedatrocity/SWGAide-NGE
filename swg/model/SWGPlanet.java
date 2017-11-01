@@ -299,7 +299,7 @@ public enum SWGPlanet implements SWGGui {
     public static void sort(List<SWGPlanet> planets) {
         Collections.sort(planets, new Comparator<SWGPlanet>() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public int compare(SWGPlanet o1, SWGPlanet o2) {
                 return o1.name.compareTo(o2.name);

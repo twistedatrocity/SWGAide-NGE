@@ -183,7 +183,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                 "docs/help_resources_schematics_viewer_en.html"));
 
         NAMED_LQ_COMP = new Comparable<SWGKnownResource>() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public int compareTo(SWGKnownResource o) {
                 return o.rc() == currentRes.rc()
@@ -435,7 +435,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * @return a GUI component
      */
     private Component makeEast() {
-        @SuppressWarnings("synthetic-access")
+        
         RTableModel tm = new RTableModel();
         resTable = new SWGJTable(tm);
 
@@ -468,7 +468,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         resTable.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3)
@@ -509,7 +509,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         spin.setEditor(ed);
 
         spin.addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void stateChanged(ChangeEvent e) {
                 String v = (String) spin.getValue();
@@ -534,7 +534,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         namedLQ.setToolTipText(
                 "Include LQ schematics for \"named\" resource classes");
         namedLQ.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (currentRes != null) display(currentRes);
@@ -564,7 +564,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * @return a GUI component
      */
     private Component makeWest() {
-        @SuppressWarnings("synthetic-access")
+        
         STableModel tm = new STableModel();
         schemTable = new SWGJTable(tm);
 
@@ -582,7 +582,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         schemTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         schemTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
@@ -597,7 +597,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                     }
                 });
         schemTable.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3)
@@ -640,7 +640,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                         kr.getName(), kr.rc().rcName()));
 
         dm.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 SWGSchemResViewer.client = c;
@@ -692,7 +692,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         private final String[] colNames =
                 { "Rate", "Name", "Class", "Inventory" };
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(
                 int row, int column, Object value) {
@@ -738,13 +738,13 @@ public final class SWGSchemResViewer extends SWGJDialog {
             return colNames[col];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public int getRowCount() {
             return resources.size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public Object getValueAt(int row, int col) {
             SWGSac sac = resources.get(row);
@@ -772,7 +772,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
          */
         private final String[] colNames = { "Schematic", "Rate" };
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -823,13 +823,13 @@ public final class SWGSchemResViewer extends SWGJDialog {
             return colNames[col];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public int getRowCount() {
             return schematics.size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public Object getValueAt(int row, int col) {
             SWGSac sac = schematics.get(row);

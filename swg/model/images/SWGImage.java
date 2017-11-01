@@ -76,7 +76,7 @@ public class SWGImage implements Serializable, Comparable<SWGImage>, SWGGui {
 
         SwingWorker<Void, Void> wrk = new SwingWorker<Void, Void>() {
             @Override
-            @SuppressWarnings( { "synthetic-access" })
+            
             protected Void doInBackground() {
                 synchronized (file) {
                     ZWriter.copy(file, target);

@@ -63,7 +63,6 @@ public final class SWGAliasesPane extends JTextArea {
 
         this.addMouseListener(new MouseAdapter() {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 aliasesClicked(e);
@@ -87,7 +86,6 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_PLUS, InputEvent.CTRL_MASK));
             fontBigger.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1.2);
                 }
@@ -99,7 +97,6 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_MINUS, InputEvent.CTRL_MASK));
             fontLesser.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(1 / 1.2);
                 }
@@ -111,7 +108,6 @@ public final class SWGAliasesPane extends JTextArea {
                 KeyEvent.VK_0, InputEvent.CTRL_MASK));
             fontNormal.addActionListener(new ActionListener() {
 
-                @SuppressWarnings( {"hiding", "synthetic-access"})
                 public void actionPerformed(ActionEvent e) {
                     changeFont(0);
                 }
@@ -175,7 +171,6 @@ public final class SWGAliasesPane extends JTextArea {
             "aliasesFont+Action");
         this.getActionMap().put("aliasesFont+Action", new AbstractAction() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 changeFont(1.2);
             }
@@ -186,7 +181,6 @@ public final class SWGAliasesPane extends JTextArea {
             "aliasesFont-Action");
         this.getActionMap().put("aliasesFont-Action", new AbstractAction() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 changeFont(1 / 1.2);
             }
@@ -197,7 +191,6 @@ public final class SWGAliasesPane extends JTextArea {
             "aliasesFont0Action");
         this.getActionMap().put("aliasesFont0Action", new AbstractAction() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 changeFont(0);
             }

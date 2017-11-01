@@ -245,5 +245,5 @@ class SWGSoapUserResponse extends SWGSoapResponse {
      * 
      * @param z a modifiable string
      */
-    void toStringHelper(@SuppressWarnings("unused") ZString z) {/* pass */}
+    void toStringHelper(ZString z) {/* pass */}
 }

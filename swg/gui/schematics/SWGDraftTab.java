@@ -355,14 +355,12 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         });
 
         this.addComponentListener(new ComponentAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void componentResized(ComponentEvent e) {
                 actionAdjustWidths();
             }
         });
         getLeftComponent().addComponentListener(new ComponentAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void componentResized(ComponentEvent e) {
                 actionAdjustWidths();
@@ -377,7 +375,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private void actionAdjustWidths() {
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void run() {
                 // let swing-utilities collate consecutive calls if so...
@@ -396,7 +393,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @param e the event that triggers the call
      * @param rcl a {@link RCLabel}, or {@code null}
      */
-    @SuppressWarnings("synthetic-access")
     private void actionEastMouse(MouseEvent e, final RCLabel rcl) {
         if (e.getButton() != MouseEvent.BUTTON3) return;
 
@@ -531,7 +527,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * 
      * @param e the event that triggers the call
      */
-    private void actionNotes(@SuppressWarnings("unused") MouseEvent e) {
+    private void actionNotes(MouseEvent e) {
         if (selectedSchematic != null) {
             SWGSchematicWrapper w = SWGSchemController.
                     wrapperDefault(selectedSchematic);
@@ -670,7 +666,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     }
                 });
                 addFav.addActionListener(new ActionListener() {
-                    @SuppressWarnings("synthetic-access")
                     @Override
                     public void actionPerformed(ActionEvent ee) {
                         assignee.addFavorite(ss);
@@ -690,7 +685,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
                 final List<SWGSchematic> sl = ct.getSchematics();
                 addAll.addActionListener(new ActionListener() {
-                    @SuppressWarnings("synthetic-access")
                     @Override
                     public void actionPerformed(ActionEvent ee) {
                         for (SWGSchematic el : filteredSchematics)
@@ -730,7 +724,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         final JCheckBoxMenuItem hide = new JCheckBoxMenuItem("Hide empty", bh);
         hide.setToolTipText("Select this to hide empty categories");
         hide.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent ee) {
                 boolean h = hide.isSelected();
@@ -799,7 +792,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             JMenuItem copy = new JMenuItem("Copy");
             copy.setToolTipText("Copy all to clip board");
             copy.addActionListener(new ActionListener() {
-                @SuppressWarnings("synthetic-access")
                 @Override
                 public void actionPerformed(ActionEvent ee) {
                     copyToClipboard(usedinAndFindModel.getAsText());
@@ -896,7 +888,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         displayUsedIn(schem);
 
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void run() {
                 Rectangle r = draftPanel.getVisibleRect();
@@ -1665,7 +1656,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         // honored, hence events outside such components are caught
         SWGAide.frame().getLayeredPane().add(jsp, JLayeredPane.MODAL_LAYER);
         jsp.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionEastMouse(e, null);
@@ -1691,7 +1681,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         // the label for category
         draftCategory = new JLabel() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(DRAFT_WIDTH, 32);
@@ -1730,7 +1719,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         // a label for misc information that reads at the schematic
         draftMisc = new JLabel() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(DRAFT_WIDTH,
@@ -1812,7 +1800,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         bp.add(l);
 
         factoryAmount = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 100) {
-            @SuppressWarnings("synthetic-access")
             @Override
             public Object getNextValue() {
                 int i = ((Integer) getValue()).intValue();
@@ -1863,7 +1850,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         });
         factoryAmount.setToolTipText(fs);
         factoryAmount.addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void stateChanged(ChangeEvent e) {
                 displayShopping(selectedSchematic);
@@ -1902,7 +1888,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         schemNotes.setEditable(false);
         schemNotes.setToolTipText("Notes added for the default schematic");
         schemNotes.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionNotes(e);
@@ -1929,14 +1914,12 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         shoppingList.getInputMap().put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK),
                 new AbstractAction() {
-                    @SuppressWarnings("synthetic-access")
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         copyToClipboard(shoppingList(factoryAmount()));
                     }
                 });
         shoppingList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionEastMouse(e, null);
@@ -1994,7 +1977,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 label.setOpaque(true);
             }
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public Component getListCellRendererComponent(
                     JList<? extends SWGSchematic> l, SWGSchematic val, int i, boolean sel, boolean focus) {
@@ -2030,7 +2012,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 BorderFactory.createEmptyBorder(2, 6, 2, 6)));
 
         usedinAndFind.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int i = usedinAndFind.getSelectedIndex();
@@ -2041,7 +2022,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         });
 
         usedinAndFind.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionUsedin(e);
@@ -2061,7 +2041,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private JMenuItem makeFindMenu() {
         final JMenuItem find = SWGSchematicTab.findSchematicMenu();
         find.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent ee) {
                 findSchematicsDialog(find.getToolTipText());
@@ -2135,7 +2114,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         spinner.setPreferredSize(d);
 
         spinner.addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void stateChanged(ChangeEvent e) {
                 selectedLevel = (Integer) spinner.getValue();
@@ -2170,7 +2148,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         cb.setSelectedItem(selectedProfession.getNameShort());
         cb.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedProfession = SWGProfession.getFromName(
@@ -2199,7 +2176,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         schemSelector.setPreferredSize(new Dimension(150, 25));
 
         schemSelector.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 int s = schemSelector.getSelectedIndex();
@@ -2223,7 +2199,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private JToolBar makeWestTraceBar() {
         ActionListener action = new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionTraceClicked(e);
@@ -2289,7 +2264,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         schemTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 TreePath path = schemTree.getSelectionPath();
@@ -2309,7 +2283,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         });
 
         schemTree.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionSchemTreeMouse(e);
@@ -2550,7 +2523,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         // contains the specified argument
         Comparator<SWGSchematic> comp = new Comparator<SWGSchematic>() {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public int compare(SWGSchematic o1, SWGSchematic o2) {
                 boolean b1 = usedInSlot(o1.getComponentSlots(), schem);
@@ -2662,7 +2634,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             ok.setMnemonic(KeyEvent.VK_O);
             ok.setToolTipText("Accept the selected/defined assignee");
             ok.addActionListener(new ActionListener() {
-                @SuppressWarnings("synthetic-access")
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     okAction();
@@ -2735,7 +2706,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
          * this method creates and adds it to SWGAide's storage. The specified
          * schematic is added as a favorite to the assignee.
          */
-        @SuppressWarnings("synthetic-access")
         private void okAction() {
             assignee = getAssignee();
             if (assignee == null)
@@ -2819,7 +2789,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             this.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
             this.addMouseListener(new MouseAdapter() {
 
-                @SuppressWarnings("synthetic-access")
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (e.getButton() == MouseEvent.BUTTON3) {
@@ -2841,7 +2810,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     setOpaque(false);
                 }
 
-                @SuppressWarnings("synthetic-access")
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     if (slot != null) {
@@ -2850,7 +2818,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     }
                 }
 
-                @SuppressWarnings("synthetic-access")
                 @Override
                 public void mouseExited(MouseEvent e) {
                     if (slot != null) {
@@ -2927,7 +2894,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
          * Notifies listeners that content is changed; compare
          * {@link DefaultComboBoxModel#fireContentsChanged(Object, int, int)}.
          */
-        @SuppressWarnings("synthetic-access")
         void fireContentChanged() {
             schems = new ArrayList<SWGSchematic>(filteredSchematics);
             Collections.sort(schems);
@@ -3167,7 +3133,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
          * @param elems a list of schematics
          * @throws NullPointerException if the argument is {@code null}
          */
-        @SuppressWarnings("synthetic-access")
         void setElements(List<SWGSchematic> elems) {
             int old = this.getSize();
             old = old > 0

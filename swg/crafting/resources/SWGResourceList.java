@@ -376,7 +376,7 @@ public final class SWGResourceList implements List<SWGResource> {
      * @throws NotSerializableException
      *             if anybody tries to deserialize this object
      */
-    private void readObject(@SuppressWarnings("unused") ObjectInputStream ois)
+    private void readObject(ObjectInputStream ois)
         throws NotSerializableException {
         // It should be impossible to get here since this class does not
         // implement the Serializable interface, but ...
@@ -526,7 +526,7 @@ public final class SWGResourceList implements List<SWGResource> {
      * @throws NotSerializableException
      *             if anybody tries to serialize this object
      */
-    private void writeObject(@SuppressWarnings("unused") ObjectOutputStream ois)
+    private void writeObject(ObjectOutputStream ois)
         throws NotSerializableException {
         // It should be impossible to get here since this class does not
         // implement the Serializable interface, but ...

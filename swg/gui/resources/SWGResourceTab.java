@@ -90,7 +90,7 @@ public final class SWGResourceTab extends JTabbedPane implements
     /**
      * A comparator which sorts resource collections on age, youngest first.
      */
-    @SuppressWarnings( { "synthetic-access" })
+    
     final ResourceAgeComparator ageComparator = new ResourceAgeComparator();
 
     /**
@@ -176,7 +176,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
         // create interior lazily, see this#focusGained()
         frame.getTabPane().addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void stateChanged(ChangeEvent e) {
                 focusGained();
             }
@@ -203,7 +203,7 @@ public final class SWGResourceTab extends JTabbedPane implements
             final ExecutorService exec = Executors.newSingleThreadExecutor();
             exec.execute(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     sendDepleted(resource);
                     exec.shutdown();
@@ -235,7 +235,7 @@ public final class SWGResourceTab extends JTabbedPane implements
                         : "none"));
         if (rc != null)
             c.addActionListener(new ActionListener() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void actionPerformed(ActionEvent e1) {
                     if (!isGuiFinished) makeInterior();
@@ -267,7 +267,7 @@ public final class SWGResourceTab extends JTabbedPane implements
                         : "none"));
         if (kr != null && !kr.isDepleted())
             c.addActionListener(new ActionListener() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void actionPerformed(ActionEvent e1) {
                     if (!isGuiFinished) makeInterior();
@@ -350,7 +350,7 @@ public final class SWGResourceTab extends JTabbedPane implements
             frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             SwingUtilities.invokeLater(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     try {
                         focusGainedHelper(toon);
@@ -458,7 +458,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
             SwingUtilities.invokeLater(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     galaxyUpdated(gxy);
                     currentUpdateGUI();
@@ -526,7 +526,7 @@ public final class SWGResourceTab extends JTabbedPane implements
      * 
      * @return a tree model for resource classes
      */
-    @SuppressWarnings("synthetic-access")
+    
     TreeModel resClassTreeModel() {
         synchronized (this) {
             if (resClassTreeModel == null)
@@ -565,7 +565,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 frame.setCursor(

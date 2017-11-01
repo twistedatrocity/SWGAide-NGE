@@ -105,7 +105,7 @@ public final class SWGInitialize extends JPanel {
         initiateButton.setMnemonic('N');
         initiateButton.setToolTipText("Initiate SWGAide: display license");
         initiateButton.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 initiateShowLicense();
             }
@@ -133,7 +133,7 @@ public final class SWGInitialize extends JPanel {
         initiateButton.setMnemonic('A');
         initiateButton.setToolTipText("Accept the license agreement");
         initiateButton.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 initiateSwgFind(true);
             }
@@ -144,7 +144,7 @@ public final class SWGInitialize extends JPanel {
         cancel.setMnemonic('D');
         cancel.setToolTipText("Decline the license agreement");
         cancel.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 initiateSwgFind(false);
             }
@@ -187,7 +187,7 @@ public final class SWGInitialize extends JPanel {
         okButton.setMnemonic('O');
         okButton.setToolTipText("Continue");
         okButton.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 initiateUniverse(true);
             }
@@ -203,7 +203,7 @@ public final class SWGInitialize extends JPanel {
                 return new File(SWGUniverse.findClientDir(), "testcenter");
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void done() {
                 try {
@@ -228,7 +228,7 @@ public final class SWGInitialize extends JPanel {
         cancel.setMnemonic('C');
         cancel.setToolTipText("Find manually or Abort initialization");
         cancel.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 worker.cancel(true);
                 initiateUniverse(false);
@@ -236,7 +236,7 @@ public final class SWGInitialize extends JPanel {
         });
 
         skip.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 worker.cancel(true);
                 initiateUniverse(true);
@@ -333,7 +333,7 @@ public final class SWGInitialize extends JPanel {
         okButton.setMnemonic('D');
         okButton.setToolTipText("Finished the initialization");
         okButton.addActionListener(new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 frame.setCursor(Cursor.getPredefinedCursor(
                         Cursor.WAIT_CURSOR));
@@ -365,7 +365,7 @@ public final class SWGInitialize extends JPanel {
                 return null;
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             protected void done() {
                 frame.setCursor(
@@ -403,7 +403,7 @@ public final class SWGInitialize extends JPanel {
         try {
             SwingUtilities.invokeLater(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     frame.putToLogbar_1(null);
                     frame.putToLogbar_2(null);
@@ -433,7 +433,7 @@ public final class SWGInitialize extends JPanel {
             try {
                 SwingUtilities.invokeAndWait(new Runnable() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     public void run() {
                         if (str != null)
                             frame.putToLogbar_1(str);
@@ -492,7 +492,7 @@ public final class SWGInitialize extends JPanel {
 
             exec.execute(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void run() {
                     scanForMails(universe);

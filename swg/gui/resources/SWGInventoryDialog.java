@@ -555,7 +555,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         b.setFocusCycleRoot(true);
         ZTraversalPolicy stp = new ZTraversalPolicy(travOrder) {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Component getComponentAfter(Container root, Component comp) {
                 int idx = travOrder.indexOf(comp) + 1;
@@ -613,7 +613,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         rnl.setPreferredSize(dn);
         rnl.setMaximumSize(dn);
         rnl.addItemListener(new ItemListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED)
                     actionResourceNameSelected();
@@ -684,7 +684,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         srcb.setHorizontalTextPosition(SwingConstants.LEFT);
         srcb.addActionListener(new ActionListener() {
             @Override
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionRecycledSpaceToggled();
             }
@@ -706,7 +706,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         rcnl.setEnabled(false);
         rcnl.setAutoscrolls(true);
         rcnl.addItemListener(new ItemListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void itemStateChanged(ItemEvent e) {
                 if (!isGuiUpdating && e.getStateChange() == ItemEvent.SELECTED) {
                     actionResourceClassSelected();

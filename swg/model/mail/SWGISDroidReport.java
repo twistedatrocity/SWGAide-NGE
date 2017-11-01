@@ -125,7 +125,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
      * @throws IllegalArgumentException if the set is for the wrong galaxy
      * @throws NullPointerException if the argument is {@code null}
      */
-    @SuppressWarnings("synthetic-access")
+    
     public List<Wrapper> depleted(SWGResourceSet inSpawn) {
 		if (!inSpawn.isEmpty() && inSpawn.get(0).galaxy().equals(gxy()) == false)
                 throw new IllegalArgumentException("Wrong galaxy");
@@ -337,7 +337,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
      * @throws InvalidNameException if a resource name is invalid
      * @throws NullPointerException if an argument or anything is {@code null}
      */
-    @SuppressWarnings("synthetic-access")
+    
     private static void processMail(
             SWGMailMessage mail, SWGISDroidReport report, SWGResourceSet known)
             throws IllegalArgumentException, IllegalStateException,

@@ -115,7 +115,7 @@ final public class SWGSchemController implements UpdateSubscriber {
                     inventory = null;
                 }
                 SwingUtilities.invokeLater(new Runnable() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void run() {
                         updateGalaxy();

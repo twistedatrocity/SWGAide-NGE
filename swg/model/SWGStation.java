@@ -83,7 +83,8 @@ public final class SWGStation implements
      * Helper member that reads version info that is used for possible upgrading
      * during deserialization.
      */
-    private String version;
+    @SuppressWarnings("unused")
+	private String version;
 
     /**
      * Creates an instance of this type.

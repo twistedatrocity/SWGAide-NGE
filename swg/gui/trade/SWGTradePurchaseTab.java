@@ -285,17 +285,17 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
         tf.setToolTipText(tt);
         tf.setBorder(BorderFactory.createLoweredBevelBorder());
         tf.getDocument().addDocumentListener(new DocumentListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void changedUpdate(DocumentEvent e) {
                 filterMailList();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void insertUpdate(DocumentEvent e) {
                 filterMailList();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void removeUpdate(DocumentEvent e) {
                 filterMailList();
             }
@@ -335,7 +335,7 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
         clearButton = new JButton("Clear");
         clearButton.setToolTipText("Clear all filter text boxes");
         clearButton.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 resetGUI();
@@ -355,7 +355,7 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
      * 
      * @return a GUI component
      */
-    @SuppressWarnings("synthetic-access")
+    
     private SWGJTable makeTable() {
         purchaseModel = new PurchaseModel();
         SWGJTable st = new SWGJTable(purchaseModel);
@@ -502,7 +502,7 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
     private void resizeFilters() {
         if (isGuiFinished && !isWorking)
             SwingUtilities.invokeLater(new Runnable() {
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     TableColumnModel tm = purchaseTable.getColumnModel();
                     resizeComp(filterDate, tm.getColumn(0));
@@ -554,14 +554,14 @@ class SWGTradePurchaseTab extends JPanel implements TableColumnModelListener {
             return columnNames[col];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public int getRowCount() {
             return filteredPurchaseMails != null
                     ? filteredPurchaseMails.size()
                     : 0;
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         public Object getValueAt(int row, int column) {
             if (filteredPurchaseMails == null) return "";
             SWGAuctionerData auct = filteredPurchaseMails.get(row);

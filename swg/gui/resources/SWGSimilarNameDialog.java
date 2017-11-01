@@ -309,7 +309,7 @@ public final class SWGSimilarNameDialog extends SWGJDialog {
      * 
      * @param w a wrapper
      */
-    @SuppressWarnings("synthetic-access")
+    
     private void wrapAdd(Wrapper w) {
         if (w == null || w.submit == null ||
                 w.response == null || w.response.getStatus() != -2) return;
@@ -407,7 +407,7 @@ public final class SWGSimilarNameDialog extends SWGJDialog {
      * @return a wrapper
      * @throws NullPointerException if an argument is {@code null}
      */
-    @SuppressWarnings("synthetic-access")
+    
     public static Wrapper wrapperInstance(
             SWGSoapNOResResponse resp, SWGMutableResource mr) {
         return new Wrapper(resp, mr);

@@ -356,7 +356,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 handleISDroidReport(mail, singleReport);
                 handleISDroidReportDone();
@@ -428,7 +428,7 @@ public final class SWGMailISDroidPanel extends JPanel {
 
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 try {
                     submitUnreportedAndDepleted(urep, depl);
@@ -486,7 +486,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void enableButtons() {
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 if ((depletedResources != null && depletedResources.size() > 0)
@@ -700,7 +700,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void handleISDroidReportDone() {
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 mailPane.mailList.setEnabled(
@@ -845,7 +845,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         completedButton.setEnabled(false);
         completedButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionCompleted();
             }
@@ -929,7 +929,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                         + notesFileName + '\"');
         notesFileSaveButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionWriteNotesFile();
             }
@@ -950,7 +950,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                 + notesFileName + "\" to SWGCraft");
         submitNotesFileButton.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionSubmitNotesFile();
             }
@@ -996,7 +996,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         submitUnreportedAndDepletedButton
                 .addActionListener(new ActionListener() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     public void actionPerformed(ActionEvent e) {
                         actionSubmitUnreportedAndDepleted();
                     }
@@ -1653,7 +1653,7 @@ public final class SWGMailISDroidPanel extends JPanel {
             return false;
         } else if (response.isFaultless()) {
             SwingUtilities.invokeLater(new Runnable() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void run() {
                     int index = wrapperIndexOf(wrapper, listModel);
@@ -1779,7 +1779,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 List<SWGSimilarNameDialog.Wrapper> sl = new
                         ArrayList<SWGSimilarNameDialog.Wrapper>();
@@ -1815,7 +1815,7 @@ public final class SWGMailISDroidPanel extends JPanel {
             final List<SWGSimilarNameDialog.Wrapper> sl) {
 
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 newList.ensureIndexIsVisible(
@@ -2156,7 +2156,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void populateDepletedList(SWGResourceSet known) {
         depletedResources = mergeDepletedResources(known);
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 depletedListModel.clear();
@@ -2175,7 +2175,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void populateNewList() {
         newResources = mergeNewResources();
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 newListModel.clear();
@@ -2194,7 +2194,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void populateStatlessList() {
         statlessResources = mergeStatlessResources();
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 statlessListModel.clear();
@@ -2215,7 +2215,7 @@ public final class SWGMailISDroidPanel extends JPanel {
     private void populateUnreportedPlanetList() {
         unreportedPlanets = mergeUnreportedPlanets();
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 unreportedListModel.clear();
@@ -2415,7 +2415,7 @@ public final class SWGMailISDroidPanel extends JPanel {
             if (!submitUnreportedOrDepleted(depl, depletedList)) return;
 
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 depletedList.ensureIndexIsVisible(
@@ -2517,7 +2517,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         if (mr != null && mr.whatever != null
                 && ((String) mr.whatever).startsWith("OK")) {
             SwingUtilities.invokeLater(new Runnable() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void run() {
                     // mark this resource's wrappers submitted, one per planet
@@ -2630,7 +2630,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                         list, value, index, isSelected, cellHasFocus);
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         protected String labelString(JList<? extends Wrapper> list, Wrapper value, int index,
                 boolean isSelected, boolean cellHasFocus) {

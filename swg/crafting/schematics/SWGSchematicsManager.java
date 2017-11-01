@@ -343,7 +343,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             final ExecutorService exec = Executors.newSingleThreadExecutor();
             exec.execute(new Runnable() {
 
-                @SuppressWarnings("synthetic-access")
+                
                 public void run() {
                     try {
                         initFoodDrinkMap();

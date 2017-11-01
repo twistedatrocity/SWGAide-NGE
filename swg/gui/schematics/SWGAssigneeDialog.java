@@ -125,7 +125,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         JMenuItem del = new JMenuItem("Delete assignee...");
         del.setToolTipText("Delete the selected assignee");
         del.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent ee) {
                 ((SWGSchematicTab)parent).assigneeRemove(as);
@@ -138,7 +137,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         JMenuItem rename = new JMenuItem("Rename assignee...");
         rename.setToolTipText("Delete the selected assignee");
         rename.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent ee) {
                 actionAssigneeRename(as);
@@ -329,7 +327,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         });
 
         assigneeList.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting())
@@ -337,7 +334,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
             }
         });
         assigneeList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3)
@@ -355,7 +351,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         };
         assigneeDefine.setToolTipText("Define an assignee and hit Enter");
         assigneeDefine.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionAssigneeDefine();
@@ -392,7 +387,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         add.setMnemonic(KeyEvent.VK_RIGHT);
         add.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 addStoA(schematicsList.getSelectedValue());
@@ -406,7 +400,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 "Remove selected schematic (right-hand side) from the assignee");
         remove.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 remSfromA(favoriteList.getSelectedValue());
@@ -462,7 +455,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         });
 
         professionChooser.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 SWGProfession p = (SWGProfession)
@@ -499,7 +491,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         });
 
         favoriteList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionFavoriteList(e);
@@ -511,7 +502,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -571,7 +561,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
         });
 
         schematicsList.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionSchematicList(e);
@@ -583,7 +572,6 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED) {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();

@@ -166,7 +166,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myAlignment(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
 
@@ -194,7 +193,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myBackground(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
 
@@ -231,7 +229,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myBorder(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
         Border border = null;
@@ -272,7 +269,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @return {@code false} if the caller should instantly abort
      */
-    @SuppressWarnings("unused")
     protected boolean myFirst(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
         if (value == null) setValue(value);
@@ -293,7 +289,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myFont(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
         /* pass */
@@ -315,7 +310,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myForeground(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
 
@@ -360,7 +354,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @param decor table cell decorations, or {@code null}
      */
-    @SuppressWarnings("unused")
     protected void myTooltip(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
 
@@ -383,7 +376,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * @param column the column that refers to the table model
      * @return the value to assign to the cell at {@code [row, column]}
      */
-    @SuppressWarnings("unused")
     protected Object myValue(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
         return value;

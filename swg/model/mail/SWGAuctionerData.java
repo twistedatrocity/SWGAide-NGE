@@ -245,7 +245,6 @@ public final class SWGAuctionerData implements Serializable {
      * @param mail a mail to parse
      * @return an instance of this type, or {@code null}
      */
-    @SuppressWarnings("synthetic-access")
     static SWGAuctionerData fromMail(SWGMailMessage mail) {
         if (!mail.exists() || mail.type() != SWGMailMessage.Type.Auction)
             return null;

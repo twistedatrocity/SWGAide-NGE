@@ -156,7 +156,6 @@ public final class SWGAlbumTab extends JPanel {
 
         // create interior lazily, see focusGained()
         frame.getTabPane().addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
             public void stateChanged(ChangeEvent e) {
                 focusGained(e);
             }
@@ -274,7 +273,6 @@ public final class SWGAlbumTab extends JPanel {
             imageDisplayNull();
         else
             SwingUtilities.invokeLater(new Runnable() {
-                @SuppressWarnings("synthetic-access")
                 public void run() {
                     Image img;
                     if (imageScaled) {
@@ -412,7 +410,6 @@ public final class SWGAlbumTab extends JPanel {
         final JMenuItem im = new JMenuItem("Properties", KeyEvent.VK_P);
         im.setToolTipText("Display the properties of the image");
         im.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e1) {
                 imageProperties(img == null
                         ? currentImage
@@ -433,7 +430,6 @@ public final class SWGAlbumTab extends JPanel {
         JMenuItem im = new JMenuItem(t, KeyEvent.VK_Z);
         im.setToolTipText("Toggle between full and scaled image size");
         im.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e1) {
                 if (currentImage == null) return;
                 imageScaled = !imageScaled;
@@ -518,7 +514,6 @@ public final class SWGAlbumTab extends JPanel {
             sa.addActionListener(i == currentImage
                     ? imageSaveAs
                     : new AbstractAction() {
-                        @SuppressWarnings("synthetic-access")
                         public void actionPerformed(ActionEvent e1) {
                             imageSaveAs(i);
                         }
@@ -551,13 +546,11 @@ public final class SWGAlbumTab extends JPanel {
         menuItems.add(imageProp);
 
         imageSaveAs = new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e1) {
                 imageSaveAs(currentImage);
             }
         };
         addComponentListener(new ComponentAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void componentResized(ComponentEvent e) {
                 if (frame.getTabPane().getSelectedComponent() == SWGAlbumTab.this)
@@ -578,7 +571,6 @@ public final class SWGAlbumTab extends JPanel {
     private Component makeCenter() {
         imageCanvas = new JPanel();
         imageCanvas.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 actionImageMouse(e);
@@ -620,7 +612,6 @@ public final class SWGAlbumTab extends JPanel {
         albums = new JList<SWGImageSubAlbum>(mm);
         albums.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         albums.addListSelectionListener(new ListSelectionListener() {
-            @SuppressWarnings("synthetic-access")
             public void valueChanged(ListSelectionEvent e) {
                 actionAlbumSelect(e);
             }
@@ -685,7 +676,6 @@ public final class SWGAlbumTab extends JPanel {
         thumbModel = new ThumbModel();
 
         thumbNails = new SWGJTable(thumbModel) {
-            @SuppressWarnings("synthetic-access")
             @Override
             public String getToolTipText(MouseEvent e) {
                 // TODO: change so model rather emits SWGImage
@@ -710,7 +700,6 @@ public final class SWGAlbumTab extends JPanel {
 
         thumbNails.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
-                    @SuppressWarnings("synthetic-access")
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
                             actionThumbSelect(e);
@@ -719,7 +708,6 @@ public final class SWGAlbumTab extends JPanel {
                 });
 
         thumbNails.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent evt) {
                 actionThumbMouse(evt);
@@ -776,14 +764,12 @@ public final class SWGAlbumTab extends JPanel {
             return 1;
         }
 
-        @SuppressWarnings("synthetic-access")
         @Override
         public int getRowCount() {
             if (currentAlbum == null) return 0;
             return currentAlbum.size();
         }
 
-        @SuppressWarnings("synthetic-access")
         @Override
         public Object getValueAt(int row, int column) {
             return (currentAlbum == null)

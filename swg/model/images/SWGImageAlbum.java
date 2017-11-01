@@ -55,7 +55,7 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
      * 
      * @param univ the universe for this album
      */
-    @SuppressWarnings("synthetic-access")
+    
     public SWGImageAlbum(SWGUniverse univ) {
         universe = univ;
 

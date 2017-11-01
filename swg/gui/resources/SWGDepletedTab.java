@@ -351,7 +351,7 @@ final class SWGDepletedTab extends JPanel {
                 "Add one selected resource to inventory",
                 new ActionListener() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         actionInventory(kr);
@@ -372,7 +372,7 @@ final class SWGDepletedTab extends JPanel {
                 "Specify a limit for the written output, in days",
                 new ActionListener() {
 
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         actionLimit();
@@ -395,7 +395,7 @@ final class SWGDepletedTab extends JPanel {
 
         JMenuItem revive = makeMenuItem("Revive...", tt, new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionRevive(kr);
@@ -417,7 +417,7 @@ final class SWGDepletedTab extends JPanel {
                 makeMenuItem("Write", "Write depleted resources to a file",
                         new ActionListener() {
 
-                            @SuppressWarnings("synthetic-access")
+                            
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 actionWrite();
@@ -513,7 +513,7 @@ final class SWGDepletedTab extends JPanel {
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK),
                 "depletedAltC");
         getActionMap().put("depletedAltC", new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent actionEvent) {
                 table.getRowSorter().setSortKeys(null);
                 table.clearSelection();
@@ -529,7 +529,7 @@ final class SWGDepletedTab extends JPanel {
      * 
      * @return a GUI element
      */
-    @SuppressWarnings("synthetic-access")
+    
     private Component makeMainTable() {
         DecoratedTableModel tableModel = new TableModel();
         table = new SWGJTable(tableModel);
@@ -597,7 +597,7 @@ final class SWGDepletedTab extends JPanel {
             depleted = null;
             if (isGuiCreated)
                 SwingUtilities.invokeLater(new Runnable() {
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void run() {
                         ((AbstractTableModel) table.getModel()).
@@ -750,7 +750,7 @@ final class SWGDepletedTab extends JPanel {
             synchronized (SWGDepletedTab.class) {
                 final ExecutorService ex = Executors.newSingleThreadExecutor();
                 ex.execute(new Runnable() {                    
-                    @SuppressWarnings("synthetic-access")
+                    
                     @Override
                     public void run() {
                         int days = writeAge();
@@ -836,7 +836,7 @@ final class SWGDepletedTab extends JPanel {
          */
         private final Stat[] gOrder = Stat.gameOrder();
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -882,13 +882,13 @@ final class SWGDepletedTab extends JPanel {
             return columnNames[column];
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public int getRowCount() {
             return getDepleted().size();
         }
 
-        @SuppressWarnings("synthetic-access")
+        
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             SWGKnownResource kr = getDepleted().get(rowIndex);

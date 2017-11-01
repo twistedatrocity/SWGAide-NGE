@@ -146,7 +146,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         contentPane.getInputMap().put(KeyStroke.getKeyStroke("F1"), "showHelp");
         contentPane.getActionMap().put("showHelp", new AbstractAction() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 showHelp();
             }
@@ -155,7 +154,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         // TODO: have a second look at this construct, remove the isOpen flag
         this.addWindowListener(new WindowAdapter() {
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public void windowActivated(WindowEvent e) {
                 if (isOpen)
@@ -164,7 +162,6 @@ public class SWGCraftOptionsPanel extends JDialog {
                 super.windowActivated(e);
             }
 
-            @SuppressWarnings("synthetic-access")
             @Override
             public void windowClosing(WindowEvent e) {
                 actionClose();
@@ -459,7 +456,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         galaxyList.setToolTipText(
                 "Your main galaxy for which to download resources");
         galaxyList.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionGalaxySelected();
             }
@@ -478,7 +474,6 @@ public class SWGCraftOptionsPanel extends JDialog {
             .booleanValue());
         autoUpdateGalaxyResources.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionAutoUpdateGalaxyToggled();
             }
@@ -528,7 +523,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         serverUnlock.setToolTipText("Unlock the input fields for editing");
         serverUnlock.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionUnlockServerData();
             }
@@ -630,7 +624,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         timeZones.setToolTipText("Select your time zone");
         timeZones.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionTimeZoneSelected();
             }
@@ -692,7 +685,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         verifyUserInfo.setToolTipText("Verify user info with SWGCraft");
         verifyUserInfo.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionVerifyUser();
             }
@@ -708,7 +700,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         saveUserInfo.setToolTipText("Save username and password locally");
         saveUserInfo.addActionListener(new ActionListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e) {
                 actionSaveButton();
             }

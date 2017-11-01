@@ -85,7 +85,7 @@ public class SWGNotesNode extends SWGTreeNode {
         del.setToolTipText("Delete the notes file");
         del.setMnemonic('D');
         del.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 delete();
             }

@@ -314,7 +314,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         resourceTab.addChangeListener(new ChangeListener() {
 
-            @SuppressWarnings("synthetic-access")
             public void stateChanged(ChangeEvent e) {
                 if (isGuiFinished)
                     focusGained(true);
@@ -1059,7 +1058,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * @param row the selected row number, already converted to the model
      * @param e the event that initiates the call
      */
-    @SuppressWarnings("synthetic-access")
     private void currentShowPopup(final int row, MouseEvent e) {
 
         JPopupMenu ppp = new JPopupMenu();
@@ -1150,7 +1148,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     private void filterFieldsAlign() {
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
             public void run() {
                 int i = 2;
                 for (Stat s : Stat.gameOrder()) {
@@ -1576,7 +1573,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @param e the event that initiates the call
      */
-    @SuppressWarnings("synthetic-access")
     private void guardsShowPopup(MouseEvent e) {
         int r = guardsTable.rowAtPoint(e.getPoint());
         final int row = r >= 0
@@ -1872,7 +1868,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         JMenuItem addInv = new JMenuItem("Add to inventory");
         addInv.setToolTipText("Add the selected resource to inventory");
         addInv.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent e1) {
                 inventoryAdd(res);
             }
@@ -1891,7 +1886,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * @param fgg integer that indicates fair, good, or great
      * @return a button panel
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeColorChooser(final String text, final int fgg) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -1996,7 +1990,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @return a GUI component for limiting view to max age
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeFilterAge() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
         maxAgeToggle = new JCheckBox("Max hours");
@@ -2051,7 +2044,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             JTextField tf = makeFilterTextField(
                     String.format("%s - %s", s.name(), s.getDescription()),
                     true, new SWGDocNumberFilter(true, null, 0, 1000) {
-                        @SuppressWarnings("synthetic-access")
                         @Override
                         protected boolean isValid(String v) {
                             return isBlocking || super.isValid(v);
@@ -2082,7 +2074,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * @param fff a filter field filter for this text field
      * @return the GUI component
      */
-    @SuppressWarnings("synthetic-access")
     private JTextField makeFilterTextField(
             String txt, boolean addDocListener, SWGDocNumberFilter fff) {
         final JTextField fld = new JTextField();
@@ -2117,7 +2108,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @return the main table of current resources
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeMainTable() {
         currentResourcesModel = new ResourcesTableModel();
         currentResourcesTable = new SWGJTable(currentResourcesModel);
@@ -2160,7 +2150,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @return the GUI lists of resource guards
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeNEGuardsPanel() {
         guardsModel = new GuardsModel();
         guardsTable = new SWGJTable(guardsModel) {
@@ -2215,7 +2204,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @return the GUI lists of resource monitors
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeNEMonitorsPanel() {
         monitorsModel = new MonitorModel();
         monitorsTable = new SWGJTable(monitorsModel);
@@ -2273,7 +2261,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         resourceDetails.setBorder(BorderFactory.createLoweredBevelBorder());
 
         resourceDetails.addMouseListener(new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
@@ -2367,7 +2354,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         guard.setToolTipText(
                 "Open the create guard dialog for " + rcl.rcName());
         guard.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent evt) {
                 actionGuardCreate(rcl);
             }
@@ -2393,7 +2379,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 : "Disable default coloring (momentarily)");
         item.setToolTipText("Toggle what coloring is based on");
         item.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             public void actionPerformed(ActionEvent evt) {
                 disableColoring = !disableColoring;
                 updateCurrent();
@@ -2408,7 +2393,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * 
      * @return the resource class tree component
      */
-    @SuppressWarnings("synthetic-access")
     private Component makeResourceClassTreePanel() {
         resourceClassTree = new JTree(resourceTab.resClassTreeModel());
         resourceClassTree.getSelectionModel().setSelectionMode(
@@ -2455,7 +2439,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 && SWGFrame.getSelectedCharacter().galaxy().exists());
 
         mi.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionWriteNews(kr, append);
@@ -2524,7 +2507,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      *        converted to the model
      * @param e the event that initiates the call
      */
-    @SuppressWarnings("synthetic-access")
     private void monitorsShowPopup(int row, MouseEvent e) {
         monitorsTable.getSelectionModel().setSelectionInterval(row, row);
         int rw = monitorsTable.convertRowIndexToModel(row);
@@ -2915,7 +2897,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
          */
         private final String[] colNames = { "Guard", "Class", "Values", "Min" };
 
-        @SuppressWarnings("synthetic-access")
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -2942,12 +2923,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             return colNames[col];
         }
 
-        @SuppressWarnings("synthetic-access")
         public int getRowCount() {
             return guardsGet().size();
         }
 
-        @SuppressWarnings("synthetic-access")
         public Object getValueAt(int rowIndex, int columnIndex) {
 
             SWGGuard guard = guardsGet().get(rowIndex);
@@ -2984,7 +2963,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
          */
         private final String[] colNames = { "Resource", "Class", "Age" };
 
-        @SuppressWarnings("synthetic-access")
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
@@ -3020,12 +2998,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             return colNames[column];
         }
 
-        @SuppressWarnings("synthetic-access")
         public int getRowCount() {
             return monitorsGet().size();
         }
 
-        @SuppressWarnings("synthetic-access")
         public Object getValueAt(int rowIndex, int columnIndex) {
             SWGMonitor monitor = monitorsGet().get(rowIndex);
             SWGKnownResource resource = monitor.getResource();
@@ -3068,7 +3044,6 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
          */
         private final Stat[] gOrder = Stat.gameOrder();
 
-        @SuppressWarnings("synthetic-access")
         @Override
         public TableCellDecorations getCellDecor(
                 int row, int column, Object value) {
@@ -3137,12 +3112,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             return columnNames[col];
         }
 
-        @SuppressWarnings("synthetic-access")
         public int getRowCount() {
             return currentGet().size();
         }
 
-        @SuppressWarnings("synthetic-access")
         public Object getValueAt(int rowIndex, int columnIndex) {
             SWGKnownResource res = currentGet(rowIndex);
             if (res == null) return null;

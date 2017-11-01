@@ -146,7 +146,7 @@ final class SWGTradeCustomerTab extends JPanel {
     private void actionFilterView() {
         if (isWorking) return;
         SwingUtilities.invokeLater(new Runnable() {
-            @SuppressWarnings( { "synthetic-access", "unchecked" })
+            @SuppressWarnings( { "unchecked" })
             public void run() {
                 String characterName = tradeTab.character.getNameComplete();
 
@@ -297,7 +297,7 @@ final class SWGTradeCustomerTab extends JPanel {
         checkOnlyNewCustomers.setToolTipText(
                 "Display only new customers");
         checkOnlyNewCustomers.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionFilterView();
             }
@@ -308,7 +308,7 @@ final class SWGTradeCustomerTab extends JPanel {
         checkSinceLastTime.setToolTipText(
                 "Display only customers since last \"Save\"");
         checkSinceLastTime.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionFilterView();
             }
@@ -320,7 +320,7 @@ final class SWGTradeCustomerTab extends JPanel {
         s.setMnemonic('C');
         s.setToolTipText("Save current date and the customer list");
         s.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionSave();
             }
@@ -335,7 +335,7 @@ final class SWGTradeCustomerTab extends JPanel {
         c.setMnemonic('C');
         c.setToolTipText("Clear the filters");
         c.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 actionClear();
             }
@@ -356,17 +356,17 @@ final class SWGTradeCustomerTab extends JPanel {
         AbstractDocument ad = (AbstractDocument) tf.getDocument();
         ad.setDocumentFilter(new SWGDocNumberFilter());
         ad.addDocumentListener(new DocumentListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void changedUpdate(DocumentEvent e) {
                 actionFilterView();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void insertUpdate(DocumentEvent e) {
                 actionFilterView();
             }
 
-            @SuppressWarnings("synthetic-access")
+            
             public void removeUpdate(DocumentEvent e) {
                 actionFilterView();
             }

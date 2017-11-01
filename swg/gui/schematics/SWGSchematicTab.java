@@ -153,7 +153,7 @@ public final class SWGSchematicTab extends JTabbedPane {
 
         // create interior lazily, see this#focusGained()
         frame.getTabPane().addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void stateChanged(ChangeEvent e) {
                 focusGained();
             }
@@ -229,7 +229,7 @@ public final class SWGSchematicTab extends JTabbedPane {
         ad.setToolTipText("Open a dialog to manage assignees and schematics");
         ad.setMnemonic(KeyEvent.VK_M);
         ad.addActionListener(new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionAssigneeDialog();
@@ -489,7 +489,7 @@ public final class SWGSchematicTab extends JTabbedPane {
         m.setMnemonic(KeyEvent.VK_S);
         if (s != null)
             m.addActionListener(new ActionListener() {
-                @SuppressWarnings("synthetic-access")
+                
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!isGuiFinished) make();

@@ -287,7 +287,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void run() {
                 downloadHelper(galaxy);
                 synchronized (locker) {

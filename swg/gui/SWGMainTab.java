@@ -136,7 +136,7 @@ public class SWGMainTab extends JSplitPane {
         this.setDividerSize(5);
 
         MouseListener ml = new MouseAdapter() {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void mousePressed(MouseEvent e) {
                 int selRow = tree.getRowForLocation(e.getX(), e.getY());
@@ -153,14 +153,14 @@ public class SWGMainTab extends JSplitPane {
         tree.getInputMap().put(KeyStroke.getKeyStroke("SPACE"),
                 "treeNodeAction");
         tree.getActionMap().put("treeNodeAction", new AbstractAction() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 treeSpaceTyped(tree.getSelectionPath());
             }
         });
 
         frame.getTabPane().addChangeListener(new ChangeListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void stateChanged(ChangeEvent e) {
                 focusChanged(e);
             }

@@ -162,7 +162,7 @@ final class SWGSchematicWrapper implements Serializable, SWGGui {
      * 
      * @param notes the new notes, or {@code null}
      */
-    void notes(@SuppressWarnings("hiding") String notes) {
+    void notes(String notes) {
         this.notes = ZString.ton(notes);
     }
 
@@ -243,7 +243,7 @@ final class SWGSchematicWrapper implements Serializable, SWGGui {
      * @param count the stock count
      * @throws IllegalArgumentException if {@code count < 0}
      */
-    void stock(@SuppressWarnings("hiding") int count) {
+    void stock(int count) {
         if (count < 0)
             throw new IllegalArgumentException("Invalid value: " + count);
         this.count = count;

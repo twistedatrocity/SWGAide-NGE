@@ -893,7 +893,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         statLog = new JLabel("   ");
         final Timer timer = new Timer(3000, new ActionListener() {
-            @SuppressWarnings("synthetic-access")
+            
             public void actionPerformed(ActionEvent e) {
                 statLog.setText("   ");
             }
@@ -1418,7 +1418,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     public void putToLogbar_1(final String text) {
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 if (text == null)
@@ -1447,7 +1447,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     public void putToLogbar_2(final Object o) {
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 Object oo = o;
@@ -1523,7 +1523,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             return;
         SwingUtilities.invokeLater(new Runnable() {
 
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public void run() {
                 if (text == null) statLog.setText("   ");
@@ -1630,7 +1630,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * Shows an option dialogue giving users the option to automatically mail
      * the error file to a mail address
      */
-    protected void showErrorMailOption() {
+    @SuppressWarnings("unused")
+	protected void showErrorMailOption() {
         final Desktop dt = Desktop.getDesktop();
         if (!dt.isSupported(Desktop.Action.MAIL))
             return;

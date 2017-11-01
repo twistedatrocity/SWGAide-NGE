@@ -136,7 +136,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
      * @param e
      *            the user action
      */
-    private void actionTypeSelected(@SuppressWarnings("unused") ItemEvent e) {
+    private void actionTypeSelected(ItemEvent e) {
         if (type.getSelectedIndex() < 0)
             return;
 
@@ -305,7 +305,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
         type.setAutoscrolls(true);
         type.addItemListener(new ItemListener() {
 
-            @SuppressWarnings("synthetic-access")
+            
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     actionTypeSelected(e);

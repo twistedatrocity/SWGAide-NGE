@@ -190,7 +190,7 @@ final class SWGTestBench extends SWGJDialog {
      */
     private JLabel makeLabel() {
         JLabel l = new JLabel("") {
-            @SuppressWarnings("synthetic-access")
+            
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
@@ -696,7 +696,7 @@ final class SWGTestBench extends SWGJDialog {
          * @param rc a resource class
          * @param units number of units
          */
-        @SuppressWarnings("synthetic-access")
+        
         RSlot(SWGResourceClass rc, int units) {
             super(ZNumber.asText(units, true, true),
                     SWGResourceClassTree.icon(rc), SwingConstants.CENTER);
