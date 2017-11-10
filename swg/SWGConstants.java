@@ -55,6 +55,16 @@ public class SWGConstants {
      * The URL to the SWGAide home and download page.
      */
     public static final String swgAideURL = "https://github.com/twistedatrocity/SWGAide-NGE";
+    
+    /**
+     * The URL to the SWGAide releases page.
+     */
+    public static final String swgAideReleaseURL = "https://github.com/twistedatrocity/SWGAide-NGE/releases";
+    
+    /**
+     * The URL to the SWGAide version file for update checking.
+     */
+    public static final String swgAideVersionURL = "https://raw.githubusercontent.com/twistedatrocity/SWGAide-NGE/master/SWGAide-version.TXT";
 
     /**
      * The text file containing version information.
@@ -64,7 +74,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.9-MrMiagi-0.1.2";
+    public static final String version = "0.9.9-MrMiagi-0.1.3";
 
     /**
      * Returns the cache directory.
