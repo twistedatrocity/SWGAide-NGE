@@ -33,7 +33,7 @@ import swg.tools.ZString;
  * with SWGCraft.org. This class manages SOAP connections with SWGCraft.org in
  * accordance with the public WSDL. None of the features of this implementation
  * has public access modifiers.
- * <P>
+ * 
  * <B>NOTE: </B>See {@link SWGCraft} for further details on how communication
  * with SWGCraft.org is structured and how it must be managed.
  * <P>
