@@ -107,9 +107,9 @@ public final class SWGAide {
                 return filename.getName();
             }
             //Possibly running in developer mode, i.e. outside of a packaged file
-            return "SWGAide.jar";
+            return "SWGAide-NGE.jar";
         } catch (URISyntaxException e) {
-            return "SWGAide.jar";
+            return "SWGAide-NGE.jar";
         }
     }
 
