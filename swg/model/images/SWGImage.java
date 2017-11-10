@@ -1,23 +1,17 @@
 package swg.model.images;
 
-import java.awt.Container;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.net.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.*;
+import javax.imageio.*;
+import javax.swing.*;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.SwingWorker;
-
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGEncodeParam;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import swg.SWGAide;
 import swg.SWGConstants;
@@ -31,6 +25,7 @@ import swg.tools.ZWriter;
  *         Chimaera.Zimoon
  */
 public class SWGImage implements Serializable, Comparable<SWGImage>, SWGGui {
+	
 
     /**
      * Serialization version info. Don't meddle with this or break the
@@ -318,17 +313,15 @@ public class SWGImage implements Serializable, Comparable<SWGImage>, SWGGui {
                 if (!tgt.getParentFile().exists())
                     tgt.getParentFile().mkdirs();
 
-                BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(tgt));
-
-                JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-                JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bi);
-                param.setQuality(.5f, false);
-                encoder.setJPEGEncodeParam(param);
-                encoder.encode(bi);
-
-                out.flush();
-                out.close();
+                int w = bi.getWidth(null);
+                int h = bi.getHeight(null);
+                if (bi.getType() != BufferedImage.TYPE_INT_RGB) {
+                    BufferedImage bi2 =
+                        new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                    Graphics big = bi2.getGraphics();
+                    big.drawImage(bi, 0, 0, null);
+                    bi = bi2;
+                }
             }
         } catch (Throwable e) {
             SWGAide.printError("SWGAlbum:imageThumbWrite", e);
