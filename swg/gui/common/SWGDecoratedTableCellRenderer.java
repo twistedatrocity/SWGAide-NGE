@@ -11,7 +11,6 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-import sun.swing.DefaultLookup;
 import swg.tools.ZNumber;
 
 /**
@@ -234,12 +233,10 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
         Border border = null;
         if (hasFocus) {
             if (isSelected)
-                border = DefaultLookup.getBorder(this, ui,
-                        "Table.focusSelectedCellHighlightBorder");
+                border = UIManager.getBorder("Table.focusSelectedCellHighlightBorder");
 
             if (border == null)
-                border = DefaultLookup.getBorder(this, ui,
-                        "Table.focusCellHighlightBorder");
+                border = UIManager.getBorder("Table.focusCellHighlightBorder");
         } else
             border = noFocusBorder;
 
