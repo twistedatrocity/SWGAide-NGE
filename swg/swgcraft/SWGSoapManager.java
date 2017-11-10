@@ -558,7 +558,7 @@ final class SWGSoapManager extends SOAPManager {
 
             Node n = getFirstChild(respMsg.getSOAPBody(), 2);
             response.parseNode(n);
-        } catch (com.sun.xml.internal.messaging.saaj.SOAPExceptionImpl e) {
+        } catch (SOAPException e) {
             SWGAide.printDebug("soap", 1,
                     "SWGSoapManager:requestUserInfoDetailed_a: "
                             + e.getMessage());

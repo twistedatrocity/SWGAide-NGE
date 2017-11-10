@@ -34,8 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
-import com.sun.xml.internal.messaging.saaj.SOAPExceptionImpl;
+import javax.xml.soap.SOAPException;
 
 import swg.SWGAide;
 import swg.crafting.Stat;
@@ -437,7 +436,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                             : urep.size() > 0
                                     ? urep.get(0).report.gxy()
                                     : null);
-                } catch (SOAPExceptionImpl e) {
+                } catch (SOAPException e) {
                     showSoapExceptionDialog();
                 } finally {
                     resetGUI();
@@ -1620,7 +1619,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private boolean notesFileSubmitResource(
             final Wrapper wrapper, List<SWGSimilarNameDialog.Wrapper> sl)
-            throws SOAPExceptionImpl {
+            throws SOAPException {
 
         if (wrapper == null || wrapper.isSubmitted)
             return true;
@@ -1690,7 +1689,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                     rm), null);
 
             if (rm.contains("Invalid Content-Type:text/html"))
-                throw new SOAPExceptionImpl();
+                throw new SOAPException();
 
             if (status == 999)
                 showUsernamePasswordDialog();
@@ -1748,7 +1747,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private boolean notesFileSubmitResources(
             List<Wrapper> wl, List<SWGSimilarNameDialog.Wrapper> sl)
-            throws SOAPExceptionImpl {
+            throws SOAPException {
 
         boolean success = true;
         for (Wrapper wr : wl)
@@ -1788,7 +1787,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                     boolean success = notesFileSubmitResources(wraps, sl);
                     notesFileSubmitResourcesDone(
                             success, autoDelete, notes, wraps, sl);
-                } catch (SOAPExceptionImpl e) {
+                } catch (SOAPException e) {
                     showSoapExceptionDialog();
                 } finally {
                     resetGUI();
@@ -2406,7 +2405,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @throws SOAPExceptionImpl if there is a communication error
      */
     private void submitUnreportedAndDepleted(
-            List<Wrapper> unRep, List<Wrapper> depl) throws SOAPExceptionImpl {
+            List<Wrapper> unRep, List<Wrapper> depl) throws SOAPException {
 
         if (unRep.size() + depl.size() <= 0)
             return; // sanity
@@ -2438,7 +2437,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @throws SOAPExceptionImpl if there is a communication error
      */
     private boolean submitUnreportedOrDepleted(
-            List<Wrapper> wraps, final JList<Wrapper> guiList) throws SOAPExceptionImpl {
+            List<Wrapper> wraps, final JList<Wrapper> guiList) throws SOAPException {
 
         // true if this batch pertains to the depleted-list
         boolean isDepl = guiList == depletedList;
@@ -2485,7 +2484,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                         printLog(String.format("submitNewAndDepleted: %s", rm),
                                 null);
                         if (rm.contains("Invalid Content-Type:text/html"))
-                            throw new SOAPExceptionImpl();
+                            throw new SOAPException();
 
                         // try to continue
                     }
