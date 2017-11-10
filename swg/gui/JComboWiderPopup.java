@@ -69,7 +69,7 @@ public class JComboWiderPopup<T> extends JComboBox<T> {
          * @param comboBox
          *            the combo box for the popup
          */
-        public WiderPopup(JComboBox<?> comboBox) {
+        public WiderPopup(JComboBox<Object> comboBox) {
             super(comboBox);
             setLayout(new GridLayout(comboBox.getModel().getSize(), 1, 5, 5));
         }

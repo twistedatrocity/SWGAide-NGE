@@ -85,11 +85,15 @@ public final class SWGAide {
      */
     private static void checkJavaVersion() {
         String ver = System.getProperty("java.version");
-        if (ver.compareTo("1.6.0") >= 0) return;
+        if (ver.compareTo("1.7.0") >= 0) {
+        	if (ver.compareTo("1.9.0") <= 0) {
+        		return;
+        	}
+        }
 
         ZString msg = ZString.fz("This application requires a Java Runtime%n" +
-                "Environment (JRE) version 1.6.0 or higher.%n" +
-                "Find a free copy at http://java.sun.com%n" +
+                "Environment (JRE) version 1.7 or 1.8.%n" +
+                "Find a free copy at http://java.com/download%n" +
                 "A minimal installation is just the JRE.%n" +
                 "Your version: %s", ver);
         printMessage(msg);
@@ -107,9 +111,9 @@ public final class SWGAide {
                 return filename.getName();
             }
             //Possibly running in developer mode, i.e. outside of a packaged file
-            return "SWGAide.jar";
+            return "SWGAide-NGE.jar";
         } catch (URISyntaxException e) {
-            return "SWGAide.jar";
+            return "SWGAide-NGE.jar";
         }
     }
 
@@ -124,7 +128,7 @@ public final class SWGAide {
 
         String msg = "Java or Windows error\n" +
                 "There is an error that makes Java work in a folder\n" +
-                "that is not the folder where you put down SWGAide.jar\n" +
+                "that is not the folder where you put down SWGAide-NGE.jar\n" +
                 "The solution depends on your setup, the README file\n" +
                 "suggests one solution: ensure that javaw.exe is the\n" +
                 "selected file association for \".jar\" files\n\n" +

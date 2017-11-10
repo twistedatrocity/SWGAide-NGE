@@ -423,7 +423,7 @@ final class SWGPostLaunch {
     private void existsUpdate() {
         try {
             URL url = new URL(
-                    SWGConstants.swgAideURL + SWGConstants.swgVersionTXT);
+                    SWGConstants.swgAideVersionURL);
             final String update = existsUpdate(url);
             if (update != null && !update.startsWith("null")) {
                 // we touch Swing GUI, hence a swing safe thread
@@ -432,7 +432,7 @@ final class SWGPostLaunch {
                     
                     @Override
                     public void run() {
-                        String u = SWGConstants.swgAideURL + "swgaide";
+                        String u = SWGConstants.swgAideReleaseURL;
                         String[] opt = { "Open browser", "Another time" };
                         String msg = String.format("SWGAide version %s%n" +
                                 "is available, visit%n%s", update, u);
@@ -468,7 +468,6 @@ final class SWGPostLaunch {
      * @return a version string, or {@code null}
      */
     private String existsUpdate(URL url) {
-    	return null;/*
         try {
             ZReader bin = ZReader.newTextReader(url.openStream());
             if (bin != null) {
@@ -482,7 +481,7 @@ final class SWGPostLaunch {
         } catch (Exception e) {
             SWGAide.printDebug("post", 1, "SWGPostLaunch:existsUpdate: " + e);
         }
-        return null;*/
+        return null;
     }
 
     /**
