@@ -1280,45 +1280,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
     }
 
     /**
-     * Creates an advertising canvas
-     * 
-     * @return a quite blank canvas inviting developers to contact me
-     */
-    private Component makeFuture() {
-        JEditorPane ed = new JEditorPane();
-        ed.setEditable(false);
-        JScrollPane jsp = new JScrollPane(ed);
-        int vs = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
-        jsp.setVerticalScrollBarPolicy(vs);
-
-        java.net.URL text = SWGAide.class.getResource("docs/future_en.htm");
-        if (text != null) {
-            try {
-                ed.setPage(text);
-            } catch (IOException e) {
-                SWGAide.printError("SWGFrame:makeFuture", e);
-            }
-        } else {
-            SWGAide.printError("SWGFrame:makeFuture: couldn't "
-                + "find future_en.htm", null);
-        }
-
-        getTabPane().addChangeListener(new ChangeListener() {
-
-            public void stateChanged(ChangeEvent e) {
-                if (getTabPane().getTitleAt(getTabPane().getSelectedIndex())
-                    .equals("Future")) {
-                    saveAsAddListener(null, null);
-                    putToLogbar_1(null);
-                    putToLogbar_2(null);
-                }
-            }
-            });
-
-        return jsp;
-    }
-
-    /**
      * Adds a menu item to the "Edit" menu. If the name of <code>menuItem</code>
      * equals "-=-" a menu separator is added
      * 
@@ -1395,7 +1356,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         tabPane.add("Resources", resourceTab);
         tabPane.add("Schematics", schematicTab);
         tabPane.add("Album", album);
-        tabPane.add("Future", makeFuture());
         
         tabPane.setMnemonicAt(0, KeyEvent.VK_M);
         tabPane.setMnemonicAt(1, KeyEvent.VK_T);
