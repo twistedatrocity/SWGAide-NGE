@@ -2315,9 +2315,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 int h = d.height / 5;
-                d.height = h > 130
+                d.height = h > 200
                         ? h
-                        : 130;
+                        : 200;
                 return d;
             }
         };
