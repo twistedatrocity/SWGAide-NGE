@@ -767,17 +767,17 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * values, and fills the frame with some initial components
      */
     private void initFrame() {
-        setTitle("SWGAide");
+        setTitle("SWGAide-NGE");
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
-        // default size 800 X 600 or screen size limited
-        int w = screen.width < 800
+        // default size 1280 X 800 or screen size limited
+        int w = screen.width < 1280
             ? screen.width
-            : 800;
-        int h = screen.height < 600
+            : 1280;
+        int h = screen.height < 800
             ? screen.height
-            : 600;
+            : 800;
         Dimension dim = new Dimension(w, h);
         dim = (Dimension) getPrefsKeeper().get("frameDimension", dim);
         setSize(dim);
@@ -1616,8 +1616,10 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     protected void showAbout() {
         JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
-                "\n\nCreated by Simon Gronlund\n\n" +
-                "Developers:\nZimoon @ Chimaera\n" +
+        		"\n\nForked and Maintained by Holmes @ SWG:Legends\n" +
+        		"    (aka Mr-Miagi)\n\n" +
+        		"Originally Created by Simon Gronlund\n" +
+                "Zimoon @ Chimaera\n" +
                 "Oarun @ Chilastra\n\n" +
                 "Resource and schematic data is provided by SWGCraft.org\n" +
                 "Creature harvesting data is obtained from SWGPets.com\n" +
@@ -1627,21 +1629,17 @@ public class SWGFrame extends JFrame implements ComponentListener,
     }
 
     /**
-     * Shows an option dialogue giving users the option to automatically mail
-     * the error file to a mail address
+     * Shows a message dialogue giving users information on where
+     * to post bugs
      */
-    @SuppressWarnings("unused")
 	protected void showErrorMailOption() {
-        final Desktop dt = Desktop.getDesktop();
-        if (!dt.isSupported(Desktop.Action.MAIL))
-            return;
-
-        final String[] args = {"", "OK"};
-        final String msg =
-            "An error has occured!\n"
-            + "Bug reports can be posted on github.\n"
-			+ "https://github.com/twistedatrocity/SWGAide-NGE/issues"
-            + "Please attach your error logs to the issue.\n";
+    	JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
+        		"\n\nAn Error has occured!\n\n" +
+        		"Bug reports can be posted on github:\n" +
+                "https://github.com/twistedatrocity/SWGAide-NGE/issues\n" +
+                "Please describe the issue and attach any logs\n\n" +
+                "Thank You",
+                "Error", JOptionPane.PLAIN_MESSAGE);
 
         return;
         
