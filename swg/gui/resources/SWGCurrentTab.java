@@ -1651,8 +1651,14 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         popup.addSeparator();
 
-        final Integer mh = (Integer) SWGFrame.getPrefsKeeper().get(
+        Integer mhh = (Integer) SWGFrame.getPrefsKeeper().get(
                 "resourceGuardsMaxHours");
+        if (mhh == null) {
+        	mhh = 900;
+        }
+        
+        final Integer mh = mhh;
+        
         JMenuItem age = new JMenuItem(String.format("Set time%s", mh == null
                 ? ""
                 : String.format(" (%d h)", mh)));

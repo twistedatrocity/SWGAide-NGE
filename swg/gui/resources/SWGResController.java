@@ -993,7 +993,7 @@ public final class SWGResController implements UpdateSubscriber {
         if (maxHours != null)
             ageLimit -= maxHours.longValue() * 3600;
         else
-            ageLimit -= 36 * 3600;
+            ageLimit -= 900 * 3600;
 
         // Resources are not aware of guards and guards do not keep track of
         // which resources have triggered or not; always consider resources
