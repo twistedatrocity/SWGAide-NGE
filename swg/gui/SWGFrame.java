@@ -21,7 +21,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,15 +39,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JWindow;
 import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import swg.SWGAide;
 import swg.SWGConstants;
@@ -853,7 +847,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         });
         helpMenu.add(lic);
 
-        JMenuItem abt = new JMenuItem("About SWGAide");
+        JMenuItem abt = new JMenuItem("About SWGAide-NGE");
         abt.setMnemonic('A');
         abt.addActionListener(new AbstractAction() {
 
@@ -865,8 +859,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         helpMenu.addSeparator();
 
-        JMenuItem goWeb = new JMenuItem("SWGAide Web Site");
-        goWeb.setToolTipText("Open the SWGAide web page in a web browser");
+        JMenuItem goWeb = new JMenuItem("SWGAide-NGE Web Site");
+        goWeb.setToolTipText("Open the SWGAide-NGE web page in a web browser");
         goWeb.setMnemonic('W');
         goWeb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1575,7 +1569,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * Shows an about dialogue pane
      */
     protected void showAbout() {
-        JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
+        JOptionPane.showMessageDialog(this, "SWGAide-NGE " + SWGConstants.version +
         		"\n\nForked and Maintained by Holmes @ SWG:Legends\n" +
         		"    (aka Mr-Miagi)\n\n" +
         		"Originally Created by Simon Gronlund\n" +
@@ -1593,7 +1587,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * to post bugs
      */
 	protected void showErrorMailOption() {
-    	JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
+    	JOptionPane.showMessageDialog(this, "SWGAide-NGE " + SWGConstants.version +
         		"\n\nAn Error has occured!\n\n" +
         		"Bug reports can be posted on github:\n" +
                 "https://github.com/twistedatrocity/SWGAide-NGE/issues\n" +
