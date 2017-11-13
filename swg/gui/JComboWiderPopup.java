@@ -50,7 +50,8 @@ public class JComboWiderPopup<T> extends JComboBox<T> {
             return new JComboButton();
         }
 
-        @Override
+        @SuppressWarnings("unchecked")
+		@Override
         protected ComboPopup createPopup() {
             WiderPopup popup1 = new WiderPopup(comboBox);
             popup1.getAccessibleContext().setAccessibleParent(comboBox);

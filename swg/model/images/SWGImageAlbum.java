@@ -113,7 +113,8 @@ public final class SWGImageAlbum implements Serializable, SWGGui {
      * @return a list of new images
      * @throws NullPointerException if the argument is {@code null}
      */
-    private List<SWGImage> newImages(File f) {
+    @SuppressWarnings("unlikely-arg-type")
+	private List<SWGImage> newImages(File f) {
         File[] lst = imageFiles(f);
         if (lst == null)
             return Collections.emptyList();
