@@ -91,7 +91,7 @@ public class SWGConstants {
             File tmp;
             String str = System.getProperty("java.io.tmpdir");
             tmp = str != null
-                    ? new File(str, "SWGAide")
+                    ? new File(str, "SWGAide-NGE-" + version)
                     : null;
             if (tmp == null || (!tmp.exists() && !tmp.mkdir()))
                 tmp = new File("temp");
