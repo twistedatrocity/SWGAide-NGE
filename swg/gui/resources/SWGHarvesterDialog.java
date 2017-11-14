@@ -253,7 +253,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
                 ttl = "Invalid BER value";
             } else if (b > 44) {
                 // XXX: make this check for harvester type too
-                msg = "Enter a BER value less than 44";
+                msg = "Enter a BER value 44 or less";
                 ttl = "Invalid BER value";
             } else if (m < 0.1) {
                 msg = "Enter a modifier size greater than 0";
