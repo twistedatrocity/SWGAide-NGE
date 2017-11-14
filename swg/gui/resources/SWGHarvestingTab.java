@@ -919,6 +919,12 @@ final class SWGHarvestingTab extends JPanel {
         if (SWGResController.harvestersExists(
                 split[1], SWGResourceTab.galaxy()))
             return true; // discard silently
+        
+        double m = 1.0;
+        
+        if (split.length > 5) {
+        	m = Double.parseDouble(split[5]);
+        }
 
         try {
             SWGHarvester h = new SWGHarvester(
@@ -926,7 +932,7 @@ final class SWGHarvestingTab extends JPanel {
                     split[2],
                     ZNumber.intExc(split[3]),
                     ZNumber.intExc(split[4]),
-                    Double.parseDouble(split[5]));
+                    m);
             SWGResController.harvestersAdd(h, SWGResourceTab.galaxy());
             return true;
         } catch (Exception e) {
@@ -1597,7 +1603,7 @@ final class SWGHarvestingTab extends JPanel {
         wr.writeExc(",");
         wr.writeExc(Integer.toString(h.ber));
         wr.writeExc(",");
-        wr.writelnExc(Integer.toString(h.hopperSize));
+        wr.writeExc(Integer.toString(h.hopperSize));
         wr.writeExc(",");
         wr.writelnExc(Double.toString(h.bmod));
     }
