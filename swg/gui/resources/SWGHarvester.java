@@ -77,6 +77,13 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @serial int: BER
      */
     final int ber;
+    
+    /**
+     * The extraction modifier
+     * 
+     * @serial double: bmod
+     */
+    double bmod = 1.0;
 
     /**
      * The concentration level of the resource being harvested. This is the
@@ -306,12 +313,14 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      *            the BER of the harvester, immutable
      * @param hopper
      *            hopper capacity of the harvester, immutable
+     * @param BMOD
+     *            the extraction modifier for the server, immutable
      * @throws IllegalArgumentException
      *             if an argument is invalid
      * @throws NullPointerException
      *             if an argument is {@code null}
      */
-    SWGHarvester(String name, String type, int BER, int hopper) {
+    SWGHarvester(String name, String type, int BER, int hopper, double BMOD) {
         if (name == null || type == null)
             throw new NullPointerException(String.format("name=%s and type%s",
                 name, type));
@@ -320,6 +329,11 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
                 "BER=%d and hopper=%d", Integer.valueOf(BER), Integer
                 .valueOf(hopper)));
 
+        if (BMOD > 0.0) {
+        	this.bmod = BMOD;
+        } else {
+        	this.bmod = 1.0;
+        }
         this.name = name;
         this.type = type;
         this.ber = BER;
@@ -433,13 +447,13 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @return the BER modifier, &ge; 1.5
      */
     double getBerModifier() {
-        // 50% (the bonus from 2005/12 when harvesters are operated per owner)
+        // XXX 50% (the bonus from 2005/12 when harvesters are operated per owner)
         double techMod = 1.0; // base
         if (harvestingTechnologyLevel == 1)
             techMod = 1.2;
         else if (harvestingTechnologyLevel == 2)
             techMod = 1.3;
-        return 1.5 * (techMod + (harvestFair * .01));
+        return bmod * (techMod + (harvestFair * .01));
     }
 
     /**
@@ -801,6 +815,17 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     void setMaint(long maintenance) {
         if (maintenance > 0)
             maint = maintenance;
+    }
+    
+    /**
+     * Set modifier for harvester
+     * 
+     * @param modifier
+     * 		the value to set
+     */
+    void setBmod(double modifier) {
+    	if(modifier > 0)
+    		bmod = modifier;
     }
 
     /**

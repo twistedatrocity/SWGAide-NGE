@@ -45,6 +45,12 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
      * The GUI text input field for the harvesters BER.
      */
     private JTextField BER;
+    
+    /**
+     * The GUI text input field for the BER modifier.
+     */
+    
+    private JTextField BMOD;
 
     /**
      * The cancel button.
@@ -174,6 +180,10 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
         hopper.setText(null);
         hopper.setToolTipText("Specify the base hopper size");
         hopper.setEnabled(true);
+        
+        BMOD.setText("1.0");
+        BMOD.setToolTipText("Specify extraction modifier value");
+        BMOD.setEnabled(true);
     }
 
     /**
@@ -201,10 +211,14 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
         BER.setText(ZNumber.asText(currentHarvester.ber, true, true));
         BER.setToolTipText("The Base Extraction Rate");
         BER.setEnabled(false);
-
+        
         hopper.setText(ZNumber.asText(currentHarvester.hopperSize, true, true));
         hopper.setToolTipText("The harvester's hopper size");
         hopper.setEnabled(false);
+        
+        BMOD.setText(ZNumber.asText(currentHarvester.bmod, 1, 1));
+        BMOD.setToolTipText("The Server Extraction Modifier");
+        BMOD.setEnabled(true);
     }
 
     /**
@@ -222,6 +236,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
             String typ = (String) type.getSelectedItem();
             int h = ZNumber.intExc(hopper.getText());
             int b = ZNumber.intExc(BER.getText());
+            double m = Double.parseDouble(BMOD.getText());
 
             if (typ == null || typ.isEmpty()) {
                 msg = "Select a harvester type";
@@ -238,8 +253,14 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
                 ttl = "Invalid BER value";
             } else if (b > 44) {
                 // XXX: make this check for harvester type too
-                msg = "Enter a BER value 44 or less";
+                msg = "Enter a BER value less than 44";
                 ttl = "Invalid BER value";
+            } else if (m < 0.1) {
+                msg = "Enter a modifier size greater than 0";
+                ttl = "Invalid modifier value";
+            } else if (m > 99) {
+                msg = "Enter a valid modifier";
+                ttl = "Invalid modifier value";
             } else if (h <= 0) {
                 msg = "Enter a hopper size greater than 0";
                 ttl = "Invalid size value";
@@ -248,7 +269,7 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
                 ttl = "Invalid size value";
             }
         } catch (Exception e) {
-            msg = "Enter a valid value (integer)";
+            msg = "Enter a valid value";
             ttl = "Not a number";
         }
 
@@ -336,8 +357,14 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
         JLabel lc = new JLabel("Hopper size", SwingConstants.LEFT);
         content.add(lc);
         content.add(hopper);
+        
+        BMOD = new JTextField("", 15);
 
-        SpringUtilities.makeCompactGrid(content, 4, 2, 0, 0, 5, 3);
+        JLabel lm = new JLabel("Extraction Modifier");
+        content.add(lm);
+        content.add(BMOD);
+
+        SpringUtilities.makeCompactGrid(content, 5, 2, 0, 0, 5, 3);
         return content;
     }
 
@@ -358,10 +385,13 @@ final class SWGHarvesterDialog extends SWGJDialog implements ActionListener {
                 SWGResController.harvestersAdd(new SWGHarvester(
                         name.getText(), (String) type.getSelectedItem(),
                         ZNumber.intExc(BER.getText()),
-                        ZNumber.intExc(hopper.getText())),
+                        ZNumber.intExc(hopper.getText()),
+                		Double.parseDouble(BMOD.getText())),
                         SWGResourceTab.galaxy());
-            } else
+            } else {
                 currentHarvester.setName(name.getText());
+                currentHarvester.setBmod(Double.parseDouble(BMOD.getText()));
+            }
 
         } catch (Exception e) {
             SWGAide.printError("HarvesterDialog:saveHarvester", e);

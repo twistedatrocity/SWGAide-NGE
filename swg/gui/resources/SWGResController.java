@@ -1197,10 +1197,27 @@ public final class SWGResController implements UpdateSubscriber {
             if (harvies == null) {
                 harvies = new ArrayList<SWGHarvester>();
                 harvesters.put(gxy, harvies);
+                // XXX This is somewhat hackish but good enough for now
+                /**
+                 * Since harvies are initiated in the res controller need to do this here.
+                 * Checks if modifier is set from dat file, if not, set to default value.
+                 * Did it this way so it only fires once per galaxy. Once a modifier is 
+                 * set it will save to the dat file upon close. so mainly this is just to
+                 * bring prior versions up to date if harvies exist wihout a modifier. 
+                 */
+            } else if (harvies.get(0).bmod < 1){
+            	for (int i = 0; i < harvies.size(); i++) {
+        			double bm = Double.valueOf(harvies.get(i).bmod);
+        			if(bm < 1) {
+                		harvies.get(i).bmod = 1.0;
+                	}
+        		}
             }
             return harvies;
         }
     }
+    
+    
 
     /**
      * Returns a list of <i>active&nbsp;</i> harvesters for the specified

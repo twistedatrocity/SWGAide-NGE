@@ -925,7 +925,8 @@ final class SWGHarvestingTab extends JPanel {
                     split[1],
                     split[2],
                     ZNumber.intExc(split[3]),
-                    ZNumber.intExc(split[4]));
+                    ZNumber.intExc(split[4]),
+                    Double.parseDouble(split[5]));
             SWGResController.harvestersAdd(h, SWGResourceTab.galaxy());
             return true;
         } catch (Exception e) {
@@ -1137,7 +1138,7 @@ final class SWGHarvestingTab extends JPanel {
         SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 2, 6, 110, 90);
         SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 7, 25);
         SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 8, 40);
-        SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 9, 30);
+        SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 9, 40);
         SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 10, 70, 115, 200);
         SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 11, 200, 300, 2000);
 
@@ -1234,6 +1235,7 @@ final class SWGHarvestingTab extends JPanel {
 
         SWGGuiUtils.tableColumnFixWidth(harvTable, 2, 35);
         SWGGuiUtils.tableColumnFixWidth(harvTable, 3, 70);
+        SWGGuiUtils.tableColumnFixWidth(harvTable, 4, 40);
 
         harvTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         harvTable.setAutoCreateRowSorter(true);
@@ -1596,6 +1598,8 @@ final class SWGHarvestingTab extends JPanel {
         wr.writeExc(Integer.toString(h.ber));
         wr.writeExc(",");
         wr.writelnExc(Integer.toString(h.hopperSize));
+        wr.writeExc(",");
+        wr.writelnExc(Double.toString(h.bmod));
     }
 
     /**
@@ -1612,7 +1616,7 @@ final class SWGHarvestingTab extends JPanel {
         wr.writeExc(", by SWGAide: ");
         wr.writelnExc(SWGConstants.swgAideURL);
 
-        wr.writeExc("# harvester,name,type,BER,hopper-size");
+        wr.writeExc("# harvester,name,type,BER,hopper-size,modifier");
         wr.writelnExc("");
         wr.writelnExc("# owner,name,hopper,maint,energy,tech,buff");
         wr.eol();
@@ -1851,7 +1855,7 @@ final class SWGHarvestingTab extends JPanel {
          * Table column header titles.
          */
         private final String[] colNames =
-            { "Harvester description", "Type", "BER", "Hopper" };
+            { "Harvester description", "Type", "BER", "Hopper", "BMOD" };
 
         @Override
         public Class<?> getColumnClass(int column) {
@@ -1886,6 +1890,8 @@ final class SWGHarvestingTab extends JPanel {
                 return Integer.valueOf(harvester.ber);
             case 3:
                 return Integer.valueOf(harvester.hopperSize);
+            case 4:
+            	return Double.valueOf(harvester.bmod);
             default:
                 return "ERROR";
             }
