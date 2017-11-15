@@ -1861,7 +1861,7 @@ final class SWGHarvestingTab extends JPanel {
          * Table column header titles.
          */
         private final String[] colNames =
-            { "Harvester description", "Type", "BER", "Hopper", "BMOD" };
+            { "Harvester description", "Type", "BER", "Hopper", "MOD" };
 
         @Override
         public Class<?> getColumnClass(int column) {
