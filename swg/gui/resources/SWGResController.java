@@ -1205,7 +1205,7 @@ public final class SWGResController implements UpdateSubscriber {
                  * set it will save to the dat file upon close. so mainly this is just to
                  * bring prior versions up to date if harvies exist wihout a modifier. 
                  */
-            } else if (harvies.get(0).bmod < 1){
+            } else if (harvies.size() > 0 && harvies.get(0).bmod < 1){
             	for (int i = 0; i < harvies.size(); i++) {
         			double bm = Double.valueOf(harvies.get(i).bmod);
         			if(bm < 1) {
