@@ -305,6 +305,8 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
         start = m.subject().indexOf(':') + 1;
         end = m.subject().indexOf('-', start);
         tmp = m.subject().substring(start, end).trim();
+        // XXX Workaround for Legends kash and must ISD support.
+        tmp = tmp.replace("_main", "");
         SWGPlanet p = SWGPlanet.fromName(tmp);
 
         // Resource class
