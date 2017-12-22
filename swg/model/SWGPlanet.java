@@ -205,6 +205,9 @@ public enum SWGPlanet implements SWGGui {
     public static SWGPlanet fromName(String name) {
         if (name.startsWith("Yavin")) // variations Yavin4 and Yavin IV
             return YAVIN4;
+        
+        if (name.startsWith("Kash")) // variations on Kashyyyk
+            return KASHYYYK;
 
         return valueOf(name.toUpperCase(Locale.ENGLISH));
     }
