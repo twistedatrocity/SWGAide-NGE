@@ -147,15 +147,16 @@ final class SWGTestBench extends SWGJDialog {
 
         slots = new ArrayList<RSlot>();
 
-        // add content
+        // add content        
         slotsGrid = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
         add(slotsGrid, BorderLayout.NORTH);
-
+        slotsGrid.setPreferredSize(new Dimension(400, 105));
+        
         exps = new JPanel();
         add(exps, BorderLayout.CENTER);
 
-        add(new JLabel("<html>&nbsp;Red denotes a value worse than \"Good\"; " +
-                "Orange is worse than \"Great\" "), BorderLayout.SOUTH);
+        String colors = "<html>&nbsp;<font color='#FF0000'>Red is worse than \"Good\".</font><br>&nbsp;<font color='#FF8C00'>Orange is \"Good\" and close to cap.</font><br>&nbsp;<font color='#000000'>Black is \"Great\" and will cap regardless.</font>";
+        add(new JLabel(colors), BorderLayout.SOUTH);
 
         setLocation(true);
         registerHelp(SWGAide.class.getResource(
@@ -298,19 +299,29 @@ final class SWGTestBench extends SWGJDialog {
      * @param init {@code true} if invoked from the constructor
      */
     private void setLocation(boolean init) {
+    	// set a preferred dimension for the dialogue window.
+    	Dimension pd = new Dimension(430, 600);
         if (init) {
             SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
             Point p = (Point) pk.get("schemTestBenchLocation",
                     new Point(SWGAide.frame().getWidth(), 0));
-            Dimension d = (Dimension) pk.get("schemTestBenchDimension",
-                    new Dimension(300, 500));
+            Dimension d = (Dimension) pk.get("schemTestBenchDimension", pd);
             setSize(d);
+            Dimension s = getSize();
             setLocation(p);
+            if (s.width < d.width)
+                setSize(d.width, getHeight());
+            
+            if (s.height < d.height)
+            	setSize(getWidth(), d.height);
         } else {
-            Dimension d = getPreferredSize();
+            Dimension d = pd;
             Dimension s = getSize();
             if (s.width < d.width || s.height < d.height)
                 setSize(d.width, getHeight());
+            
+            if (s.height < d.height)
+            	setSize(getWidth(), d.height);
 
             Point p = getLocation();
             Point pp = SWGGuiUtils.ensureOnScreen(p, getSize());
