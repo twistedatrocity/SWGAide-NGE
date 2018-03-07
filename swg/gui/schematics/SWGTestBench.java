@@ -2,6 +2,7 @@ package swg.gui.schematics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
@@ -108,6 +111,11 @@ final class SWGTestBench extends SWGJDialog {
      * A panel for labels displaying experimentation wrappers.
      */
     private final JPanel exps;
+    
+    /**
+     * A panel for displaying ingredients
+     */
+    private final JPanel ingredients;
 
     /**
      * A constant string of four &nbsp; for HTML padding.
@@ -146,17 +154,30 @@ final class SWGTestBench extends SWGJDialog {
         super(null, false, null);
 
         slots = new ArrayList<RSlot>();
+        Dimension pd = new Dimension(400, 105);
 
         // add content        
         slotsGrid = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
-        add(slotsGrid, BorderLayout.NORTH);
-        slotsGrid.setPreferredSize(new Dimension(400, 105));
+        getContentPane().add(slotsGrid, BorderLayout.NORTH);
+        slotsGrid.setPreferredSize(pd);
         
-        exps = new JPanel();
+        exps = new JPanel(new BorderLayout());
         add(exps, BorderLayout.CENTER);
-
-        String colors = "<html>&nbsp;<font color='#FF0000'>Red is worse than \"Good\".</font><br>&nbsp;<font color='#FF8C00'>Orange is \"Good\" and close to cap.</font><br>&nbsp;<font color='#000000'>Black is \"Great\" and will cap regardless.</font>";
-        add(new JLabel(colors), BorderLayout.SOUTH);
+        exps.setPreferredSize(new Dimension(400, 305));
+        
+        ingredients = new JPanel(new BorderLayout());
+        add(ingredients, BorderLayout.SOUTH);
+        ingredients.setPreferredSize(new Dimension(400, 155));
+        Border current = ingredients.getBorder();
+        Border empty = new EmptyBorder(5, 2, 5, 5);
+        if (current == null)
+        {
+            ingredients.setBorder(empty);
+        }
+        else
+        {
+            ingredients.setBorder(new CompoundBorder(empty, current));
+        }
 
         setLocation(true);
         registerHelp(SWGAide.class.getResource(
@@ -255,6 +276,45 @@ final class SWGTestBench extends SWGJDialog {
     }
 
     /**
+     * Helper method which rebuilds ingredient list with
+     * whatever is currently in the resource slots.
+     */
+    private void resetIngredients() {
+    	//
+    	String rez = "";
+    	ingredients.setLayout(new BorderLayout());
+        ingredients.removeAll();
+        
+        
+        String header = "<h4>Ingredients:</h4>";
+        
+        String colors = "<html><div align=\"center\" style=\"font-weight:bold; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;<font color='#FF0000'>Red is worse than \"Good\"." +
+        		"</font>&nbsp;<font color='#FF8C00'>Orange is \"Good\"." +
+        		"</font>&nbsp;<font color='#000000'>Black is \"Great\".</font>&nbsp;&uarr;&uarr;</div>";
+        for (Component c : slotsGrid.getComponents()) {
+            if (c instanceof JLabel) {
+               String jl = ((JLabel)c).getToolTipText();
+            	   if (jl != null && !jl.isEmpty()) {
+            		   jl = jl.replace("[", "<strong>");
+                       jl = jl.replace("]", "</strong>");
+            		   rez = rez + jl + "<br>";
+            	   }
+            }
+        }
+        String text = colors + header + rez;
+        
+        JLabel iL = new JLabel(text, SwingConstants.LEFT);
+        iL.setVerticalAlignment(SwingConstants.TOP);
+        iL.setFont(SWGGuiUtils.fontPlain());
+        iL.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
+                BorderFactory.createEmptyBorder(2, 3, 2, 0)));
+        iL.setOpaque(true);
+        iL.setBackground(Color.WHITE);
+        ingredients.add(iL);
+        
+    }
+    /**
      * Helper method which resets and updates the slots for the current
      * schematic. This method empties {@link #slots} and refills it with the
      * number of resource slots for the current schematic; this method is not
@@ -270,8 +330,9 @@ final class SWGTestBench extends SWGJDialog {
         slotsGrid.removeAll();
         slotsGrid.setLayout(new SpringLayout());
 
-        for (RSlot rs : slots)
+        for (RSlot rs : slots) {
             slotsGrid.add(rs);
+        }
 
         int rows = 2;
         int cols = 5;
@@ -393,6 +454,7 @@ final class SWGTestBench extends SWGJDialog {
 
                 resetSlots();
                 resetExps();
+                resetIngredients();
             }
 
             setResource(kr);
@@ -401,8 +463,10 @@ final class SWGTestBench extends SWGJDialog {
             wrap = null;
             resetSlots();
             resetExps();
+            resetIngredients();
         }
         updateEWAR();
+        resetIngredients();
 
         setVisible(true);
         setLocation(false);
@@ -729,6 +793,7 @@ final class SWGTestBench extends SWGJDialog {
                     } else if (e.getButton() == MouseEvent.BUTTON3) {
                         fill(null);
                         updateEWAR();
+                        resetIngredients();
                     }
                 }
             });
