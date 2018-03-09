@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -40,6 +41,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
@@ -57,6 +59,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.DefaultEditorKit;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -2271,6 +2274,15 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     JPopupMenu p = new JPopupMenu();
+                    Action copy = new DefaultEditorKit.CopyAction();
+                    copy.putValue(Action.NAME, "Copy text");
+                    copy.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control C"));
+                    if (resourceDetails.getSelectedText() != null) { // See if they selected something 
+                    	p.add( copy );
+                        p.addSeparator();
+                        // Do work with String s
+                    }
+                    
                     p.add(makeWriteNews(selectedResource, false));
                     p.add(makeWriteNews(selectedResource, true));
                     p.show(resourceDetails, e.getX(), e.getY());
