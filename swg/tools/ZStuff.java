@@ -36,11 +36,6 @@ public final class ZStuff {
      */
     private static final DateFormat TIME_SHORT =
             DateFormat.getTimeInstance(DateFormat.SHORT);
-    
-    /**
-     * A string for OS
-     */
-    private static String OS = null;
 
     /**
      * Returns the current date formatted per the user's locale and
@@ -184,23 +179,5 @@ public final class ZStuff {
             CAL.setTimeInMillis(time);
             return TIME_SHORT.format(CAL.getTime());
         }
-    }
-    
-    /**
-     * Returns OS name, caches result into string.
-     * @return an OS string
-     */
-    public static String getOsName() {
-       if(OS == null) { OS = System.getProperty("os.name");
-       }
-       return OS;
-    }
-
-    /**
-     * Simple check to see if we are on windows
-     * @return boolean
-     */
-    public static boolean isWindows() {
-       return getOsName().startsWith("Windows");
     }
 }
