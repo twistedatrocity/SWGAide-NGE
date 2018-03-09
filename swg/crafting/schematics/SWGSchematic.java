@@ -260,10 +260,10 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         category = c > 0
                 ? c
                 : Integer.MAX_VALUE;
-        if (category == Integer.MAX_VALUE) {
+        /* if (category == Integer.MAX_VALUE) {
             SWGAide.printDebug("scmc", 1,
                     "SWGSchematic: missing category: " + name + " SWGCRAFT_ID: " +id);
-		}
+		}*/
 
         List<String> cl = ZXml.commentsFromElem(xml);
         screen = cl.contains("Screenshot available");
