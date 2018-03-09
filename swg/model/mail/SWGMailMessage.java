@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public final class SWGMailMessage
      * "Unavailable at this system".
      */
     private static final String[] DUMMY_STR_ARRAY =
-            new String[] { "Unavailable at this system" };
+            new String[] { "Message details unavailable, the .mail file does not exist on this computer." };
 
     /**
      * {@code true} if any error occurred while parsing mails, {@code false}
@@ -170,9 +171,9 @@ public final class SWGMailMessage
     private SWGMailMessage(File file, SWGCharacter o) throws Exception {
         this.file = file;
         this.owner = o;
-
+        ZReader reader = null;
         try {
-            ZReader reader = ZReader.newTextReaderExc(file());
+            reader = ZReader.newTextReaderExc(file());
 
             id = Long.parseLong(reader.lineExc(false));
             messageFrom = reader.lineExc(false);
@@ -196,6 +197,8 @@ public final class SWGMailMessage
             SWGAide.printError("SWGMailMessage:parseHeader: " + file(), e);
             hasError = true;
             throw e;
+        } finally {
+        	reader.close();
         }
     }
 
@@ -323,14 +326,14 @@ public final class SWGMailMessage
     File file() {
         if (file == null) {
             // get a directory
-            File f = owner.mailBox().swgAidePath();
-            if (!f.exists())
-                f = owner.mailBox().swgPath();
+            File d = owner.mailBox().swgAidePath();
+            if (!d.exists())
+                d = owner.mailBox().swgPath();
 
-            if (!f.exists())
+            if (!d.exists())
                 file = SWGMailBox.DUMMY_FILE;
             else {
-                f = new File(f, getName());
+                File f = new File(d, getRealName());
                 file = f.exists()
                         ? f
                         : SWGMailBox.DUMMY_FILE;
@@ -348,11 +351,17 @@ public final class SWGMailMessage
      * @throws SecurityException if there is an error
      */
     void fileDelete() {
-        if (file() != SWGMailBox.DUMMY_FILE) {
-            file().delete();
-            file = null;
-            if (file() != SWGMailBox.DUMMY_FILE) file().delete();
+        File lf = new File(owner.mailBox().swgAidePath(), getRealName());
+        File sf = new File(owner.mailBox().swgPath(), getRealName());
+        
+        if (lf.getAbsoluteFile().exists()) {
+        	lf.getAbsoluteFile().delete();
         }
+        
+        if (sf.getAbsoluteFile().exists()) {
+        	sf.getAbsoluteFile().delete();
+        }
+
     }
 
     /**
@@ -393,6 +402,17 @@ public final class SWGMailMessage
      */
     public String getName() {
         return new ZString().app(id).app('.').app("mail").toString();
+    }
+    
+    /**
+     * Get the REAL filename
+     */
+    public String getRealName() {
+    	DecimalFormat df = new DecimalFormat("00000000");
+        String newid = df.format(id);
+        String result = new ZString().app(newid).app('.').app("mail").toString();
+        
+        return result;
     }
 
     /**
@@ -580,8 +600,9 @@ public final class SWGMailMessage
     private static String[] body(File file) {
         ArrayList<String> list = new ArrayList<String>(32);
         if (file.exists()) {
+        	ZReader sr = null;
             try {
-                ZReader sr = ZReader.newTextReaderExc(file);
+                sr = ZReader.newTextReaderExc(file);
                 List<String> sl = sr.linesExc();
                 boolean body = false;
                 for (String line : sl) {
@@ -589,10 +610,13 @@ public final class SWGMailMessage
                         list.add(line);
                     else if (line.startsWith("TIMESTAMP: ")) body = true;
                 }
+                sr.close();
             } catch (Exception e) {
                 SWGAide.printDebug("mail", 1,
                         "SWGMailMessage:body:", e.getMessage());
                 list.add("ERROR: mail:body: " + e.getMessage());
+            } finally {
+            	sr.close();
             }
         } else
             return DUMMY_STR_ARRAY;
