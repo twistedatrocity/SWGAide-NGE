@@ -167,7 +167,7 @@ final class SWGTestBench extends SWGJDialog {
         
         ingredients = new JPanel(new BorderLayout());
         add(ingredients, BorderLayout.SOUTH);
-        ingredients.setPreferredSize(new Dimension(400, 155));
+        ingredients.setPreferredSize(new Dimension(400, 170));
         Border current = ingredients.getBorder();
         Border empty = new EmptyBorder(5, 2, 5, 5);
         if (current == null)
@@ -335,7 +335,7 @@ final class SWGTestBench extends SWGJDialog {
         }
 
         int rows = 2;
-        int cols = 5;
+        int cols = 6;
         while (slotsGrid.getComponentCount() < cols * rows
                 || slotsGrid.getComponentCount() % cols > 0) {
             JLabel l = new JLabel("");
@@ -361,7 +361,7 @@ final class SWGTestBench extends SWGJDialog {
      */
     private void setLocation(boolean init) {
     	// set a preferred dimension for the dialogue window.
-    	Dimension pd = new Dimension(430, 600);
+    	Dimension pd = new Dimension(493, 620);
         if (init) {
             SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
             Point p = (Point) pk.get("schemTestBenchLocation",
