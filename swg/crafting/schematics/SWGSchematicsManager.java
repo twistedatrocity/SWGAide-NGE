@@ -545,10 +545,11 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * food_drink.txt} and for each line it adds an entry to the map.
      */
     private void initFoodDrinkMap() {
+    	ZReader sr = null;
         try {
             foodDrinkBuffs = new HashMap<String, String>(113);
 
-            ZReader sr = ZReader.newTextReaderExc(
+            sr = ZReader.newTextReaderExc(
                     SWGSchematicsManager.class.getResourceAsStream(
                             "food_drink.txt"));
 
@@ -562,6 +563,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             }
         } catch (Throwable e) {
             SWGAide.printError("SWGSchematicsManager:initFoodDrink", e);
+        } finally {
+        	sr.close();
         }
     }
 
@@ -687,12 +690,13 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param cats a list of existing categories
      */
     private void parseCatsCSV(ArrayList<SWGCategory> cats) {
-        try {
+        ZReader sr = null;
+    	try {
             URL u = SWGCategory.class.getResource("categories.csv");
             if (u == null)
                 return;
 
-            ZReader sr = ZReader.newTextReader(u.openStream());
+            sr = ZReader.newTextReader(u.openStream());
             if (sr == null) return;
 
             List<String> sl = sr.lines(true, true);
@@ -705,6 +709,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             }
         } catch (Throwable e) {
             SWGAide.printError("SWGSchematicsManager:parseCatsCSV", e);
+        } finally {
+        	sr.close();
         }
     }
 

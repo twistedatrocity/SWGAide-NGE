@@ -82,6 +82,8 @@ public final class SWGPets {
         List<String> ret = new ArrayList<String>(128);
         for (String line : sr.lines(true, true))
             ret.add(line);
+        
+        sr.close();
 
         return ret;
     }
@@ -179,6 +181,7 @@ public final class SWGPets {
         if (sr == null) return;
 
         List<String> sl = sr.lines(true, true);
+        sr.close();
         for (String line : sl) {
             // sample: Endorian Domesticated Milk : Bolle Bol Calf, Bordok
             String[] split = line.split(":");

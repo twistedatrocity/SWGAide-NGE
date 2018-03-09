@@ -327,6 +327,7 @@ public final class SWGAide {
             ZReader in = ZReader.newTextReaderExc(iFile);
             List<String> lines = in.lines(true, true);
             parseArgs(lines.toArray((new String[lines.size()])));
+            in.close();
         }
     }
 
@@ -628,6 +629,7 @@ public final class SWGAide {
                 }
             }
         }
+        sr.close();
         ZWriter wr = ZWriter.newTextWriterExc(f, false);
         wr.write(ls);
         wr.close();

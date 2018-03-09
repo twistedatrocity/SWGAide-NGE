@@ -904,6 +904,7 @@ final class SWGHarvestingTab extends JPanel {
                     "Error", JOptionPane.ERROR_MESSAGE);
         resetHarvesters();
         resetOwners();
+        sr.close();
     }
 
     /**

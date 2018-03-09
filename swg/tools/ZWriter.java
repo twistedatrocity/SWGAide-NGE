@@ -322,15 +322,26 @@ public final class ZWriter {
      * @return {@code true} if successful
      */
     public static boolean copy(File src, File to) {
+    	InputStream is = null;
+        OutputStream os = null;
         try {
-            ZReader sr = ZReader.newByteReader(new FileInputStream(src));
-            if (sr != null) {
-                ZWriter.copy(sr.bin, new BufferedOutputStream(
-                        new FileOutputStream(to)));
-                return true;
+            is = new FileInputStream(src);
+            os = new FileOutputStream(to);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
             }
+            return true;
         } catch (Throwable e) {
             SWGAide.printError("ZReader:copy", e);
+        } finally {
+            try {
+				is.close();
+				os.close();
+			} catch (IOException e) {
+				SWGAide.printError("ZReader:copy", e);
+			}
         }
         return false;
     }

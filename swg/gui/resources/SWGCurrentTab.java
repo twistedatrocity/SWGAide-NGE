@@ -1402,6 +1402,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 "Error", JOptionPane.ERROR_MESSAGE);
 
         SWGResController.check();
+        sr.close();
     }
 
     /**

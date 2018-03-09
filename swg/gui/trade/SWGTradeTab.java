@@ -1061,6 +1061,8 @@ public class SWGTradeTab extends JTabbedPane {
                 return true;
             } catch (Throwable e) {
                 SWGAide.printError("SWGTradeTab:readPriceMapFromFile", e);
+            } finally {
+            	sr.close();
             }
         }
         return false;

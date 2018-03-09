@@ -407,11 +407,19 @@ public final class ZReader {
     public static String read(File file) {
         if (!file.exists()) return null;
 
+        FileInputStream in = null;
         try {
-            return read(new FileInputStream(file));
+        	in = new FileInputStream(file);
+            return read(in);
         } catch (Throwable e) {
             SWGAide.printError("ZReader:read", e);
             return "ERROR: " + e.getMessage();
+        } finally {
+        	try {
+				in.close();
+			} catch (IOException e) {
+				SWGAide.printError("ZReader:read", e);
+			}
         }
     }
 

@@ -92,6 +92,7 @@ final class SWGPostLaunch {
     private void copyFile(InputStream in, File out) {
         ZReader sr = ZReader.newByteReader(in);
         if (sr != null) sr.copy(out);
+        sr.close();
     }
 
     /**
@@ -198,6 +199,7 @@ final class SWGPostLaunch {
                 map.put(s.substring(0, i), s.substring(i).trim());
             }
         }
+        sr.close();
         return map;
     }
 
@@ -468,8 +470,9 @@ final class SWGPostLaunch {
      * @return a version string, or {@code null}
      */
     private String existsUpdate(URL url) {
-        try {
-            ZReader bin = ZReader.newTextReader(url.openStream());
+        ZReader bin = null;
+    	try {
+            bin = ZReader.newTextReader(url.openStream());
             if (bin != null) {
                 String onlineVersion = bin.lineExc(false);
                 String dateString = bin.lineExc();
@@ -480,6 +483,8 @@ final class SWGPostLaunch {
             }
         } catch (Exception e) {
             SWGAide.printDebug("post", 1, "SWGPostLaunch:existsUpdate: " + e);
+        } finally {
+        	bin.close();
         }
         return null;
     }

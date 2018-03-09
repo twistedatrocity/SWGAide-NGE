@@ -269,6 +269,7 @@ public final class SWGCharacter implements
                     if (mr.find() && mr.group(1).equals(galaxy.getName()))
                             characterNames.add(mr.group(2));
                 }
+                sr.close();
                 return characterNames;
             }
         } // else

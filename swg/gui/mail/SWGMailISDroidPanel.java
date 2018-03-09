@@ -1924,6 +1924,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                             m, "Invalid", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            sr.close();
         }
     }
 

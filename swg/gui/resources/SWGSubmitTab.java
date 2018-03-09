@@ -512,6 +512,7 @@ final class SWGSubmitTab extends JPanel {
                                 + "Ignored until it is corrected",
                                 blf, line));
             }
+            sr.close();
         }
     }
 

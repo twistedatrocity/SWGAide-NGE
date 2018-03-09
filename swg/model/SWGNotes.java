@@ -301,14 +301,17 @@ public class SWGNotes implements Comparable<SWGNotes>, Serializable, SWGGui {
     private void contentRepopulate() {
         content.clear();
 
+        ZReader sr = null;
         try {
-            ZReader sr = ZReader.newTextReaderExc(file());
+            sr = ZReader.newTextReaderExc(file());
             content.addAll(sr.linesExc());
         } catch (Throwable e) {
             SWGAide.printDebug("note", 1, "SWGNotes:content: ",
                     Arrays.toString(e.getStackTrace()));
             content.clear();
             content.add("ERROR: " + e.getMessage());
+        } finally {
+        	sr.close();
         }
     }
 

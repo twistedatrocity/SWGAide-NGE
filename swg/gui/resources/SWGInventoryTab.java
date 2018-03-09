@@ -1140,8 +1140,9 @@ final class SWGInventoryTab extends JPanel {
     private List<SWGInventoryWrapper> fileReadWorker(File file, int[] order,
             String assignee, SWGCGalaxy galaxy, boolean jnf) {
 
-        try {
-            ZReader sr = ZReader.newTextReaderExc(file);
+        ZReader sr = null;
+    	try {
+            sr = ZReader.newTextReaderExc(file);
             List<String> ls = sr.lines(true, true);
 
             importCounter = 0;
@@ -1173,6 +1174,7 @@ final class SWGInventoryTab extends JPanel {
             return Collections.emptyList();
         } finally {
             frame.putToStatbar(null);
+            sr.close();
         }
     }
 
