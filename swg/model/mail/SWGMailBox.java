@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -275,7 +276,19 @@ public final class SWGMailBox implements Serializable {
 
             File[] mails = swgPath().listFiles(new FileFilter() {
                 public boolean accept(File f) {
-                    return f.getName().endsWith(".mail");
+                	Boolean result = false;
+                	if ( f.getName().endsWith(".mail") && f.length() > 10 ) {
+                    		result = true;
+                	} else {
+                		// delete if older than 2 days
+                		long diff = new Date().getTime() - f.lastModified();
+                		if (diff > 2 * 24 * 60 * 60 * 1000) {
+                		    f.delete();
+                		}
+                		SWGAide.printDebug("mbox", 1,
+                                "SWGMailBox:fetch: mail file appears empty, not processing " +f);
+                	}
+                    return result;
                 }
             });
             if (mails == null) return;
@@ -399,8 +412,15 @@ public final class SWGMailBox implements Serializable {
         // find files
         File[] list = boxPath.listFiles(new FileFilter() {
             public boolean accept(File f) {
-                return f.isFile()
-                        && !f.getName().toLowerCase().endsWith(".txt");
+            	Boolean result = false;
+            	if ( f.isFile() && f.getName().endsWith(".mail") && f.length() > 10 ) {
+                		result = true;
+            	} else {
+            		f.delete();
+            		SWGAide.printDebug("mbox", 1,
+                            "SWGMailBox:fetchSWGAide: mail file appears empty, deleting " +f);
+            	}
+                return result;
             }
         });
         if (list == null) return;
