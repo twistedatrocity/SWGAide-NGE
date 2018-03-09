@@ -176,6 +176,15 @@ public final class SWGGalaxy implements
     public String getName() {
         return galaxy.getName();
     }
+    
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The name as obtained from {@link SWGCGalaxy#getNameComplete()}.
+     */
+	public String getNameComplete() {
+		return galaxy.getNameComplete();
+	}
 
     /**
      * Returns the galaxy constant for this galaxy.

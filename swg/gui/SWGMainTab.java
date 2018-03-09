@@ -124,6 +124,7 @@ public class SWGMainTab extends JSplitPane {
         if (SWGTreeNode.focusedNode() != null) {
             TreePath p = new TreePath(SWGTreeNode.focusedNode().getPath());
             tree.setSelectionPath(p);
+            tree.expandPath(p);
         } else
             tree.expandRow(0);
 

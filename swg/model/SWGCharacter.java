@@ -252,7 +252,7 @@ public final class SWGCharacter implements
      * @return a list of complete character names, or an empty list
      */
     private static List<String> scanCharacterListFile(SWGGalaxy galaxy) {
-        File f = galaxy.station().characterlist();
+        File f = galaxy.station().characterlistFile();
         if (f.exists()) {
             // Example of a line in the file:
             // Europe-Chimaera,Zimoon Hartnoord (Europe-Chimaera),0,8
@@ -269,7 +269,14 @@ public final class SWGCharacter implements
                     if (mr.find() && mr.group(1).equals(galaxy.getName()))
                             characterNames.add(mr.group(2));
                 }
+                for (String line : sl) {
+                    Matcher mr = re.matcher(line);
+                    if (mr.find() && mr.group(1).equals(galaxy.getNameComplete()))
+                            characterNames.add(mr.group(2));
+                }
                 sr.close();
+                /* SWGAide.printDebug("char", 1,
+                        "Testing HIT " + characterNames);*/
                 return characterNames;
             }
         } // else
@@ -360,7 +367,7 @@ public final class SWGCharacter implements
      */
     public static List<SWGCharacter> scanForNewCharacters(SWGGalaxy galaxy) {
 
-        List<SWGCharacter> knownCharacters = galaxy.characters();
+    	List<SWGCharacter> knownCharacters = galaxy.characters();
         List<String> lostBoxes = galaxy.scanForLostMailboxes();
         List<String> charFromFile = scanCharacterListFile(galaxy);
         List<String> mailFolders = scanForMailFolders(galaxy);

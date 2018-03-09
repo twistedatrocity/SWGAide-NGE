@@ -361,6 +361,12 @@ public final class SWGInitialize extends JPanel {
 					}
 				}, UpdateType.SERVERS);
                 SWGCraftCache.updateCache();
+                // initiating another scan here to try and get everything.
+                try {
+					scanAll(universe, false);
+				} catch (Exception e) {
+					SWGAide.printError("SWGInitialize:iniateUniverseReal", e);
+				}
                 frame.putToStatbar("Downloading remote files...");
                 return null;
             }

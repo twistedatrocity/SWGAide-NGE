@@ -2,6 +2,7 @@ package swg.model;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -115,7 +116,7 @@ public final class SWGStation implements
      * 
      * @return a character-list file
      */
-    File characterlist() {
+    File characterlistFile() {
         return new File(universe.swgPath(),
                 String.format("characterlist_%s.txt", name));
     }
@@ -222,26 +223,6 @@ public final class SWGStation implements
     @Override
     public int hashCode() {
         return name.hashCode() + universe.hashCode();
-    }
-
-    /**
-     * Returns the login date for this station, or 0. If the file does not exist
-     * at the current computer, or if there is an error, this method returns 0.
-     * The return value is seconds since the epoch, Jan 1, 1970, 00:00:00 GMT.
-     * <p>
-     * In particular, this method returns the last modification date for the
-     * character-list file at the current host that pertains to this instance.
-     * This file is updated when somebody logs into a station.
-     * 
-     * @return a login date in seconds, or 0
-     */
-    public long loginDate() {
-        try {
-            return characterlist().lastModified() / 1000L;
-        } catch (Throwable e) {
-            SWGAide.printError("SWGStation:loginDate", e);
-            return 0L;
-        }
     }
 
     /**
