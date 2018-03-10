@@ -525,8 +525,9 @@ public final class SWGCraftCache {
                 return true;
 
             // else
-            SWGAide.printError("SWGCraftCache:updateLocally: replace failed: "
-                + local.getName(), null);
+            /*SWGAide.printError("SWGCraftCache:updateLocally: replace failed: "
+                + local.getName(), null); */
+            SWGAide.printDebug("cc", 1, "SWGCraftCache:updateLocally: replace failed: " + local.getName());
             return false;
         }
     }
