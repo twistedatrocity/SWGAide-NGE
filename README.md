@@ -6,6 +6,8 @@ SWGAide-NGE
 Installation
 ============
 
+Grab a current copy of SWGAide-NGE.exe from the releases area: https://github.com/twistedatrocity/SWGAide-NGE/releases
+
 Create a new folder for SWGAide-NGE, anywhere you want.
 
 Drag and drop the SWGAide-NGE.exe file in to the new folder.
@@ -21,6 +23,8 @@ SWGAide creates several folders and files its directory; they are all self
 explanatory.
 
 Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use separate installation folders.
+
+For updates all you need to do is download a new copy of the exe replacing the old one.
 
 
 Usage
