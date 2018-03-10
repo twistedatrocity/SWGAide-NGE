@@ -2,7 +2,6 @@ package swg.model;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
