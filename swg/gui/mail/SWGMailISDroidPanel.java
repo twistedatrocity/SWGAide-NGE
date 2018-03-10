@@ -1827,9 +1827,10 @@ public final class SWGMailISDroidPanel extends JPanel {
 
                 notesFileEraseNotes(notes, success, autoDelete);
                 frame.putToStatbar("Done");
-                notifyUpdateSubscribers(wraps.size() > 0
-                        ? wraps.get(0).report.gxy()
-                        : null);
+                if (wraps.size() > 0) {
+                    SWGResourceManager.notifySubscribers(
+                            new ResourceUpdate(UpdateType.LOCAL_SUBMISSION, wraps.get(0).report.gxy()));
+                }
             }
         });
     }

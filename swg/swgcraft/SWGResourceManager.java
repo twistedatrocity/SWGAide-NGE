@@ -347,6 +347,8 @@ public final class SWGResourceManager extends SWGResourceMgr {
             SWGResourceList resList = localXmlParse(cf, galaxy);
             updateFromDownload(resList);
             statusLocalWrite(galaxy, statusTime);
+            SWGResourceManager.notifySubscribers(new ResourceUpdate(
+                    UpdateType.NEW_DOWNLOAD, galaxy));
 
         } catch (IOException e) {
             if (e.getMessage().equals("Not in GZIP format")) {
@@ -376,9 +378,11 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     "Communication error", JOptionPane.WARNING_MESSAGE);
             downloadStatusAbort(galaxy);
             return;
+        } finally {
+        	SWGResourceManager.notifySubscribers(new ResourceUpdate(
+                    UpdateType.NEW_DOWNLOAD, galaxy));
         }
-        SWGResourceManager.notifySubscribers(new ResourceUpdate(
-                UpdateType.NEW_DOWNLOAD, galaxy));
+        
     }
 
     /**
