@@ -378,10 +378,9 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     "Communication error", JOptionPane.WARNING_MESSAGE);
             downloadStatusAbort(galaxy);
             return;
-        } finally {
-        	SWGResourceManager.notifySubscribers(new ResourceUpdate(
-                    UpdateType.NEW_DOWNLOAD, galaxy));
         }
+        SWGResourceManager.notifySubscribers(new ResourceUpdate(
+                UpdateType.NEW_DOWNLOAD, galaxy));
         
     }
 
