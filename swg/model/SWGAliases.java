@@ -8,8 +8,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import swg.SWGAide;
 import swg.gui.common.SWGGui;
 import swg.tools.ZReader;
+import swg.tools.ZWriter;
 
 /**
  * This type represents an aliases file within SWG.
@@ -26,11 +28,26 @@ import swg.tools.ZReader;
 public final class SWGAliases implements
         Comparable<SWGAliases>, Serializable, SWGGui {
 
-    /**
+	/**
+     * A list of instances of this type. This list is a cache and a helper for
+     * {@link #getInstance(String, SWGStation, SWGUniverse, boolean)}.
+     */
+    private static List<SWGAliases> aliases = new ArrayList<SWGAliases>();
+    
+	/**
      * Serialization version info. Don't meddle with this or break the
      * deserialization.
      */
     private static final long serialVersionUID = -4007008949079840400L;
+    
+    /**
+     * A list of the string of the aliases file. The content of this list should
+     * never be trusted for more than momentarily; it is used by a few contained
+     * methods of this instance and its content should be cleared the next time
+     * such a method is invoked. This member is also used as the synchronization
+     * lock by accessor methods.
+     */
+    private transient List<String> content;
 
     /**
      * A short description for this aliases file. The string may be used in GUI
@@ -93,6 +110,64 @@ public final class SWGAliases implements
                     && file().equals(((SWGAliases) obj).file()));
     }
 
+    /**
+     * Erases either the content of this instance, or the instance itself. If
+     * the boolean value is true this method deletes this instance from SWGAide
+     * and from the file system, and if possible it deletes itself from
+     * {@link #station}. Otherwise this method just empties the file.
+     * <p>
+     * <b>Notice:</b> this method first invokes {@link #backup()}. This method
+     * is synchronized and locks on {@link #content}.
+     * 
+     * @param instance {@code true} to erase this instance
+     */
+    public void erase(boolean instance) {
+        
+            try {
+                if (instance) {
+                    if (universe != null) universe.aliasRemove(this);
+                    aliases.remove(this);
+                    file().delete();
+                } else
+                    setText("");
+            } catch (Throwable e) {
+                SWGAide.printError("SWGAliases:erase: " + file.toString(), e);
+            }
+        
+    }
+    
+    /**
+     * Sets the text of this instance to the file for this instance. If no file
+     * exists it is created. This method writes the content to file as is,
+     * without modifications. If the argument is {@code null} this method does
+     * nothing. If there is an error it is caught, written to SWGAide's log file
+     * and returned; otherwise this method returns {@code null}.
+     * <p>
+     * <b>Notice:</b> if no valid path to SWG exists a client should not invoke
+     * this method, the result is undefined.
+     * <p>
+     * This method is synchronized and locks on {@link #content}.
+     * 
+     * @param str the text to write
+     * @return an error message or {@code null}
+     */
+    public String setText(String str) {
+        if (str != null) {
+            synchronized (content) {
+                try {
+                    File f = file();
+                    f.getParentFile().mkdirs();
+
+                    ZWriter.writeExc(str, f, false);
+                } catch (Throwable e) {
+                    SWGAide.printError("SWGAliases:setText: " + file, e);
+                    return e.getMessage();
+                }
+            }
+        }
+        return null;
+    }
+    
     /**
      * Determines if this instance exists at the current file system.
      * 

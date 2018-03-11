@@ -160,6 +160,21 @@ public final class SWGUniverse implements Serializable, SWGGui {
     }
 
     /**
+     * Removes the specified alias instance from this universe. In particular,
+     * this method does not remove the instance from the current file system,
+     * just from this universe. If this universe does not contain the argument
+     * this method does nothing.
+     * 
+     * @param aliases an aliases instance to remove
+     */
+    void aliasRemove(SWGAliases al) {
+        if (al == null) return;
+        synchronized (aliases) {
+            aliases.remove(al);
+        }
+    }
+    
+    /**
      * Returns {@code true} if it exists a valid path to the SWG client at this
      * host. That is, if SWGAide is launched and cannot find a path and the user
      * decides to carry on anyway, then this method returns {@code false}.

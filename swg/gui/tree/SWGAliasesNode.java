@@ -1,7 +1,15 @@
 package swg.gui.tree;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import swg.gui.SWGAliasesPane;
 import swg.model.SWGAliases;
@@ -35,6 +43,47 @@ final class SWGAliasesNode extends SWGTreeNode {
         super(aliases);
         this.setAllowsChildren(false);
     }
+    
+    /**
+     * Deletes this aliases object from the system
+     */
+    private void delete() {
+        if (aliases() == null
+                || JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                        frame,
+                        String.format("Delete \"%s\"", aliases().getName()),
+                        "Confirm deletion",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE)) {
+
+            if (aliases() != null) aliases().erase(true);
+
+            SWGTreeNode p = (SWGTreeNode) this.getParent();
+            mainTab.tree.setSelectionPath(new TreePath(p.getPath()));
+            SWGTreeNode.focusTransition(p, new EventObject(this));
+            ((DefaultTreeModel) mainTab.tree.getModel())
+                    .removeNodeFromParent(this);
+
+            focusLost();
+        }
+    }
+    /**
+     * Returns a menu item with an action listener
+     * 
+     * @return a menu item
+     */
+    private JMenuItem deleteMenuItem() {
+        JMenuItem del = new JMenuItem("Delete");
+        del.setToolTipText("Delete the notes file");
+        del.setMnemonic('D');
+        del.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                delete();
+            }
+        });
+        return del;
+    }
 
     /**
      * Returns the aliases object that is wrapped by this node.
@@ -65,8 +114,12 @@ final class SWGAliasesNode extends SWGTreeNode {
     @Override
     protected void focusGained(EventObject evt) {
         if (evt instanceof MouseEvent
-                && ((MouseEvent) evt).getButton() == MouseEvent.BUTTON3)
-            return;
+                && ((MouseEvent) evt).getButton() == MouseEvent.BUTTON3) {
+        	JPopupMenu popup = new JPopupMenu();
+        	popup.add(deleteMenuItem());
+        	MouseEvent e = (MouseEvent) evt;
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        }
 
         boolean exists = exists();
         if (exists) {
