@@ -335,7 +335,8 @@ final class SWGTestBench extends SWGJDialog {
         }
 
         int rows = 2;
-        int cols = 6;
+        int defcols = 5;
+        int cols = Math.max(  ((slots.size() ) ), defcols);
         while (slotsGrid.getComponentCount() < cols * rows
                 || slotsGrid.getComponentCount() % cols > 0) {
             JLabel l = new JLabel("");
@@ -348,6 +349,13 @@ final class SWGTestBench extends SWGJDialog {
         SpringUtilities.makeCompactGrid(slotsGrid, rows, cols, 2, 2, 3, 3);
         slotsGrid.revalidate();
         slotsGrid.repaint(200);
+        
+        int diff = cols - defcols;
+    	int nh = Math.min( ((diff * 20) + 155), 230);
+    	ingredients.setPreferredSize(new Dimension(400, nh));
+        int nwidth = cols * 82;
+        setSize(nwidth, getHeight());
+        	
     }
 
     /**
