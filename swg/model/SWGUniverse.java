@@ -9,7 +9,6 @@ import java.util.Map;
 
 import swg.gui.common.SWGGui;
 import swg.model.SWGAliases.SWGAliasesList;
-import swg.model.images.SWGImageAlbum;
 import swg.tools.SearchFiles;
 
 /**
@@ -90,11 +89,6 @@ public final class SWGUniverse implements Serializable, SWGGui {
     private static final long serialVersionUID = 346833251978240872L;
 
     /**
-     * An album for screen shots and images.
-     */
-    private final SWGImageAlbum album;
-
-    /**
      * A list of aliases files.
      */
     private final SWGAliasesList aliases;
@@ -137,7 +131,6 @@ public final class SWGUniverse implements Serializable, SWGGui {
                 : "SWG";
         swgPath(swgDir);
 
-        this.album = new SWGImageAlbum(this);
         this.aliases = new SWGAliasesList();
         this.stations = new HashMap<String, SWGStation>();
     }
@@ -196,15 +189,6 @@ public final class SWGUniverse implements Serializable, SWGGui {
     @Override
     public int hashCode() {
         return swgPath().hashCode();
-    }
-
-    /**
-     * Returns the album of screen shots and images.
-     * 
-     * @return the album
-     */
-    public SWGImageAlbum imageAlbum() {
-        return album;
     }
 
     /**

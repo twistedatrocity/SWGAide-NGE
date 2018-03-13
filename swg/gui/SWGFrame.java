@@ -669,7 +669,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
      *         otherwise
      */
     private boolean initEnvironment() {
-        checkForDirectory("album");
         checkForDirectory(SWGConstants.backupDir);
         checkForDirectory(SWGConstants.repositoryPath);
         checkForDirectory("logs");
@@ -1341,7 +1340,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         SWGTradeTab tradeTab = new SWGTradeTab(this);
         resourceTab = new SWGResourceTab(this);
         schematicTab = new SWGSchematicTab(this);
-        SWGAlbumTab album = new SWGAlbumTab(this);
 
         // add them after all are created, not to trigger GUI action events
         // until all are at least in pre-state
@@ -1349,13 +1347,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
         tabPane.add("Trade", tradeTab);
         tabPane.add("Resources", resourceTab);
         tabPane.add("Schematics", schematicTab);
-        tabPane.add("Album", album);
         
         tabPane.setMnemonicAt(0, KeyEvent.VK_M);
         tabPane.setMnemonicAt(1, KeyEvent.VK_T);
         tabPane.setMnemonicAt(2, KeyEvent.VK_R);
         tabPane.setMnemonicAt(3, KeyEvent.VK_S);
-        tabPane.setMnemonicAt(4, KeyEvent.VK_A);
 
         splashProgressBar.setValue((int) (5 * step));
     }
