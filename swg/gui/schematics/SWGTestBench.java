@@ -323,15 +323,19 @@ final class SWGTestBench extends SWGJDialog {
     private void resetSlots() {
         slots.clear();
         if (wrap != null) {
-            for (SWGResourceSlot s : wrap.schem().getResourceSlots())
-                slots.add(new RSlot(s.getResourceClass(), s.getUnits()));
+            for (SWGResourceSlot s : wrap.schem().getResourceSlots()) {
+            	if (!s.getResourceClass().rcName().contains("Asteroid")) {
+            		//SWGAide.printDebug("tbench:addslot", 1, s.getResourceClass().rcName());
+            		slots.add(new RSlot(s.getResourceClass(), s.getUnits()));
+            	}
+            }
         }
         slotsGrid.setLayout(null);
         slotsGrid.removeAll();
         slotsGrid.setLayout(new SpringLayout());
 
         for (RSlot rs : slots) {
-            slotsGrid.add(rs);
+        	slotsGrid.add(rs);
         }
 
         int rows = 2;
@@ -347,15 +351,13 @@ final class SWGTestBench extends SWGJDialog {
 
         rows = Math.max(((slots.size() + cols - 1) / cols), rows);
         SpringUtilities.makeCompactGrid(slotsGrid, rows, cols, 2, 2, 3, 3);
-        slotsGrid.revalidate();
-        slotsGrid.repaint(200);
-        
         int diff = cols - defcols;
     	int nh = Math.min( ((diff * 20) + 155), 230);
     	ingredients.setPreferredSize(new Dimension(400, nh));
         int nwidth = cols * 82;
         setSize(nwidth, getHeight());
-        	
+        slotsGrid.revalidate();
+        slotsGrid.repaint(200);
     }
 
     /**
@@ -785,6 +787,8 @@ final class SWGTestBench extends SWGJDialog {
                     SWGResourceClassTree.icon(rc), SwingConstants.CENTER);
             setVerticalTextPosition(SwingConstants.BOTTOM);
             setHorizontalTextPosition(SwingConstants.CENTER);
+            
+            //SWGAide.printDebug("tbench", 1, rc.rcName());
 
             this.rc = rc;
             this.units = units;
