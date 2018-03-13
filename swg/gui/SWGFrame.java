@@ -1743,8 +1743,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @return the file chooser object
      */
     public static synchronized JFileChooser getFileChooser() {
-        if (fileChooser == null)
+        if (fileChooser == null) {
             fileChooser = new JFileChooser();
+            fileChooser.setPreferredSize(new Dimension(800, 600));
+            fileChooser.setLocation(10, 10);
+        }
 
         return fileChooser;
     }
