@@ -1504,7 +1504,8 @@ public final class SWGResController implements UpdateSubscriber {
         if (kr == null || ass == null)
             throw new NullPointerException("An argument is null");
 
-        synchronized (inventoryMap) {
+        //XXX synchronize breaks harvesters adding to inventory.
+        //synchronized (inventoryMap) {
             List<SWGInventoryWrapper> wl = inventory(ass, gxy, false);
             if (wl != null)
                 for (SWGInventoryWrapper w : wl)
@@ -1517,7 +1518,7 @@ public final class SWGResController implements UpdateSubscriber {
             SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
             w.setAmount(amount);
             inventoryAdd(w, gxy);
-        }
+        //}
     }
 
     /**
