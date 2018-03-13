@@ -68,7 +68,11 @@ public class SWGResourceMgr {
      * The standard size for a collection for all resources on a galaxy, with
      * some latitude for depleted resources which are retained for some days.
      */
-    public static final int COLLECTION_SIZE = 512;
+    //XXX While collections will auto-grow in size, setting initial size helps 
+    // Increasing this from 512 to 1536 for performance as a full galaxy will
+    // have over 570+ active and 600+ depleted, will save some re-copying as the
+    // collection is populated.
+    public static final int COLLECTION_SIZE = 1536;
 
     /**
      * The frame for this application.
