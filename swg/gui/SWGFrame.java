@@ -23,13 +23,22 @@ import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -1683,11 +1692,143 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * method may display dialogs or perform other tasks which must be done
      * before continuing launch of SWGAide.
      */
-    private void updatePreLaunch() {
-        if (SWGFrame.getPrefsKeeper().
-                getVersion().compareTo("0.9.0") < 0) {
-            // replace selected tree node with its content
-            SWGFrame.getPrefsKeeper().remove("mainTabSelectedNode");
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void updatePreLaunch() {
+    	String pkver = SWGFrame.getPrefsKeeper().getVersion();
+        if (pkver.contains("MrMiagi")) {
+        	String[] parts = pkver.split("-MrMiagi-");
+        	String ver = parts[1];
+        	
+        	// I don't trust compareTo methods on version numbering so splitting into integers 
+        	String[] vparts = ver.split("\\.");
+        	int ord1 = Integer.parseInt(vparts[0]);
+        	int ord2 = Integer.parseInt(vparts[1]);
+        	int ord3 = Integer.parseInt(vparts[2]);
+        	
+        	/**
+        	 * Begin conversion of old Inventory map, taking ito account any duplicates and trying to fix them
+        	 */
+        	// checks if version in dat file older than or equal to 0.1.9
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 9 ) {
+        		
+        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch doing upgrade  Data: " + pkver);
+        		
+				Map<Object, Map<String, List<Object>>> oldMap =
+                        (Map<Object, Map<String, List<Object>>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceInventoryMap",
+                                new TreeMap<Object,
+                                Map<String, List<Object>>>());
+        		Set<Object> glist = new TreeSet<Object>();
+        		oldMap.forEach( (g,v) -> {
+                	glist.add(g.toString());
+                });
+        		Set<Object> alist = new TreeSet<Object>();
+        		oldMap.forEach( (g,v) -> {
+                	v.forEach( (ass, d) -> {
+                		Object k = g + "@" + ass;
+                		alist.add(k);
+                	});
+                });
+        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch dump alist  Data: " + alist);
+        		
+        		TreeSet<Object> anlist = new TreeSet<Object>();
+        		Set<Object> tmpr = new LinkedHashSet();
+        		List<Object> tmpnr = new ArrayList();
+        		HashMap<String, List<Object>> tmpags = new HashMap<String, List<Object>>();
+                Map<String, Map<String, List<Object>>> tempmap = new HashMap<String, Map<String, List<Object>>>();
+                for (Object g : glist) {
+                	for (Object o : alist) {
+                		String[] parts1 = o.toString().split("@");
+                    	String gxy = parts1[0];
+                    	String a = parts1[1];
+                    	if(g.toString().equals(gxy)) {
+                    		anlist.add(a);
+                    		Iterator<Entry<Object, Map<String, List<Object>>>> parent = oldMap.entrySet().iterator();
+                            while (parent.hasNext()) {
+                                Entry<Object, Map<String, List<Object>>> parentPair = parent.next();
+                                String gg = parentPair.getKey().toString();
+                                if(gg.equals(gxy)) {
+	                                Iterator<Entry<String, List<Object>>> child = (parentPair.getValue()).entrySet().iterator();
+	                                while (child.hasNext()) {
+	                                    Map.Entry childPair = child.next();
+	                                    String ass = childPair.getKey().toString();
+	                                    List<Object> d = (List<Object>) childPair.getValue();
+	                                    if(ass.equals(a)) {
+                    						for (Object res : d) {
+                        						tmpr.add(res);
+                        					}
+                    					}
+	
+	                                    child.remove(); // avoids a ConcurrentModificationException
+	                                }
+                                }
+
+                            }
+                    		tmpnr.clear();
+        					tmpnr.addAll(tmpr);
+        					tmpags.put(a, tmpnr);
+        					
+        					tmpr = new LinkedHashSet();
+        			        tmpnr = new ArrayList();
+                    	}
+                    	tempmap.put(g.toString(), tmpags);
+                	}
+                	tmpags = new HashMap<String, List<Object>>();
+                	anlist = new TreeSet<Object>();
+                	}
+                SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch tempmap  Data: " + tempmap);
+                
+                SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
+                
+                Map<String, Map<String, List<Object>>> inventoryMap =
+                        (Map<String, Map<String, List<Object>>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceInventoryMap",
+                                new TreeMap<String,
+                                Map<String, List<Object>>>());
+                inventoryMap.putAll(tempmap);
+                
+                try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					//
+				}
+                SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch DAT file upgrade complete ");
+                JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
+                		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
+                JDialog d = pane.createDialog(null, "SWGAide-NGE Upgrade Complete");
+                d.pack();
+                d.setModal(false);
+                d.setVisible(true);
+                while (pane.getValue() == JOptionPane.UNINITIALIZED_VALUE) {
+                  try {
+                    Thread.sleep(100);
+                  } catch (InterruptedException e) {
+                	  //
+                  }
+                }
+                // call the doExit() so things get saved to the DAT
+                doExit();
+        	}
+        	// XXX End of Inventory Map conversion. ^^
+        } else {
+        	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
+        	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
+        			+ "SWGAide-NGE is not compatible with pre-cu or other earlier versions.\nExiting",JOptionPane.PLAIN_MESSAGE);
+            JDialog d = pane.createDialog(null, "SWGAide.DAT Incompatible");
+            d.pack();
+            d.setModal(false);
+            d.setVisible(true);
+            while (pane.getValue() == JOptionPane.UNINITIALIZED_VALUE) {
+              try {
+                Thread.sleep(100);
+              } catch (InterruptedException e) {
+            	  //
+              }
+            }
+            // calling system exit so nothing gets saved to the DAT
+            System.exit(0);
         }
     }
 
