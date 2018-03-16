@@ -344,11 +344,10 @@ public final class SWGResourceManager extends SWGResourceMgr {
                 return;
             }
 
+            //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:downloadHelper update reslist");
             SWGResourceList resList = localXmlParse(cf, galaxy);
             updateFromDownload(resList);
             statusLocalWrite(galaxy, statusTime);
-            SWGResourceManager.notifySubscribers(new ResourceUpdate(
-                    UpdateType.NEW_DOWNLOAD, galaxy));
 
         } catch (IOException e) {
             if (e.getMessage().equals("Not in GZIP format")) {
@@ -379,6 +378,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             downloadStatusAbort(galaxy);
             return;
         }
+        //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:downloadHelper: send subscriber update");
         SWGResourceManager.notifySubscribers(new ResourceUpdate(
                 UpdateType.NEW_DOWNLOAD, galaxy));
         
@@ -987,10 +987,16 @@ public final class SWGResourceManager extends SWGResourceMgr {
      *             if the argument is {@code null}
      */
     public static void notifySubscribers(ResourceUpdate notice) {
-        synchronized (subscribers) {
+        // TODO: something here is breaking refreshes.
+    	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers before synchronized " + notice);
+    	synchronized (subscribers) {
+    		//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers inside synchro before notify " + notice);
             for (UpdateSubscriber us : subscribers)
                 us.handleUpdate(notice);
+            
+            //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers inside synchro after notify " + notice);
         }
+    	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers after synchronized " + notice);
     }
 
     /**
