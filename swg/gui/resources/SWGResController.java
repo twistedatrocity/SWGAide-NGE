@@ -12,9 +12,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
+import java.util.TreeMap;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -117,7 +119,7 @@ public final class SWGResController implements UpdateSubscriber {
      * having a set of wrappers. The wrappers are contained in a list but is
      * maintained as a set.
      */
-    private static Map<SWGCGalaxy, Map<String, List<SWGInventoryWrapper>>> inventoryMap;
+    private static Map<String, Map<String, List<SWGInventoryWrapper>>> inventoryMap;
 
     /**
      * A comparator that determines if a resource is from Kashyyyk or Mustafar,
@@ -223,11 +225,12 @@ public final class SWGResController implements UpdateSubscriber {
                         new HashMap<SWGCGalaxy, List<SWGHarvester>>());
 
         inventoryMap =
-                (Map<SWGCGalaxy, Map<String, List<SWGInventoryWrapper>>>)
+                (Map<String, Map<String, List<SWGInventoryWrapper>>>)
                 SWGFrame.getPrefsKeeper().get(
-                        "resourceInventoryMap",
-                        new HashMap<SWGCGalaxy,
+                        "resourceInventoryMap2",
+                        new TreeMap<String,
                         Map<String, List<SWGInventoryWrapper>>>());
+        
 
         monitors = (Map<SWGCGalaxy, List<SWGMonitor>>)
                 SWGFrame.getPrefsKeeper().get(
@@ -1401,8 +1404,7 @@ public final class SWGResController implements UpdateSubscriber {
 
             if (ags == null) return Collections.emptyList();
 
-            ArrayList<SWGInventoryWrapper> ret =
-                    new ArrayList<SWGInventoryWrapper>(512);
+            ArrayList<SWGInventoryWrapper> ret = new ArrayList<SWGInventoryWrapper>();
 
             for (String assignee : ags.keySet()) {
                 List<SWGInventoryWrapper> ws = ags.get(assignee);
@@ -1473,10 +1475,11 @@ public final class SWGResController implements UpdateSubscriber {
             List<SWGInventoryWrapper> asl = inventory(
                     iw.getAssignee(), gxy, true);
 
-            if (iw.equalAddSub == null)
+            if (iw.equalAddSub == null) {
                 inventoryAddHelper(iw, asl);
-            else
+            } else {
                 inventoryAddUpdate(iw, gxy, asl);
+            }
         }
     }
 
@@ -1504,21 +1507,37 @@ public final class SWGResController implements UpdateSubscriber {
         if (kr == null || ass == null)
             throw new NullPointerException("An argument is null");
 
-        //XXX synchronize breaks harvesters adding to inventory.
-        //synchronized (inventoryMap) {
+        synchronized (inventoryMap) {
             List<SWGInventoryWrapper> wl = inventory(ass, gxy, false);
-            if (wl != null)
-                for (SWGInventoryWrapper w : wl)
-                if (w.getResource() == kr) {
-                    w.setAmount(w.getAmount() + amount);
-                    return;
+            if (wl != null) {
+            	// this is old school but I did not feel like coming up with a
+            	// lambda stream predicate to search the collection.
+            	boolean hit = false;
+                for (SWGInventoryWrapper w : wl) {
+	                if (w.getResource() == kr) {
+	                	hit = true;
+	                }
                 }
-
-            // else, either no list of wrappers or no wrapper was found
-            SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
-            w.setAmount(amount);
-            inventoryAdd(w, gxy);
-        //}
+                if (hit == true) {
+	                for (SWGInventoryWrapper w : wl) {
+		                if (w.getResource() == kr) {
+		                    w.setAmount(w.getAmount() + amount);
+		                    return;
+		                }
+	                }
+                } else {
+                	SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
+    	            w.setAmount(amount);
+    	            inventoryAdd(w, gxy);
+                }
+            } else {
+	            // else, either no list of wrappers or no wrapper was found
+	            SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
+	            w.setAmount(amount);
+	            inventoryAdd(w, gxy);
+	            
+            }
+        }
     }
 
     /**
@@ -1527,17 +1546,23 @@ public final class SWGResController implements UpdateSubscriber {
      * {@link #inventoryAdd(SWGInventoryWrapper, SWGCGalaxy)}. The caller must
      * have synchronized on {@link #inventoryMap}.
      * 
+     * Duplicates are not allowed and handled by the Set
+     * 
      * @param iw an inventory wrapper
      * @param asl a list of wrappers for the assignee
+     * @throws NullPointerException if an argument is {@code null}
      */
     private static void inventoryAddHelper(
             SWGInventoryWrapper iw, List<SWGInventoryWrapper> asl) {
-
-        for (SWGInventoryWrapper w : asl)
-            if (w.getResource() == iw.getResource())
-                return; // and no duplicates allowed
+    	 if (iw == null || asl == null)
+             throw new NullPointerException(
+                     "Something is null: " + iw + ' ' + ' ' + asl);
 
         asl.add(iw);
+        Set<SWGInventoryWrapper> nw = new LinkedHashSet<SWGInventoryWrapper>(asl);
+        asl.clear();
+        asl.addAll(nw);
+        nw.clear();
     }
 
     /**
@@ -1655,11 +1680,13 @@ public final class SWGResController implements UpdateSubscriber {
         if (gxy == null) throw new NullPointerException("Galaxy is null");
 
         synchronized (inventoryMap) {
-            Map<String, List<SWGInventoryWrapper>> ags = inventoryMap.get(gxy);
+            Map<String, List<SWGInventoryWrapper>> ags = inventoryMap.get(gxy.toString());
+
             if (ags == null && create) {
                 ags = new HashMap<String, List<SWGInventoryWrapper>>();
-                inventoryMap.put(gxy, ags);
+                inventoryMap.put(gxy.toString(), ags);
             }
+            
             return ags;
         }
     }
@@ -2268,71 +2295,4 @@ public final class SWGResController implements UpdateSubscriber {
             super.setValue(s);
         }
     }
-
-    // /**
-    // * Returns the URL for the "gloomy" sound clip which is played when a
-    // * harvester is idling or a monitor alarms on a depleted resource.
-    // *
-    // * @return the alarm URL
-    // */
-    // public URL getAlarm() {
-    // return null; // alarm;
-    // }
-    //
-    // /**
-    // * Returns the URL for the "happy" sound clip which is played when a guard
-    // * is triggered.
-    // *
-    // * @return the alert
-    // */
-    // public URL getAlert() {
-    // return null; // alert;
-    // }
-    //
-    // /**
-    // * Returns the URL for the "warning" sound clip which is played when a
-    // * harvester soon will begin to idle.
-    // *
-    // * @return the warning URL
-    // */
-    // public URL getWarning() {
-    // return null; // aWarn;
-    // }
-    //
-    // /**
-    // * Sets the URL for the "gloomy" sound clip to play when a harvester is
-    // * idling or a monitor is triggered.
-    // * <p>
-    // * <b>Unimplemented</b>
-    // *
-    // * @param gloomyClip the URL for the alarm sound clip
-    // */
-    // public void setAlarm(@SuppressWarnings("unused") URL gloomyClip) {
-    // // XXX: implement at some options dialog
-    // // also see setAlert(URL)
-    // }
-    //
-    // /**
-    // * Sets the URL for the "happy" sound clip to play when a guard is
-    // * triggered, see {@code alert}.
-    // * <p>
-    // * <b>Unimplemented</b>
-    // *
-    // * @param happyClip the URL for the alert sound clip
-    // */
-    // public void setAlert(@SuppressWarnings("unused") URL happyClip) {
-    // // implement at some options dialog
-    // }
-    //
-    // /**
-    // * Sets the URL for the "warning" sound clip to play when a harvester soon
-    // * begins to idle.
-    // * <p>
-    // * <b>Unimplemented</b>
-    // *
-    // * @param warningClip the URL for the warning sound clip
-    // */
-    // public void setWarning(@SuppressWarnings("unused") URL warningClip) {
-    // // also see setAlert(URL)
-    // }
 }
