@@ -85,14 +85,14 @@ public final class SWGAide {
      */
     private static void checkJavaVersion() {
         String ver = System.getProperty("java.version");
-        if (ver.compareTo("1.7.0") >= 0) {
+        if (ver.compareTo("1.8.0") >= 0) {
         	if (ver.compareTo("1.9.0") <= 0) {
         		return;
         	}
         }
 
         ZString msg = ZString.fz("This application requires a Java Runtime%n" +
-                "Environment (JRE) version 1.7 or 1.8.%n" +
+                "Environment (JRE) 1.8.%n" +
                 "Find a free copy at http://java.com/download%n" +
                 "A minimal installation is just the JRE.%n" +
                 "Your version: %s", ver);
@@ -359,11 +359,9 @@ public final class SWGAide {
      * @param lvl the log level for the invocation, in the range [1 4]
      * @param msg the message, or an array of strings
      */
-    @SuppressWarnings("all")
-    public static void printDebug(String g, int lvl, String... msg) {
+    @SuppressWarnings("unused")
+	public static void printDebug(String g, int lvl, String... msg) {
         synchronized (LOCK_LOG) {
-            assert (1 <= lvl && lvl <= 4); // Log level out of bounds [1 4]
-            assert (msg != null && msg.length > 0);
 
             int lvlGr = 0;
             if (logGroups != null && g != null) {
