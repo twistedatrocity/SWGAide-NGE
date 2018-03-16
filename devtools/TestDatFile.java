@@ -162,8 +162,8 @@ public class TestDatFile {
         for (SWGAliases als : univ.aliases())
             printObject(4, als.toString());
 
-        printObject(4, univ.imageAlbum().toString());
-        printObject(8, univ.imageAlbum().images().toString());
+        //printObject(4, univ.imageAlbum().toString());
+        //printObject(8, univ.imageAlbum().images().toString());
 
         for (SWGStation stn : univ.stations()) {
             printObject(4, stn.getName());

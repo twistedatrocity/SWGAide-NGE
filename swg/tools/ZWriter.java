@@ -256,7 +256,7 @@ public final class ZWriter {
             throw new IllegalArgumentException("Illegal max: " + max);
 
         // use more backups in dev-mode, will break sometimes for dev <--> nodev
-		@SuppressWarnings("unused")
+
         int mx = SWGConstants.DEV_DEBUG && max < 10
                 ? max + 10
                 : max;
