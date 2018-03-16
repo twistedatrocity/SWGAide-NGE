@@ -106,6 +106,32 @@ public final class SWGInventoryWrapper implements Serializable,
     public int compareTo(SWGInventoryWrapper o) {
         return this.resource.compareTo(o.resource);
     }
+    
+    /**
+     * hashcode method
+     */
+    @Override
+    public int hashCode() {
+        int hashcode = 0;
+        hashcode += assignee.hashCode();
+        hashcode += resource.hashCode();
+        return hashcode;
+    }
+    
+    /**
+     * override equals to prevent dups
+     * Use Set to invoke rather than List
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SWGInventoryWrapper) {
+    		SWGInventoryWrapper wr = (SWGInventoryWrapper) obj;
+            boolean flag=(wr.assignee.equals(this.assignee) && wr.resource.equals(this.resource)); 
+            return flag;
+        } else {
+                return false;
+        }
+     }
 
     /**
      * Creates and returns a copy of this object but for the specified assignee.
