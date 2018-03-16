@@ -227,7 +227,7 @@ public final class SWGResController implements UpdateSubscriber {
         inventoryMap =
                 (Map<String, Map<String, List<SWGInventoryWrapper>>>)
                 SWGFrame.getPrefsKeeper().get(
-                        "resourceInventoryMap2",
+                        "resourceInventoryMap",
                         new TreeMap<String,
                         Map<String, List<SWGInventoryWrapper>>>());
         
