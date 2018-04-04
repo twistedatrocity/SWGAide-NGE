@@ -1,86 +1,61 @@
 <HTML>
 <HEAD>
-<TITLE>Help: SWGCraft Options </TITLE>
+<TITLE>Help: SWGCraft Options</TITLE>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
 </HEAD>
 
 <BODY bgcolor="#ffffff">
-
 <blockquote>
-<p><font face="Arial" size="+1">
-<b>Help: SWGCraft Options </b></font></p>
-
-<p><font face="Arial" size="-1">
-These options apply to Traders and their support for SWGCraft.org. To use many 
-of the crafting related features of SWGAide you must first register at 
-www.swgcraft.co.uk. </font></p><br/>
+  <p> <b>Help: SWGCraft Options </b></p>
+  <p> These options apply to Traders and their support for SWGCraft.org. To use many 
+    of the crafting related features of SWGAide you must first register at 
+    www.swgcraft.co.uk. </p>
+  <br/>
 </blockquote>
-
 <CENTER>
-<IMG SRC="help_swgcraft_options.png">
+  <IMG SRC="help_swgcraft_options.png">
 </CENTER>
-
-<blockquote>
-<br/>
-<p><font face="Arial" size="-1">
-<b>Main galaxy: </b>the default galaxy which is preselected at panels related 
-to crafting, unless the current character is from another galaxy. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Auto-update: </b>if this option is selected SWGAide automatically downloads 
-resource data for the main galaxy. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Time zone: </b>your time zone relative to the international GMT (UTC). 
-Daylight saving is unsupported. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>User name and password: </b>your login details to SWGCraft.org. The password 
-is stored locally in strongly encrypted form and when uploading data to 
-SWGCraft.org it is not the password itself but its "hash" that is used (its 
-digital fingerprint from which it is impossible to reconstruct the password). 
-During the request for the 'hash' from SWGCraft.org the password is communicated 
-on time in strongly encrypted form. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Verify: </b>validates the entered username/password before saving them 
-locally. An invalid username and/or password makes many crafting related 
-features of SWGAide unusable. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Save: </b>the user name and password are the only data which you must save 
-manually. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>SWGCraft data: </b>Details for communicating with the server. These details 
-are locked and cannot be edited unless the check-box is ticked.
-<OL>
-<LI><font face="Arial" size="-1">
-The "base URL" to the server, the initial part of the link. </font>
-</LI>
-<LI><font face="Arial" size="-1">
-The "resource path" is the specific path to the file for exported resource data.
-The "%BASE%" and "%GALAXY%.xml.gz" are filled in by SWGAide but the rest can be 
-edited if ever necessary. </font>
-</LI>
-<LI><font face="Arial" size="-1">
-The "status file" is the tiny file at the server that reads the most recent date
-the exported data files were updated. This file is always checked against to 
-avoid excess downloads of the export files. </font>
-</LI>
-<LI><font face="Arial" size="-1">
-SOAP is the path pointing to the SOAP server utilized by SWGAide to communicate 
-resource data with SWGCraft.org. </font>
-</LI>
-</OL>
-
-<font face="Arial" size="-1">
-Normally you should not have to touch these server settings and they are 
-"locked" to prevent accidental data corruption. </font></p>
-
-<p><font face="Arial" size="-1">
-If you completely erase the content of any of these fields it will reset to its 
-default value when you restart SWGAide. </font></p>
-
+<blockquote> <br/>
+  <p> <b>Main galaxy: </b>the default galaxy which is preselected at panels related 
+    to crafting, unless the current character is from another galaxy. </p>
+  <p> <b>Auto-update: </b>if this option is selected SWGAide automatically downloads 
+    resource data for the main galaxy. </p>
+  <p> <b>Time zone: </b>your time zone relative to the international GMT (UTC). 
+    Daylight saving is unsupported. </p>
+  <p> <b>User name and password: </b>your login details to SWGCraft.org. The password 
+    is stored locally in strongly encrypted form and when uploading data to 
+    SWGCraft.org it is not the password itself but its "hash" that is used (its 
+    digital fingerprint from which it is impossible to reconstruct the password). 
+    During the request for the 'hash' from SWGCraft.org the password is communicated 
+    on time in strongly encrypted form. </p>
+  <p> <b>Verify: </b>validates the entered username/password before saving them 
+    locally. An invalid username and/or password makes many crafting related 
+    features of SWGAide unusable. </p>
+  <p> <b>Save: </b>the user name and password are the only data which you must save 
+    manually. </p>
+  <p> <b>SWGCraft data: </b>Details for communicating with the server. These details 
+    are locked and cannot be edited unless the check-box is ticked.
+  <OL>
+    <LI> The "base URL" to the server, the initial part of the link. </LI>
+    <LI> The "resource path" is the specific path to the file for exported resource data.
+      The "%BASE%" and "%GALAXY%.xml.gz" are filled in by SWGAide but the rest can be 
+      edited if ever necessary. </LI>
+    <LI> The "status file" is the tiny file at the server that reads the most recent date
+      the exported data files were updated. This file is always checked against to 
+      avoid excess downloads of the export files. </LI>
+    <LI> SOAP is the path pointing to the SOAP server utilized by SWGAide to communicate 
+      resource data with SWGCraft.org. </LI>
+  </OL>
+  Normally you should not have to touch these server settings and they are 
+  "locked" to prevent accidental data corruption.
+  </p>
+  <p> If you completely erase the content of any of these fields it will reset to its 
+    default value when you restart SWGAide. </p>
 </blockquote>
 </BODY>
 </HTML>

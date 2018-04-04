@@ -1,115 +1,84 @@
 <HTML>
 <HEAD>
-<TITLE>Help: Depleted Resources </TITLE>
+<TITLE>Help: Depleted Resources</TITLE>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
 </HEAD>
 
 <BODY BGCOLOR="#ffffff">
 <BLOCKQUOTE>
-
-<p><font face="Arial" size="+1"><b>
-Help - Depleted Resources </b></font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-This panel &mdash; "Depleted Resources" &mdash; displays resources that players
-recently have marked as depleted at <nobr><b>www.SWGCraft.org</b></nobr>.
-The displayed information is extracted by SWGAide from resource files that are
-downloaded earlier, hence this panel requires that you run SWGAide fairly often.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Depletion Dates</b> &mdash;
-By default the list is ordered by recent dates first. However, remember that
-dates are estimated, not exact. The exact dates are not published anywhere,
-players like you and me report or do not report to <nobr>SWGCraft.org</nobr>
-often enough, and even so, depletion dates are not exported, they are estimated
-by SWGAide. </font></p>
-
-<p><font face="Arial" size="-1">
-SWGAide sets the depletion time stamp in two fashions, <br/>
-- 1: when you submit to SWGCraft that resources are depleted <br/>
-- 2: when SWGAide compares the most recent download with local data and there
-are differences <br/>
-In both cases SWGAide sets the depletion date to the current date, which always
-lags behind the real date, more or less. Furthermore, in the second case it all
-depends on when you last launched SWGAide and when you last browsed the
-displayed galaxy. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Notice: </b>
-If you have not run SWGAide in several days the time stamp may be off. If there
-exist no local resource data there is nothing to compare with, and this panel is
-empty. SWGAide never retains resource information longer than ten days, if you
-have not run SWGAide for some time this panel is probably empty. </font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-Right-click the table to access the options provided with this panel.
-To clear selected table rows, press "Alt-C".
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Write</b> &mdash;
-Select this option to write the list of depleted resources to file. SWGAide
-writes to notes file or to a file in SWGAide's "misc" foldet which is set by
-options explained below. To write just one, or a block of resources, select them
-at the table and then use this option. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Option: Limit days...</b> &mdash;
-Select this option to open a dialog where you can specify a limit for the output
-at the next dialog, default is 3 days. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Option: File/Notes &gt;</b> &mdash;
-For any write-option, select if SWGAide should write to <br/>
-- 1) a file in SWGAide's folder, to</font><tt>
-[SWGAide]\misc\depleted_[galaxy].txt </tt><font face="Arial" size="-1">...
-or to<br/>
-- 2) a notes file named <i>depleted.txt&nbsp;</i> in your current station
-(account) which you open in game with the command</font><tt><font color="blue"> 
-/note depleted </font></tt> </p>
-
-<p><font face="Arial" size="-1">
-<b>Option: Auto-Write</b> &mdash;
-Enable this check-box and SWGAide automatically writes depleted resources to
-file &mdash; just for the main galaxy, specified at menu Options &raquo; SWGCraft
-&mdash; each time you submit resource data to SWGCraft.org and whenever SWGAide
-downloads resource data from SWGCraft.org. The output is always written to the
-file [SWGAide]\misc\depleted_[galaxy].txt and the output is limited by the
-option for days (above). This file writes to file also if no resources have
-been depleted within the time frame. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Revive...</b> &mdash;
-Even a genius makes mistakes and sometimes a player wrongly reports a resource
-as depleted. Select this option to revive the resource at SWGCraft.org.
-Information on success or failure is written to SWGAide's log file. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Add to Inventory...</b> &mdash;
-Select this to conveniently add a resource to SWGAide's Resource Inventory after
-it is depleted; perhaps you had it in a backpack and forgot to add it while it
-was spawning. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Filter Inventory...</b> &mdash;
-Select a resource at the table and then this option to filter SWGAide's Resource
-Inventory for the resource's specified class. This is a convenience to easily
-find the depleted resource in the inventory, if it is entered; in any case its
-cousins are listed. </font></p>
-
-<br/> <hr align="center" width="50%" />
-
-<p><font face="Arial" size="-1">
-As always, suggestions and ideas are warmly accepted. Visit SWGAide's forum at
-<nobr;>SWGCraft.org</nobr> which is <i>the&nbsp;</i> SWG fan-site for Traders.
-</font></p>
-
-<br/><br/>
-
+  <p><b> Help - Depleted Resources </b></p>
+  <br/>
+  <br/>
+  <p> This panel &mdash; "Depleted Resources" &mdash; displays resources that players
+    recently have marked as depleted at <nobr><b>www.SWGCraft.org</b></nobr>.
+    The displayed information is extracted by SWGAide from resource files that are
+    downloaded earlier, hence this panel requires that you run SWGAide fairly often. </p>
+  <p> <b>Depletion Dates</b> &mdash;
+    By default the list is ordered by recent dates first. However, remember that
+    dates are estimated, not exact. The exact dates are not published anywhere,
+    players like you and me report or do not report to <nobr>SWGCraft.org</nobr> often enough, and even so, depletion dates are not exported, they are estimated
+    by SWGAide. </p>
+  <p> SWGAide sets the depletion time stamp in two fashions, <br/>
+    - 1: when you submit to SWGCraft that resources are depleted <br/>
+    - 2: when SWGAide compares the most recent download with local data and there
+    are differences <br/>
+    In both cases SWGAide sets the depletion date to the current date, which always
+    lags behind the real date, more or less. Furthermore, in the second case it all
+    depends on when you last launched SWGAide and when you last browsed the
+    displayed galaxy. </p>
+  <p> <b>Notice: </b> If you have not run SWGAide in several days the time stamp may be off. If there
+    exist no local resource data there is nothing to compare with, and this panel is
+    empty. SWGAide never retains resource information longer than ten days, if you
+    have not run SWGAide for some time this panel is probably empty. </p>
+  <br/>
+  <br/>
+  <p> Right-click the table to access the options provided with this panel.
+    To clear selected table rows, press "Alt-C". </p>
+  <p> <b>Write</b> &mdash;
+    Select this option to write the list of depleted resources to file. SWGAide
+    writes to notes file or to a file in SWGAide's "misc" foldet which is set by
+    options explained below. To write just one, or a block of resources, select them
+    at the table and then use this option. </p>
+  <p> <b>Option: Limit days...</b> &mdash;
+    Select this option to open a dialog where you can specify a limit for the output
+    at the next dialog, default is 3 days. </p>
+  <p> <b>Option: File/Notes &gt;</b> &mdash;
+    For any write-option, select if SWGAide should write to <br/>
+    - 1) a file in SWGAide's folder, to<tt> [SWGAide]\misc\depleted_[galaxy].txt </tt>...
+    or to<br/>
+    - 2) a notes file named <i>depleted.txt&nbsp;</i> in your current station
+    (account) which you open in game with the command<tt><font color="blue"> /note depleted </font></tt> </p>
+  <p> <b>Option: Auto-Write</b> &mdash;
+    Enable this check-box and SWGAide automatically writes depleted resources to
+    file &mdash; just for the main galaxy, specified at menu Options &raquo; SWGCraft
+    &mdash; each time you submit resource data to SWGCraft.org and whenever SWGAide
+    downloads resource data from SWGCraft.org. The output is always written to the
+    file [SWGAide]\misc\depleted_[galaxy].txt and the output is limited by the
+    option for days (above). This file writes to file also if no resources have
+    been depleted within the time frame. </p>
+  <p> <b>Revive...</b> &mdash;
+    Even a genius makes mistakes and sometimes a player wrongly reports a resource
+    as depleted. Select this option to revive the resource at SWGCraft.org.
+    Information on success or failure is written to SWGAide's log file. </p>
+  <p> <b>Add to Inventory...</b> &mdash;
+    Select this to conveniently add a resource to SWGAide's Resource Inventory after
+    it is depleted; perhaps you had it in a backpack and forgot to add it while it
+    was spawning. </p>
+  <p> <b>Filter Inventory...</b> &mdash;
+    Select a resource at the table and then this option to filter SWGAide's Resource
+    Inventory for the resource's specified class. This is a convenience to easily
+    find the depleted resource in the inventory, if it is entered; in any case its
+    cousins are listed. </p>
+  <br/>
+  <hr align="center" width="50%" />
+  <p> As always, suggestions and ideas are warmly accepted. Visit SWGAide's forum at <nobr;>SWGCraft.org</nobr> which is <i>the&nbsp;</i> SWG fan-site for Traders. </p>
+  <br/>
+  <br/>
 </BLOCKQUOTE>
 </BODY>
 </HTML>

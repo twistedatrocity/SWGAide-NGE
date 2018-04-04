@@ -1,520 +1,269 @@
 <html>
 <head>
-<title>
-Help: Harvesting
-</title>
+<title>Help: Harvesting</title>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
 </head>
 
 <body bgcolor=white>
 <blockquote>
-
-<p><font face="Arial" size="+1"><b>
-Help - Harvesting
-</b></font></p>
-
-<br/>
-
-<p><font face="Arial" size="-1">
-The panel named "Harvesting" helps you to monitor several
-active harvesters; they will alert you when harvesters run
-out of maintenance, power, or is soon full, and when the
-harvested resource is depleted. Harvested resources are
-added to inventory.
-</font></p>
-
-<p><font face="Arial" size="-1">
-In order to use these features you must first define one or
-several harvesters and at least one owner; see tips further
-down. To begin monitoring, at the "Current Resources" you
-select the wanted resource, right-click it and select the
-option "Add to harvester panel" at the popup dialog.
-</font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1"><b>
-Harvesters: </b><br/>
-The upper leftmost table displays your defined harvesters.
-To add a new harvester, right-click inside the table and
-select to create or possibly clone a harvester. Define its
-properties: name, harvester type, BER, and hopper size. Of
-a defined harvester, only its name can be edited; this is
-the same as for in-game harvesters.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvesters &mdash; Popup menu: </b><br/>
-The popup menu for the this table provides options that are
-related to harvesters:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Create harvester</b>
-&ndash; define a harvester for the current galaxy.
-<b>Tips:</b> you do not need to create as many harvesters
-as you usually put down on a resource; you rather want to
-use the feature for "Harvester Cluster" at the "Activate
-Harvester" dialog; see below.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Edit harvester</b>
-&ndash; edit the name/description of a harvester.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Clone harvester</b>
-&ndash; define a harvester for the current galaxy but copy
-all values from a selected harvester. Make its description
-unique.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Export</b>
-&ndash; write harvesters and owners for the current galaxy
-to file, the two are merged to the same file. Use this to
-backup your definitions, or to transfer them to some other
-galaxy or installation of SWGAide.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Import file</b>
-/ndash; import harvesters and owners to the current galaxy
-from file. Any entry with a name that equals an existing
-entry is silently ignored.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Delete harvester</b>
-&ndash; delete a selected harvester; this action cannot be
-undone.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-<b>Harvesters &mdash; Create &amp; Edit dialog: </b><br/>
-The dialogs for creating, cloning, and editing harvesters
-basically provides the same options, but some are disabled:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1"><b>
-Harvester description</b>
-&ndash; a unique name or text that describes each harvester.
-Examples: "Elite Mineral - 1" and "Elite Mineral - 2".
-</font>
-
-<p><font face="Arial" size="-1"><b>
-Harvester type</b>
-&ndash; this value automatically defines certain properties,
-such as maintenance rates, power consumption, and for which
-resource classes the harvester is listed at the activation
-dialog.
-</font></p>
-
-<p><font face="Arial" size="-1"><b>
-Harvester BER</b>
-&ndash; the base extraction rate of the harvester. This is
-the un-buffed value, as it reads at the deed.
-</font></p>
-
-<p><font face="Arial" size="-1"><b>
-Hopper size</b>
-&ndash; the basic hopper size of the harvester. This is the
-un-buffed value, as it reads at the deed. <b>Tip:</b> do not
-up this value, rather round off downwards; this way alerts
-for full hopper are not delayed.
-</font></p>
-
-<p><font face="Arial" size="-1"><b>
-Extraction Modifier</b>
-&ndash; the resource extraction rate modifier for your server. This modifier is used in the calculation of UBER and AER which controls how fast your hopper fills up. This function was added to accomodate different servers having their own rate for resource extraction... e.g. Legends uses a 2.0 modifier. Back on live this was 1.5x the normal rate in the latter years. If you are unsure what your server uses for a resource extraction rate modifier, just leave the default of 1.0 in place. You can always edit it later.</font></p>
-</blockquote>
-
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-<b>Owners: </b><br/>
-The upper rightmost table displays your defined owners. To
-add a new harvester owner, right-click inside the table and
-select to create an owner. Select a character from the list
-or edit/add any useful but unique name. Initiate values for
-harvesting expertise and entertainer buff; these determine
-the improvement SWGAide adds to an active harvester, the
-same as in-game.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Notice: if you decide to <b><u>transfer ownership</u></b>
-of a put-down harvester to another owner, then the applied
-bonuses stick on the harvester. This is so until it is
-re-deeded, exactly as for in-game harvesters. Remember that
-in-game, if the new owner fills up maintenance or power the
-bonus is adjusted to the expertise level of that owner.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Owners &mdash; Popup menu: </b><br/>
-The popup menu for the this table provides options that are
-related to owners:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Create owner</b>
-&ndash; create a new harvester owner for the current galaxy,
-either select an existing player or create a uniquely named
-owner.
-</b></font>
-
-<p><font face="Arial" size="-1">
-<b>Edit owner</b>
-&ndash; edit the properties of an existing owner, but not
-the name. Remember that when activating a harvester it is
-possible to adjust the owner's Entertainer buff right there
-and then.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Export</b>
-&ndash; write harvesters and owners for the current galaxy
-to file, the two are merged to the same file. Use this to
-backup your definitions, or to transfer them to some other
-galaxy or installation of SWGAide.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Import file</b>
-/ndash; import harvesters and owners to the current galaxy
-from file. Any entry with a name that equals an existing
-entry is silently ignored.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Delete owner</b>
-&ndash; delete a selected owner. Just custom owners can be
-deleted, not in-game characters.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-<b>Owners &mdash; Create &amp; Edit dialog: </b><br/>
-The dialog for creating and editing owners is the same, but
-the name field is disabled in edit mode:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Owner name</b>
-&ndash; select an existing character of the current galaxy,
-or define an owner with a unique name.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Storage Efficiency</b>
-&ndash; the owner's expertise level in this field.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Maintenance Efficiency</b>
-&ndash; the owner's expertise level in this field.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Energy Efficiency</b>
-&ndash; the owner's expertise level in this field.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Advanced Harvester Technology</b>
-&ndash; the owner's expertise level in this field.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Fair</b>
-&ndash; the owner's usual level of the Entertainer buff.
-Remember that when activating a harvester it is possible to
-adjust this value right there and then.
-</font></p>
-</blockquote>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Warnings: </b><br/>
-The upper center panel allows you to specify how many hours
-in advance an alert indicates that an active harvester will
-stop. This feature monitors when maintenance and power are
-drained, and when the hopper is full. The alerts are visual
-and acoustic (optional); the default value is 24 hours.
-</font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-<b>Activate Harvester Dialog:</b><br/>
-The dialog "Activate Harvester" is opened in one of two
-modes: to activate a harvester for a specific resource; or
-to edit an active harvester.
-</font></p>
-
-<blockquote>
-<p><font face="Arial" size="-1">
-<b>Activate</b>
-&ndash; at Current Resources panel, select and right-click
-a resource, then select "Add to harvester panel" at the
-popup dialog.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Edit</b>
-&ndash; at the main table of active harvesters, select
-and right-click a harvester. You can adjust the very same
-properties that you can do at an in-game harvester, other
-properties are disabled but read their current values.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-Options and features at the dialog:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Harvester</b>
-&ndash; select a harvester to gather the selected resource.
-The list displays inactive harvesters that are suitable for
-the resource class; a harvester is listed as a <u>deed</u>,
-or as one that "<u>stayed put</u>" which denotes an in-game
-harvester which is no pulled up (re-deeded) and it retains
-all buffs that were applied on it when it was put down;
-this mimics how harvesters and bonuses work in-game.
-</font></p>
-
-<p><font face="Arial" size="-1">
-b>Owner</b>
-&ndash; select an owner for the harvester. If the harvester
-is listed as a deed the selected owner also sets the values
-for harvesting bonuses. However, if the harvester is listed
-as one that "stayed-put" the old bonuses are displayed at
-the details panel to the right; these bonuses stick until
-the harvester is re-deeded and another owner simply mimics
-a structure-transfer. To <u>reset</u> a harvester to "deed"
-form, right-click the harvester drop-down list, or at the
-harvester details panel for another dialog.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Resource name</b>
-&ndash; reads the name of the resource, cannot be edited.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Resource class</b>
-&ndash; reads the resource class, cannot be edited.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Misc notes</b>
-&ndash; enter any kind of text: harvester location, planet,
-intended use of resource, etc...
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Add to Inventory</b>
-&ndash; select this option to add the hopper content to
-inventory each time the harvester is "refreshed".
-<B>Tips:</b> select this option when you activate a
-harvester which adds one unit to inventory. That one unit
-serves as a place-holder and to stop unwanted alerts; with
-the place-holders you do not need to manually add resources
-to inventory; neither resource guards or Today's Alert will
-alert you for something you are already harvesting.
-</font></p> 
-
-<p><font face="Arial" size="-1">
-<b>Self powered</b>
-&ndash; select this check-box if you apply a "Make a
-Harvester Self Powered" device to the harvester, something
-nullifies its power consumption.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Concentration %</b>
-&ndash; specify the resource concentration for the location
-where the harvester is put down, as it reads at the survey
-device. This value is used when SWGAide estimates amount at
-hopper, which also is the amount that is added to inventory
-if that option is selected.
-<b>Tips:</b> if you use the cluster feature, see below,
-you specify the highest value for the location so that
-alerts are not delayed.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Remember that the estimated amount is never 100% accurate,
-there are hidden decimals and other factors that makes it
-deviate from the final yield from your harvesters. Thence
-you must adjust the value at the inventory no matter what,
-and it is pointless to spend too much time on accuracy at
-these panels.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Maintenance</b>
-&ndash; specify the amount of maintenance that is added to
-the harvester. This is also the amount which is added to
-the harvester at a "refresh".
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Power</b>
-&ndash; specify the amount of power that is added to
-the harvester. This is also the amount which is added to
-the harvester at a "refresh".
- </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvester details</b>
-&ndash; this panel reads the properties and bonuses of the
-harvester. For a deed its bonuses are pending until it is
-activated. If it stayed-put the values are from the date it
-was put down, no matter who the current owner is.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harv Fair</b>
-&ndash; adjust the Entertainer buff Harvester Fair for the
-current owner before you activate the harvester. This value
-cannot be adjusted for an active or put-down harvester;
-this works the same as in-game.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Harvester Cluster</b>
-&ndash; specify how many harvesters you put down in-game
-and let this one harvester represent them all, to denote
-a cluster of in-game harvesters; but use it only for
-harvesters of equal BER and hopper size. The cluster size
-just multiplies the amount that is added to inventory at
-each "refresh".
-<b>Tips:</b> use this feature to reduce the number of
-active harvesters at this panel. There is no need for many
-entries that essentially monitors the same thing; as long
-as you maintain all harvesters at one location at the same
-time alerts and whatever are monitored by just one entry.
-</font></p>
-</blockquote>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-<b>Active Harvesters:</b><br/>
-The main table displays active harvesters for the current
-galaxy. Hover the mouse over the column titles to read the
-"tool-tip" texts. It is possible to <u>edit cells</u> for
-maintenance, power, and notes; just double click such a
-cell and edit its value.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Any alert colors one or more table cells in yellow or red;
-yellow warns that the harvester will stop soon, red that it
-already is stopped; either for maintenance or power.
-If a resource is depleted the cell is colored in purple.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Active Harvesters &mdash; Popup menu: </b><br/>
-The popup menu for the this table provides options that are
-related to active harvesters. Some options are doubled at
-the harvesters and owners tables, see their help texts.
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Refresh harvester</b>
-&ndash; empty the hopper and replenish maintenance and
-power. The "add-to-inventory" option determines if hopper
-content is added to inventory, possibly multiplied by the
-cluster size.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Edit active harvester</b>
-&ndash; open the dialog to edit certain properties of the
-selected harvester, see above. Many options are disabled,
-this works as in-game mechanics.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Filter inventory </b> 
-&ndash; filter resource inventory for the resource class
-of the active harvester.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Select current </b> 
-&ndash; select the harvested resource at Current Resources.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Select schematic use </b> 
-&ndash; select the harvested resource class at Schematics:
-Resource Class Use. At that panel you can see which
-schematics that calls for the resource class by name,
-or which schematics that may use it. If the resource class
-is not a <i>named resource class </i> it is still selected
-at the right-most tree but the middle list displays the
-first super-class that is a named resource class.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Numerical hopper totals </b>
-&ndash; select this to display numerical values rather than
-percent at the hopper column.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Display end dates</b>
-&ndash; select this to display estimated end dates for
-maintenance, power, and hopper.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Mark depleted </b> 
-&ndash; send a depleted-resource message to
-<nobr>SWGCraft.org</nobr> for the harvested resource.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Deactivate harvester (stays put)</b>
-&ndash; deactivate the harvester but let it retain applied
-bonuses. No bonuses, Entertainer buff, or self-powered mode
-are reset. This mimics deactivating in-game harvesters and
-reactivating them to harvest another resource but they stay
-put at the same location and retain all applied bonuses. 
-</font></p>
-
-<p><font face="Arial" size="-1">
-To "re-deed" a "stayed-put" harvester you must open the
-activate-harvester dialog at Current Resources, select the
-harvester, and right-click the harvester list or at the
-details panel to bring up a dialog.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Deactivate harvester (re-deed)</b>
-&ndash; deactivate the harvester and return it to deed;
-this resets any buff, bonuses, and self-powered device.
-This mimics re-deeding in-game harvesters.
-</font></p>
-</blockquote>
-
-<br/><br/>
-
+  <p><b> Help - Harvesting </b></p>
+  <br/>
+  <p> The panel named "Harvesting" helps you to monitor several
+    active harvesters; they will alert you when harvesters run
+    out of maintenance, power, or is soon full, and when the
+    harvested resource is depleted. Harvested resources are
+    added to inventory. </p>
+  <p> In order to use these features you must first define one or
+    several harvesters and at least one owner; see tips further
+    down. To begin monitoring, at the "Current Resources" you
+    select the wanted resource, right-click it and select the
+    option "Add to harvester panel" at the popup dialog. </p>
+  <br/>
+  <br/>
+  <p><b> Harvesters: </b><br/>
+    The upper leftmost table displays your defined harvesters.
+    To add a new harvester, right-click inside the table and
+    select to create or possibly clone a harvester. Define its
+    properties: name, harvester type, BER, and hopper size. Of
+    a defined harvester, only its name can be edited; this is
+    the same as for in-game harvesters. </p>
+  <p> <b>Harvesters &mdash; Popup menu: </b><br/>
+    The popup menu for the this table provides options that are
+    related to harvesters: </p>
+  <blockquote> <b>Create harvester</b> &ndash; define a harvester for the current galaxy. <b>Tips:</b> you do not need to create as many harvesters
+    as you usually put down on a resource; you rather want to
+    use the feature for "Harvester Cluster" at the "Activate
+    Harvester" dialog; see below.
+    <p> <b>Edit harvester</b> &ndash; edit the name/description of a harvester. </p>
+    <p> <b>Clone harvester</b> &ndash; define a harvester for the current galaxy but copy
+      all values from a selected harvester. Make its description
+      unique. </p>
+    <p> <b>Export</b> &ndash; write harvesters and owners for the current galaxy
+      to file, the two are merged to the same file. Use this to
+      backup your definitions, or to transfer them to some other
+      galaxy or installation of SWGAide. </p>
+    <p> <b>Import file</b> /ndash; import harvesters and owners to the current galaxy
+      from file. Any entry with a name that equals an existing
+      entry is silently ignored. </p>
+    <p> <b>Delete harvester</b> &ndash; delete a selected harvester; this action cannot be
+      undone. </p>
+  </blockquote>
+  <p> <b>Harvesters &mdash; Create &amp; Edit dialog: </b><br/>
+    The dialogs for creating, cloning, and editing harvesters
+    basically provides the same options, but some are disabled: </p>
+  <blockquote> <b> Harvester description</b> &ndash; a unique name or text that describes each harvester.
+    Examples: "Elite Mineral - 1" and "Elite Mineral - 2".
+    <p><b> Harvester type</b> &ndash; this value automatically defines certain properties,
+      such as maintenance rates, power consumption, and for which
+      resource classes the harvester is listed at the activation
+      dialog. </p>
+    <p><b> Harvester BER</b> &ndash; the base extraction rate of the harvester. This is
+      the un-buffed value, as it reads at the deed. </p>
+    <p><b> Hopper size</b> &ndash; the basic hopper size of the harvester. This is the
+      un-buffed value, as it reads at the deed. <b>Tip:</b> do not
+      up this value, rather round off downwards; this way alerts
+      for full hopper are not delayed. </p>
+    <p><b> Extraction Modifier</b> &ndash; the resource extraction rate modifier for your server. This modifier is used in the calculation of UBER and AER which controls how fast your hopper fills up. This function was added to accomodate different servers having their own rate for resource extraction... e.g. Legends uses a 2.0 modifier. Back on live this was 1.5x the normal rate in the latter years. If you are unsure what your server uses for a resource extraction rate modifier, just leave the default of 1.0 in place. You can always edit it later.</p>
+  </blockquote>
+  <br/>
+  <br/>
+  <p> <b>Owners: </b><br/>
+    The upper rightmost table displays your defined owners. To
+    add a new harvester owner, right-click inside the table and
+    select to create an owner. Select a character from the list
+    or edit/add any useful but unique name. Initiate values for
+    harvesting expertise and entertainer buff; these determine
+    the improvement SWGAide adds to an active harvester, the
+    same as in-game. </p>
+  <p> Notice: if you decide to <b><u>transfer ownership</u></b> of a put-down harvester to another owner, then the applied
+    bonuses stick on the harvester. This is so until it is
+    re-deeded, exactly as for in-game harvesters. Remember that
+    in-game, if the new owner fills up maintenance or power the
+    bonus is adjusted to the expertise level of that owner. </p>
+  <p> <b>Owners &mdash; Popup menu: </b><br/>
+    The popup menu for the this table provides options that are
+    related to owners: </p>
+  <blockquote> <b>Create owner</b> &ndash; create a new harvester owner for the current galaxy,
+    either select an existing player or create a uniquely named
+    owner. </b>
+    <p> <b>Edit owner</b> &ndash; edit the properties of an existing owner, but not
+      the name. Remember that when activating a harvester it is
+      possible to adjust the owner's Entertainer buff right there
+      and then. </p>
+    <p> <b>Export</b> &ndash; write harvesters and owners for the current galaxy
+      to file, the two are merged to the same file. Use this to
+      backup your definitions, or to transfer them to some other
+      galaxy or installation of SWGAide. </p>
+    <p> <b>Import file</b> /ndash; import harvesters and owners to the current galaxy
+      from file. Any entry with a name that equals an existing
+      entry is silently ignored. </p>
+    <p> <b>Delete owner</b> &ndash; delete a selected owner. Just custom owners can be
+      deleted, not in-game characters. </p>
+  </blockquote>
+  <p> <b>Owners &mdash; Create &amp; Edit dialog: </b><br/>
+    The dialog for creating and editing owners is the same, but
+    the name field is disabled in edit mode: </p>
+  <blockquote> <b>Owner name</b> &ndash; select an existing character of the current galaxy,
+    or define an owner with a unique name.
+    <p> <b>Harvester Storage Efficiency</b> &ndash; the owner's expertise level in this field. </p>
+    <p> <b>Harvester Maintenance Efficiency</b> &ndash; the owner's expertise level in this field. </p>
+    <p> <b>Harvester Energy Efficiency</b> &ndash; the owner's expertise level in this field. </p>
+    <p> <b>Advanced Harvester Technology</b> &ndash; the owner's expertise level in this field. </p>
+    <p> <b>Harvester Fair</b> &ndash; the owner's usual level of the Entertainer buff.
+      Remember that when activating a harvester it is possible to
+      adjust this value right there and then. </p>
+  </blockquote>
+  <br/>
+  <br/>
+  <p> <b>Harvester Warnings: </b><br/>
+    The upper center panel allows you to specify how many hours
+    in advance an alert indicates that an active harvester will
+    stop. This feature monitors when maintenance and power are
+    drained, and when the hopper is full. The alerts are visual
+    and acoustic (optional); the default value is 24 hours. </p>
+  <br/>
+  <br/>
+  <p> <b>Activate Harvester Dialog:</b><br/>
+    The dialog "Activate Harvester" is opened in one of two
+    modes: to activate a harvester for a specific resource; or
+    to edit an active harvester. </p>
+  <blockquote>
+    <p> <b>Activate</b> &ndash; at Current Resources panel, select and right-click
+      a resource, then select "Add to harvester panel" at the
+      popup dialog. </p>
+    <p> <b>Edit</b> &ndash; at the main table of active harvesters, select
+      and right-click a harvester. You can adjust the very same
+      properties that you can do at an in-game harvester, other
+      properties are disabled but read their current values. </p>
+  </blockquote>
+  <p> Options and features at the dialog: </p>
+  <blockquote> <b>Harvester</b> &ndash; select a harvester to gather the selected resource.
+    The list displays inactive harvesters that are suitable for
+    the resource class; a harvester is listed as a <u>deed</u>,
+    or as one that "<u>stayed put</u>" which denotes an in-game
+    harvester which is no pulled up (re-deeded) and it retains
+    all buffs that were applied on it when it was put down;
+    this mimics how harvesters and bonuses work in-game.
+    </p>
+    <p> b>Owner</b> &ndash; select an owner for the harvester. If the harvester
+      is listed as a deed the selected owner also sets the values
+      for harvesting bonuses. However, if the harvester is listed
+      as one that "stayed-put" the old bonuses are displayed at
+      the details panel to the right; these bonuses stick until
+      the harvester is re-deeded and another owner simply mimics
+      a structure-transfer. To <u>reset</u> a harvester to "deed"
+      form, right-click the harvester drop-down list, or at the
+      harvester details panel for another dialog. </p>
+    <p> <b>Resource name</b> &ndash; reads the name of the resource, cannot be edited. </p>
+    <p> <b>Resource class</b> &ndash; reads the resource class, cannot be edited. </p>
+    <p> <b>Misc notes</b> &ndash; enter any kind of text: harvester location, planet,
+      intended use of resource, etc... </p>
+    <p> <b>Add to Inventory</b> &ndash; select this option to add the hopper content to
+      inventory each time the harvester is "refreshed". <B>Tips:</b> select this option when you activate a
+      harvester which adds one unit to inventory. That one unit
+      serves as a place-holder and to stop unwanted alerts; with
+      the place-holders you do not need to manually add resources
+      to inventory; neither resource guards or Today's Alert will
+      alert you for something you are already harvesting. </p>
+    <p> <b>Self powered</b> &ndash; select this check-box if you apply a "Make a
+      Harvester Self Powered" device to the harvester, something
+      nullifies its power consumption. </p>
+    <p> <b>Concentration %</b> &ndash; specify the resource concentration for the location
+      where the harvester is put down, as it reads at the survey
+      device. This value is used when SWGAide estimates amount at
+      hopper, which also is the amount that is added to inventory
+      if that option is selected. <b>Tips:</b> if you use the cluster feature, see below,
+      you specify the highest value for the location so that
+      alerts are not delayed. </p>
+    <p> Remember that the estimated amount is never 100% accurate,
+      there are hidden decimals and other factors that makes it
+      deviate from the final yield from your harvesters. Thence
+      you must adjust the value at the inventory no matter what,
+      and it is pointless to spend too much time on accuracy at
+      these panels. </p>
+    <p> <b>Maintenance</b> &ndash; specify the amount of maintenance that is added to
+      the harvester. This is also the amount which is added to
+      the harvester at a "refresh". </p>
+    <p> <b>Power</b> &ndash; specify the amount of power that is added to
+      the harvester. This is also the amount which is added to
+      the harvester at a "refresh". </p>
+    <p> <b>Harvester details</b> &ndash; this panel reads the properties and bonuses of the
+      harvester. For a deed its bonuses are pending until it is
+      activated. If it stayed-put the values are from the date it
+      was put down, no matter who the current owner is. </p>
+    <p> <b>Harv Fair</b> &ndash; adjust the Entertainer buff Harvester Fair for the
+      current owner before you activate the harvester. This value
+      cannot be adjusted for an active or put-down harvester;
+      this works the same as in-game. </p>
+    <p> <b>Harvester Cluster</b> &ndash; specify how many harvesters you put down in-game
+      and let this one harvester represent them all, to denote
+      a cluster of in-game harvesters; but use it only for
+      harvesters of equal BER and hopper size. The cluster size
+      just multiplies the amount that is added to inventory at
+      each "refresh". <b>Tips:</b> use this feature to reduce the number of
+      active harvesters at this panel. There is no need for many
+      entries that essentially monitors the same thing; as long
+      as you maintain all harvesters at one location at the same
+      time alerts and whatever are monitored by just one entry. </p>
+  </blockquote>
+  <br/>
+  <br/>
+  <p> <b>Active Harvesters:</b><br/>
+    The main table displays active harvesters for the current
+    galaxy. Hover the mouse over the column titles to read the
+    "tool-tip" texts. It is possible to <u>edit cells</u> for
+    maintenance, power, and notes; just double click such a
+    cell and edit its value. </p>
+  <p> Any alert colors one or more table cells in yellow or red;
+    yellow warns that the harvester will stop soon, red that it
+    already is stopped; either for maintenance or power.
+    If a resource is depleted the cell is colored in purple. </p>
+  <p> <b>Active Harvesters &mdash; Popup menu: </b><br/>
+    The popup menu for the this table provides options that are
+    related to active harvesters. Some options are doubled at
+    the harvesters and owners tables, see their help texts. </p>
+  <blockquote> <b>Refresh harvester</b> &ndash; empty the hopper and replenish maintenance and
+    power. The "add-to-inventory" option determines if hopper
+    content is added to inventory, possibly multiplied by the
+    cluster size.
+    <p> <b>Edit active harvester</b> &ndash; open the dialog to edit certain properties of the
+      selected harvester, see above. Many options are disabled,
+      this works as in-game mechanics. </p>
+    <p> <b>Filter inventory </b> &ndash; filter resource inventory for the resource class
+      of the active harvester. </p>
+    <p> <b>Select current </b> &ndash; select the harvested resource at Current Resources. </p>
+    <p> <b>Select schematic use </b> &ndash; select the harvested resource class at Schematics:
+      Resource Class Use. At that panel you can see which
+      schematics that calls for the resource class by name,
+      or which schematics that may use it. If the resource class
+      is not a <i>named resource class </i> it is still selected
+      at the right-most tree but the middle list displays the
+      first super-class that is a named resource class. </p>
+    <p> <b>Numerical hopper totals </b> &ndash; select this to display numerical values rather than
+      percent at the hopper column. </p>
+    <p> <b>Display end dates</b> &ndash; select this to display estimated end dates for
+      maintenance, power, and hopper. </p>
+    <p> <b>Mark depleted </b> &ndash; send a depleted-resource message to <nobr>SWGCraft.org</nobr> for the harvested resource. </p>
+    <p> <b>Deactivate harvester (stays put)</b> &ndash; deactivate the harvester but let it retain applied
+      bonuses. No bonuses, Entertainer buff, or self-powered mode
+      are reset. This mimics deactivating in-game harvesters and
+      reactivating them to harvest another resource but they stay
+      put at the same location and retain all applied bonuses. </p>
+    <p> To "re-deed" a "stayed-put" harvester you must open the
+      activate-harvester dialog at Current Resources, select the
+      harvester, and right-click the harvester list or at the
+      details panel to bring up a dialog. </p>
+    <p> <b>Deactivate harvester (re-deed)</b> &ndash; deactivate the harvester and return it to deed;
+      this resets any buff, bonuses, and self-powered device.
+      This mimics re-deeding in-game harvesters. </p>
+  </blockquote>
+  <br/>
+  <br/>
 </blockquote>
 </body>
 </html>

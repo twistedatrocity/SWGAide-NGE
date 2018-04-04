@@ -1,454 +1,282 @@
 <HTML>
 <HEAD>
-<TITLE>Help: Resources Help </TITLE>
+<TITLE>Help: Resources Help</TITLE>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
 </HEAD>
 
 <BODY BGCOLOR="#ffffff">
 <BLOCKQUOTE>
-
-<p><font face="Arial" size="+1"><b>
-Help - Resource Inventory </b></font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-The panel named "Inventory" displays a list of resources in stock for the
-assignees at the current galaxy. It is possible to filter the list on an
-assignee, resource class, or stats. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Resource name: 
-</b>this column reads in three fashions: </font>
-
+<p><b> Help - Resource Inventory </b></p>
+<br/>
+<br/>
+<p> The panel named "Inventory" displays a list of resources in stock for the
+  assignees at the current galaxy. It is possible to filter the list on an
+  assignee, resource class, or stats. </p>
+<p> <b>Resource name: </b>this column reads in three fashions:
 <DIV ALIGN="LEFT">
-<UL>
-<li><font face="Arial" size="-1">
-Plain name; the origin of the resource is known, the current galaxy. </font></li>
-<li><font face="Arial" size="-1">
-The name preceded by a bracketed "foreign" galaxy name; the origin of the 
-resource is known, the specified galaxy, for example (Ahazi)Gaia. </font></li>
-<li><font face="Arial" size="-1">
-The name is preceded by a bracketed question mark; the origin of the resource is
-unknown, you'd better specify the galaxy promptly. </font></li>
-</UL>
+  <UL>
+    <li> Plain name; the origin of the resource is known, the current galaxy. </li>
+    <li> The name preceded by a bracketed "foreign" galaxy name; the origin of the 
+      resource is known, the specified galaxy, for example (Ahazi)Gaia. </li>
+    <li> The name is preceded by a bracketed question mark; the origin of the resource is
+      unknown, you'd better specify the galaxy promptly. </li>
+  </UL>
 </DIV>
-
-<font face="Arial" size="-1">
 The two columns "<b>Amount</b>" and "<b>Notes</b>" can always be edited directly
 at the table, just double click the table cell. Some other values are edited at
 the edit dialog. Currently stats for <I>known</I> resources cannot be edited in
 SWGAide but only at SWGCraft.org, then "edit" the resource in SWGAide and click
-"Lookup" and verify that SWGAide obtains the new stats. </font></p>
-
-<p><font face="Arial" size="-1">
-The column named "<b>Rate</b>" shows the rating for resources while using the
-filters at the bottom of this panel. The rating is either based on the specified
-experimental weights, or a general average. The rating is always relative to the
-caps of the resource class which is selected at the drop down list. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Assignee: 
-</b>default is "All". All characters found at the current galaxy are listed,
-this includes all stations found at the computers hard disk. You can also define
-your own assignees. </font>
-
-<BLOCKQUOTE>
-<font face="Arial" size="-1">
-<b>Add: 
-</b>define a custom assignee to which resources can be assigned <BR/> 
-<b>Delete: 
-</b>remove a custom assignee; if the assignee owns resources they are relocated
-to "All" </b></font>
-</BLOCKQUOTE>
+"Lookup" and verify that SWGAide obtains the new stats.
 </p>
-
-<p><font face="Arial" size="-1">
-<b>Resource class: 
-</b>filter by class </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Stats: 
-</b>filters by minimum values, <b>or</b> experimental values such as CD=50 and
-OQ=50 so that the sum is 100 or close to it. These filters work as the filters
-at the table of current resources which are explained in that help text. 
-</font></p>
-
-<p><font face="Arial" size="-1">
-However, one difference is that these filters displays all resources which meet
-at least one stat of the filter as if "Calc no-stat" is always selected. Another
-difference is that minimum values are not filtered relative caps. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Popup dialog options at the main table: </b></font></p>
-
-<p><font face="Arial" size="-1">
-<b>Schematics viewer </b>
-&ndash; select a resource and open a window that gives
-a quick display of the quality of the resource versus
-schematics that can use it. The viewer has its own
-help text, press F1 when it has focus.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Select schematic use </b> 
-&ndash; select a resource class and also have it selected
-at Schematics: Resource Class Use. At that panel you can see
-which schematics that calls for the resource class by name,
-or which schematics that may use it. If the resource class
-is not a <i>named resource class </i> it is still selected
-at the right-most tree but one the middle list displays the
-first super-class that is a named resource class.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Create/Edit dialog: 
-</b>Type a resource name, or the first few letters, and click <b>Lookup</b>
-which requests the resource data from SWGCraft.org. If the resource is found all
-stats are automatically entered, otherwise you must enter them manually. If many
-resources are found for the entered letters, select one of them at the drop down
-list. Specify the amount you have of that resource. Select an assignee at the
-drop down list. Optionally add a note. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Manage &rArr; Find duplicates </b>
-&ndash; display all duplicate entries at the main table.
-If no duplicates exist this option is disabled.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Manage &rArr; Merge duplicates to NN </b>
-&ndash; select a resource entry and select this option to
-merge all duplicates to the assignee of the selected entry.
-If no entry is selected the target is assumed as "All".
-If the target does not own a duplicate resource a new entry
-is added, otherwise the amount is adjusted for the existing
-entry; if several duplicates exist the amount of each is
-added to the entry of the target.
-If no duplicates exist this option is disabled.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Manage &rArr; Move from NN... </b>
-&ndash; optionally filter the display, select a resource
-entry, and select this option for another dialog at which
-you select a target assignee. The selected resource entry
-determines the from-assignee; all visible resource entries
-owned by this assignee are moved to the selected target,
-hence filters for assignee, resource classes, or resource
-stats apply. If the target already owns a resource its
-amount is updated.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Create guard:
-</b> select a resource entry and create a guard which has
-its values preset based on the selected resource. Erase any
-unwanted values and save the guard. This option creates a
-plain guard unless you edit the values to become a weighed
-guard. See help text at page <i>Current Resources, Guards
-</i> for information on guards.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Creature harvesting </b>
-&ndash; select a creature resource class and this option
-displays two sub-options: <br/>
-<b>Harvested from...</b> which displays a dialog that lists
-the creatures that the class may be harvested from, if any.
-Egg and Seafood are not supported because they are harvested
-wherever. <br/>
-<b>Browse SWGPets.com</b> which opens your web browser for
-the selected resource class. Notice that for generic resource
-classes SWGPets displays all creatures.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>File export: 
-</b>export <U>the current view</U> of resources to CSV file.
-The syntax for the
-output file is described in the next section. Test it out to see how it looks
-like. Do this every now and then to have a backup file. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>File import: 
-</b>Import from CSV file, for example from backup files or
-from other applications.
-This imports to the resource inventory for the current galaxy. If the file
-contains resources that already exist in the inventory these file resources are
-ignored. The supported format for <i>an unbroken line </i> is as follows
-(x is any positive integer but is ignored):
-</font>
-
+<p> The column named "<b>Rate</b>" shows the rating for resources while using the
+  filters at the bottom of this panel. The rating is either based on the specified
+  experimental weights, or a general average. The rating is always relative to the
+  caps of the resource class which is selected at the drop down list. </p>
+<p> <b>Assignee: </b>default is "All". All characters found at the current galaxy are listed,
+  this includes all stations found at the computers hard disk. You can also define
+  your own assignees.
+<BLOCKQUOTE> <b>Add: </b>define a custom assignee to which resources can be assigned <BR/>
+  <b>Delete: </b>remove a custom assignee; if the assignee owns resources they are relocated
+  to "All" </b> </BLOCKQUOTE>
+</p>
+<p> <b>Resource class: </b>filter by class </p>
+<p> <b>Stats: </b>filters by minimum values, <b>or</b> experimental values such as CD=50 and
+  OQ=50 so that the sum is 100 or close to it. These filters work as the filters
+  at the table of current resources which are explained in that help text. </p>
+<p> However, one difference is that these filters displays all resources which meet
+  at least one stat of the filter as if "Calc no-stat" is always selected. Another
+  difference is that minimum values are not filtered relative caps. </p>
+<p> <b>Popup dialog options at the main table: </b></p>
+<p> <b>Schematics viewer </b> &ndash; select a resource and open a window that gives
+  a quick display of the quality of the resource versus
+  schematics that can use it. The viewer has its own
+  help text, press F1 when it has focus. </p>
+<p> <b>Select schematic use </b> &ndash; select a resource class and also have it selected
+  at Schematics: Resource Class Use. At that panel you can see
+  which schematics that calls for the resource class by name,
+  or which schematics that may use it. If the resource class
+  is not a <i>named resource class </i> it is still selected
+  at the right-most tree but one the middle list displays the
+  first super-class that is a named resource class. </p>
+<p> <b>Create/Edit dialog: </b>Type a resource name, or the first few letters, and click <b>Lookup</b> which requests the resource data from SWGCraft.org. If the resource is found all
+  stats are automatically entered, otherwise you must enter them manually. If many
+  resources are found for the entered letters, select one of them at the drop down
+  list. Specify the amount you have of that resource. Select an assignee at the
+  drop down list. Optionally add a note. </p>
+<p> <b>Manage &rArr; Find duplicates </b> &ndash; display all duplicate entries at the main table.
+  If no duplicates exist this option is disabled. </p>
+<p> <b>Manage &rArr; Merge duplicates to NN </b> &ndash; select a resource entry and select this option to
+  merge all duplicates to the assignee of the selected entry.
+  If no entry is selected the target is assumed as "All".
+  If the target does not own a duplicate resource a new entry
+  is added, otherwise the amount is adjusted for the existing
+  entry; if several duplicates exist the amount of each is
+  added to the entry of the target.
+  If no duplicates exist this option is disabled. </p>
+<p> <b>Manage &rArr; Move from NN... </b> &ndash; optionally filter the display, select a resource
+  entry, and select this option for another dialog at which
+  you select a target assignee. The selected resource entry
+  determines the from-assignee; all visible resource entries
+  owned by this assignee are moved to the selected target,
+  hence filters for assignee, resource classes, or resource
+  stats apply. If the target already owns a resource its
+  amount is updated. </p>
+<p> <b>Create guard: </b> select a resource entry and create a guard which has
+  its values preset based on the selected resource. Erase any
+  unwanted values and save the guard. This option creates a
+  plain guard unless you edit the values to become a weighed
+  guard. See help text at page <i>Current Resources, Guards </i> for information on guards. </p>
+<p> <b>Creature harvesting </b> &ndash; select a creature resource class and this option
+  displays two sub-options: <br/>
+  <b>Harvested from...</b> which displays a dialog that lists
+  the creatures that the class may be harvested from, if any.
+  Egg and Seafood are not supported because they are harvested
+  wherever. <br/>
+  <b>Browse SWGPets.com</b> which opens your web browser for
+  the selected resource class. Notice that for generic resource
+  classes SWGPets displays all creatures. </p>
+<p> <b>File export: </b>export <U>the current view</U> of resources to CSV file.
+  The syntax for the
+  output file is described in the next section. Test it out to see how it looks
+  like. Do this every now and then to have a backup file. </p>
+<p> <b>File import: </b>Import from CSV file, for example from backup files or
+  from other applications.
+  This imports to the resource inventory for the current galaxy. If the file
+  contains resources that already exist in the inventory these file resources are
+  ignored. The supported format for <i>an unbroken line </i> is as follows
+  (x is any positive integer but is ignored):
 <PRE>assignee,galaxy,resourceName,ID,resourceClass,classToken,...
 ...amount,[stats in any order],notes</pre>
-
-<font face="Arial" size="-1">
 For files with a header line that reads the column names exactly as in the line
 above and the correct order of the columns, SWGAide supports a relaxed syntax.
 For resources which are known at SWGCraft.org only the "ID" column is enough, or
 the galaxy and name columns; amount and notes are optional, but known resources
 do not need values for stats. The columns can have any order but notes must
 always be last. However, this is just if one of the header lines read the
-proper column names and their order. </font>
-
+proper column names and their order.
 <pre>resourceClass;resourceName;x;ER;CR;CD;DR;FL;HR;MB;PE;OQ;SR;UT;...
 ...amount;x;x;notes</PRE>
-
-<font face="Arial" size="-1">
 If there is no header line it is assumed that it is exported from a crafter's
 utility, such as the JnF SWGTool that has the format of the second line above
 (but at an unbroken line of course).
 Galaxies other than the current galaxy are supposed to read
 "...;(galaxy)resourceName;...". For other tools that export SWG resources, in
 any file format, please post at the SWGAide forum at SWGCraft.org and include an
-example. </font></p>
-
-<blockquote><font face="Arial" size="-1">
-<b>How to create a file:</b> It is always possible to create a file that
-SWGAide can import. Usually players have used a program such as OpenOffice Calc
-or MS Excel. Then name each column header with a name that reads exactly as in
-the <i>first&nbsp;</i> line above, stats are upper case but can be skipped for
-known resources. Delete or move away unnecessary columns. Notes must come last.
-Export as CSV (text) and make sure that the delimiter between columns is a comma
-sign. Verify in a text editor. Import. </font></blockquote>
-
-<p><font face="Arial" size="-1">
-The import is done for the following <b>assignee: </b></font>
+example.
+</p>
+<blockquote> <b>How to create a file:</b> It is always possible to create a file that
+  SWGAide can import. Usually players have used a program such as OpenOffice Calc
+  or MS Excel. Then name each column header with a name that reads exactly as in
+  the <i>first&nbsp;</i> line above, stats are upper case but can be skipped for
+  known resources. Delete or move away unnecessary columns. Notes must come last.
+  Export as CSV (text) and make sure that the delimiter between columns is a comma
+  sign. Verify in a text editor. Import. </blockquote>
+<p> The import is done for the following <b>assignee: </b>
 <ul>
-<li><font face="Arial" size="-1">
-To the assignee specified in the file's column for assignees; perhaps add or
-edit the line before import. </font></li>
-<li><font face="Arial" size="-1">
-If no assignee is specified in the file, to the assignee who is selected at the
-list in the lower left corner of SWGAide. </font></li>
-<li><font face="Arial" size="-1">
-Otherwise, to the current character who is selected at the Main panel. 
-</font></li>
+  <li> To the assignee specified in the file's column for assignees; perhaps add or
+    edit the line before import. </li>
+  <li> If no assignee is specified in the file, to the assignee who is selected at the
+    list in the lower left corner of SWGAide. </li>
+  <li> Otherwise, to the current character who is selected at the Main panel. </li>
 </ul>
 </p>
-
-<p><font face="Arial" size="-1">
-SWGAide always tries to look up each resource at SWGCraft.org. This is done in
-this order: 1) If the ID is known it is used, 2) if galaxy is specified 
-galaxy+name is used, and 3) if the user selects so current-galaxy+name is used.
-Otherwise, 4) if nothing is found or if the user negates No. 3, if resource
-stats are specified for the entry they are used. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Notes import/update... </b>
-import from an in-game notes file for the character
-<u>who is selected at the Main panel</u>; this option is
-also used to <b>update existing entries</b> in inventory.
-In-game, type minimal information to a notes file and import
-the notes. For each entry SWGAide either adds, updates, or
-ignores the resource (for "update", see below on how to
-specify amount):
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-&mdash; If the import <i>is not </i> an "update" and if the
-selected character does not own the resource it is added as
-an entry for the character. If necessary SWGAide tries to
-look it up at SWGCraft.org, using the specified name +
-current or specified galaxy; if it is unknown at SWGCraft
-it is disregarded and displayed at a final dialog.<br/>
-</font>
-
-<p><font face="Arial" size="-1">
-&mdash; If the import <i>is </i> an "update" SWGAide does
-its best to update the entry for the proper assignee, but
-remember that it imports/updates for the selected character.
-</font>
-<ol>
-<li><font face="Arial" size="-1">
-if the a previous entry does not exist it is added to the
-selected character
-</font></li>
-<li><font face="Arial" size="-1">
-else if the selected character owns an entry of the resource
-it is updated
-</font></li>
-<li><font face="Arial" size="-1">
-else if <b>one</b> previous entry exists it is updated no
-matter the owner
-</font></li>
-<li><font face="Arial" size="-1">
-else an undefined entry is updated no matter the owner
-</font></li>
-</ol> 
-</p>
-
-<p><font face="Arial" size="-1">
-This notes file must only contain lines for the resources, you'd
-better dedicate a file only for this purpose. It must have the following syntax: 
-</font>
-
-<PRE>(galaxy)resourceName,amount,optional notes</PRE>
-
-<font face="Arial" size="-1">
-If no galaxy is specified SWGAide <U>assumes the current galaxy</U> (galaxy can
-be abbreviated). Amount and notes are optional. However, amount accepts special
-signs that may <b>update but not replace</b> an existing entry in the inventory,
-these
-signs for amount are =, +, or - :</font>
-<div align="left"><ul>
-<li><tt>=   </tt><font face="Arial" size="-1">the equal sign, replace the
-amount in the old entry</font></li>
-<li><tt>+   </tt><font face="Arial" size="-1">the plus sign, add the
-amount in the notes file to the old entry</font></li>
-<li><tt>-   </tt><font face="Arial" size="-1">the minus sign, subtract the
-amount in the notes file from the old entry</font></li>
-</ul></div>
-<font face="Arial" size="-1">If the resource does not exist in the inventory for
-the selected character the signs have no effect but the entry in the file is
-added to the inventory. Examples with names that conveys the idea: </font></p>
-
-<blockquote><font face="monospace" size="-1">
-(Ahazi)Importedwood, 950000, bulk wood<br/>
-Newfrommygalaxy, +225000, here + = or nothing is the same<br/>
-Boughtmore, +250000, add 250k to what I have<br/>
-rectifyinventory, =1000000, rectify inventory<br/>
-drainedinfactory, -75000, used 75k in factory</font></blockquote>
-
-<p><font face="Arial" size="-1">
-<i>Limitation </i> &ndash; the misc-notes part are not
-updated for existing entries, just the amount.  
-</font></p>
-
-
-
-<p><font face="Arial" size="-1">
-<b>Notes export...  </b>
-writes the current display to an in-game notes file. You are
-prompted to select an existing notes file and to that file is
-written all the resources which meet the current filters, or
-all entries if no filter is applied. The output format equals
-the format for importing from notes file, hence you can edit
-the amount, see the above options, and add new entries.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<i>Limitation </i> &ndash; for each entry this option writes
-only the first line of the misc-notes, if any. This is because
-multi-line notes is not supported for the in-game notes file,
-only while exporting/importing from file. Also, the notes are
-not updated for existing entries, just the amount (if you are
-using the signs + - or = as is described above).  
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Galaxy copy:
-</b>select a galaxy to which to copy the current resource
-inventory; only galaxies that are visible at the Main view
-are listed. Then this feature copies to an assignee that is
-named as the current galaxy so that you can find the copied
-the easier. Switch to that galaxy to edit, merge and/or
-delete resources.
-<b>Notice:</b>
-If the target assignee already owns a certain resource that
-entry is not modified, but if any other assignee owns that
-resource it exists as two entries, one for each assignee.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Delete all: 
-</b>remove all resources from the inventory. This option removes only the
-visible entries, that is, if the view is filtered by an assignee then only
-resources for that assignee are removed. This is true for any combination of
-the filters. </font></p>
-
-<p><font face="Arial" size="-1">
-<b>Delete entry: 
-</b>remove the selected entry from the inventory. 
-</font></p>
-
-<br/><br/>
-
-<p><font face="Arial">
-<b>Galaxy-Transfered Resources </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-SWGAide's displays resource names exactly as in SWG; that
-is, a resource that originates from the current galaxy just
-reads its plain name, but the name of a galaxy-transferred
-resource reads the galaxy and the resource name, such as
-"(Ahazi)Longago".</font></p>
-
-<p><font face="Arial" size="-1">
-See below for how export to file works, you may need to
-adjust resource names in the file when you transfer from
-one galaxy to the other, <u>or you simply use the option
-for "Galaxy copy"</u>.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<font COLOR="red">Resources of unknown origin</font> is firmly advised against
-and you better correct this promptly. The Edit dialog does not support unknown
-galaxies in an attempt to avoid mishaps. How to fix this the easiest way then?
-<u>The best way</u> is to properly add the resource at SWGCraft.org (there is a
-special web page to submit old resources) and then create an entry as usual.
-Or... </font>
-
-<OL>
-<li><font face="Arial" size="-1">
-Export the inventory to file, no filter applied </font>
-</li>
-<li><font face="Arial" size="-1">
-Make a backup copy of the file </font>
-</li>
-<li><font face="Arial" size="-1">
-Open the file in any text editor </font>
-</li>
-<li><font face="Arial" size="-1">
-Replace all question marks with the correct galaxy name (or its 
-abbreviation) </font>
-</li>
-<li><font face="Arial" size="-1">
-Verify that all resources are assigned to their appropriate galaxy </font>
-</li>
-<li><font face="Arial" size="-1">Save the file as text file </font>
-</li>
-<li><font face="Arial" size="-1">
-In SWGAide, delete the inventory, all of it </font>
-</li>
-<li><font face="Arial" size="-1">
-Import the edited file </font>
-</li>
-</OL></p>
-
-<p><font face="Arial" size="-1">
-When SWGAide <b>imports from file</b> several things can happen: </font>
-
-<UL>
-<li><font face="Arial" size="-1">
-If a galaxy name or abbreviation is found SWGAide tries the specified galaxy
-as the origin for the resource. </font>
-</li>
-<li><font face="Arial" size="-1">
-If galaxy reads <b>(?)</b> SWGAide prompts you to select between some options
-to correct the situation. <br/>
-NOTE: at this point you cannot specify a galaxy other than the current galaxy,
-or skip that line.
-</li>
-<li><font face="Arial" size="-1">
-Finally, if no galaxy is specified SWGAide <U>does <b>not</b> assume 
-anything</U> but will set the origin of the resource to "unknown galaxy",
-that is (?) </font>
-</li>
-</UL>
-</p>
-
-<p><font face="Arial" size="-1">
-However, when SWGAide <b>imports from notes file</b> and <b>no galaxy</b> is
-specified there is an important difference from the above, then SWGAide
-<U>assumes the current galaxy</U> as the origin. Thus, when you write the
-in-game notes file, type the resource name exactly as it reads at the in-game
-examine screen, galaxy name included just if there is any. </p></font>
-
-<br/><br/>
-
+<p> SWGAide always tries to look up each resource at SWGCraft.org. This is done in
+  this order: 1) If the ID is known it is used, 2) if galaxy is specified 
+  galaxy+name is used, and 3) if the user selects so current-galaxy+name is used.
+  Otherwise, 4) if nothing is found or if the user negates No. 3, if resource
+  stats are specified for the entry they are used. </p>
+<p> <b>Notes import/update... </b> import from an in-game notes file for the character <u>who is selected at the Main panel</u>; this option is
+  also used to <b>update existing entries</b> in inventory.
+  In-game, type minimal information to a notes file and import
+  the notes. For each entry SWGAide either adds, updates, or
+  ignores the resource (for "update", see below on how to
+  specify amount): </p>
+<blockquote> &mdash; If the import <i>is not </i> an "update" and if the
+  selected character does not own the resource it is added as
+  an entry for the character. If necessary SWGAide tries to
+  look it up at SWGCraft.org, using the specified name +
+  current or specified galaxy; if it is unknown at SWGCraft
+  it is disregarded and displayed at a final dialog.<br/>
+  <p> &mdash; If the import <i>is </i> an "update" SWGAide does
+    its best to update the entry for the proper assignee, but
+    remember that it imports/updates for the selected character.
+  <ol>
+    <li> if the a previous entry does not exist it is added to the
+      selected character </li>
+    <li> else if the selected character owns an entry of the resource
+      it is updated </li>
+    <li> else if <b>one</b> previous entry exists it is updated no
+      matter the owner </li>
+    <li> else an undefined entry is updated no matter the owner </li>
+  </ol>
+  </p>
+  <p> This notes file must only contain lines for the resources, you'd
+    better dedicate a file only for this purpose. It must have the following syntax:
+  <PRE>(galaxy)resourceName,amount,optional notes</PRE>
+  If no galaxy is specified SWGAide <U>assumes the current galaxy</U> (galaxy can
+  be abbreviated). Amount and notes are optional. However, amount accepts special
+  signs that may <b>update but not replace</b> an existing entry in the inventory,
+  these
+  signs for amount are =, +, or - :
+  <div align="left">
+    <ul>
+      <li><tt>= </tt>the equal sign, replace the
+        amount in the old entry</li>
+      <li><tt>+ </tt>the plus sign, add the
+        amount in the notes file to the old entry</li>
+      <li><tt>- </tt>the minus sign, subtract the
+        amount in the notes file from the old entry</li>
+    </ul>
+  </div>
+  If the resource does not exist in the inventory for
+  the selected character the signs have no effect but the entry in the file is
+  added to the inventory. Examples with names that conveys the idea:
+  </p>
+  <blockquote> (Ahazi)Importedwood, 950000, bulk wood<br/>
+    Newfrommygalaxy, +225000, here + = or nothing is the same<br/>
+    Boughtmore, +250000, add 250k to what I have<br/>
+    rectifyinventory, =1000000, rectify inventory<br/>
+    drainedinfactory, -75000, used 75k in factory</blockquote>
+  <p> <i>Limitation </i> &ndash; the misc-notes part are not
+    updated for existing entries, just the amount. </p>
+  <p> <b>Notes export... </b> writes the current display to an in-game notes file. You are
+    prompted to select an existing notes file and to that file is
+    written all the resources which meet the current filters, or
+    all entries if no filter is applied. The output format equals
+    the format for importing from notes file, hence you can edit
+    the amount, see the above options, and add new entries. </p>
+  <p> <i>Limitation </i> &ndash; for each entry this option writes
+    only the first line of the misc-notes, if any. This is because
+    multi-line notes is not supported for the in-game notes file,
+    only while exporting/importing from file. Also, the notes are
+    not updated for existing entries, just the amount (if you are
+    using the signs + - or = as is described above). </p>
+  <p> <b>Galaxy copy: </b>select a galaxy to which to copy the current resource
+    inventory; only galaxies that are visible at the Main view
+    are listed. Then this feature copies to an assignee that is
+    named as the current galaxy so that you can find the copied
+    the easier. Switch to that galaxy to edit, merge and/or
+    delete resources. <b>Notice:</b> If the target assignee already owns a certain resource that
+    entry is not modified, but if any other assignee owns that
+    resource it exists as two entries, one for each assignee. </p>
+  <p> <b>Delete all: </b>remove all resources from the inventory. This option removes only the
+    visible entries, that is, if the view is filtered by an assignee then only
+    resources for that assignee are removed. This is true for any combination of
+    the filters. </p>
+  <p> <b>Delete entry: </b>remove the selected entry from the inventory. </p>
+  <br/>
+  <br/>
+  <p> <b>Galaxy-Transfered Resources </b> </p>
+  <p> SWGAide's displays resource names exactly as in SWG; that
+    is, a resource that originates from the current galaxy just
+    reads its plain name, but the name of a galaxy-transferred
+    resource reads the galaxy and the resource name, such as
+    "(Ahazi)Longago".</p>
+  <p> See below for how export to file works, you may need to
+    adjust resource names in the file when you transfer from
+    one galaxy to the other, <u>or you simply use the option
+    for "Galaxy copy"</u>. </p>
+  <p> Resources of unknown origin is firmly advised against
+    and you better correct this promptly. The Edit dialog does not support unknown
+    galaxies in an attempt to avoid mishaps. How to fix this the easiest way then? <u>The best way</u> is to properly add the resource at SWGCraft.org (there is a
+    special web page to submit old resources) and then create an entry as usual.
+    Or...
+  <OL>
+    <li> Export the inventory to file, no filter applied </li>
+    <li> Make a backup copy of the file </li>
+    <li> Open the file in any text editor </li>
+    <li> Replace all question marks with the correct galaxy name (or its 
+      abbreviation) </li>
+    <li> Verify that all resources are assigned to their appropriate galaxy </li>
+    <li>Save the file as text file </li>
+    <li> In SWGAide, delete the inventory, all of it </li>
+    <li> Import the edited file </li>
+  </OL>
+  </p>
+  <p> When SWGAide <b>imports from file</b> several things can happen:
+  <UL>
+    <li> If a galaxy name or abbreviation is found SWGAide tries the specified galaxy
+      as the origin for the resource. </li>
+    <li> If galaxy reads <b>(?)</b> SWGAide prompts you to select between some options
+      to correct the situation. <br/>
+      NOTE: at this point you cannot specify a galaxy other than the current galaxy,
+      or skip that line. </li>
+    <li> Finally, if no galaxy is specified SWGAide <U>does <b>not</b> assume 
+      anything</U> but will set the origin of the resource to "unknown galaxy",
+      that is (?) </li>
+  </UL>
+  </p>
+  <p> However, when SWGAide <b>imports from notes file</b> and <b>no galaxy</b> is
+    specified there is an important difference from the above, then SWGAide <U>assumes the current galaxy</U> as the origin. Thus, when you write the
+    in-game notes file, type the resource name exactly as it reads at the in-game
+    examine screen, galaxy name included just if there is any. </p>
+  <br/>
+  <br/>
 </BLOCKQUOTE>
 </BODY>
 </HTML>

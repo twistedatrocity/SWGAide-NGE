@@ -1,386 +1,223 @@
 <html>
 <head>
-<title>
-Help: Schematics &mdash; Today's Alert
-</title>
+<title>Help: Schematics &mdash; Today's Alert</title>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
 </head>
 
 <body bgcolor="#ffffff">
 <blockquote>
-
-<p><font face="Arial" size="+1"><b>
-Help: Schematics &mdash; Today's Alert
-</b></font></p>
-
-<br/>
-
-<p><font face="Arial" size="-1">
-This panel helps you to quickly review currently spawning
-resources that are better than what exists in your resource
-inventory. SWGAide scans current resources which are not yet
-harvested and computes their experimental weights which are
-compared versus your resource inventory. In low-quality mode
-this panel displays resources for classes that are missing
-in inventory.
-</font></p>
-
-<p><font face="Arial" size="-1">
-This panel <i>does not </i> replace resource guards at the
-Resources panel. Guards alert you when a resource meets its
-criterion, whether high or low, and they automatically check
-for news at your main galaxy at SWGCraft.org. This panel,
-for your assignees and their lists of favorite schematics
-it displays which resources that are better than your stock.
-Or you select to do this for all schematics or for a
-selected profession.
-</font></p>
-
-<blockquote>
-<p><font face="Arial" size="-1">
-Schematic data are mainly obtained from
-<nobr><b>www.SWGCraft.org</b></nobr> and all resource data
-are obtained from there. This is the data which are submitted
-and updated by players like you and me.
-</font></p>
-
-<p><font face="Arial" size="-1">
-The more players that update SWGCraft the better this panel
-supports your crafting; find the ISDroid folder at the mail
-section and also the "Submit Resources" panel for manual
-submission of one or several resource data. See help file
-for <i>Draft Schematics </i> for details on how to update
-or submit schematics.
-</font></p>
-
-<p><font face="Arial" size="-1">
-In SWGAide, often a mouse right-click at a GUI element displays
-a popup dialog with various options and features. 
-</font></p>
-</blockquote>
-
-<br/>
-
-<p><font face="Arial">
-<b>Today's Alert </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-When computing the weights for schematics this panel makes
-use of the resource classes that these schematics call for.
-Thus, computed rates and coloring is done relative the caps
-of the required resource classes. It allows for zero-stats
-but requires at least one stat for the displayed resources.
-See the <i>Beginner's Guide for Traders </i> for a complete
-discussion on how rates are computed for a single resource.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Limits and colors are the same as for the <i>Resources </i> 
-panel and this panel displays resources with a computed rate
-better than anything in inventory or resources with a rate
-better than the "fair" limit. Specify limits and colors at
-the panel Current Resources &rArr; Display Options.
-For example, set the limit for "fair" to 800 and if nothing
-in inventory meets the schematic then only resources with a
-rate better than 800 are listed, and then 800 is also the
-lower limit for the "fair" color.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Assignees: </b><br/>
-To the upper left, select an assignee and for its list of
-favorite schematics SWGAide scans the current resources and
-displays those that are better than your resource inventory
-&mdash; define assignees and add favorite schematics either
-at the <i>Manage Assignees and Favorites </i> dialog or at
-the <i>Draft Schematics </i> panel; the dialog is opened at
-the Edit menu and it has its own help text. 
-</font></p>
-
-<p><font face="Arial" size="-1">
-Below the assignees you have created you see more entries.
-If you select "Pro: All" or "Pro: <profession>" this panel
-rather scans all schematics for the selected item. If you
-are new to SWGAide and inventory is quite empty, then these
-options may display way too much to be useful for you, then
-create one or several assignees and add schematics to their
-list of favorites. On the other hand, if resource inventory
-is well stocked you may prefer these options over assignees
-&mdash; or not.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Assignees &mdash; Popup menu: </b>
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Manage assignees... </b> 
-&ndash; select this option to open the dialog for managing
-assignees and favorite lists. This dialog is not for other
-features related to schematic assignees. 
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Default assignee</b> 
-&ndash; select an entry as a default assignee; when SWGAide
-starts it scans all current resources against the list of
-favorite schematics of this assignee and if a resource is
-found that is better-than-inventory it colors the tabs for
-Schematics and Today's Alert as a notification. If nothing
-is selected SWGAide scans schematics for all professions,
-which equals the "Pro: All" entry.
-</font></p>
-</blockquote>
-
-<br/>
-
-<p><font face="Arial" size="-1">
-<b>Options: </b><br/>
-Adjust the limits for which resources to include and what
-inventory stock to consider:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Max days </b>
-&ndash; specify maximum age for the resources to display;
-e.g. "2" displays all better-than-inventory resources that
-are reported to SWGCraft.org within the recent two days.
-This option applies to both HQ and LQ mode.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Inventory </b>
-&ndash; specify a limit for which inventory resource crates
-to ignore. For example "50,000" makes SWGAide to ignore any
-crate smaller than 50k when it compares resource rates.
-Hence this option gives an early warning that something soon
-runs out; zero (0) compares against all inventory resources,
-also very small crates. This option only applies to HQ mode.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>HQ / LQ </b>
-&ndash; switch between high-quality and low-quality mode.<br/>
-&ndash; <font color="blue">
-HQ mode</font>: 
-for each favorite schematic and for its combinations of
-required resource classes and experimental weights, SWGAide
-computes the rates for current and inventory resources; only
-resources with rates equal or better than inventory are
-displayed. <br/>
-&ndash; <font color="blue">
-LQ mode</font>: 
-for each favorite schematic SWGAide checks if its required
-resource classes are missing in inventory. This feature does
-not determine if resources are bulk or superior qualities.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Show Great </b>
-&ndash; select this option to ignore inventory and rather
-display all "great" resources. For each schematic of the
-selected assignee or profession and for all its combinations
-of required resource classes and its experimental weights,
-SWGAide computes the rates for all of the current resources
-and displays only resources with rates that are better than
-"great". Define the limit of <i>Great </i> at Resources
-&rarr; Display Options. This option is disabled in LQ mode.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Ignore K/M </b>
-&ndash; select to ignore resources from Kashyyyk or Mustafar.
-Notice that this option does not apply to creature resources
-from these two planets.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-<b>Main table: </b><br/>
-This table is populated when you select an assignee so that
-for its list of favorite schematics SWGAide scans all current
-resources and displays the result at this table. If nothing
-outshines your inventory this table is empty. For a resource
-this table reads its rate and its improvement over inventory.
-A resources is displayed per combination of
-resource-class-and-weights that pertains to the resource.
-Thus you may see several entries for the same resource,
-each of its entries is for a discreet combination of
-resource-class and weights.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Columns and Colors </b>
-&ndash; for resource values, the rate, and the <i>percent 
-</i> columns the limits and colors are the same as at the
-<i>Resources </i> panel. The stats that are called for by
-the experimental weights are rendered in bold face. Rates
-are based on the combination of resource class and weights
-of the favorite schematic that the entries pertain to.
-</font></p>
-
-<p><font face="Arial" size="-1">
-The <nobr>%%</nobr> column displays the estimated improvement
-of current resources versus best of inventory as a percentage.
-Improvements greater than 5% are rendered at a "fair" color,
-above 10% at a "good" color, and greater than 15% at a "great"
-color background. If the resource is for a resource class that
-is missing in inventory the background is cyan to alert you.
-A calculated rate <b>is not</b> the
-<i>weighed average result</i> because then <i>all resources
-</i> in a schematic must be calculated together &mdash; this
-topic and the math behind this is discussed in the
-<i>Beginner's Guide for Traders</i>.
-</font></p>
-
-<p><font face="Arial" size="-1">
-In LQ mode coloring is based on the classes of the resources
-themselves, without rate because there is no experimenting
-but the <nobr>%%</nobr> column is colored with cyan.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Main table &mdash; Popup menu: </b>
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Resource details...</b>
-&ndash: displays a dialog with details about the selected
-resource. The dialog reads details about planets and age,
-and if the resource is already in inventory the total
-amount is included.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Select current </b> 
-&ndash; selects the spawning resource at the table of current
-resources as a convenience.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Filter current </b> 
-&ndash; filters table of currently spawning resources for
-the class of the filter and selects the resource for entry.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Filter inventory </b>
-&ndash; filters and sorts the resource inventory for
-the weights and class that pertains to the selected entry;
-that is, the resource class of the selected resource and the 
-experimental weights of the filter the resource pertains to.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Schematics viewer </b>
-&ndash; select a resources and open a window that gives
-a quick display of the quality of the monitored resource
-versus schematics that can use it. The viewer has its own
-help text, press F1 when it has focus.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Creature harvesting </b>
-&ndash; for a selected creature resource class and this
-option displays two sub-options: <br/>
-<b>Harvested from...</b> which displays a dialog that lists
-the creatures that the class may be harvested from, if any.
-Egg and Seafood are not supported because they are harvested
-wherever. <br/>
-<b>Browse SWGPets.com</b> which opens your web browser for
-the selected resource class. Notice that for generic resource
-classes SWGPets displays all creatures.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Organic vs. Creature Resources </b>
-&ndash; toggles whether Creature Resources are disregarded
-or not when a schematic calls for Organic; using harvesters
-for Flora Resources is "cheaper" for Organic.
-</font></p>
-</blockquote>
-
-<br/>
-
-<p><font face="Arial" size="-1">
-<b>Resource class &amp; weights and best from Inventory: </b><br/>
-Select an entry at the table of current resources and this
-text field displays information that pertains to the selected
-resource:
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Filter </b>
-&ndash; displays the required resource-class and the weights;
-this is the combination that is used to calculate the rate
-for the selected resource, the class and the weights from one
-or several favorite schematics.
-</font>
-
-<p><font face="Arial" size="-1">
-<b>Inventory </b>
-&ndash; displays the best resource you have on stock for the
-current resource class and weights. It also displays its total
-<b>amount</b>.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-<b>Resource class &amp; weights and best from Inventory
-&mdash; Popup menu: </b>
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<font face="Arial" size="-1">
-<b>Filter current </b> 
-&ndash; filters the table of currently spawning resources
-for the resource class of the displayed filter.
-</font>
-
-<p><b>Filter inventory </b> 
-&ndash; filters and sorts the resource inventory for the
-displayed filter, i.e. the displayed resource class and
-experimental weights.
-</font></p>
-</blockquote>
-
-<br/>
-
-<p><font face="Arial" size="-1">
-<b>Schematics: </b><br/>
-Select an entry at the table of current resources and this
-field displays a list of the schematics which are using the
-<i>Filter </i> that is displayed at the left-hand text field.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Select an entry at this list; if the menu option <i>Always
-select </i> is enabled the schematic is selected at other
-GUI panels as a convenience. This overrides but does not
-modify possible filters that would hinder the display.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Schematics &mdash; Popup menu: </b>
-</font></p>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Select schematic</b>
-&ndash; use this option to select the current schematic at
-other GUI panels as a convenience. This overrides but does
-not modify possible filters that would hinder the display.
-If <i>Always select </i> at the Options menu is enabled
-there is no need to invoke this option.
-</font>
-</blockquote>
-
-<br/><br/>
+  <p><b> Help: Schematics &mdash; Today's Alert </b></p>
+  <br/>
+  <p> This panel helps you to quickly review currently spawning
+    resources that are better than what exists in your resource
+    inventory. SWGAide scans current resources which are not yet
+    harvested and computes their experimental weights which are
+    compared versus your resource inventory. In low-quality mode
+    this panel displays resources for classes that are missing
+    in inventory. </p>
+  <p> This panel <i>does not </i> replace resource guards at the
+    Resources panel. Guards alert you when a resource meets its
+    criterion, whether high or low, and they automatically check
+    for news at your main galaxy at SWGCraft.org. This panel,
+    for your assignees and their lists of favorite schematics
+    it displays which resources that are better than your stock.
+    Or you select to do this for all schematics or for a
+    selected profession. </p>
+  <blockquote>
+    <p> Schematic data are mainly obtained from <nobr><b>www.SWGCraft.org</b></nobr> and all resource data
+      are obtained from there. This is the data which are submitted
+      and updated by players like you and me. </p>
+    <p> The more players that update SWGCraft the better this panel
+      supports your crafting; find the ISDroid folder at the mail
+      section and also the "Submit Resources" panel for manual
+      submission of one or several resource data. See help file
+      for <i>Draft Schematics </i> for details on how to update
+      or submit schematics. </p>
+    <p> In SWGAide, often a mouse right-click at a GUI element displays
+      a popup dialog with various options and features. </p>
+  </blockquote>
+  <br/>
+  <p> <b>Today's Alert </b> </p>
+  <p> When computing the weights for schematics this panel makes
+    use of the resource classes that these schematics call for.
+    Thus, computed rates and coloring is done relative the caps
+    of the required resource classes. It allows for zero-stats
+    but requires at least one stat for the displayed resources.
+    See the <i>Beginner's Guide for Traders </i> for a complete
+    discussion on how rates are computed for a single resource. </p>
+  <p> Limits and colors are the same as for the <i>Resources </i> panel and this panel displays resources with a computed rate
+    better than anything in inventory or resources with a rate
+    better than the "fair" limit. Specify limits and colors at
+    the panel Current Resources &rArr; Display Options.
+    For example, set the limit for "fair" to 800 and if nothing
+    in inventory meets the schematic then only resources with a
+    rate better than 800 are listed, and then 800 is also the
+    lower limit for the "fair" color. </p>
+  <p> <b>Assignees: </b><br/>
+    To the upper left, select an assignee and for its list of
+    favorite schematics SWGAide scans the current resources and
+    displays those that are better than your resource inventory
+    &mdash; define assignees and add favorite schematics either
+    at the <i>Manage Assignees and Favorites </i> dialog or at
+    the <i>Draft Schematics </i> panel; the dialog is opened at
+    the Edit menu and it has its own help text. </p>
+  <p> Below the assignees you have created you see more entries.
+    If you select "Pro: All" or "Pro:
+    <profession>
+    " this panel
+    rather scans all schematics for the selected item. If you
+    are new to SWGAide and inventory is quite empty, then these
+    options may display way too much to be useful for you, then
+    create one or several assignees and add schematics to their
+    list of favorites. On the other hand, if resource inventory
+    is well stocked you may prefer these options over assignees
+    &mdash; or not. </p>
+  <p> <b>Assignees &mdash; Popup menu: </b> </p>
+  <blockquote> <b>Manage assignees... </b> &ndash; select this option to open the dialog for managing
+    assignees and favorite lists. This dialog is not for other
+    features related to schematic assignees.
+    <p> <b>Default assignee</b> &ndash; select an entry as a default assignee; when SWGAide
+      starts it scans all current resources against the list of
+      favorite schematics of this assignee and if a resource is
+      found that is better-than-inventory it colors the tabs for
+      Schematics and Today's Alert as a notification. If nothing
+      is selected SWGAide scans schematics for all professions,
+      which equals the "Pro: All" entry. </p>
+  </blockquote>
+  <br/>
+  <p> <b>Options: </b><br/>
+    Adjust the limits for which resources to include and what
+    inventory stock to consider: </p>
+  <blockquote> <b>Max days </b> &ndash; specify maximum age for the resources to display;
+    e.g. "2" displays all better-than-inventory resources that
+    are reported to SWGCraft.org within the recent two days.
+    This option applies to both HQ and LQ mode.
+    <p> <b>Inventory </b> &ndash; specify a limit for which inventory resource crates
+      to ignore. For example "50,000" makes SWGAide to ignore any
+      crate smaller than 50k when it compares resource rates.
+      Hence this option gives an early warning that something soon
+      runs out; zero (0) compares against all inventory resources,
+      also very small crates. This option only applies to HQ mode. </p>
+    <p> <b>HQ / LQ </b> &ndash; switch between high-quality and low-quality mode.<br/>
+      &ndash; HQ mode: 
+      for each favorite schematic and for its combinations of
+      required resource classes and experimental weights, SWGAide
+      computes the rates for current and inventory resources; only
+      resources with rates equal or better than inventory are
+      displayed. <br/>
+      &ndash; LQ mode: 
+      for each favorite schematic SWGAide checks if its required
+      resource classes are missing in inventory. This feature does
+      not determine if resources are bulk or superior qualities. </p>
+    <p> <b>Show Great </b> &ndash; select this option to ignore inventory and rather
+      display all "great" resources. For each schematic of the
+      selected assignee or profession and for all its combinations
+      of required resource classes and its experimental weights,
+      SWGAide computes the rates for all of the current resources
+      and displays only resources with rates that are better than
+      "great". Define the limit of <i>Great </i> at Resources
+      &rarr; Display Options. This option is disabled in LQ mode. </p>
+    <p> <b>Ignore K/M </b> &ndash; select to ignore resources from Kashyyyk or Mustafar.
+      Notice that this option does not apply to creature resources
+      from these two planets. </p>
+  </blockquote>
+  <p> <b>Main table: </b><br/>
+    This table is populated when you select an assignee so that
+    for its list of favorite schematics SWGAide scans all current
+    resources and displays the result at this table. If nothing
+    outshines your inventory this table is empty. For a resource
+    this table reads its rate and its improvement over inventory.
+    A resources is displayed per combination of
+    resource-class-and-weights that pertains to the resource.
+    Thus you may see several entries for the same resource,
+    each of its entries is for a discreet combination of
+    resource-class and weights. </p>
+  <p> <b>Columns and Colors </b> &ndash; for resource values, the rate, and the <i>percent </i> columns the limits and colors are the same as at the <i>Resources </i> panel. The stats that are called for by
+    the experimental weights are rendered in bold face. Rates
+    are based on the combination of resource class and weights
+    of the favorite schematic that the entries pertain to. </p>
+  <p> The <nobr>%%</nobr> column displays the estimated improvement
+    of current resources versus best of inventory as a percentage.
+    Improvements greater than 5% are rendered at a "fair" color,
+    above 10% at a "good" color, and greater than 15% at a "great"
+    color background. If the resource is for a resource class that
+    is missing in inventory the background is cyan to alert you.
+    A calculated rate <b>is not</b> the <i>weighed average result</i> because then <i>all resources </i> in a schematic must be calculated together &mdash; this
+    topic and the math behind this is discussed in the <i>Beginner's Guide for Traders</i>. </p>
+  <p> In LQ mode coloring is based on the classes of the resources
+    themselves, without rate because there is no experimenting
+    but the <nobr>%%</nobr> column is colored with cyan. </p>
+  <p> <b>Main table &mdash; Popup menu: </b> </p>
+  <blockquote> <b>Resource details...</b> &ndash: displays a dialog with details about the selected
+    resource. The dialog reads details about planets and age,
+    and if the resource is already in inventory the total
+    amount is included.
+    <p> <b>Select current </b> &ndash; selects the spawning resource at the table of current
+      resources as a convenience. </p>
+    <p> <b>Filter current </b> &ndash; filters table of currently spawning resources for
+      the class of the filter and selects the resource for entry. </p>
+    <p> <b>Filter inventory </b> &ndash; filters and sorts the resource inventory for
+      the weights and class that pertains to the selected entry;
+      that is, the resource class of the selected resource and the 
+      experimental weights of the filter the resource pertains to. </p>
+    <p> <b>Schematics viewer </b> &ndash; select a resources and open a window that gives
+      a quick display of the quality of the monitored resource
+      versus schematics that can use it. The viewer has its own
+      help text, press F1 when it has focus. </p>
+    <p> <b>Creature harvesting </b> &ndash; for a selected creature resource class and this
+      option displays two sub-options: <br/>
+      <b>Harvested from...</b> which displays a dialog that lists
+      the creatures that the class may be harvested from, if any.
+      Egg and Seafood are not supported because they are harvested
+      wherever. <br/>
+      <b>Browse SWGPets.com</b> which opens your web browser for
+      the selected resource class. Notice that for generic resource
+      classes SWGPets displays all creatures. </p>
+    <p> <b>Organic vs. Creature Resources </b> &ndash; toggles whether Creature Resources are disregarded
+      or not when a schematic calls for Organic; using harvesters
+      for Flora Resources is "cheaper" for Organic. </p>
+  </blockquote>
+  <br/>
+  <p> <b>Resource class &amp; weights and best from Inventory: </b><br/>
+    Select an entry at the table of current resources and this
+    text field displays information that pertains to the selected
+    resource: </p>
+  <blockquote> <b>Filter </b> &ndash; displays the required resource-class and the weights;
+    this is the combination that is used to calculate the rate
+    for the selected resource, the class and the weights from one
+    or several favorite schematics.
+    <p> <b>Inventory </b> &ndash; displays the best resource you have on stock for the
+      current resource class and weights. It also displays its total <b>amount</b>. </p>
+  </blockquote>
+  <p> <b>Resource class &amp; weights and best from Inventory
+    &mdash; Popup menu: </b> </p>
+  <blockquote> <b>Filter current </b> &ndash; filters the table of currently spawning resources
+    for the resource class of the displayed filter.
+    <p><b>Filter inventory </b> &ndash; filters and sorts the resource inventory for the
+      displayed filter, i.e. the displayed resource class and
+      experimental weights. </p>
+  </blockquote>
+  <br/>
+  <p> <b>Schematics: </b><br/>
+    Select an entry at the table of current resources and this
+    field displays a list of the schematics which are using the <i>Filter </i> that is displayed at the left-hand text field. </p>
+  <p> Select an entry at this list; if the menu option <i>Always
+    select </i> is enabled the schematic is selected at other
+    GUI panels as a convenience. This overrides but does not
+    modify possible filters that would hinder the display. </p>
+  <p> <b>Schematics &mdash; Popup menu: </b> </p>
+  <blockquote> <b>Select schematic</b> &ndash; use this option to select the current schematic at
+    other GUI panels as a convenience. This overrides but does
+    not modify possible filters that would hinder the display.
+    If <i>Always select </i> at the Options menu is enabled
+    there is no need to invoke this option. </blockquote>
+  <br/>
+  <br/>
 </blockquote>
 </body>
 </html>

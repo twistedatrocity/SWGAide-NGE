@@ -1,294 +1,175 @@
+<!doctype html>
 <html>
 <head>
-<title>Help: Submit Resources </title>
+<title>Help: Submit Resources</title>
+<style type="text/css">
+body { font-family:Arial, Helvetica, sans-serif; background:#FFFFFF; color:#000000; font-size:14pt; }
+html, body { height: 100%; padding: 0; }
+pre {font : 11px monaco; color : black; background-color : #fafafa; }
+li {margin-left:1em;} 
+</style>
+<meta charset="utf-8">
 </head>
 
-<body bgcolor="#ffffff">
-<blockquote>
-
-<p><font face="Arial" size="+1">
-<b>Help - Submit Resources </b>
-</font></p>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-This section of SWGAide presents you with a feature
-to easily submit a single resource, or to submit several
-resources in a semiautomated fashion which useful for the
-players who manually update SWGCraft.org with for example
-creature resources. No copy & paste, just a few mouse clicks
-plus editing an in-game notes file.
-</font></p>
-
-<p><font face="Arial" size="-1">
-With the feature for multi-submit you can write a set of
-resources to an in-game notes file named "rem.txt". Then, in
-game, you look them up with for example a 30k resource crate
-to see if there is any action required, see further down. The
-output <i>always includes </i> stat-less resources, no matter
-their age but possibly filtered on resource class or planet.
-</font></p>
-
-<br/>
-
-<blockquote>
-<font face="Arial" size="-1">
-<b>Mandatory resource classes </b>
-&mdash; these are resource classes that are always in spawn
-in SWG; each of these classes always has one and only one
-resource in spawn; they are: <br/>
-&ndash; all of Organic <br/>
-&ndash; all Fiberplast <br/>
-&ndash; all JTL<br/>
-Organic and Fiberplast are also planetary and SWGAide
-automatically selects the correct planet. When you submit
-mandatory resources to SWGCraft the older counterparts are
-automatically marked as unavailable. 
-</font>
-
-<p><font face="Arial" size="-1">
-For the resource class or planet that is filtered for,
-if mandatory resources are missing at SWGCraft.org they are
-always written to the notes file.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Summary: the resource-class/planet and the age filters
-allow you to focus on a small, manageable set of resources
-and only if you find that a resource is new, replaced, or 
-depleted you need take action.
-&mdash; This text is referred to later in this document.
-</font></p>
-</blockquote>
-
-<br/>
-
-<p><font face="Arial">
-<b>Single input / Edit </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-The upper panel has two distinct functions: <br/>
-1 &mdash; <b>submit</b> a single resource to SWGCraft.org
-<br/>
-2 &mdash; <b>edit</b> an entry that is selected at the list
-of multiple resources; assuming that you have loaded a notes
-file.
-</font></p>
-
-<p><font face="Arial" size="-1">
-The input fields for <b>planets</b> and for <b>resource
-class</b> support <b>abbreviated input</b> and the result
-is displayed just under the input fields.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Resource names</b> requires you to be careful, a spelling
-error will block a future submission to SWGCraft.org for that
-name ... until it is corrected by the moderators.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Stats</b> are optional, you can submit a resource without
-stats and complement the resource later on; it is better to
-submit without stats than not or several hours later. Type
-only the stats which are displayed in-game and in the same
-order as you read them. When a resource class is selected
-the expected stats are displayed under the input field.
-Errors are displayed in red above the input fields, usual
-errors are: values outside the caps for the resource class,
-too few or too many values, or input that is not a number.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Once resource data are entered and no error is displayed,
-click <b>Submit</b> to upload the single resource to
-SWGCraft.org; see a later paragraph on similar names.<br />
-If you rather are <u>editing</u> an entry that you selected
-at the list of multiple resources this button is named
-<b>Apply</b>.
-</font></p>
-
-<br/>
-
-<p><font face="Arial">
-<b>Multiple resources </b></font></p>
-
-<p><font face="Arial" size="-1">
-The center and bottom section of this panel are used for
-submitting a batch of several resources. For this feature
-you create an in-game notes file named "rem.txt" which you
-update in-game. First a walk-through:
-</font></p>
-
-<br/>
-
-<p><font face="Arial">
-<b>1 &mdash; Prepare the notes file </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-a &ndash; <b>Filter on</b> resource class, planet, or
-stat-less to narrow down the set of resources to handle.
-The stat-less filter writes all resources that are listed at
-SWGCraft.org without stats.
-</font></p>
-
-<p><font face="Arial" size="-1">
-b &ndash; <b>Limit on age</b> to narrow the set even more.
-Default age is 6 days which is the minimum lifetime for all
-resources in SWG, except that JTL resources are 13 days.
-Default is fine for all mandatory resources but for all other
-classes you may want to use 0 days to be able to see what is
-reported and what is not.
-</font></p>
-
-<p><font face="Arial" size="-1">
-c &ndash; <b>Write to "rem.txt"</b> for in-game editing. If
-the notes file is not empty a dialog displays with the options
-to Erase, Append, or Cancel. The option to Append makes it
-possible to apply one filter after the other and append to
-the file. Resources are written to the file in the same order
-as their resource classes are listed in the 30k resource
-crate to make it the easier to look them up.
-</font></p>
- 
-<br/>
-
-<p><font face="Arial">
-<b>2 &mdash; In-game, edit the notes file </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-This far you have a notes file that is named "rem.txt".
-The file contains current, missing, and so called stat-less
-resources; they have three different looks:</font>
+<body>
+<h1>Help - Submit Resources </h1>
+<br>
+<br>
+<p> This section of SWGAide presents you with a feature
+  to easily submit a single resource, or to submit several
+  resources in a semiautomated fashion which useful for the
+  players who manually update SWGCraft.org with for example
+  creature resources. No copy & paste, just a few mouse clicks
+  plus editing an in-game notes file. </p>
+<p> With the feature for multi-submit you can write a set of
+  resources to an in-game notes file named "rem.txt". Then, in
+  game, you look them up with for example a 30k resource crate
+  to see if there is any action required, see further down. The
+  output <i>always includes </i> stat-less resources, no matter
+  their age but possibly filtered on resource class or planet. </p>
+<br>
+<p><b>Mandatory resource classes </b> &mdash; these are resource classes that are always in spawn
+  in SWG; each of these classes always has one and only one
+  resource in spawn; they are: </p>
+<ul>
+  <li>all of Organic</li>
+  <li>all Fiberplast</li>
+  <li>all JTL</li>
+</ul>
+<p><br>
+  Organic and Fiberplast are also planetary and SWGAide
+  automatically selects the correct planet. When you submit
+  mandatory resources to SWGCraft the older counterparts are
+  automatically marked as unavailable. </p>
+<p> For the resource class or planet that is filtered for,
+  if mandatory resources are missing at SWGCraft.org they are
+  always written to the notes file. </p>
+<p> Summary: the resource-class/planet and the age filters
+  allow you to focus on a small, manageable set of resources
+  and only if you find that a resource is new, replaced, or 
+  depleted you need take action.
+  &mdash; This text is referred to later in this document. </p>
+<br>
+<h2>Single input / Edit</h2>
+<p> The upper panel has two distinct functions: <br>
+  1 &mdash; <b>submit</b> a single resource to SWGCraft.org <br>
+  2 &mdash; <b>edit</b> an entry that is selected at the list
+  of multiple resources; assuming that you have loaded a notes
+  file. </p>
+<p> The input fields for <b>planets</b> and for <b>resource
+  class</b> support <b>abbreviated input</b> and the result
+  is displayed just under the input fields. </p>
+<p> <b>Resource names</b> requires you to be careful, a spelling
+  error will block a future submission to SWGCraft.org for that
+  name ... until it is corrected by the moderators. </p>
+<p> <b>Stats</b> are optional, you can submit a resource without
+  stats and complement the resource later on; it is better to
+  submit without stats than not or several hours later. Type
+  only the stats which are displayed in-game and in the same
+  order as you read them. When a resource class is selected
+  the expected stats are displayed under the input field.
+  Errors are displayed in red above the input fields, usual
+  errors are: values outside the caps for the resource class,
+  too few or too many values, or input that is not a number. </p>
+<p> Once resource data are entered and no error is displayed,
+  click <b>Submit</b> to upload the single resource to
+  SWGCraft.org; see a later paragraph on similar names.<br>
+  If you rather are <u>editing</u> an entry that you selected
+  at the list of multiple resources this button is named <b>Apply</b>. </p>
+<br>
+<h2> <b>Multiple resources </b></h2>
+<p> The center and bottom section of this panel are used for
+  submitting a batch of several resources. For this feature
+  you create an in-game notes file named "rem.txt" which you
+  update in-game. First a walk-through: </p>
+<br>
+<p> <b>1 &mdash; Prepare the notes file </b> </p>
+<p> a &ndash; <b>Filter on</b> resource class, planet, or
+  stat-less to narrow down the set of resources to handle.
+  The stat-less filter writes all resources that are listed at
+  SWGCraft.org without stats. </p>
+<p> b &ndash; <b>Limit on age</b> to narrow the set even more.
+  Default age is 6 days which is the minimum lifetime for all
+  resources in SWG, except that JTL resources are 13 days.
+  Default is fine for all mandatory resources but for all other
+  classes you may want to use 0 days to be able to see what is
+  reported and what is not. </p>
+<p> c &ndash; <b>Write to "rem.txt"</b> for in-game editing. If
+  the notes file is not empty a dialog displays with the options
+  to Erase, Append, or Cancel. The option to Append makes it
+  possible to apply one filter after the other and append to
+  the file. Resources are written to the file in the same order
+  as their resource classes are listed in the 30k resource
+  crate to make it the easier to look them up. </p>
+<br>
+<p> <b>2 &mdash; In-game, edit the notes file </b> </p>
+<p> This far you have a notes file that is named "rem.txt".
+  The file contains current, missing, and so called stat-less
+  resources; they have three different looks:
 <pre>
      Resourcename , Resource Class, (age, nbr of days)
      Resourcename , Resource Class, add-stats
       , Resource Class, 
 </pre>
 </p>
-
-<p><font face="Arial" size="-1">
-&mdash; the first look is for current resources and it reads
-their age; find out if they are replaced <br />
-&mdash; the second look is for resources which are reported
-without stats; add stats if you can <br/> 
-&mdash; the third look is for mandatory resources where none
-is listed at SWGCraft; add the resource if you can
-</font></p>
-
-<p><font face="Arial" size="-1">
-a &mdash; <b>Open</b> the notes file with the command
-</font><font color="blue"><tt>/notes rem
-</tt></font><font face="Arial" size="-1">&mdash;
-notice that you must not type the file suffix ".txt",
-otherwise you creates a file named "rem.txt.txt".
-The header of the notes file reads today's date and a brief
-help text, do not edit this header.
-These are the possible actions:
-</font></p>
-
-<p><font face="Arial" size="-1">
-b &mdash; <b>Verify</b> that the header of the notes file
-reads today's date. If you need it also reads a brief help
-text. Do not edit this header.
-</font></p>
-
-<p><font face="Arial" size="-1">
-c &mdash; <b>Edit</b> the notes file; while looking up the
-resources you will find that these are the possible actions
-(lookup is easiest via a 30k resource crate):
-</font></p>
-
-<blockquote>
+<p> &mdash; the first look is for current resources and it reads
+  their age; find out if they are replaced <br>
+  &mdash; the second look is for resources which are reported
+  without stats; add stats if you can <br>
+  &mdash; the third look is for mandatory resources where none
+  is listed at SWGCraft; add the resource if you can </p>
+<p> a &mdash; <b>Open</b> the notes file with the command <tt>/notes rem </tt>&mdash;
+  notice that you must not type the file suffix ".txt",
+  otherwise you creates a file named "rem.txt.txt".
+  The header of the notes file reads today's date and a brief
+  help text, do not edit this header.
+  These are the possible actions: </p>
+<p> b &mdash; <b>Verify</b> that the header of the notes file
+  reads today's date. If you need it also reads a brief help
+  text. Do not edit this header. </p>
+<p> c &mdash; <b>Edit</b> the notes file; while looking up the
+  resources you will find that these are the possible actions
+  (lookup is easiest via a 30k resource crate): </p>
 <dl>
-<dt><font face="Arial" size="-1">
-<b>Unchanged resources</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-no action required, leave them as-is, SWGAide ignores these
-&mdash; this is the most common case
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Replaced resources</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-replace the name and add stats but leave the resource class
-&mdash; <i>only mandatory resource classes are replaced</i>,
-all other classes are either new or depleted
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Missing resource classes</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-add name and add stats but leave the resource class
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>New resources</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-at a new line you add name, resource class, and stats
-&mdash; the format is <br/>
-<tt>planet1, planet2, name, resource class, stats </tt>
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Depleted resources</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-type<tt> "depl," </tt>just before the resource name,
-without quotes &mdash; for mandatory resources, see above
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Stat-less resources</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-replace "add-stats" with the stats
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Rectify resource stats</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-erase the age and add the stats; leave resource name and
-class as-is 
-</font></dd>
-<dt><font face="Arial" size="-1">
-<b>Rectify resource name</b>
-</font></dt>
-<dd><font face="Arial" size="-1">
-specify the correct name together with the old name
-&mdash; the format is (notice the two = signs)<br/>
-=<tt>oldname</tt>=<tt>correctname</tt><br/>
-If the difference in names is to large SWGAide ignores the
-suggested name, you must correct this at SWGCraft.org.
-</font></dd>
+  <dt> <b>Unchanged resources</b> </dt>
+  <dd> no action required, leave them as-is, SWGAide ignores these
+    &mdash; this is the most common case </dd>
+  <dt> <b>Replaced resources</b> </dt>
+  <dd> replace the name and add stats but leave the resource class
+    &mdash; <i>only mandatory resource classes are replaced</i>,
+    all other classes are either new or depleted </dd>
+  <dt> <b>Missing resource classes</b> </dt>
+  <dd> add name and add stats but leave the resource class </dd>
+  <dt> <b>New resources</b> </dt>
+  <dd> at a new line you add name, resource class, and stats
+    &mdash; the format is <br>
+    <tt>planet1, planet2, name, resource class, stats </tt> </dd>
+  <dt> <b>Depleted resources</b> </dt>
+  <dd> type<tt> "depl," </tt>just before the resource name,
+    without quotes &mdash; for mandatory resources, see above </dd>
+  <dt> <b>Stat-less resources</b> </dt>
+  <dd> replace "add-stats" with the stats </dd>
+  <dt> <b>Rectify resource stats</b> </dt>
+  <dd> erase the age and add the stats; leave resource name and
+    class as-is </dd>
+  <dt> <b>Rectify resource name</b> </dt>
+  <dd> specify the correct name together with the old name
+    &mdash; the format is (notice the two = signs)<br>
+    =<tt>oldname</tt>=<tt>correctname</tt><br>
+    If the difference in names is to large SWGAide ignores the
+    suggested name, you must correct this at SWGCraft.org. </dd>
 </dl>
-
-<p><font face="Arial" size="-1">
-For your convenience SWGAide supports the delimiters<tt>
-" .,:;" </tt>(quotes excluded) but between name and resource
- class you <b><i>must use </i></b> a comma sign.
-</font></p>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-d &mdash; <b>Close</b> the in-game notes editor so that the
-file is saved to disk. If you leave the editor open and read
-or edit it outside SWG the outcome is undefined and the data
-is lost or corrupt.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Remember that SWGAide supports abbreviated input for planet
-names and resource classes, that planets of planetary resources
-are automatically handled, and that resource names are properly
-capitalized by SWGAide.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Examples</b> of valid input lines:</font
+<p> For your convenience SWGAide supports the delimiters<tt> " .,:;" </tt>(quotes excluded) but between name and resource
+  class you <b><i>must use </i></b> a comma sign. </p>
+<p> d &mdash; <b>Close</b> the in-game notes editor so that the
+  file is saved to disk. If you leave the editor open and read
+  or edit it outside SWG the outcome is undefined and the data
+  is lost or corrupt. </p>
+<p> Remember that SWGAide supports abbreviated input for planet
+  names and resource classes, that planets of planetary resources
+  are automatically handled, and that resource names are properly
+  capitalized by SWGAide. </p>
+<p> <b>Examples</b> of valid input lines:
 <pre>
     Corellia Rori Yavin, Amaraz, Lubricating Oil, 789 963
     c, r, y, amaraz, lu oil, 789 963
@@ -298,8 +179,6 @@ capitalized by SWGAide.
     depl, restinpeace
 </pre>
 </p>
-
-<font face="Arial" size="-1">
 The first two entries equal each other in spite of the
 abbreviations of the second. The third entry is a Dathomir
 Water Vapor which is planetary, hence the planet may be
@@ -307,225 +186,137 @@ omitted; notice that upper or lower case is corrected by
 SWGAide. The last entries are for a depleted resource, the
 word "depl, " is prepended to the entry and anything after
 the resource name is ignored; tips: if possible, re-use the
-resource class for a new resource.  
-</font></p>
-
-<br/><br/>
-
-<p><font face="Arial">
-<b>3 &mdash; Back in SWGAide, load notes file  </b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-By now you have updated some resources of the notes file
-and you want to submit them to SWGCraft.org.
-</font></p>
-
-<p><font face="Arial" size="-1">
-a &mdash; <b>Load from "rem.txt"</b> to populate the main
-panel with the added and edited resources. All unchanged
-resources are ignored and are not displayed.
-</font></p>
-
-<p><font face="Arial" size="-1">
-b &mdash; <b>Verify</b> the entries for correctness; these
-are the colors that are used at this panel:
-</font></p>
-
-<blockquote>
-<table border=0 cellspacing=2 cellpadding=3 bgcolor="silver">
-<tr>
-<td bgcolor="White"><font face="Arial" size="-1">
-White 
-</font></td>
-<td bgcolor="White"><font face="Arial" size="-1">
-Valid resource data 
-</font></td></tr>
-<tr>
-<td bgcolor="#ffdfdf"><font face="Arial" size="-1">
-Red 
-</font></td>
-<td bgcolor="#ffdfdf"><font face="Arial" size="-1">
-An error, displayed as-is
-</font></td></tr>
-<tr>
-<td bgcolor="#ffffbf"><font face="Arial" size="-1">
-Yellow 
-</font></td>
-<td bgcolor="#ffffbf"><font face="Arial" size="-1">
-No stats (stats are optional) 
-</font></td></tr>
-<tr>
-<td bgcolor="#bfbfff"><font face="Arial" size="-1">
-Blue 
-</font></td>
-<td bgcolor="#bfbfff"><font face="Arial" size="-1">
-Depleted 
-</font></td></tr>
+resource class for a new resource.
+</p>
+<br>
+<br>
+<p> <b>3 &mdash; Back in SWGAide, load notes file </b> </p>
+<p> By now you have updated some resources of the notes file
+  and you want to submit them to SWGCraft.org. </p>
+<p> a &mdash; <b>Load from "rem.txt"</b> to populate the main
+  panel with the added and edited resources. All unchanged
+  resources are ignored and are not displayed. </p>
+<p> b &mdash; <b>Verify</b> the entries for correctness; these
+  are the colors that are used at this panel: </p>
+<table border="0" cellspacing="2" cellpadding="3" bgcolor="silver">
+  <tr>
+    <td bgcolor="White"> White </td>
+    <td bgcolor="White"> Valid resource data </td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffdfdf"> Red </td>
+    <td bgcolor="#ffdfdf"> An error, displayed as-is </td>
+  </tr>
+  <tr>
+    <td bgcolor="#ffffbf"> Yellow </td>
+    <td bgcolor="#ffffbf"> No stats (stats are optional) </td>
+  </tr>
+  <tr>
+    <td bgcolor="#bfbfff"> Blue </td>
+    <td bgcolor="#bfbfff"> Depleted </td>
+  </tr>
 </table>
-</blockquote>
-
-<p><font face="Arial" size="-1">
-c &mdash; <b>Edit</b> any entry; just click the line to
-select it and its content populates the fields at the upper
-panel. Edit the content until it is correct, then click <b>
-Apply</b>, the secondary form of the upper submit button.
-</font></p>
-
-<p><font face="Arial" size="-1">
-d &mdash; <b>To delete</b> an entry (optional) you select a
-line and right click it, at the popup dialog you select the
-option to delete the entry. Editing or deleting an entry
-<i>does not </i> affect the notes file but just the display
-and what is submitted to SWGCraft.org, or not. To undo the
-edits, just load the notes file again.
-</font></p>
-
-<p><font face="Arial" size="-1">
-e &mdash; <b>Reload</b> the notes file to undo any edits or
-deletions you may have done. Nothing of the above modifies
-the in-game notes file, hence, press the load-button to load
-it once again. This also makes it possible to again edit the
-notes file in-game, for example to add or correct something.
-</font></p>
-
-<p><font face="Arial" size="-1">
-f &mdash; <b>Submit</b> all resources by clicking the
-Submit button at the lower, right-hand side. The process is
-displayed at SWGAide's status bar and when the entries at
-the list turns gray; see a later paragraph on similar names.
-</font></p>
-
-<p><font face="Arial" size="-1">
-g &mdash; <b>Verify</b> at SWGCraft.org that the submission
-was a success.
-</font></p>
-
-<br/><br/>
-
-<blockquote><font face="Arial" size="-1">
+<p> c &mdash; <b>Edit</b> any entry; just click the line to
+  select it and its content populates the fields at the upper
+  panel. Edit the content until it is correct, then click <b> Apply</b>, the secondary form of the upper submit button. </p>
+<p> d &mdash; <b>To delete</b> an entry (optional) you select a
+  line and right click it, at the popup dialog you select the
+  option to delete the entry. Editing or deleting an entry <i>does not </i> affect the notes file but just the display
+  and what is submitted to SWGCraft.org, or not. To undo the
+  edits, just load the notes file again. </p>
+<p> e &mdash; <b>Reload</b> the notes file to undo any edits or
+  deletions you may have done. Nothing of the above modifies
+  the in-game notes file, hence, press the load-button to load
+  it once again. This also makes it possible to again edit the
+  notes file in-game, for example to add or correct something. </p>
+<p> f &mdash; <b>Submit</b> all resources by clicking the
+  Submit button at the lower, right-hand side. The process is
+  displayed at SWGAide's status bar and when the entries at
+  the list turns gray; see a later paragraph on similar names. </p>
+<p> g &mdash; <b>Verify</b> at SWGCraft.org that the submission
+  was a success. </p>
+<br>
+<br>
 <b>Similar resource names &mdash; Dialog</b>
-</font></p>
-
-<p><font face="Arial" size="-1">
-To avoid that you submit resources that double those that
-already are listed at SWGCraft.org SWGAide determines how
-similar the names of your resources are with all other
-resources. Equal names are already handled but a spelling
-error is so easily done, either by you or another player.
-If such names are found SWGAide displays a dialog with some
-options.
-</font></p>
-
-<p><font face="Arial" size="-1">
-If a resource is similar to many other resources you see a
-<b>cluster</b> of your resource and those it mimics. Then
-<i>review all </i> alerts in that cluster before you decide
-how to proceed. 
-</font></p>
-
-<p><font face="Arial" size="-1">
-Both single and clustered resources have two buttons per
-entry, to send your resource or send a name correction, and
-you can of course decide to do nothing.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Submit new</b>
-&mdash; press this button to send your resource as is;
-this is when when SWGAide displays a false alert, your
-resource and the other resource are not the same ... see
-below. If your resource is in a cluster, review all alerts
-before you decide how to proceed.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>Submit name</b>
-&mdash; press this button to edit the name of the older
-resource to the name of your resource; this is when the
-older resource is correct except for its name - both your
-and the older resource must be identical except for the
-names. If the opposite is true, your resource is wrong and
-the existing is correct, do nothing. If your resource is in
-a cluster, review all alerts before you decide how to
-proceed.
-</font></p>
-
-<p><font face="Arial" size="-1">
-Other error types are not handled by this dialog. To edit
-the stats of a resource you just send it with the correct
-values and this dialog is never used (assuming that the
-name is correct).
-If the resource class is in error, currently SWGAide does
-not support this edit but you must visit SWGCraft.
-If planets are in error, this must always be reported at
-the resource forum at SWGCraft.
-</font></p>
-
-<p><font face="Arial" size="-1">
-<b>False alarms</b>
-&mdash; the algorithm to determine if names are similar
-is called the Levenshtein distance; it is quite simple and
-measures how many edits it takes to change one name to the
-other, the edits being replace, add, or erase. Thus, it is
-a fair risk for false alarms every now and then, certainly
-so for the shorter names. Should SWGAide really test name
-similarities also against other resource classes?
-Maybe, maybe not; please report your experience so that we
-can improve the logic.
-</font></p>
-</blockquote>
-
-<br/><br/>
-
-<p><font face="Arial" size="-1">
-<b>Tips: </b><br/>
-Use the <b>30k resource deed</b> which is a 6 months veteran
-reward. Per resource class the most recent resource is listed
-bottommost, which makes it easy to determine if it is a new
-name or not (rarely the crate displays the name topmost, but
-just for the session; a bug of some kind). Select a resource
-and the crate reads its stats at the next screen. After this
-screen it comes a confirmation screen, hence, those scary
-moments of the past, while reading the stats, are history.
-</font></p>
-
-<p><font face="Arial" size="-1">
-The resources are written to the in-game notes file in the
-same order as resource classes are listed in the 30k deed,
-credits to Rommel. This makes it most convenient to lookup
-resources while walking through the notes file.
-</font></p>
-
-<br/>
-
-<p><font face="Arial">
-<b>Misc: </b></font></p>
-
-<p><font face="Arial" size="-1">
-a &mdash; 
-This panel supports a black-list for resource classes you
-never want to manage. In the folder <SWGAide>\misc you create
-a file which must be named "submit_blacklist.txt". Specify
-resource classes, each at a line by itself, for example:
-</font>
+</p>
+<p> To avoid that you submit resources that double those that
+  already are listed at SWGCraft.org SWGAide determines how
+  similar the names of your resources are with all other
+  resources. Equal names are already handled but a spelling
+  error is so easily done, either by you or another player.
+  If such names are found SWGAide displays a dialog with some
+  options. </p>
+<p> If a resource is similar to many other resources you see a <b>cluster</b> of your resource and those it mimics. Then <i>review all </i> alerts in that cluster before you decide
+  how to proceed. </p>
+<p> Both single and clustered resources have two buttons per
+  entry, to send your resource or send a name correction, and
+  you can of course decide to do nothing. </p>
+<p> <b>Submit new</b> &mdash; press this button to send your resource as is;
+  this is when when SWGAide displays a false alert, your
+  resource and the other resource are not the same ... see
+  below. If your resource is in a cluster, review all alerts
+  before you decide how to proceed. </p>
+<p> <b>Submit name</b> &mdash; press this button to edit the name of the older
+  resource to the name of your resource; this is when the
+  older resource is correct except for its name - both your
+  and the older resource must be identical except for the
+  names. If the opposite is true, your resource is wrong and
+  the existing is correct, do nothing. If your resource is in
+  a cluster, review all alerts before you decide how to
+  proceed. </p>
+<p> Other error types are not handled by this dialog. To edit
+  the stats of a resource you just send it with the correct
+  values and this dialog is never used (assuming that the
+  name is correct).
+  If the resource class is in error, currently SWGAide does
+  not support this edit but you must visit SWGCraft.
+  If planets are in error, this must always be reported at
+  the resource forum at SWGCraft. </p>
+<p> <b>False alarms</b> &mdash; the algorithm to determine if names are similar
+  is called the Levenshtein distance; it is quite simple and
+  measures how many edits it takes to change one name to the
+  other, the edits being replace, add, or erase. Thus, it is
+  a fair risk for false alarms every now and then, certainly
+  so for the shorter names. Should SWGAide really test name
+  similarities also against other resource classes?
+  Maybe, maybe not; please report your experience so that we
+  can improve the logic. </p>
+<br>
+<br>
+<p> <b>Tips: </b><br>
+  Use the <b>30k resource deed</b> which is a 6 months veteran
+  reward. Per resource class the most recent resource is listed
+  bottommost, which makes it easy to determine if it is a new
+  name or not (rarely the crate displays the name topmost, but
+  just for the session; a bug of some kind). Select a resource
+  and the crate reads its stats at the next screen. After this
+  screen it comes a confirmation screen, hence, those scary
+  moments of the past, while reading the stats, are history. </p>
+<p> The resources are written to the in-game notes file in the
+  same order as resource classes are listed in the 30k deed,
+  credits to Rommel. This makes it most convenient to lookup
+  resources while walking through the notes file. </p>
+<br>
+<p> <b>Misc: </b></p>
+<p> a &mdash; 
+  This panel supports a black-list for resource classes you
+  never want to manage. In the folder
+  <SWGAide>
+  \misc you create
+  a file which must be named "submit_blacklist.txt". Specify
+  resource classes, each at a line by itself, for example:
 <pre>
     Seafood
     Horn
     Egg
 </pre>
 </p>
-
-<p><font face="Arial" size="-1">
-b &mdash;
-Another option; if you want to manage resources which are
-not possible to harvest naturally then right click the main
-panel and select "Allow non-harvestable". These resources
-can only be obtained by popping a 30k resource crate.
-</font></p>
-
-<br/>
-
+<p> b &mdash;
+  Another option; if you want to manage resources which are
+  not possible to harvest naturally then right click the main
+  panel and select "Allow non-harvestable". These resources
+  can only be obtained by popping a 30k resource crate. </p>
+<br>
 </blockquote>
 </body>
 </html>
