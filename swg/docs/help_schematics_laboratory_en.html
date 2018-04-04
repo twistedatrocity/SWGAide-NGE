@@ -199,6 +199,17 @@ li {margin-left:1em;}
       At this section SWGAide always uses the "<i>rule of
       thumb</i>"; any resource that lacks one or or more of the
       required stats but yet have a good enough rating is listed. </p>
+    <p>The resource stats used for the exp group are shown in bold text.</p>
+    <p>Rate calculation uses the stats needed for the exp group, taking into account resource caps, schematic weights and then sums them up for a rating.</p>
+    <pre>(stat / stat_cap * 1000) * (weight / 100)</pre>
+    <p>For example lets assume a schematic calls for Ostrine Carbonate Ore with requirement for OQ/SR at 66/33. The resource we have has stats of OQ=949 and SR=418</p>
+    <pre>First we get the adjusted stats based on caps:
+66 / 100 = .6666666666 # adjusted OQ weight snipped for brevity
+(949 / 1000 * 1000) * .6666666666  = 632.6666666 #  ostrine OQ caps at 1000
+33 / 100 = .3333333333 # adjusted SR weight snipped for brevity
+(418 / 551 * 1000) * .3333333333 = 252.87356319 # ostrine SR caps at 551
+Next we simply add up the results to get rating:
+632.66666666 + 252.87356319 = 885.54</pre>
     <p> For <b>low quality</b> schematics the "rate" is an <i>average
       quality </i> per resource, computed over all non-zero values,
       each value relative the cap for its own resource class, not
