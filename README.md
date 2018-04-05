@@ -24,6 +24,9 @@ explanatory.
 
 Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use separate installation folders.
 
+Upgrades
+========
+
 For updates all you need to do is download a new copy of the exe replacing the old one.
 
 
