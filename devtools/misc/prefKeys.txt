@@ -45,6 +45,7 @@ mainTabHiddenNodesUpdated   String          # a version string, recent update
 
 currentlySelectedCharacter  SWGCharacter
 
+fontSizeParam				String			# font size parameter used in multiplier for font size settings
 mailBodyFontSize            Integer
 mailClientDividerLocation   Integer
 mailClientDividerLocationUp Integer

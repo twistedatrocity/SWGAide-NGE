@@ -53,7 +53,6 @@ import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
 import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.resources.SWGResource;
@@ -762,8 +761,10 @@ public class SWGFrame extends JFrame implements ComponentListener,
             ? screen.height
             : 800;
         Dimension dim = new Dimension(w, h);
-        dim = (Dimension) getPrefsKeeper().get("frameDimension", dim);
-        setSize(dim);
+        dim = (Dimension) getPrefsKeeper().add("frameDimension", dim);
+        Dimension md = new Dimension(1280,800);
+        this.setMinimumSize(md);
+        this.setSize(dim);
 
         // compute location mid screen
         w = (screen.width - dim.width) >> 1;
