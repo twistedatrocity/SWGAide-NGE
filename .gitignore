@@ -16,3 +16,15 @@
 /bin/
 SWGAide-NGE.jar
 SWGAide-NGE.exe
+META-INF/
+javax/
+SWGAide.OLDAT
+*.DAT
+SWGAide.INI
+SWGAide.INI
+SWGAide.INI
+/nbproject/
+/build/
+build.xml
+contents2.txt
+contents.txt
