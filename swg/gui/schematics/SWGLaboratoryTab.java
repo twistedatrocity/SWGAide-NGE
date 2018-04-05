@@ -69,6 +69,7 @@ import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 import swg.gui.common.SWGGui;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.common.SWGJDialog;
 import swg.gui.common.SWGJTable;
 import swg.gui.common.SWGListCellRenderer;
 import swg.gui.common.SWGListModel;
@@ -205,6 +206,19 @@ final class SWGLaboratoryTab extends JPanel {
             popup.add(makeMenuFilterAll());
 
             popup.show(assigneeCombo, e.getX(), e.getY());
+        }
+    }
+    
+    /**
+     * Called when the user mouse clicks the manage assignee button. This method,
+     * if it is a left-click it displays a popup menu.
+     * 
+     * @param e the action that triggers the call
+     */
+    private void actionAssigneeButton(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+        	SWGJDialog ad = schemTab.assigneeDialog();
+            ad.setVisible(true);
         }
     }
 
@@ -796,8 +810,11 @@ final class SWGLaboratoryTab extends JPanel {
         JPanel bp = new JPanel(new SpringLayout()) {
             @Override
             public Dimension getPreferredSize() {
-                Dimension d = super.getPreferredSize();
-                d.height = schemTab.getHeight() >> 2;
+            	Dimension d = super.getPreferredSize();
+                int h = d.height / 5;
+                d.height = h > 220
+                        ? h
+                        : 220;
                 return d;
             }
         };
@@ -975,7 +992,7 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private Component makeNWAssigneeChooser() {
         assigneeCombo = new JComboBox<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
-        assigneeCombo.setToolTipText("Select assignee for favorite schematics");
+        assigneeCombo.setToolTipText("Select assignee for favorite schematics. Right click for more options");
         assigneeCombo.setRenderer(new SWGListCellRenderer<SWGGui>() {
 
             @Override
@@ -1017,7 +1034,29 @@ final class SWGLaboratoryTab extends JPanel {
             }
         };
         vb.add(assigneeCombo);
-        return vb;
+
+        JButton mb = new JButton("Manage");
+        mb.setToolTipText("Manage Assignees");
+        mb.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                actionAssigneeButton(e);
+            }
+        });
+        vb.add(mb);
+        Box hb = Box.createHorizontalBox();
+        hb.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+                " Assignees "));
+        hb.add(vb);
+        hb.add(Box.createHorizontalStrut(3));
+        hb.add(mb);
+
+        Box bp = Box.createVerticalBox();
+        bp.add(hb);
+        bp.add(Box.createVerticalStrut(15));
+        return hb;
     }
 
     /**
@@ -1056,7 +1095,12 @@ final class SWGLaboratoryTab extends JPanel {
             }
         });
         JScrollPane jsp = new JScrollPane(schematicList);
-        return jsp;
+        Box hb = Box.createHorizontalBox();
+        hb.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+                " Schematics "));
+        hb.add(jsp);
+        return hb;
     }
 
     /**
