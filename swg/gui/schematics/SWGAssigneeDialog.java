@@ -357,6 +357,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             }
         });
 
+        Box nest = Box.createVerticalBox();
         Box vb = Box.createVerticalBox();
         vb.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
@@ -367,9 +368,15 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED));
 
         vb.add(Box.createVerticalStrut(3));
-        vb.add(assigneeDefine);
+        Box vvb = Box.createVerticalBox();
+        vvb.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+                " Create New Assignee "));
+        vvb.add(assigneeDefine);
+        nest.add(vb);
+        nest.add(vvb);
 
-        return vb;
+        return nest;
     }
 
     /**
@@ -526,7 +533,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * {@link #makeEast()}.
      */
     private void makeInterior() {
-        super.setMinimumSize(new Dimension(550, 200));
+        super.setMinimumSize(new Dimension(800, 400));
 
         JPanel hp = new JPanel(new BorderLayout());
 
