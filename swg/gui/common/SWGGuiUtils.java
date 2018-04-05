@@ -366,7 +366,12 @@ public final class SWGGuiUtils {
      *         specified default color
      */
     private static Color statColor(String pref, Color defaultColor) {
-        return (Color) SWGFrame.getPrefsKeeper().get(pref, defaultColor);
+    	Color def = (Color) SWGFrame.getPrefsKeeper().get(pref, defaultColor);
+    	if (def == null) {
+    		def = (Color) defaultColor;
+    		SWGFrame.getPrefsKeeper().add(pref, defaultColor);
+    	}
+    	return def;
     }
 
     /**
@@ -379,15 +384,15 @@ public final class SWGGuiUtils {
      */
     public static void statColorLimitSet() {
         statLimits[0] = statLimit("resourceLimitFair", 800);
-        statColors[0] = statColor("resourceColorFair", new Color(221, 225, 204));
+        statColors[0] = statColor("resourceColorFair", new Color(213, 224, 166));
         statColors[1] = statColor("resourceColorFairText", Color.BLACK);
 
         statLimits[1] = statLimit("resourceLimitGood", 900);
-        statColors[2] = statColor("resourceColorGood", new Color(255, 255, 204));
+        statColors[2] = statColor("resourceColorGood", new Color(255, 255, 121));
         statColors[3] = statColor("resourceColorGoodText", Color.BLACK);
 
         statLimits[2] = statLimit("resourceLimitGreat", 960);
-        statColors[4] = statColor("resourceColorGreat", new Color(255, 221, 221));
+        statColors[4] = statColor("resourceColorGreat", new Color(255, 185, 185));
         statColors[5] = statColor("resourceColorGreatText", Color.BLACK);
     }
 
