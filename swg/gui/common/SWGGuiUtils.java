@@ -9,6 +9,7 @@ import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -16,10 +17,12 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -161,8 +164,29 @@ public final class SWGGuiUtils {
      * 
      * @param frame the frame for this application
      */
-    public SWGGuiUtils(SWGFrame frame) {
-        Font f = new JLabel().getFont();
+    @SuppressWarnings({ "rawtypes", "unused" })
+	public SWGGuiUtils(SWGFrame frame) {
+    	String fontSizeParam = getFontSizeParam();
+        if (fontSizeParam != null) {
+            float multiplier = Integer.parseInt(fontSizeParam) / 100.0f;
+            UIDefaults defaults = UIManager.getDefaults();
+            int i = 0;
+            for (Enumeration e = defaults.keys(); e.hasMoreElements(); i++) {
+                Object key = e.nextElement();
+                Object value = defaults.get(key);
+                if (value instanceof Font) {
+                    Font font = (Font) value;
+                    int newSize = Math.round(font.getSize() * multiplier);
+                    if (value instanceof FontUIResource) {
+                        defaults.put(key, new FontUIResource(font.getName(), font.getStyle(), newSize));
+                    } else {
+                        defaults.put(key, new Font(font.getName(), font.getStyle(), newSize));
+                    }
+                }
+            }
+        }
+    	
+        Font f = new JTable().getFont();
         fontBold = new Font(f.getName(), Font.BOLD, f.getSize());
         fontItalic = new Font(f.getName(), Font.ITALIC, f.getSize());
         fontPlain = new Font(f.getName(), Font.PLAIN, f.getSize());
@@ -327,7 +351,121 @@ public final class SWGGuiUtils {
         FontMetrics fm = comp.getFontMetrics(font);
         return fm.stringWidth(text);
     }
+    
+    /**
+     * Computes and returns the font height for specified font.
+     * 
+     * @param comp
+     * @param font
+     * @return a height
+     * @author Mr-Miagi
+     */
+    public static int fontHeight(Component comp, Font font) {
+    	FontMetrics fm = comp.getFontMetrics(font);
+    	return fm.getHeight();
+    }
 
+    /**
+     * Computes padding based on font height.
+     * 
+     * @param h height
+     * @return padding integer
+     * @author Mr-Miagi
+     */
+    private static int fontHeightPadding (int h) {
+    	int p = 1;
+    	if (h <= 18) {
+    		p = 2;
+    	} else if (h <= 20) {
+    		p = 4;
+    	} else if (h > 20) {
+    		p = 6;
+    	}
+    	int t = h + p;
+    	return t;
+    }
+    
+    /**
+     * Sets Row Height for supplied JTable using both
+     * {@link #fontHeight(Component, Font)} and {@link #fontHeightPadding(int)}
+     * 
+     * @param comp
+     * @author Mr-Miagi
+     */
+    public static void setRowHeight (JTable comp) {
+    	comp.setRowHeight( fontHeightPadding( fontHeight(comp, comp.getFont()) ) );
+    }
+    
+    /**
+     * Computes height and for font and returns height to use.
+     * 
+     * @param comp Component
+     * @return int height with padding
+     * @author Mr-Miagi
+     */
+    public static int getRowHeight (Component comp) {
+    	return fontHeightPadding( fontHeight(comp, comp.getFont()) ) ;
+    }
+    
+    /**
+     * Computes dimension using font.
+     * The button should already contain text before calling this.
+     * 
+     * @param comp JButton
+     * @return Dimension
+     * @author Mr-Miagi
+     */
+    public static void setButtonDim (JButton comp, int minwidth) {
+    	int h = fontHeightPadding( fontHeight(comp, comp.getFont()) );
+    	int fw = fontWidth(comp, comp.getText(), comp.getFont());
+    	int w = Math.max(fw+h+18, minwidth);
+    	Dimension dm = new Dimension(w, h);
+    	comp.setMinimumSize(dm);
+        comp.setPreferredSize(dm);
+    }
+    
+    /**
+     * Computes dimension based on font and supplied text
+     * 
+     * @param comp
+     * @param text
+     * @param minwidth
+     */
+    public static void setDim (Component comp, String text, int minwidth, int minheight, boolean max) {
+   		int h = fontHeightPadding( fontHeight(comp, comp.getFont()) );
+    	int fw = fontWidth(comp, text, comp.getFont());
+    	int w = Math.max(fw+h+18, minwidth);
+    	h = Math.max(h, minheight);
+    	Dimension dm = new Dimension(w, h);
+    	comp.setMinimumSize(dm);
+    	if(max) {
+    		comp.setMaximumSize(dm);
+    	}
+        comp.setPreferredSize(dm);
+    }
+    
+    /** TODO finish this so it writes default value back to prefs after font option panel is done being written.
+     * Gets fontSizeParam from prefs or sets default to 100 if null.
+     * 
+     * @return fontSizeParam
+     */
+    public static String getFontSizeParam () {
+    	String fp = (String) SWGFrame.getPrefsKeeper().get("fontSizeParam");
+    	if (fp == null) {
+    		fp = "130";
+    	}
+    	return fp;
+    }
+    
+    /**
+     * Simple method to return a multiplier from {@link #fontSizeParam}
+     * 
+     * @return multiplier
+     */
+    public static float fontMultiplier () {
+    	float multiplier = Integer.parseInt(getFontSizeParam()) / 100.0f;
+    	return multiplier;
+    }
     /**
      * Creates and returns a button with the specified image and tool tip. If
      * the image does not exist the returned button read the alternative text.
