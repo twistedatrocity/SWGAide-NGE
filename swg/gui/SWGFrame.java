@@ -1793,6 +1793,17 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 doExit();
         	}
         	// XXX End of Inventory Map conversion. ^^
+        	/*
+        	 * Begin update for stat colors. This just nukes the stored pref for colors
+        	 * so the new defaults will show. Color picker never worked before this update
+        	 * so all should be fine.
+        	 */
+        	// checks if version in dat file older than or equal to 0.1.10
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 10 ) {
+        		SWGFrame.getPrefsKeeper().remove("resourceColorFair");
+        		SWGFrame.getPrefsKeeper().remove("resourceColorGood");
+        		SWGFrame.getPrefsKeeper().remove("resourceColorGreat");
+        	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
