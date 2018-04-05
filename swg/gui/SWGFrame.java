@@ -71,7 +71,6 @@ import swg.model.SWGUniverse;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftOptionsPanel;
 import swg.swgcraft.SWGResourceManager;
-import swg.tools.ColorChooser;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.ZHtml;
 import swg.tools.ZWriter;
@@ -108,11 +107,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * The interface to resource collections and communications with SWGCraft
      */
     private static SWGResourceManager resourceManager;
-
-    /**
-     * The color chooser that may be used by components of this application
-     */
-    private ColorChooser colorChooser = null;
 
     /**
      * The edit menu
@@ -555,19 +549,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 }
             });
         }
-    }
-
-    /**
-     * Returns a color chooser dialog for choosing background color and text
-     * color
-     * 
-     * @return a color chooser dialog
-     */
-    public ColorChooser getColorChooser() {
-        if (colorChooser == null) {
-            colorChooser = new ColorChooser(this);
-        }
-        return colorChooser;
     }
 
     /**

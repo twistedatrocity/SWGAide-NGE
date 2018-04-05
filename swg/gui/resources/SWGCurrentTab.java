@@ -31,6 +31,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -95,7 +96,6 @@ import swg.model.SWGNotes;
 import swg.model.SWGStation;
 import swg.swgcraft.SWGPets;
 import swg.swgcraft.SWGResourceManager;
-import swg.tools.ColorChooser;
 import swg.tools.SpringUtilities;
 import swg.tools.ZHtml;
 import swg.tools.ZNumber;
@@ -687,22 +687,20 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     private void actionStatColorChooserButton(JButton button) {
         String str = "resourceColor" + button.getText();
-        Color bg = (Color) SWGFrame.getPrefsKeeper().get(str);
-        Color fg = (Color) SWGFrame.getPrefsKeeper().get(str + "Text");
+        String ctitle = "Choose Background Color for " + button.getText();
+        Color bg = (Color) button.getBackground();
+        Color fg = (Color) button.getForeground();
+        bg = JColorChooser.showDialog(button, ctitle, bg);
+        if (bg != null) {
+        	button.setBackground(bg);
+            button.setForeground(fg);
 
-        ColorChooser cc = SWGAide.frame().getColorChooser();
-        cc.showDialog(bg, fg);
+            SWGFrame.getPrefsKeeper().add(str, bg);
+            SWGFrame.getPrefsKeeper().add(str + "Text", fg);
 
-        bg = cc.getSelectedBackgroundColor();
-        fg = cc.getSelectedForegroundColor();
-        button.setBackground(bg);
-        button.setForeground(fg);
-
-        SWGFrame.getPrefsKeeper().add(str, bg);
-        SWGFrame.getPrefsKeeper().add(str + "Text", fg);
-
-        SWGGuiUtils.statColorLimitSet();
-        currentResourcesModel.fireTableDataChanged();
+            SWGGuiUtils.statColorLimitSet();
+            currentResourcesModel.fireTableDataChanged();
+        }
     }
 
     /**
