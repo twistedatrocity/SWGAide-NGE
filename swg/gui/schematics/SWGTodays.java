@@ -1174,24 +1174,25 @@ class SWGTodays extends JPanel {
                 "schemTodaysAlertDefaultAss");
 
         SWGSchematicAssignee ass = null;
-        if (pn != null) {
-            List<SWGSchematicAssignee> al = pn.startsWith("Pro: ")
-                    ? assigneeProfession()
-                    : SWGSchematicTab.assignees();
-            for (SWGSchematicAssignee a : al)
-                if (a.getName().equals(pn)) {
-                    ass = a;
-                    break;
-                }
-        }
-        if (THIS != null) {
-            if (ass == null)
-                THIS.assigneeList.setSelectedIndex(0);
-            else
-                THIS.assigneeList.setSelectedValue(ass, true);
+        if (pn == null) {
+        	pn = "Pro: All";
         }
 
-        return ass == null
+        List<SWGSchematicAssignee> al = pn.startsWith("Pro: ")
+                ? assigneeProfession()
+                : SWGSchematicTab.assignees();
+        for (SWGSchematicAssignee a : al) {
+            if (a.getName().equals(pn)) {
+                ass = a;
+                break;
+            }
+        }
+
+        if (THIS != null) {
+            THIS.assigneeList.setSelectedValue(ass, true);
+        }
+
+        return ass.getName().equals("Pro: All")
                 ? SWGSchematicsManager.getSchematics(SWGProfession.ALL)
                 : ass.getFavorites();
     }
