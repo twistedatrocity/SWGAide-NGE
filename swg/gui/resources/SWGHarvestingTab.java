@@ -20,6 +20,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -1041,6 +1042,7 @@ final class SWGHarvestingTab extends JPanel {
         };
 
         int rHeight = activeHarvTable.getRowHeight();
+        rHeight = SWGGuiUtils.getRowHeight(activeHarvTable);
         activeHarvTable.setRowHeight((rHeight * 3) + 3);
         TableCellRenderer tc;
         tc = new SWGDecoratedTableCellRenderer(activeHarvModel) {
@@ -1141,13 +1143,19 @@ final class SWGHarvestingTab extends JPanel {
         activeHarvTable.setDefaultRenderer(Number.class, tc);
         activeHarvTable.setDefaultRenderer(SWGResource.class, tc);
 
-        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 0, 1, 70, 130);
-        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 2, 6, 110, 90);
-        SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 7, 25);
-        SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 8, 40);
-        SWGGuiUtils.tableColumnFixWidth(activeHarvTable, 9, 40);
-        SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 10, 70, 115, 200);
-        SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 11, 200, 300, 2000);
+        int w = SWGGuiUtils.fontWidth(activeHarvTable, "A ssigne e", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 0, 1, w, 130);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "D escriptio n", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 2, 3, w, 5);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "0123456789012345", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 4, 6, w, 90);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "100", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 7, 7, w, 5);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "UBER", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 8, 9, w, 5);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "0123456789012345", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 10, 10, w, 90);
+        SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 11, 200, 300, 4000);
 
         activeHarvTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         activeHarvTable.setAutoCreateRowSorter(true);
@@ -1239,10 +1247,14 @@ final class SWGHarvestingTab extends JPanel {
 
         harvTable.setDefaultRenderer(String.class, tc);
         harvTable.setDefaultRenderer(Number.class, tc);
+        SWGGuiUtils.setRowHeight(harvTable);
 
-        SWGGuiUtils.tableColumnFixWidth(harvTable, 2, 35);
-        SWGGuiUtils.tableColumnFixWidth(harvTable, 3, 70);
-        SWGGuiUtils.tableColumnFixWidth(harvTable, 4, 40);
+        int w = SWGGuiUtils.fontWidth(harvTable, "BER", harvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(harvTable, 2, 2, w, 10);
+        w = SWGGuiUtils.fontWidth(harvTable, "999,999", harvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(harvTable, 3, 3, w, 10);
+        w = SWGGuiUtils.fontWidth(harvTable, "99.00", harvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(harvTable, 4, 4, w, 10);
 
         harvTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         harvTable.setAutoCreateRowSorter(true);
@@ -1352,9 +1364,12 @@ final class SWGHarvestingTab extends JPanel {
             }
         };
 
-        for (int i = 1; i < ownerModel.getColumnCount(); i++)
-            SWGGuiUtils.tableSetColumnWidths(ownerTable, 1, 99, 35, 0);
+        for (int i = 1; i < ownerModel.getColumnCount(); i++) {
+        	int w = SWGGuiUtils.fontWidth(ownerTable, "Ag e", ownerTable.getFont()) + 5;
+            SWGGuiUtils.tableSetColumnWidths(ownerTable, 1, 99, w, 0);
+        }
 
+        SWGGuiUtils.setRowHeight(ownerTable);
         ownerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ownerTable.setAutoCreateRowSorter(true);
         ownerTable.getTableHeader().setReorderingAllowed(false);
@@ -1497,8 +1512,21 @@ final class SWGHarvestingTab extends JPanel {
      * @return a GUI component
      */
     private Component makeTopPanel() {
-        Box box = Box.createHorizontalBox();
-        box.setPreferredSize(new Dimension(1000, 150));
+    	Box box = new Box(BoxLayout.LINE_AXIS) {
+            @Override
+            public Dimension getPreferredSize() {
+                Dimension d = super.getPreferredSize();
+                int h = d.height / 5;
+                float m = SWGGuiUtils.fontMultiplier();
+                h = Math.round(h * m);
+                d.height = h > 200
+                        ? h
+                        : 200;
+                return d;
+            }
+        };
+
+        //box.setPreferredSize(new Dimension(1000, h));
         box.add(makeHarvesterPanel());
         box.add(makeWarningOptionsPanel());
         box.add(makeOwnersPanel());

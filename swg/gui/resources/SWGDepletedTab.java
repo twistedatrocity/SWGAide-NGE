@@ -550,6 +550,7 @@ final class SWGDepletedTab extends JPanel {
         int w;
         w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontPlain()) + 5;
         SWGGuiUtils.tableSetColumnWidths(table, 2, 999, w, 0);
+        SWGGuiUtils.setRowHeight(table);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         table.getTableHeader().setReorderingAllowed(false);

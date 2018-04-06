@@ -3,7 +3,6 @@ package swg.gui.resources;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -602,16 +601,12 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         box.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), " Lookup at SWGCraft.org "));
 
-        Dimension dn = new Dimension(200, 26);
-        Dimension dg = new Dimension(100, 26);
-
         JComboWiderPopup<String> rnl = new JComboWiderPopup<String>();
         rnl.setEditable(true);
         rnl.setToolTipText("Enter a name for a resource, or its first letters");
         rnl.setAlignmentX(Component.LEFT_ALIGNMENT);
         rnl.setAutoscrolls(true);
-        rnl.setPreferredSize(dn);
-        rnl.setMaximumSize(dn);
+        SWGGuiUtils.setDim(rnl, "123456789012345", 200, 26, false);
         rnl.addItemListener(new ItemListener() {
             
             public void itemStateChanged(ItemEvent e) {
@@ -632,8 +627,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         // all historical galaxies because of cross-server resources
         JComboBox<Object> gxys = new JComboBox<Object>(SWGCGalaxy.values());
-        gxys.setPreferredSize(dg);
-        gxys.setMaximumSize(dg);
+        SWGGuiUtils.setDim(gxys, "1234567890", 100, 26, false);
         gxys.setAlignmentX(Component.LEFT_ALIGNMENT);
         gxys.setAutoscrolls(true);
         gxys.setToolTipText("Select a galaxy");
@@ -701,7 +695,8 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         makeResourceClasses();
 
         JComboBox<SWGResourceClass> rcnl = new JComboBox<SWGResourceClass>();
-        rcnl.setPreferredSize(new Dimension(200, 26));
+        SWGGuiUtils.setDim(rcnl, "12345678901234", 200, 26, false);
+        //rcnl.setPreferredSize(new Dimension(200, 26));
         rcnl.setAlignmentX(Component.LEFT_ALIGNMENT);
         rcnl.setEnabled(false);
         rcnl.setAutoscrolls(true);
@@ -788,7 +783,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         JTextField amt = new JTextField();
         amt.setText("1");
         amt.setToolTipText("Number of units in stock");
-        amt.setMaximumSize(new Dimension(100, 21));
+        SWGGuiUtils.setDim(amt, "10000000", 100, 21, true);
         amt.setBorder(BorderFactory.createLoweredBevelBorder());
         amt.setHorizontalAlignment(SwingConstants.RIGHT);
         ((AbstractDocument) amt.getDocument()).setDocumentFilter(
@@ -802,8 +797,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         JComboBox<String> cnbl = new JComboBox<String>();
         cnbl.setEditable(true);
-        cnbl.setPreferredSize(new Dimension(124, 26));
-        cnbl.setMaximumSize(new Dimension(124, 26));
+        SWGGuiUtils.setDim(cnbl, "A ssigne e", 124, 26, true);
         cnbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         cnbl.setAutoscrolls(true);
         cnbl.setToolTipText("Select or define an assignee (optional)");

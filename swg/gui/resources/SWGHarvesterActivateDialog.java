@@ -1,7 +1,6 @@
 package swg.gui.resources;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -572,7 +571,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         Box pBox = Box.createHorizontalBox();
         pBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         concentration = new JTextField("", 7);
-        concentration.setMaximumSize(new Dimension(60, 21));
+        SWGGuiUtils.setDim(concentration, "1234567", 60, 21, true);
         concentration.setToolTipText("Enter the resource concentration");
         pBox.add(concentration);
         JLabel tl = new JLabel(" Concentration %", SwingConstants.LEFT);
@@ -582,7 +581,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         Box mBox = Box.createHorizontalBox();
         mBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         maintenance = new JTextField("", 7);
-        maintenance.setMaximumSize(new Dimension(60, 21));
+        SWGGuiUtils.setDim(maintenance, "1234567", 60, 21, true);
         maintenance.setToolTipText("Enter harvester maintenance");
         mBox.add(maintenance);
         JLabel tm = new JLabel(" Maintenance", SwingConstants.LEFT);
@@ -592,7 +591,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         Box poBox = Box.createHorizontalBox();
         poBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         power = new JTextField("", 7);
-        power.setMaximumSize(new Dimension(60, 21));
+        SWGGuiUtils.setDim(power, "1234567", 60, 21, true);
         power.setToolTipText("Enter harvester power");
         poBox.add(power);
         JLabel tp = new JLabel(" Power", SwingConstants.LEFT);
@@ -644,8 +643,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
             "Specify the in-game cluster of harvesters this harvester denotes "
             + "(multiplies amount added to inventory)");
         clusterCount.setAutoscrolls(true);
-        clusterCount.setPreferredSize(new Dimension(60, 26));
-        clusterCount.setMaximumSize(new Dimension(175, 26));
+        SWGGuiUtils.setDim(clusterCount, "1234567", 60, 26, true);
 
         JLabel lc = new JLabel("Count: ");
         lc.setToolTipText(
@@ -743,8 +741,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         resourceName.setToolTipText("The name of the resource");
         resourceName.setAlignmentX(Component.LEFT_ALIGNMENT);
         resourceName.setAutoscrolls(true);
-        resourceName.setPreferredSize(new Dimension(110, 26));
-        resourceName.setMaximumSize(new Dimension(175, 26));
+        SWGGuiUtils.setDim(resourceName, "12345678901234567890", 110, 26, true);
         resourceName.setEditable(false);
 
         JLabel ln = new JLabel("Resource name");
@@ -759,8 +756,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         resourceClass.setToolTipText("Name of the resource class");
         resourceClass.setAlignmentX(Component.LEFT_ALIGNMENT);
         resourceClass.setAutoscrolls(true);
-        resourceClass.setPreferredSize(new Dimension(110, 26));
-        resourceClass.setMaximumSize(new Dimension(175, 26));
+        SWGGuiUtils.setDim(resourceClass, "12345678901234567890", 110, 26, true);
         resourceClass.setEditable(false);
 
         Box tc = Box.createVerticalBox();
@@ -784,7 +780,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         Box top = Box.createHorizontalBox();
 
         harvesterList = new JComboBox<String>();
-        harvesterList.setPreferredSize(new Dimension(175, 26));
+        SWGGuiUtils.setDim(harvesterList, "123456789012345", 175, 26, false);
         harvesterList.setAlignmentX(Component.LEFT_ALIGNMENT);
         harvesterList.setToolTipText("Select a harvester");
         harvesterList.setAutoscrolls(true);
@@ -814,7 +810,7 @@ final class SWGHarvesterActivateDialog extends SWGJDialog implements
         top.add(tn);
 
         ownerList = new JComboBox<String>();
-        ownerList.setPreferredSize(new Dimension(175, 26));
+        SWGGuiUtils.setDim(ownerList, "A ssigne e", 175, 26, false);
         ownerList.setAlignmentX(Component.LEFT_ALIGNMENT);
         ownerList.setToolTipText("Select a owner");
         ownerList.setAutoscrolls(true);

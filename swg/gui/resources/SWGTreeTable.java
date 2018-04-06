@@ -3,6 +3,7 @@ package swg.gui.resources;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
@@ -84,7 +85,11 @@ final class SWGTreeTable extends SWGJTable {
         setDefaultRenderer(SWGResourceClass.class, makeCellRenderer());
         setDefaultEditor(TreeTableModel.class, new TreeTableCellEditor());
 
-        SWGGuiUtils.tableColumnSetWidth(this, 0, 200, 300, 0);
+        int w = SWGGuiUtils.fontWidth(this, "1234567890123456789012345678901234567", this.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(this, 0, 0, w, 100);
+        w = SWGGuiUtils.fontWidth(this, "1000 1000", this.getFont());
+        SWGGuiUtils.tableSetColumnWidths(this, 1, 200, w, 100);
+        SWGGuiUtils.setRowHeight(this);
         getTableHeader().setReorderingAllowed(false);
 
         setGridColor(Color.LIGHT_GRAY);
@@ -92,11 +97,6 @@ final class SWGTreeTable extends SWGJTable {
         // No inter-cell spacing
         setIntercellSpacing(new Dimension(0, 0));
 
-        // And update the height of the trees row to match that of the table.
-        if (tree.getRowHeight() < 1) {
-            // Metal looks better like this.
-            setRowHeight(18);
-        }
     }
 
     @Override
@@ -233,7 +233,13 @@ final class SWGTreeTable extends SWGJTable {
             }
         };
 
-        cr.setFont(SWGGuiUtils.fontPlain());
+        //cr.setFont(SWGGuiUtils.fontPlain());
+        if (SWGGuiUtils.fontMultiplier() > 1.3) {
+	        Font f = cr.getFont();
+	        int s = Math.max((int) (Math.round(f.getSize() * 1 / 1.3)), 6);
+	        f = new Font(f.getName(), f.getStyle(), s);
+	        cr.setFont(f);
+        }
         setBackground(Color.WHITE);
         return cr;
     }

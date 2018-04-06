@@ -1921,9 +1921,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         panel.add(txtFld);
 
         final JButton button = new JButton(text);
-        Dimension d = new Dimension(65, 20);
-        button.setMinimumSize(d);
-        button.setPreferredSize(d);
+        SWGGuiUtils.setButtonDim(button, 65);
         button.setToolTipText("Choose the color for "
                 + text.toLowerCase(Locale.ENGLISH) + " resource stats");
         button.addActionListener(new ActionListener() {
@@ -2128,9 +2126,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 new SWGResController.AgeRenderer(currentResourcesModel));
 
         SWGGuiUtils.tableColumnSetWidth(currentResourcesTable, 0, 20, 150, 150);
-        int w;
-        w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontPlain()) + 5;
+        int w = SWGGuiUtils.fontWidth(currentResourcesTable, "1 000", currentResourcesTable.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(currentResourcesTable, 2, 999, w, 5);
+        SWGGuiUtils.setRowHeight(currentResourcesTable);
 
         currentResourcesTable
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -2175,8 +2173,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         guardsTable.setAutoCreateRowSorter(true);
         guardsTable.getTableHeader().setReorderingAllowed(false);
         int w;
-        w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontPlain()) + 5;
+        w = SWGGuiUtils.fontWidth(guardsTable, "1 000", guardsTable.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(guardsTable, 3, 3, w, 10);
+        SWGGuiUtils.setRowHeight(guardsTable);
         guardsTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
 
@@ -2222,7 +2221,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 new SWGResController.AgeRenderer(monitorsModel));
         monitorsTable.setAutoCreateRowSorter(true);
         monitorsTable.getTableHeader().setReorderingAllowed(false);
-        SWGGuiUtils.tableColumnFixWidth(monitorsTable, 2, 40);
+        int w = SWGGuiUtils.fontWidth(monitorsTable, "Ag e", monitorsTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(monitorsTable, 2, 2, w, 10);
+        SWGGuiUtils.setRowHeight(monitorsTable);
         monitorsTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -2332,6 +2333,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 int h = d.height / 5;
+                float m = SWGGuiUtils.fontMultiplier();
+                h = Math.round(h * m);
                 d.height = h > 200
                         ? h
                         : 200;

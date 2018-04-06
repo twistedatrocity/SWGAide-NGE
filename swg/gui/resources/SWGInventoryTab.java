@@ -1933,15 +1933,16 @@ final class SWGInventoryTab extends JPanel {
         tcm.getColumn(3).setCellEditor(te);
         tcm.getColumn(16).setCellEditor(te);
 
-        SWGGuiUtils.tableColumnSetWidth(table, 0, 0, 75, 150);
-        int w = SWGGuiUtils.fontWidth(this, "100,000,000",
-                SWGGuiUtils.fontPlain()) + 5; // amount
+        SWGGuiUtils.setRowHeight(table);
+        int w = SWGGuiUtils.fontWidth(table, "A  ssigne  e", table.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(table, 0, 0, w, 5);
+        w = SWGGuiUtils.fontWidth(table, "100,000,000", table.getFont()) + 5; // amount
         SWGGuiUtils.tableColumnFixWidth(table, 3, w);
 
         // do not set width for the notes column
-        w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontPlain()) + 5;
+        w = SWGGuiUtils.fontWidth(table, "1 000", table.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(table, 4, 4 + 10, w, 5);
-        w = SWGGuiUtils.fontWidth(this, "999.99", SWGGuiUtils.fontPlain()) + 5;
+        w = SWGGuiUtils.fontWidth(table, "999.99", table.getFont()) + 5;
         SWGGuiUtils.tableColumnSetWidth(table, 15, w, w, w + 10);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
