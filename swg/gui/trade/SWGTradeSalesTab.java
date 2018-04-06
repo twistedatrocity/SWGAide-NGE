@@ -401,11 +401,16 @@ class SWGTradeSalesTab extends JPanel implements TableColumnModelListener {
 
         st.getTableHeader().setReorderingAllowed(false);
 
-        SWGGuiUtils.tableColumnSetWidth(st, 0, 100, 115, 150);
-        SWGGuiUtils.tableColumnSetWidth(st, 1, 100, 115, 200);
-        SWGGuiUtils.tableColumnSetWidth(st, 3, 55, 80, 115);
+        int w;
+        w = SWGGuiUtils.fontWidth(st, "XX/XX/XX XXXXXX", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(st, 0, 0, w, 100);
+        w = SWGGuiUtils.fontWidth(st, "SomeLongNameXX", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(st, 1, 1, w, 200);
+        w = SWGGuiUtils.fontWidth(st, "99,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(st, 3, 3, w, 20);
         SWGGuiUtils.tableColumnSetWidth(st, 4, 100, 115, 500);
         SWGGuiUtils.tableColumnSetWidth(st, 5, 100, 200, 500);
+        SWGGuiUtils.setRowHeight(st);
 
         st.getColumnModel().addColumnModelListener(this);
         st.getSelectionModel().addListSelectionListener(

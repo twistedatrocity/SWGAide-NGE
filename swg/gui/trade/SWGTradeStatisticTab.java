@@ -220,9 +220,12 @@ class SWGTradeStatisticTab extends JPanel {
 
         customerTable.getTableHeader().setReorderingAllowed(false);
 
-        SWGGuiUtils.tableColumnSetWidth(customerTable, 1, 35, 50, 90);
-        SWGGuiUtils.tableColumnSetWidth(customerTable, 2, 35, 50, 90);
-        SWGGuiUtils.tableColumnSetWidth(customerTable, 3, 55, 85, 130);
+        int w;
+        w = SWGGuiUtils.fontWidth(customerTable, "000000", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(customerTable, 1, 2, w, 100);
+        w = SWGGuiUtils.fontWidth(customerTable, "99,999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(customerTable, 3, 3, w, 100);
+        SWGGuiUtils.setRowHeight(customerTable);
 
         customerTable.addMouseListener(new MouseAdapter() {
             @Override
@@ -252,6 +255,7 @@ class SWGTradeStatisticTab extends JPanel {
         startDate.setBorder(BorderFactory.createEtchedBorder());
         startDate.setOpaque(true);
         startDate.setBackground(Color.WHITE);
+        SWGGuiUtils.setDim(startDate, "XX/XX/XX", 100, 26, false);
         b.add(startDate);
 
         b.add(new JLabel(" for "));
@@ -260,6 +264,7 @@ class SWGTradeStatisticTab extends JPanel {
         period.setBorder(BorderFactory.createEtchedBorder());
         period.setOpaque(true);
         period.setBackground(Color.WHITE);
+        SWGGuiUtils.setDim(period, "XXXX Days", 100, 26, false);
         b.add(period);
 
         return b;
@@ -305,8 +310,12 @@ class SWGTradeStatisticTab extends JPanel {
 
         itemTable.getTableHeader().setReorderingAllowed(false);
 
-        SWGGuiUtils.tableColumnSetWidth(itemTable, 1, 35, 50, 65);
-        SWGGuiUtils.tableColumnSetWidth(itemTable, 2, 55, 85, 130);
+        int w;
+        w = SWGGuiUtils.fontWidth(itemTable, "COUNT", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(itemTable, 1, 1, w, 100);
+        w = SWGGuiUtils.fontWidth(itemTable, "99,999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(itemTable, 2, 2, w, 100);
+        SWGGuiUtils.setRowHeight(itemTable);
 
         return new JScrollPane(itemTable);
     }
@@ -334,18 +343,19 @@ class SWGTradeStatisticTab extends JPanel {
     private Component makeMetricsView() {
         JPanel metricsPanel = new JPanel(new BorderLayout());
         metricsPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-        metricsPanel.setPreferredSize(new Dimension(250, 6 * 17));
+        metricsPanel.setPreferredSize(new Dimension(600, 6 * SWGGuiUtils.getRowHeight(metricsPanel)));
 
         metricsTable = new SWGJTable(new SWGTradeMetricsTableModel());
         metricsTable.getTableHeader().setReorderingAllowed(false);
-        SWGGuiUtils.tableColumnSetWidth(metricsTable, 1, 55, 85, 130);
+        int w = SWGGuiUtils.fontWidth(metricsTable, "99,999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(metricsTable, 1, 1, w, 100);
+        SWGGuiUtils.setRowHeight(metricsTable);
 
         metricsTable.setDefaultRenderer(Long.class,
                 SWGDecoratedTableCellRenderer.newNumberRenderer());
 
-        metricsPanel
-                .add(metricsTable.getTableHeader(), BorderLayout.PAGE_START);
-        metricsPanel.add(metricsTable, BorderLayout.CENTER);
+        metricsPanel.add(metricsTable.getTableHeader(), BorderLayout.PAGE_START);
+        metricsPanel.add(new JScrollPane(metricsTable), BorderLayout.CENTER);
 
         return metricsPanel;
     }
@@ -362,7 +372,7 @@ class SWGTradeStatisticTab extends JPanel {
         JPanel metrics = makeMetricsPanel();
         JPanel mb = new JPanel(new BorderLayout());
 
-        mb.add(Box.createRigidArea(new Dimension(200, 15)),
+        mb.add(Box.createRigidArea(new Dimension(600, 15)),
                 BorderLayout.PAGE_START);
         mb.add(metrics, BorderLayout.CENTER);
         bottom.add(mb, BorderLayout.PAGE_START);
@@ -379,11 +389,10 @@ class SWGTradeStatisticTab extends JPanel {
      * @return a panel for data broken down on vendors
      */
     private JPanel makeVendorsPanel() {
-        JPanel vp = new JPanel();
+    	JPanel vp = new JPanel(new BorderLayout(0, 10));
         vp.setBorder(BorderFactory.createTitledBorder(BorderFactory
                 .createEtchedBorder(), "Vendors"));
-
-        vp.add(makeVendorsTable());
+        vp.add(makeVendorsTable(), BorderLayout.CENTER);
         return vp;
     }
 
@@ -402,11 +411,15 @@ class SWGTradeStatisticTab extends JPanel {
                 SWGDecoratedTableCellRenderer.newNumberRenderer());
 
         vendorTable.getTableHeader().setReorderingAllowed(false);
-        SWGGuiUtils.tableColumnSetWidth(vendorTable, 1, 50, 65, 80);
-        SWGGuiUtils.tableColumnSetWidth(vendorTable, 2, 50, 85, 130);
+        int w;
+        w = SWGGuiUtils.fontWidth(vendorTable, "999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(vendorTable, 1, 1, w, 100);
+        w = SWGGuiUtils.fontWidth(vendorTable, "99,999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(vendorTable, 2, 2, w, 100);
+        SWGGuiUtils.setRowHeight(vendorTable);
 
         vendorsPanel.add(vendorTable.getTableHeader(), BorderLayout.PAGE_START);
-        vendorsPanel.add(vendorTable, BorderLayout.CENTER);
+        vendorsPanel.add(new JScrollPane(vendorTable), BorderLayout.CENTER);
 
         vendorTable = new SWGJTable();
         return vendorsPanel;

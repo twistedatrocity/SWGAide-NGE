@@ -295,7 +295,6 @@ class SWGTradeMiscTab extends JLabel {
 
         mappingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mappingTable.getTableHeader().setReorderingAllowed(false);
-        // mappingTable.setAutoCreateRowSorter(true);
 
         mappingTable.setDefaultRenderer(Integer.class, 
                 new SWGDecoratedTableCellRenderer() {
@@ -306,7 +305,10 @@ class SWGTradeMiscTab extends JLabel {
                     }
                 });
 
-        SWGGuiUtils.tableColumnSetWidth(mappingTable, 0, 55, 70, 85);
+        int w;
+        w = SWGGuiUtils.fontWidth(mappingTable, "999,999,999", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(mappingTable, 0, 0, w, 100);
+        SWGGuiUtils.setRowHeight(mappingTable);
 
         mappingTable.getInputMap().put(KeyStroke.getKeyStroke("DELETE"),
                 "tradeMiscDeleteAction");
