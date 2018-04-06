@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -154,7 +155,10 @@ final class SWGTestBench extends SWGJDialog {
         super(null, false, null);
 
         slots = new ArrayList<RSlot>();
-        Dimension pd = new Dimension(400, 105);
+        float m = SWGGuiUtils.fontMultiplier();
+        int w = Math.round(400 * m);
+        int h = Math.round(105 * m);
+        Dimension pd = new Dimension(w, h);
 
         // add content        
         slotsGrid = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
@@ -163,11 +167,15 @@ final class SWGTestBench extends SWGJDialog {
         
         exps = new JPanel(new BorderLayout());
         add(exps, BorderLayout.CENTER);
-        exps.setPreferredSize(new Dimension(400, 305));
+        w = Math.round(400 * m);
+        h = Math.round(305 * m);
+        exps.setPreferredSize(new Dimension(w, h));
         
         ingredients = new JPanel(new BorderLayout());
         add(ingredients, BorderLayout.SOUTH);
-        ingredients.setPreferredSize(new Dimension(400, 170));
+        w = Math.round(400 * m);
+        h = Math.round(170 * m);
+        ingredients.setPreferredSize(new Dimension(w, h));
         Border current = ingredients.getBorder();
         Border empty = new EmptyBorder(5, 2, 5, 5);
         if (current == null)
@@ -217,6 +225,8 @@ final class SWGTestBench extends SWGJDialog {
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 d.width = THIS.getSize().width - 15;
+                float m = SWGGuiUtils.fontMultiplier();
+                d.width = Math.round(d.width * m);
                 return d;
             }
         };
@@ -353,8 +363,12 @@ final class SWGTestBench extends SWGJDialog {
         SpringUtilities.makeCompactGrid(slotsGrid, rows, cols, 2, 2, 3, 3);
         int diff = cols - defcols;
     	int nh = Math.min( ((diff * 20) + 155), 230);
+    	float m = SWGGuiUtils.fontMultiplier();
+    	nh = Math.round(nh * m);
     	ingredients.setPreferredSize(new Dimension(400, nh));
         int nwidth = cols * 82;
+        
+        nwidth = Math.round(nwidth * m);
         setSize(nwidth, getHeight());
         slotsGrid.revalidate();
         slotsGrid.repaint(200);
@@ -371,7 +385,10 @@ final class SWGTestBench extends SWGJDialog {
      */
     private void setLocation(boolean init) {
     	// set a preferred dimension for the dialogue window.
-    	Dimension pd = new Dimension(493, 620);
+    	float m = SWGGuiUtils.fontMultiplier();
+    	int w = Math.round(493 * m);
+    	int h = Math.round(620 * m);
+    	Dimension pd = new Dimension(w, h);
         if (init) {
             SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
             Point p = (Point) pk.get("schemTestBenchLocation",
@@ -792,6 +809,19 @@ final class SWGTestBench extends SWGJDialog {
 
             this.rc = rc;
             this.units = units;
+            
+            // scaling the icons up with the fonts.
+            int iw = SWGResourceClassTree.icon(rc).getIconWidth();
+            int ih = SWGResourceClassTree.icon(rc).getIconHeight();
+            // only scale them once. Original image size is 64x64 so....
+            if (iw == 64) {
+	            float m = SWGGuiUtils.fontMultiplier();
+	            iw = Math.round(iw * m);
+	            ih = Math.round(ih * m);
+	            Image image = SWGResourceClassTree.icon(rc).getImage(); // transform it 
+	            Image newimg = image.getScaledInstance(iw, ih,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+	            SWGResourceClassTree.icon(rc).setImage(newimg);  // transform it back
+            }
 
             fill(null);
             select(false);
