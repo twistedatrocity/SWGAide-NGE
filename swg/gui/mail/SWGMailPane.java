@@ -268,6 +268,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             saveAs.setEnabled(b);
             popup.add(saveAs);
 
+            /* disabling this for now
             popup.addSeparator();
 
             JMenuItem fontBigger = new JMenuItem("Font increase");
@@ -299,6 +300,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 }
             });
             popup.add(fontNormal);
+            */
 
             popup.show(mailBody, e.getX(), e.getY());
         }
@@ -966,10 +968,10 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JScrollPane folderScroll = new JScrollPane(folderList,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        folderScroll.setMinimumSize(new Dimension(70, 50));
+        SWGGuiUtils.setDim(folderScroll, "Folders", 70, 20, false);
 
         JLabel lab = new JLabel("Folders  ", SwingConstants.CENTER);
-        lab.setPreferredSize(new Dimension(50, 20));
+        SWGGuiUtils.setDim(lab, "Folders", 50, 20, false);
         lab.setBorder(BorderFactory.createRaisedBevelBorder());
         folderScroll.setColumnHeaderView(lab);
 
@@ -1277,10 +1279,10 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
 
         mailBody = new SWGMailBody();
 
-        Font f = mailBody.getFont();
+        /*Font f = mailBody.getFont();
         int s = ((Integer) SWGFrame.getPrefsKeeper().get(
                 "mailBodyFontSize", new Integer(f.getSize()))).intValue();
-        mailBody.setFont(new Font(f.getName(), f.getStyle(), s));
+        mailBody.setFont(new Font(f.getName(), f.getStyle(), s));*/
 
         mailBodyJSP = new JScrollPane(mailBody);
         lower.add(mailBodyJSP, BorderLayout.CENTER);
@@ -1689,20 +1691,25 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
 
             this.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
             this.setAutoCreateRowSorter(true);
+            
+            SWGGuiUtils.setRowHeight(this);
 
             this.setDefaultRenderer(Date.class, new DateRenderer());
+            int w;
 
             for (int i = 2; i < this.getColumnCount(); ++i) {
                 TableColumn col = this.getColumnModel().getColumn(i);
-                if (i >= 4)
-                    SWGGuiUtils.tableColumnSetWidth(col, 22, 22, 30);
-                else {
+                if (i >= 4) {
+                	w = SWGGuiUtils.fontWidth(this, "ISD", this.getFont()) + 5;
+                    SWGGuiUtils.tableColumnSetWidth(col, w, w, w+10);
+                } else {
                     Integer is = (Integer) SWGFrame.getPrefsKeeper().get(
                                     "mailClientColumnSize" + i);
                     int s = is == null
                                 ? 115
                                 : is.intValue();
-                    SWGGuiUtils.tableColumnSetWidth(col, 50, s, 130);
+                    w = SWGGuiUtils.fontWidth(this, "123456789012", this.getFont()) + 5;
+                    SWGGuiUtils.tableColumnSetWidth(col, w/2, s, 530);
                 }
             }
             this.getSelectionModel().addListSelectionListener(
