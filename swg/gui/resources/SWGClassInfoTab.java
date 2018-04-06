@@ -7,6 +7,7 @@ import java.net.URL;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -90,7 +91,8 @@ class SWGClassInfoTab extends JPanel {
      * @return a GUI element
      */
     private Component makeCenter() {
-        return new JScrollPane(new SWGTreeTable());
+        return new JScrollPane(new SWGTreeTable(), ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS );
     }
     /**
      * The URL for the help page for this view.
