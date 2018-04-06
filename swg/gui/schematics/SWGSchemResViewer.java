@@ -459,9 +459,10 @@ public final class SWGSchemResViewer extends SWGJDialog {
                 });
 
         int w;
-        w = SWGGuiUtils.fontWidth(this, "1 000.00", SWGGuiUtils.fontPlain());
+        w = SWGGuiUtils.fontWidth(resTable, "1 000.00", resTable.getFont());
         SWGGuiUtils.tableSetColumnWidths(resTable, 0, 0, w + 5, 5);
         SWGGuiUtils.tableSetColumnWidths(resTable, 3, 99, w + 20, 5);
+        SWGGuiUtils.setRowHeight(resTable);
 
         resTable.setAutoCreateRowSorter(false);
         resTable.getTableHeader().setReorderingAllowed(false);
@@ -574,8 +575,9 @@ public final class SWGSchemResViewer extends SWGJDialog {
                 new SWGResourceStatRenderer(tm));
 
         int w;
-        w = SWGGuiUtils.fontWidth(this, "1 000.00", SWGGuiUtils.fontPlain());
+        w = SWGGuiUtils.fontWidth(schemTable, "1 000.00", schemTable.getFont());
         SWGGuiUtils.tableSetColumnWidths(schemTable, 1, 999, w, 5);
+        SWGGuiUtils.setRowHeight(schemTable);
 
         schemTable.setAutoCreateRowSorter(false);
         schemTable.getTableHeader().setReorderingAllowed(false);

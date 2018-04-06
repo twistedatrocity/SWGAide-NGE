@@ -690,11 +690,14 @@ final class SWGLaboratoryTab extends JPanel {
         resourceTable.getTableHeader().setReorderingAllowed(false);
 
         int w;
+        w = SWGGuiUtils.fontWidth(this, "ResourceNameLOngName", SWGGuiUtils.fontBold()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(resourceTable, 0, 0, w, 100);
         w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontBold()) + 5;
-        SWGGuiUtils.tableColumnSetWidth(resourceTable, 0, 20, 150, 150);
         SWGGuiUtils.tableColumnSetWidth(resourceTable, 2, w * 2, w * 2, w * 3);
         SWGGuiUtils.tableSetColumnWidths(resourceTable, 3, 3 + 10, w, 5);
-        SWGGuiUtils.tableColumnFixWidth(resourceTable, 14, 50);
+        w = SWGGuiUtils.fontWidth(this, "999.99", SWGGuiUtils.fontBold()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(resourceTable, 14, 14, w, 10);
+        SWGGuiUtils.setRowHeight(resourceTable);
 
         resourceTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -812,9 +815,11 @@ final class SWGLaboratoryTab extends JPanel {
             public Dimension getPreferredSize() {
             	Dimension d = super.getPreferredSize();
                 int h = d.height / 5;
-                d.height = h > 220
+                float m = SWGGuiUtils.fontMultiplier();
+                h = Math.round(h * m);
+                d.height = h > 250
                         ? h
-                        : 220;
+                        : 250;
                 return d;
             }
         };
@@ -1023,6 +1028,9 @@ final class SWGLaboratoryTab extends JPanel {
             public Dimension getMaximumSize() {
                 Dimension d = super.getMaximumSize();
                 d.height = 23;
+                float m = SWGGuiUtils.fontMultiplier();
+                d.height = Math.round(d.height * m);
+                
                 return d;
             }
 
@@ -1030,9 +1038,12 @@ final class SWGLaboratoryTab extends JPanel {
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 d.height = 23;
+                float m = SWGGuiUtils.fontMultiplier();
+                d.height = Math.round(d.height * m);
                 return d;
             }
         };
+        SWGGuiUtils.setDim(assigneeCombo, "12345678901234567", 100, 23, false);
         vb.add(assigneeCombo);
 
         JButton mb = new JButton("Manage");

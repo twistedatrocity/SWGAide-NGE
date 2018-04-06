@@ -64,6 +64,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -1034,39 +1038,39 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @param count the selected amount
      */
     private void displayShoppingList(SWGSchematic schem, int count) {
-        String f = "<font face=\"arial,sans-serif\" size=\"-1\">";
+        //String f = "<font face=\"arial,sans-serif\" size=\"-1\">";
         String err = "<font color=\"red\"><b>ERROR</b></font>";
         List<ResourceAmount> ral = shoppingResourcesSorted(schem);
         ZString z = new ZString();
         z.app("<html>");
 
         if (ral == null) {
-            z.app(f).app("<font color=\"red\"><b>ERROR</b></font>");
+            z.app("<font color=\"red\"><b>ERROR</b></font>");
             z.app(", see log file for details<br/>");
-            z.app("Please report the error at SWGCraft</font></html>");
+            z.app("Please report the error at SWGCraft</html>");
             shoppingList.setText(z.toString());
             return;
         }
 
         z.app("<table width=\"100%\"border=0 cellpadding=1>");
-        z.app("<tr><td>").app(f).app(schem.getName());
-        z.app("</font></td><td align=\"right\">").app(f);
+        z.app("<tr><td>").app(schem.getName());
+        z.app("</td><td align=\"right\">");
         if (count > 1) z.app("Factory batch:  ").
                 app(ZNumber.asText(count, true, true));
-        z.app("&nbsp;</font></td></tr></table>");
+        z.app("&nbsp;</td></tr></table>");
 
         z.app("<table border=0 cellpadding=1>");
         int total = 0;
         for (ResourceAmount ra : ral) {
-            z.app("<tr><td width=\"100\" align=\"right\">").app(f);
+            z.app("<tr><td width=\"100\" align=\"right\">");
             int u = ra.getUnits() * count;
             z.app(ZNumber.asText(u, true, true));
             total += u;
-            z.app("</font></td><td>").app(f).app("&nbsp; ");
-            z.app(ra.getResourceClass().rcName()).app("</font></td></tr>");
+            z.app("</td><td>").app("&nbsp; ");
+            z.app(ra.getResourceClass().rcName()).app("</td></tr>");
         }
-        z.app("<tr><td width=\"100\" align=\"right\">").app(f).app("= ");
-        z.app(ZNumber.asText(total, true, true)).app("</font></td></tr>");
+        z.app("<tr><td width=\"100\" align=\"right\">").app("= ");
+        z.app(ZNumber.asText(total, true, true)).app("</td></tr>");
         // one empty row
         z.app("<tr><td>&nbsp;</td></tr>");
 
@@ -1075,9 +1079,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         for (SWGComponentSlot cs : csl) {
             if (cs.isOptional()) continue;
 
-            z.app("<tr><td width=\"100\" align=\"right\">").app(f);
+            z.app("<tr><td width=\"100\" align=\"right\">");
             z.app(ZNumber.asText(cs.getAmount() * count, true, true));
-            z.app("</font></td><td>").app(f).app("&nbsp; ");
+            z.app("</td><td>").app("&nbsp; ");
 
             if (cs.getType().equals("schematic")) {
                 SWGSchematic s =
@@ -1094,21 +1098,21 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             } else
                 z.app(cs.getItemName()); // item
 
-            z.app("</font></td></tr>");
+            z.app("</td></tr>");
             ++comps;
         }
 
         for (int i = ral.size() + comps + 1; i < 10; ++i) {
             // pad to sensible size to avoid too much flicker
-            z.app("<tr><td>").app(f).app("&nbsp;</font></td>");
-            z.app("<td>").app(f).app("&nbsp;</font></td></tr>");
+            z.app("<tr><td>").app("&nbsp;</td>");
+            z.app("<td>").app("&nbsp;</td></tr>");
         }
         z.app("</table>");
-        z.app(f).app("<font color=#bbbbbb>");
+        z.app("<font color=#bbbbbb>");
         z.app("Optional and interchangeable components are not included in the");
         z.app("<br/>");
         z.app("shopping list, nor is losses from manufacturing sub-components.");
-        z.app("</font></font>").app("</html>");
+        z.app("</font>").app("</html>");
         shoppingList.setText(z.toString());
     }
 
@@ -1855,9 +1859,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 displayShopping(selectedSchematic);
             }
         });
+        SWGGuiUtils.setDim(factoryAmount, "XX:XX:XX h", 110, 23, true);
         Dimension d = new Dimension(110, 23);
-        factoryAmount.setPreferredSize(d);
-        factoryAmount.setMaximumSize(d);
         bp.add(factoryAmount);
 
         // vb.add(Box.createHorizontalStrut(20));
@@ -1910,6 +1913,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 BorderFactory.createEmptyBorder(2, 6, 2, 6)));
         shoppingList.setContentType("text/html");
         shoppingList.setEditable(false);
+        HTMLEditorKit kit = new HTMLEditorKit();
+        shoppingList.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
 
         shoppingList.getInputMap().put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK),
@@ -2141,10 +2149,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 		final JComboBox<String> cb = new JComboBox<String>(plArr);
         cb.setToolTipText("Filter by profession");
 
-        Dimension d = new Dimension(100, 25);
-        cb.setMinimumSize(d);
-        cb.setPreferredSize(d);
-        cb.setMaximumSize(d);
+        SWGGuiUtils.setDim(cb, "Profession", 100, 25, false);
 
         cb.setSelectedItem(selectedProfession.getNameShort());
         cb.addActionListener(new ActionListener() {

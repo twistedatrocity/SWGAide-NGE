@@ -513,12 +513,12 @@ final class SWGResourceClassUse extends JPanel {
                 if (!wl.contains(l.getWeights()))
                     wl.add(l.getWeights());
 
-        ZString z = new ZString("<html><font size=\"-1\">");
+        ZString z = new ZString("<html>");
         for (SWGWeights w : wl) {
             w.toString(z, false);
             z.app("<br/>");
         }
-        return z.app("</font></html>").toString();
+        return z.app("</html>").toString();
     }
 
     /**

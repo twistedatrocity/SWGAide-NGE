@@ -346,6 +346,8 @@ final class SWGAssigneeDialog extends SWGJDialog {
             public Dimension getMaximumSize() {
                 Dimension d = super.getMaximumSize();
                 d.height = 20;
+                float m = SWGGuiUtils.fontMultiplier();
+                d.height = Math.round(d.height * m);
                 return d;
             }
         };

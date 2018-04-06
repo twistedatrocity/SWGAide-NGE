@@ -47,6 +47,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import swg.SWGAide;
 import swg.crafting.SWGWeights;
@@ -637,6 +641,11 @@ class SWGTodays extends JPanel {
         rcwPairDetails.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
         rcwPairDetails.setContentType("text/html");
         rcwPairDetails.setEditable(false);
+        HTMLEditorKit kit = new HTMLEditorKit();
+        rcwPairDetails.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
 
         rcwPairDetails.addMouseListener(new MouseAdapter() {
             
@@ -689,11 +698,8 @@ class SWGTodays extends JPanel {
         op.add(makeLabel("Ignore K/M:", tt));
         op.add(makeNorthOptionsKM(tt));
 
-        Dimension d = new Dimension(80, 25);
-        ageSpinner.setMaximumSize(d);
-        invSpinner.setMaximumSize(d);
-        ageSpinner.setPreferredSize(d);
-        invSpinner.setPreferredSize(d);
+        SWGGuiUtils.setDim(ageSpinner, "00", 40, 25, true);
+        SWGGuiUtils.setDim(invSpinner, "00,000", 40, 25, true);
 
         SpringUtilities.makeCompactGrid(op, 5, 2, 0, 0, 0, 1);
 
@@ -984,11 +990,15 @@ class SWGTodays extends JPanel {
         todaysTable.getTableHeader().setReorderingAllowed(false);
 
         int w;
-        w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontBold()) + 5;
-        SWGGuiUtils.tableColumnSetWidth(todaysTable, 0, 20, 150, 150);
+        w = SWGGuiUtils.fontWidth(todaysTable, "ResourceNameLongName", SWGGuiUtils.fontBold()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(todaysTable, 0, 0, w, 100);
+        w = SWGGuiUtils.fontWidth(todaysTable, "1 000", SWGGuiUtils.fontBold()) + 5;
         SWGGuiUtils.tableSetColumnWidths(todaysTable, 2, 2 + 11, w, 5);
-        SWGGuiUtils.tableColumnFixWidth(todaysTable, 14, 65);
-        SWGGuiUtils.tableColumnFixWidth(todaysTable, 15, w);
+        w = SWGGuiUtils.fontWidth(todaysTable, "00000000", SWGGuiUtils.fontBold()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(todaysTable, 14, 14, w, 10);
+        w = SWGGuiUtils.fontWidth(todaysTable, "A ge", SWGGuiUtils.fontBold()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(todaysTable, 15, 15, w, 10);
+        SWGGuiUtils.setRowHeight(todaysTable);
 
         todaysTable.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
@@ -1090,41 +1100,40 @@ class SWGTodays extends JPanel {
     private String tripletDetails(Triplet tri) {
         if (tri == null) return "";
 
-        final String FS = "<font face=\"arial,sans-serif\" size=\"-1\">";
 
         ZString z = new ZString("<html>");
         z.app("<table border=0 cellspacing=0 cellpadding=0><tr><td>");
-        z.app(FS).app("<b>Filter: </b></font></td><td>");
-        z.app(FS).app(tri.rcwPair.rc()).app(" ¤ ");
+        z.app("<b>Filter: </b></td><td>");
+        z.app(tri.rcwPair.rc()).app(" ¤ ");
         tri.rcwPair.filter().toString(z, false);
-        z.app("</font></td></tr>");
+        z.app("</td></tr>");
 
         if (tri.inventory != null) {
-            z.app("<tr><td>").app(FS);
-            z.app("<b>Inventory: </b></font></td><td>").app(FS);
+            z.app("<tr><td>");
+            z.app("<b>Inventory: </b></td><td>");
             SWGKnownResource kr = tri.inventory.getResource();
             if (kr.galaxy().equals(SWGFrame.getSelectedGalaxy()) == false)
                 z.app('(').app(kr.galaxy().getName()).app(')');
             z.app(kr.getName()).app(" --- ");
             z.app(tri.inventory.getResource().rc().rcName());
-            z.app("</font></td></tr>");
+            z.app("</td></tr>");
 
-            z.app("<tr><td>&nbsp;</td><td>").app(FS);
+            z.app("<tr><td>&nbsp;</td><td>");
             tri.inventory.getResource().stats().toString(z, true);
-            z.app(" </font></td></tr>");
+            z.app(" </td></tr>");
 
-            z.app("<tr><td>").app(FS);
-            z.app("<b>Amount: </b></font></td><td>").app(FS);
+            z.app("<tr><td>");
+            z.app("<b>Amount: </b></td><td>");
             z.app(ZNumber.asText(tri.inventory.getAmount(), true, true));
             z.app("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Rate: </b>");
             z.app(ZNumber.asText((int) tri.rateInv, true, true));
-            z.app("</font></td></tr>");
+            z.app("</td></tr>");
 
             String n = tri.inventory.getNotes();
             if (!n.isEmpty()) {
-                z.app("<tr><td>").app(FS);
-                z.app("<b>Notes: </b></font></td><td>").app(FS);
-                z.app(n).app("</font></td></tr>");
+                z.app("<tr><td>");
+                z.app("<b>Notes: </b></td><td>");
+                z.app(n).app("</td></tr>");
             }
         }
         return z.app("</table></html>").toString();
