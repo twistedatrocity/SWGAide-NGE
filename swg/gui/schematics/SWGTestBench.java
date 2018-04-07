@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -99,7 +102,7 @@ final class SWGTestBench extends SWGJDialog {
     /**
      * Dimension of fillers for unused slots at GUI.
      */
-    private static final Dimension LABEL_DIM = new Dimension(76, 96);
+    private static final Dimension LABEL_DIM = new Dimension(Math.round(76 * SWGGuiUtils.fontMultiplier()), Math.round(96 * SWGGuiUtils.fontMultiplier()));
 
     /**
      * A constant reference to an instance of this type. The first time a client
@@ -156,9 +159,10 @@ final class SWGTestBench extends SWGJDialog {
 
         slots = new ArrayList<RSlot>();
         float m = SWGGuiUtils.fontMultiplier();
-        int w = Math.round(400 * m);
-        int h = Math.round(105 * m);
+        int w = Math.round(420 * m);
+        int h = Math.round(96 * m);
         Dimension pd = new Dimension(w, h);
+        getContentPane().setLayout(new BorderLayout());
 
         // add content        
         slotsGrid = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
@@ -166,26 +170,29 @@ final class SWGTestBench extends SWGJDialog {
         slotsGrid.setPreferredSize(pd);
         
         exps = new JPanel(new BorderLayout());
-        add(exps, BorderLayout.CENTER);
-        w = Math.round(400 * m);
         h = Math.round(305 * m);
-        exps.setPreferredSize(new Dimension(w, h));
+        
+        JScrollPane jsp = new JScrollPane(exps, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jsp.setPreferredSize(new Dimension(w, h));
+        getContentPane().add(jsp, BorderLayout.CENTER);
         
         ingredients = new JPanel(new BorderLayout());
-        add(ingredients, BorderLayout.SOUTH);
-        w = Math.round(400 * m);
         h = Math.round(170 * m);
         ingredients.setPreferredSize(new Dimension(w, h));
+        getContentPane().add(ingredients, BorderLayout.SOUTH);
         Border current = ingredients.getBorder();
-        Border empty = new EmptyBorder(5, 2, 5, 5);
-        if (current == null)
-        {
+        Border empty = new EmptyBorder(2, 2, 5, 5);
+        if (current == null) {
             ingredients.setBorder(empty);
-        }
-        else
-        {
+        } else {
             ingredients.setBorder(new CompoundBorder(empty, current));
         }
+        
+        // set max size to be screen
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        setMaximumSize(new Dimension(screen.width-20, screen.height-50));
+        setMinimumSize(new Dimension(w, Math.round(500 * m)));
 
         setLocation(true);
         registerHelp(SWGAide.class.getResource(
@@ -208,7 +215,6 @@ final class SWGTestBench extends SWGJDialog {
     protected void close() {
         SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
         pk.add("schemTestBenchLocation", getLocation());
-        pk.add("schemTestBenchDimension", getSize());
     }
 
     /**
@@ -225,8 +231,6 @@ final class SWGTestBench extends SWGJDialog {
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 d.width = THIS.getSize().width - 15;
-                float m = SWGGuiUtils.fontMultiplier();
-                d.width = Math.round(d.width * m);
                 return d;
             }
         };
@@ -366,10 +370,9 @@ final class SWGTestBench extends SWGJDialog {
     	float m = SWGGuiUtils.fontMultiplier();
     	nh = Math.round(nh * m);
     	ingredients.setPreferredSize(new Dimension(400, nh));
-        int nwidth = cols * 82;
-        
-        nwidth = Math.round(nwidth * m);
-        setSize(nwidth, getHeight());
+        int nwidth = cols * Math.round(79 * m);
+        Dimension sp = slotsGrid.getPreferredSize();
+        slotsGrid.setPreferredSize(new Dimension(nwidth, sp.height));
         slotsGrid.revalidate();
         slotsGrid.repaint(200);
     }
@@ -386,35 +389,39 @@ final class SWGTestBench extends SWGJDialog {
     private void setLocation(boolean init) {
     	// set a preferred dimension for the dialogue window.
     	float m = SWGGuiUtils.fontMultiplier();
-    	int w = Math.round(493 * m);
-    	int h = Math.round(620 * m);
+    	int w = Math.round(453 * m);
+    	int h = Math.round(630 * m);
     	Dimension pd = new Dimension(w, h);
+    	Dimension mx = getMaximumSize();
+    	Dimension cs = getSize();
+    	if (cs.width > mx.width) {
+    		w = mx.width;
+    	} else if (cs.width > pd.width) {
+    		w = cs.width;
+    	} else {
+    		w = pd.width;
+    	}
+    	if (cs.height > mx.height) {
+    		h = mx.height;
+    	} else if (cs.height > pd.height) {
+    		h = cs.height;
+    	} else {
+    		h = pd.height;
+    	}
+    	setSize(w, h);
+    	Point p;
         if (init) {
             SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
-            Point p = (Point) pk.get("schemTestBenchLocation",
+            p = (Point) pk.get("schemTestBenchLocation",
                     new Point(SWGAide.frame().getWidth(), 0));
-            Dimension d = (Dimension) pk.get("schemTestBenchDimension", pd);
-            setSize(d);
-            Dimension s = getSize();
-            setLocation(p);
-            if (s.width < d.width)
-                setSize(d.width, getHeight());
-            
-            if (s.height < d.height)
-            	setSize(getWidth(), d.height);
         } else {
-            Dimension d = pd;
-            Dimension s = getSize();
-            if (s.width < d.width || s.height < d.height)
-                setSize(d.width, getHeight());
-            
-            if (s.height < d.height)
-            	setSize(getWidth(), d.height);
-
-            Point p = getLocation();
-            Point pp = SWGGuiUtils.ensureOnScreen(p, getSize());
-            if (!p.equals(pp))
-                setLocation(pp);
+            p = getLocation();
+        }
+        Point pp = SWGGuiUtils.ensureOnScreen(p, getSize());
+        if (!p.equals(pp)) {
+            setLocation(pp);
+        } else {
+        	setLocation(p);
         }
     }
 
@@ -495,7 +502,10 @@ final class SWGTestBench extends SWGJDialog {
         updateEWAR();
         resetIngredients();
 
+        pack();
         setVisible(true);
+        int h = getContentPane().getHeight() + getInsets().top + getInsets().bottom;
+        setSize(getWidth(), h);
         setLocation(false);
     }
 
@@ -813,7 +823,12 @@ final class SWGTestBench extends SWGJDialog {
             // scaling the icons up with the fonts.
             int iw = SWGResourceClassTree.icon(rc).getIconWidth();
             int ih = SWGResourceClassTree.icon(rc).getIconHeight();
-            // only scale them once. Original image size is 64x64 so....
+            /* TODO add a way to compensate if a user has used test bench already during session
+             * then changes font size and uses the bench again without restarting aide.
+             * Since some icons would have already been resized they will no longer be 64x64 and not hit
+             * Could just let it re-scale all the time but that would be expensive.
+             */
+            // only scale them once per session. Original image size is 64x64 so....
             if (iw == 64) {
 	            float m = SWGGuiUtils.fontMultiplier();
 	            iw = Math.round(iw * m);
