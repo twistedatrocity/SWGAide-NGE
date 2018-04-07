@@ -886,7 +886,9 @@ final class SWGLaboratoryTab extends JPanel {
         it.setToolTipText("The inventory of a selected schematic");
         it.setAutoCreateRowSorter(false);
         it.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        SWGGuiUtils.tableColumnSetWidth(it, 1, 10, 50, 70);
+        int w = SWGGuiUtils.fontWidth(it, "Count", SWGGuiUtils.fontPlain()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(it, 1, 1, w, 10);
+        SWGGuiUtils.setRowHeight(it);
         it.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     
@@ -920,7 +922,7 @@ final class SWGLaboratoryTab extends JPanel {
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
-                d.width = (schemTab.getWidth() >> 1);
+                d.width = (schemTab.getWidth() >> 2);
                 return d;
             }
         };
