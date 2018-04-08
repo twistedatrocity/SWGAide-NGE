@@ -378,7 +378,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         setIconImage();
 
         exitList = new ArrayList<SWGDoTask>();
-        helpViewer = new SWGHelp(this);
 
         // do this before the preference keeper to open an empty resource cache
         resourceManager = new SWGResourceManager(this);
@@ -388,6 +387,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         // once the preference keeper is OK, initialize internal states
         resourceManager.initiate();
         guiUtils.initiate();
+        helpViewer = new SWGHelp(this);
 
         initFrame();
         double step = 100.0 / 6; // progress steps
