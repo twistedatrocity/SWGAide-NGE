@@ -332,21 +332,6 @@ public final class SWGUniverse implements Serializable, SWGGui {
     }
 
     /**
-     * Returns a file path for a SWG client folder, or {@code null}. This method
-     * invokes {@link SearchFiles#searchForDir(String, File)} with the arguments
-     * "StarWarsGalaxies" and "C:\". This method returns {@code null} if no such
-     * folder is found or if {@link #isValidSWGPath(File)} deems it invalid.
-     * 
-     * @return a path to a SWG client folder, or {@code null}
-     */
-    public static File findClientDir() {
-        File clientDir = SearchFiles.searchForDir("StarWarsGalaxies", null);
-        return isValidSWGPath(clientDir)
-                ? clientDir
-                : null;
-    }
-
-    /**
      * Determines if the specified directory contains some crucial SWG files
      * that must be present in a SWG installation. If the argument is {@code
      * null} this method returns {@code false}.

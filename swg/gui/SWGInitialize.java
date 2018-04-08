@@ -160,7 +160,7 @@ public final class SWGInitialize extends JPanel {
 
     /**
      * Helper method which continues with the step that displays initialization
-     * information and starts scanning for SWG. The boolean argument determines
+     * information and starts dialog for choosing SWG folder. The boolean argument determines
      * if the user accepted or declined the license in the previous step. If the
      * argument is {@code false} a dialog is displayed and the user selects to
      * abort or to continue.
@@ -178,83 +178,36 @@ public final class SWGInitialize extends JPanel {
                 this, "Abort initialization?", "Confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
             abort();
+            System.exit(0);
             return;
         }
 
         frame.putToStatbar("Initiating");
         setHtml("docs/initiate_en.htm");
 
-        final JLabel initLabel = new JLabel(
-                "Step 1: Is scanning for StarWarsGalaxies on C:\\      ");
-
-        final JButton okButton = new JButton("OK");
-        okButton.setEnabled(false);
-        okButton.setMnemonic('O');
-        okButton.setToolTipText("Continue");
-        okButton.addActionListener(new AbstractAction() {
-            
-            public void actionPerformed(ActionEvent e) {
-                initiateUniverse(true);
-            }
-        });
-        final JButton skip = new JButton("Skip scanning");
-        skip.setMnemonic('S');
-        skip.setToolTipText("Find SWG manually");
-        // find SWG client directory while waiting for user input but defer
-        // start until end of this method
-        final SwingWorker<File, Void> worker = new SwingWorker<File, Void>() {
-            @Override
-            public File doInBackground() {
-                return new File(SWGUniverse.findClientDir(), "testcenter");
-            }
-
-            
-            @Override
-            public void done() {
-                try {
-                    swgDir = get();
-                    frame.setCursor(Cursor.getPredefinedCursor(
-                            Cursor.DEFAULT_CURSOR));
-
-                    skip.setEnabled(false);
-                    initLabel.setText(swgDir == null
-                            ? "Step 1: Could not find StarWarsGalaxies on C:\\         "
-                            : "Step 1: Found " + swgDir.getAbsolutePath()
-                                    + "        ");
-
-                    okButton.setEnabled(true);
-                    okButton.requestFocusInWindow();
-                } catch (Exception e) {/* ignore */
-                }
-            }
-        };
+        final JButton choose = new JButton("Select SWG Game Folder");
+        choose.setMnemonic('C');
+        choose.setToolTipText("Find SWG manually");
 
         JButton cancel = new JButton("Cancel");
         cancel.setMnemonic('C');
-        cancel.setToolTipText("Find manually or Abort initialization");
+        cancel.setToolTipText("Abort initialization");
         cancel.addActionListener(new AbstractAction() {
             
             public void actionPerformed(ActionEvent e) {
-                worker.cancel(true);
                 initiateUniverse(false);
             }
         });
 
-        skip.addActionListener(new AbstractAction() {
+        choose.addActionListener(new AbstractAction() {
             
             public void actionPerformed(ActionEvent e) {
-                worker.cancel(true);
                 initiateUniverse(true);
             }
         });
 
-        buttons.add(initLabel);
-        buttons.add(okButton);
+        buttons.add(choose);
         buttons.add(cancel);
-        buttons.add(skip);
-
-        frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        worker.execute();
     }
 
     /**
@@ -293,18 +246,19 @@ public final class SWGInitialize extends JPanel {
                 this, "Abort initialization?", "Confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
             abort();
+            System.exit(0);
             return;
         }
 
         frame.putToStatbar("Select folder");
         final JLabel initLabel = new JLabel(
-                "Step 1: Find / Accept folder for StarWarsGalaxies");
+                "Step 1: Select main SWG game folder");
         buttons.add(initLabel);
 
         JFileChooser fc = SWGFrame.getFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setSelectedFile(swgDir);
-        String msg = "Select folder for StarWarsGalaxies (step 1)";
+        String msg = "Select main SWG game folder (step 1)";
 
         while ((swgDir == null
                 || (fc.getSelectedFile() != null
@@ -319,6 +273,7 @@ public final class SWGInitialize extends JPanel {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE)) {
                 abort();
+                System.exit(0);
                 return;
             }
             msg = "Select valid folder (step 1)";
