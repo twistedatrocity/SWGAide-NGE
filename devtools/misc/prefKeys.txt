@@ -46,7 +46,6 @@ mainTabHiddenNodesUpdated   String          # a version string, recent update
 currentlySelectedCharacter  SWGCharacter
 
 fontSizeParam				String			# font size parameter used in multiplier for font size settings
-mailBodyFontSize            Integer
 mailClientDividerLocation   Integer
 mailClientDividerLocationUp Integer
 mailClientColumnSize[0 3]   Integer
@@ -63,10 +62,6 @@ ISDroidFileAutoDelete       Boolean
 ISDroidFileDelete           Boolean       # used temporary 
 ISDroidFileHelpText         Boolean
 ISDroidFileContinuous       Boolean
-
-aliasPaneFontSize           Integer
-macrosPaneFontSize          Integer
-notesPaneFontSize           Integer
 
 auctionCSVFile              File
 tradeMiscSharedTOONNAME     Boolean

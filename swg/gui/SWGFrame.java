@@ -1862,6 +1862,18 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("resourceColorGreat");
         	}
         	// XXX End stat color update ^^
+        	/*
+        	 * Begin update for font size. This just nukes the stored pref for the old unused keys.
+        	 * 
+        	 */
+        	// checks if version in dat file older than or equal to 0.1.11
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 11 ) {
+        		SWGFrame.getPrefsKeeper().remove("mailBodyFontSize");
+        		SWGFrame.getPrefsKeeper().remove("aliasPaneFontSize");
+        		SWGFrame.getPrefsKeeper().remove("macrosPaneFontSize");
+        		SWGFrame.getPrefsKeeper().remove("notesPaneFontSize");
+        	}
+        	// XXX End font size update ^^
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
