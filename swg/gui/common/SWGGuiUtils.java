@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -113,6 +114,16 @@ public final class SWGGuiUtils {
      * A convenience constant for the plain font.
      */
     private static Font fontPlain;
+    
+    /**
+     * A convenience constant for the font multiplier.
+     */
+    private static float fontMultiplier = 0f;
+    
+    /**
+     * A convenience constant for the original font size before applying any scalars.
+     */
+    private static int defFontSize;
 
     /**
      * An array of colors which are used in SWGAide to tint GUI elements with
@@ -164,11 +175,21 @@ public final class SWGGuiUtils {
      * 
      * @param frame the frame for this application
      */
-    @SuppressWarnings({ "rawtypes", "unused" })
 	public SWGGuiUtils(SWGFrame frame) {
-    	String fontSizeParam = getFontSizeParam();
-        if (fontSizeParam != null) {
-            float multiplier = Integer.parseInt(fontSizeParam) / 100.0f;
+		Font tf = new JLabel().getFont();
+        defFontSize = tf.getSize();
+    }
+
+    /**
+     * Initiates this instance; this method must not be invoked before SWGAide's
+     * persistent storage is initiated and it should be invoked just once.
+     */
+    @SuppressWarnings({ "rawtypes", "unused" })
+	public void initiate() {
+        statColorLimitSet();
+        fontMultiplier();
+        
+        if (fontMultiplier != 0f) {
             UIDefaults defaults = UIManager.getDefaults();
             int i = 0;
             for (Enumeration e = defaults.keys(); e.hasMoreElements(); i++) {
@@ -176,7 +197,7 @@ public final class SWGGuiUtils {
                 Object value = defaults.get(key);
                 if (value instanceof Font) {
                     Font font = (Font) value;
-                    int newSize = Math.round(font.getSize() * multiplier);
+                    int newSize = Math.round(font.getSize() * fontMultiplier);
                     if (value instanceof FontUIResource) {
                         defaults.put(key, new FontUIResource(font.getName(), font.getStyle(), newSize));
                     } else {
@@ -186,18 +207,10 @@ public final class SWGGuiUtils {
             }
         }
     	
-        Font f = new JTable().getFont();
+        Font f = new JLabel().getFont();
         fontBold = new Font(f.getName(), Font.BOLD, f.getSize());
         fontItalic = new Font(f.getName(), Font.ITALIC, f.getSize());
         fontPlain = new Font(f.getName(), Font.PLAIN, f.getSize());
-    }
-
-    /**
-     * Initiates this instance; this method must not be invoked before SWGAide's
-     * persistent storage is initiated and it should be invoked just once.
-     */
-    public void initiate() {
-        statColorLimitSet();
     }
 
     /**
@@ -444,7 +457,7 @@ public final class SWGGuiUtils {
         comp.setPreferredSize(dm);
     }
     
-    /** TODO finish this so it writes default value back to prefs after font option panel is done being written.
+    /**
      * Gets fontSizeParam from prefs or sets default to 100 if null.
      * 
      * @return fontSizeParam
@@ -452,9 +465,19 @@ public final class SWGGuiUtils {
     public static String getFontSizeParam () {
     	String fp = (String) SWGFrame.getPrefsKeeper().get("fontSizeParam");
     	if (fp == null) {
-    		fp = "130";
+    		fp = "100";
     	}
     	return fp;
+    }
+    
+    /**
+     * Writes new fontSizeParam value to prefs storage.
+     * 
+     * @param fp
+     */
+    public static void setFontSize (int fp) {
+    	if (fp < 100 || fp > 280 ) return;
+    	SWGFrame.getPrefsKeeper().add("fontSizeParam", Integer.toString(fp) );
     }
     
     /**
@@ -463,9 +486,21 @@ public final class SWGGuiUtils {
      * @return multiplier
      */
     public static float fontMultiplier () {
-    	float multiplier = Integer.parseInt(getFontSizeParam()) / 100.0f;
-    	return multiplier;
+    	if(fontMultiplier == 0f) {
+    		fontMultiplier = Integer.parseInt(getFontSizeParam()) / 100.0f;
+    	}
+    	return fontMultiplier;
     }
+    
+    /**
+     * Simple method to return default font size
+     * 
+     * @return multiplier
+     */
+    public static int defFontSize () {
+    	return defFontSize;
+    }
+    
     /**
      * Creates and returns a button with the specified image and tool tip. If
      * the image does not exist the returned button read the alternative text.

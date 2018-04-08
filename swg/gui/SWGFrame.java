@@ -57,6 +57,7 @@ import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.resources.SWGResource;
 import swg.crafting.schematics.SWGSchematicsManager;
+import swg.gui.common.FontOptionsPanel;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
@@ -115,7 +116,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     /**
      * A list of callbacks to be executed before exit
      */
-    private List<SWGDoTask> exitList;
+    private static List<SWGDoTask> exitList;
 
     /**
      * The file menu
@@ -169,11 +170,21 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * The dialog for general options
      */
     private SWGCraftOptionsPanel optionsCraft = null;
+    
+    /**
+     * The dialog for general options
+     */
+    private FontOptionsPanel optionsFont = null;
 
     /**
      * The menu item for general options
      */
     private JMenuItem optionsCraftMenuItem;
+    
+    /**
+     * The menu item for Font options
+     */
+    private JMenuItem optionsFontMenuItem;
 
     /**
      * The options menu
@@ -433,7 +444,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * 
      * @see SWGDoTask
      */
-    void doExit() {
+    public static void doExit() {
 
         for (SWGDoTask dx : exitList) {
             try {
@@ -579,6 +590,18 @@ public class SWGFrame extends JFrame implements ComponentListener,
             optionsCraft = new SWGCraftOptionsPanel(this);
         }
         return optionsCraft;
+    }
+    
+    /**
+     * Returns the dialog for general options of this application
+     * 
+     * @return the dialog for general options of this application
+     */
+    public FontOptionsPanel getOptionsFont() {
+        if (optionsFont == null) {
+            optionsFont = new FontOptionsPanel(this);
+        }
+        return optionsFont;
     }
 
     /**
@@ -940,6 +963,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         optionsMenu.setMnemonic(KeyEvent.VK_O);
 
         optionsMenu.add(optionsSWGCraftMenuItem());
+        optionsMenu.add(optionsFontSize());
 
         optionsMenu.setEnabled(true);
         bar.add(optionsMenu);
@@ -1297,6 +1321,14 @@ public class SWGFrame extends JFrame implements ComponentListener,
         getOptionsCraft();
         optionsCraft.setVisible(true);
     }
+    
+    /**
+     * Called when the general options menu is selected
+     */
+    protected void optionsFontSizeClicked() {
+        getOptionsFont();
+        optionsFont.setVisible(true);
+    }
 
     /**
      * Returns a menu item for the Options menu, SWGCraft options
@@ -1315,6 +1347,25 @@ public class SWGFrame extends JFrame implements ComponentListener,
             }
         });
         return optionsCraftMenuItem;
+    }
+    
+    /**
+     * Returns a menu item for the Options menu, FontSize options
+     * 
+     * @return a menu item for the Options menu, FontSize options
+     */
+    private JMenuItem optionsFontSize() {
+        optionsFontMenuItem = new JMenuItem("Font Size");
+        optionsFontMenuItem
+            .setToolTipText("Adjust the Font Size for the entire application");
+        optionsFontMenuItem.setMnemonic('F');
+        optionsFontMenuItem.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                optionsFontSizeClicked();
+            }
+        });
+        return optionsFontMenuItem;
     }
 
     /**
