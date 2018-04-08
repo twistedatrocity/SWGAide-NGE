@@ -9,6 +9,10 @@ import java.util.Stack;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import swg.SWGAide;
 import swg.gui.SWGFrame;
@@ -50,9 +54,23 @@ public final class SWGHelp extends SWGJDialog {
 
         pageStack = new Stack<URL>();
         pageStack.add(makeDefaultURL());
-
+        
         textPane = new JEditorPane();
+        textPane.setContentType("text/html");
         textPane.setEditable(false);
+        HTMLEditorKit kit = new HTMLEditorKit();
+        textPane.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        style = styleSheet.getStyle("h1");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h2");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h3");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h4");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
 
         JScrollPane jsp = new JScrollPane(textPane);
         jsp.setMinimumSize(new Dimension(150, 120));
