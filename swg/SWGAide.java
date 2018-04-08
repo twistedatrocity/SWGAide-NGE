@@ -359,8 +359,7 @@ public final class SWGAide {
      * @param lvl the log level for the invocation, in the range [1 4]
      * @param msg the message, or an array of strings
      */
-    @SuppressWarnings("unused")
-	public static void printDebug(String g, int lvl, String... msg) {
+    public static void printDebug(String g, int lvl, String... msg) {
         synchronized (LOCK_LOG) {
 
             int lvlGr = 0;

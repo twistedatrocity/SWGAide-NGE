@@ -9,7 +9,6 @@ import java.util.Map;
 
 import swg.gui.common.SWGGui;
 import swg.model.SWGAliases.SWGAliasesList;
-import swg.tools.SearchFiles;
 
 /**
  * This type represents the topmost element of a SWG universe, either SWG or TC.
