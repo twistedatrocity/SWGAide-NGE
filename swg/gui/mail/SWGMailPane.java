@@ -3,8 +3,6 @@ package swg.gui.mail;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +21,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -213,7 +210,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 doExit();
             }
         }));
-        makeKeyActions();
     }
 
     /**
@@ -267,41 +263,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             JMenuItem saveAs = mailSaveAsMenuItem();
             saveAs.setEnabled(b);
             popup.add(saveAs);
-
-            /* disabling this for now
-            popup.addSeparator();
-
-            JMenuItem fontBigger = new JMenuItem("Font increase");
-            fontBigger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,
-                    InputEvent.CTRL_MASK));
-            fontBigger.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    mailBodyChangeFont(1.2);
-                }
-            });
-            popup.add(fontBigger);
-
-            JMenuItem fontLesser = new JMenuItem("Font decrease");
-            fontLesser.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
-                    InputEvent.CTRL_MASK));
-            fontLesser.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    mailBodyChangeFont(1 / 1.2);
-                }
-            });
-            popup.add(fontLesser);
-
-            JMenuItem fontNormal = new JMenuItem("Font normal");
-            fontNormal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
-                    InputEvent.CTRL_MASK));
-            fontNormal.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    mailBodyChangeFont(0);
-                }
-            });
-            popup.add(fontNormal);
-            */
-
             popup.show(mailBody, e.getX(), e.getY());
         }
     }
@@ -605,28 +566,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     }
 
     /**
-     * Changes font size relatively to the value of <code>change</code>, a value
-     * of 0 resets the font size to normal size, otherwise the new font is the
-     * product of current font size times <code>change</code>
-     * 
-     * @param change the multiplier for the new font size, 0 resets font size to
-     *        normal
-     */
-    private void mailBodyChangeFont(double change) {
-        Font f = null;
-        if (change == 0)
-            f = frame.getFont();
-        else {
-            f = mailBody.getFont();
-            int s = Math.max((int) (Math.round(f.getSize() * change)), 6);
-            f = new Font(f.getName(), f.getStyle(), s);
-        }
-        mailBody.setFont(f);
-        SWGFrame.getPrefsKeeper().add("mailBodyFontSize",
-                new Integer(f.getSize()));
-    }
-
-    /**
      * Set the mail body to <code>comp</code>
      * 
      * @param comp the component to set as mail body
@@ -927,38 +866,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     }
 
     /**
-     * Creates key actions for the mail body font size
-     */
-    
-    private void makeKeyActions() {
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, InputEvent.CTRL_MASK),
-                "mailFont+Action");
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_MASK),
-                "mailFont-Action");
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_0, InputEvent.CTRL_MASK),
-                "mailFont0Action");
-
-        this.getActionMap().put("mailFont+Action", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                mailBodyChangeFont(1.2);
-            }
-        });
-        this.getActionMap().put("mailFont-Action", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                mailBodyChangeFont(1 / 1.2);
-            }
-        });
-        this.getActionMap().put("mailFont0Action", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                mailBodyChangeFont(0);
-            }
-        });
-    }
-
-    /**
      * Returns a pane for the mail client folders for the current character
      * 
      * @return a pane for the mail folders
@@ -1214,33 +1121,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         return sdup;
     }
 
-    // /**
-    // * Returns a menu item for ISDroid reporting
-    // *
-    // * @return a menu item for ISDroid reporting
-    // */
-    // private JMenuItem makeOptionsISDroidGUIInput() {
-    // final JCheckBoxMenuItem gui = new JCheckBoxMenuItem("GUI input");
-    // gui.setToolTipText("Use a GUI input field rather than the notes file");
-    // gui.setMnemonic('G');
-    //
-    // gui.setSelected(((Boolean) SWGFrame.getPrefsKeeper().get(
-    // "ISDroidUseGUIPanel", Boolean.FALSE)).booleanValue());
-    //
-    // gui.addActionListener(new ActionListener() {
-    // public void actionPerformed(ActionEvent e) {
-    // // if (gui.isSelected())
-    // // JOptionPane.showMessageDialog(optionsMenu,
-    // // "Yet not implemented", "TODO",
-    // // JOptionPane.INFORMATION_MESSAGE);
-    // // getPrefsKeeper().add("ISDroidUseGUIPanel",
-    // // Boolean.valueOf(gui.isSelected()));
-    // }
-    // });
-    // gui.setEnabled(false);
-    // return gui;
-    // }
-
     /**
      * Returns a menu item for ISDroid reporting
      * 
@@ -1278,11 +1158,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         lower.add(mailHeader, BorderLayout.PAGE_START);
 
         mailBody = new SWGMailBody();
-
-        /*Font f = mailBody.getFont();
-        int s = ((Integer) SWGFrame.getPrefsKeeper().get(
-                "mailBodyFontSize", new Integer(f.getSize()))).intValue();
-        mailBody.setFont(new Font(f.getName(), f.getStyle(), s));*/
 
         mailBodyJSP = new JScrollPane(mailBody);
         lower.add(mailBodyJSP, BorderLayout.CENTER);
@@ -1845,11 +1720,6 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             return columnIndex == 2 ? Date.class : String.class;
-
-            // columnIndex == 2
-            // ? Date.class
-            // :
-                        //String.class;
         }
 
         @Override

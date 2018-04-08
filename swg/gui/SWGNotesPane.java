@@ -1,6 +1,5 @@
 package swg.gui;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -10,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -126,12 +124,6 @@ public class SWGNotesPane extends JTextArea {
                 : "");
         this.setCaretPosition(0);
 
-        Font f = this.getFont();
-        int s =
-                ((Integer) SWGFrame.getPrefsKeeper().get("notesPaneFontSize",
-                        new Integer(f.getSize()))).intValue();
-        this.setFont(new Font(f.getName(), f.getStyle(), s));
-
         notesUndo = new UndoManager();
         getDocument().addUndoableEditListener(
                 new SWGNotesUndoableEditListener());
@@ -146,7 +138,6 @@ public class SWGNotesPane extends JTextArea {
                 notesClicked(e);
             }
         });
-        createKeyActions();
 
         frame.addExitCallback(new SWGDoTask(new SWGDoTask.TaskCallback() {
 
@@ -156,65 +147,6 @@ public class SWGNotesPane extends JTextArea {
                 }
             }
         }));
-    }
-
-    /**
-     * Changes font size relatively to the value of <code>change</code>, a value
-     * of 0 resets the font size to normal size, otherwise the new font is the
-     * product of current font size times <code>change</code>
-     * 
-     * @param change the multiplier for the new font size, 0 resets font size to
-     *        normal
-     */
-    void changeFont(double change) {
-        int s = 0;
-        Font f = null;
-        if (change != 0) {
-            f = this.getFont();
-            s = Math.max((int) (Math.round(f.getSize() * change)), 6);
-            f = new Font(f.getName(), f.getStyle(), s);
-        } else {
-            f = frame.getFont();
-        }
-        this.setFont(f);
-        SWGFrame.getPrefsKeeper().add("notesPaneFontSize",
-                new Integer(f.getSize()));
-    }
-
-    /**
-     * Creates and applies key actions for the mail body font size
-     */
-    private void createKeyActions() {
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, InputEvent.CTRL_MASK),
-                "notesFont+Action");
-        this.getActionMap().put("notesFont+Action", new AbstractAction() {
-
-            public void actionPerformed(ActionEvent e) {
-                changeFont(1.2);
-            }
-        });
-
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(
-                        KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
-                                InputEvent.CTRL_MASK), "notesFont-Action");
-        this.getActionMap().put("notesFont-Action", new AbstractAction() {
-
-            public void actionPerformed(ActionEvent e) {
-                changeFont(1 / 1.2);
-            }
-        });
-
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-                KeyStroke.getKeyStroke(KeyEvent.VK_0, InputEvent.CTRL_MASK),
-                "notesFont0Action");
-        this.getActionMap().put("notesFont0Action", new AbstractAction() {
-
-            public void actionPerformed(ActionEvent e) {
-                changeFont(0);
-            }
-        });
     }
 
     /**
@@ -308,41 +240,6 @@ public class SWGNotesPane extends JTextArea {
     protected void notesClicked(MouseEvent e) {
         if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
             JPopupMenu popup = new JPopupMenu();
-
-            JMenuItem fontBigger = new JMenuItem("Font increase");
-            fontBigger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS,
-                    InputEvent.CTRL_MASK));
-            fontBigger.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    changeFont(1.2);
-                }
-            });
-            popup.add(fontBigger);
-
-            JMenuItem fontLesser = new JMenuItem("Font decrease");
-            fontLesser.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS,
-                    InputEvent.CTRL_MASK));
-            fontLesser.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    changeFont(1 / 1.2);
-                }
-            });
-            popup.add(fontLesser);
-
-            JMenuItem fontNormal = new JMenuItem("Font normal");
-            fontNormal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
-                    InputEvent.CTRL_MASK));
-            fontNormal.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    changeFont(0);
-                }
-            });
-            popup.add(fontNormal);
-
-            popup.addSeparator();
 
             JMenuItem bak = notesBackupMenuItem();
             popup.add(bak);
