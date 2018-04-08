@@ -789,7 +789,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
             ? screen.height
             : 800;
         Dimension dim = new Dimension(w, h);
-        dim = (Dimension) getPrefsKeeper().add("frameDimension", dim);
+        Dimension pd = (Dimension) getPrefsKeeper().add("frameDimension", dim);
+        if (pd != null) dim = pd;
         Dimension md = new Dimension(1280,800);
         this.setMinimumSize(md);
         this.setSize(dim);
