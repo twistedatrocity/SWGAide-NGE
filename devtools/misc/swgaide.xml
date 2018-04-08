@@ -21,5 +21,7 @@
     <maxVersion>1.8.0_999</maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
+    <opt>-XX:MaxHeapFreeRatio=60</opt>
+    <opt>-XX:MinHeapFreeRatio=40</opt>
   </jre>
 </launch4jConfig>
