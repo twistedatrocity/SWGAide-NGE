@@ -461,7 +461,7 @@ public final class SWGGuiUtils {
     public static String getFontSizeParam () {
     	String fp = (String) SWGFrame.getPrefsKeeper().get("fontSizeParam");
     	if (fp == null) {
-    		fp = "100";
+    		fp = "130";
     	}
     	return fp;
     }
