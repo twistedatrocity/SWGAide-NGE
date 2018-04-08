@@ -23,5 +23,6 @@
     <runtimeBits>64/32</runtimeBits>
     <opt>-XX:MaxHeapFreeRatio=60</opt>
     <opt>-XX:MinHeapFreeRatio=40</opt>
+    <opt>-XX:+UseG1GC</opt>
   </jre>
 </launch4jConfig>

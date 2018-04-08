@@ -32,6 +32,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -419,6 +421,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
         addWindowListener(this);
 
         if (!firstTime) updatePostLaunch();
+        
+        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(() -> System.gc(), 5, TimeUnit.MINUTES);
     }
 
     /**
@@ -1856,6 +1861,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("resourceColorGood");
         		SWGFrame.getPrefsKeeper().remove("resourceColorGreat");
         	}
+        	// XXX End stat color update ^^
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
