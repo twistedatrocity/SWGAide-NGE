@@ -386,13 +386,9 @@ public final class SWGGuiUtils {
      * @author Mr-Miagi
      */
     private static int fontHeightPadding (int h) {
-    	int p = 1;
-    	if (h <= 18) {
-    		p = 2;
-    	} else if (h <= 20) {
-    		p = 4;
-    	} else if (h > 20) {
-    		p = 6;
+    	int p = 0;
+    	if (h > 24) {
+    		p = 1;
     	}
     	int t = h + p;
     	return t;
