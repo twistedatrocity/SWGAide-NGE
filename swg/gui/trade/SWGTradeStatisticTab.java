@@ -343,7 +343,7 @@ class SWGTradeStatisticTab extends JPanel {
     private Component makeMetricsView() {
         JPanel metricsPanel = new JPanel(new BorderLayout());
         metricsPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-        metricsPanel.setPreferredSize(new Dimension(600, 6 * SWGGuiUtils.getRowHeight(metricsPanel)));
+        metricsPanel.setPreferredSize(new Dimension(600, Math.round(6.6f * SWGGuiUtils.getRowHeight(metricsPanel))));
 
         metricsTable = new SWGJTable(new SWGTradeMetricsTableModel());
         metricsTable.getTableHeader().setReorderingAllowed(false);
