@@ -601,6 +601,13 @@ final class SWGLaboratoryTab extends JPanel {
 
         actionAssigneeSelected(null); // populate assignee combo
         isGuiFinished = true;
+        Integer tsid = (Integer) SWGFrame.getPrefsKeeper().get("schemDraftSelectedSchematic", Integer.valueOf(690));
+        SWGSchematic tsel = null;
+        if (tsid != null)
+            tsel = SWGSchematicsManager.getSchematic(tsid.intValue());
+        
+        if (tsel != null)
+            schemSelect(tsel);
     }
 
     /**
