@@ -71,8 +71,30 @@ public class FontOptionsPanel extends JDialog implements ActionListener {
      */
     public FontOptionsPanel(final SWGFrame frame) {
         super(frame, "Font Options (requires restart)", false);
-        
-        JPanel contentPane = new JPanel();
+
+        this.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+                if (isOpen)
+                    return;
+                focusGained();
+                super.windowActivated(e);
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                actionClose();
+                super.windowClosing(e);
+            }
+        });
+    }
+    
+    /**
+     * Initialize everything.
+     */
+    private void init() {
+    	JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 7, 7, 7));
 
@@ -114,24 +136,6 @@ public class FontOptionsPanel extends JDialog implements ActionListener {
         
         contentPane.add(outer);
         contentPane.add(buttons);
-
-        this.addWindowListener(new WindowAdapter() {
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-                if (isOpen)
-                    return;
-                focusGained();
-                super.windowActivated(e);
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-                actionClose();
-                super.windowClosing(e);
-            }
-        });
-
         this.setContentPane(contentPane);
         this.pack();
         this.setMinimumSize(this.getSize());
@@ -139,14 +143,14 @@ public class FontOptionsPanel extends JDialog implements ActionListener {
         Point pp =
             (Point) SWGFrame.getPrefsKeeper().get("optionsGeneralLocation");
         if (pp == null) {
-            pp = frame.getLocation();
+            pp = this.getLocation();
             pp.x += 50;
             pp.y += 20;
         } else
             pp = SWGGuiUtils.ensureOnScreen(pp, getSize());
         setLocation(pp);
-    }
-    
+		
+	}
     /**
      * Changes sample text in options window when slider is moved.
      * 
@@ -197,7 +201,24 @@ public class FontOptionsPanel extends JDialog implements ActionListener {
         isOpen = true;
     }
     
-    private void showConfirm () {
+    /**
+     * Override setVisible so all values are re-initialized
+     */
+    @Override
+    public void setVisible(boolean bVisible)
+    {
+        if(bVisible == false)
+        {
+            super.setVisible(bVisible);
+            return;
+        }
+
+        init();
+        super.setVisible(bVisible);
+        return;
+    }
+
+	private void showConfirm () {
     	JOptionPane pane = new JOptionPane("\nThe application must be restarted to apply changes\n"
         		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
         JDialog d = pane.createDialog(null, "SWGAide-NGE Requires Restart");
