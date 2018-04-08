@@ -21,12 +21,17 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.UpdateNotification;
 import swg.crafting.UpdateSubscriber;
 import swg.gui.common.SWGDoTask;
+import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.model.SWGAliases;
 import swg.model.SWGCGalaxy;
@@ -392,6 +397,19 @@ public final class SWGInitialize extends JPanel {
 
         ed = new JEditorPane();
         ed.setEditable(false);
+        HTMLEditorKit kit = new HTMLEditorKit();
+        ed.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        style = styleSheet.getStyle("h1");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h2");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h3");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
+        style = styleSheet.getStyle("h4");
+        StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
         JScrollPane jsp = new JScrollPane(ed);
         int vs = ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
         jsp.setVerticalScrollBarPolicy(vs);
