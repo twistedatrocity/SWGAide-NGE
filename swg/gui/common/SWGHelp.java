@@ -174,11 +174,11 @@ public final class SWGHelp extends SWGJDialog {
 
         if (dim == null || loc == null) {
             dim = THIS.parent.getSize();
-            int w = dim.width > 400
-                    ? 400
+            int w = dim.width > 800
+                    ? 800
                     : dim.width - 50;
-            int h = dim.height > 500
-                    ? 500
+            int h = dim.height > 600
+                    ? 600
                     : dim.height - 50;
             dim = new Dimension(w, h);
 
