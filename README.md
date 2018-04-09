@@ -15,14 +15,13 @@ Drag and drop the SWGAide-NGE.exe file in to the new folder.
 Double click the icon for SWGAide-NGE.exe to launch it.
 
 SWGAide guides you through its initialization. Actually, you just have to
-verify (or possibly find) the folder for StarWarsGalaxies; you cannot make
-a useful installation of SWGAide without SWG installed. You may also wish to
-skip the scanning phase and manually choose your SWG game folder.
+choose the game folder SWG is installed in; you cannot make
+a useful installation of SWGAide without SWG installed.
 
 SWGAide creates several folders and files its directory; they are all self
 explanatory.
 
-Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use separate installation folders.
+Note: The Pre-CU version of SWGAide cannot live in the same folder as this NGE one, please use separate installation folders.
 
 Upgrades
 ========
