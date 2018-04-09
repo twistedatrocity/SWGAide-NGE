@@ -2670,9 +2670,9 @@ final class SWGInventoryTab extends JPanel {
         create.setEnabled(row >= 0);
         ppp.add(create);
 
-        ppp.addSeparator();
+        //ppp.addSeparator();
 
-        JMenuItem exp = new JMenuItem("File export...");
+        /*JMenuItem exp = new JMenuItem("File export...");
         exp.setToolTipText("Export the current view to CSV file");
         exp.addActionListener(new ActionListener() {
             
@@ -2691,13 +2691,13 @@ final class SWGInventoryTab extends JPanel {
                 actionImportFile();
             }
         });
-        ppp.add(impf);
+        ppp.add(impf); */
 
         ppp.addSeparator();
 
         final SWGCharacter toon = SWGFrame.getSelectedCharacter();
 
-        JMenuItem impn = new JMenuItem("Notes import / update...");
+        JMenuItem impn = new JMenuItem("Import / Update from notes...");
         impn.setToolTipText("Import / Update inventory from in-game notes file");
         impn.addActionListener(new ActionListener() {
             
@@ -2708,7 +2708,7 @@ final class SWGInventoryTab extends JPanel {
         impn.setEnabled(toon != null);
         ppp.add(impn);
 
-        JMenuItem expn = new JMenuItem("Notes export...");
+        JMenuItem expn = new JMenuItem("Export to notes...");
         expn.setToolTipText("Export current display to in-game notes file");
         expn.addActionListener(new ActionListener() {
             
