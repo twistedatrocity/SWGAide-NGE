@@ -290,19 +290,6 @@ class SWGTodays extends JPanel {
         boolean hq = hqlqCheck.isSelected();
 
         List<SWGInventoryWrapper> inv = Collections.emptyList();
-        if (hq && !great.isSelected()) {
-            inv = SWGSchemController.inventory();
-            if (inv.isEmpty())
-                JOptionPane.showMessageDialog(schemTab,
-                        "You have no resources in your inventory for " +
-                                SWGFrame.getSelectedGalaxy().getName() +
-                                ".\nThis panel helps you to quickly review currently" + 
-                                "\nspawning resources that are better than what exists in" +
-                                "\nyour resource inventory based on the options you have set. " +
-                                "\nThis popup will always show unless *Show Great* is checked or you" +
-                                "\nhave at least one item in your inventory.", "Empty inventory",
-                        JOptionPane.WARNING_MESSAGE);
-        }
 
         List<Triplet> ts = todaysTS(hq, great.isSelected(),
                 selectedAssignee.getFavorites(), inv);
