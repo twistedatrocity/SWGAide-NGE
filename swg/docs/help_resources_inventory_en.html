@@ -2,10 +2,21 @@
 <HEAD>
 <TITLE>Help: Resources Help</TITLE>
 <style type="text/css">
-body { background:#FFFFFF; color:#000000;}
-html, body { height: 100%; padding: 0; }
-pre {color : black; background-color : #fafafa; }
-li {margin-left:1em;} 
+body {
+	background: #FFFFFF;
+	color: #000000;
+}
+html, body {
+	height: 100%;
+	padding: 0;
+}
+pre {
+	color : black;
+	background-color : #fafafa;
+}
+li {
+	margin-left: 1em;
+}
 </style>
 </HEAD>
 
@@ -99,57 +110,7 @@ SWGAide but only at SWGCraft.org, then "edit" the resource in SWGAide and click
   wherever. <br/>
   <b>Browse SWGPets.com</b> which opens your web browser for
   the selected resource class. Notice that for generic resource
-  classes SWGPets displays all creatures. </p>
-<p> <b>File export: </b>export <U>the current view</U> of resources to CSV file.
-  The syntax for the
-  output file is described in the next section. Test it out to see how it looks
-  like. Do this every now and then to have a backup file. </p>
-<p> <b>File import: </b>Import from CSV file, for example from backup files or
-  from other applications.
-  This imports to the resource inventory for the current galaxy. If the file
-  contains resources that already exist in the inventory these file resources are
-  ignored. The supported format for <i>an unbroken line </i> is as follows
-  (x is any positive integer but is ignored):
-<PRE>assignee,galaxy,resourceName,ID,resourceClass,classToken,...
-...amount,[stats in any order],notes</pre>
-For files with a header line that reads the column names exactly as in the line
-above and the correct order of the columns, SWGAide supports a relaxed syntax.
-For resources which are known at SWGCraft.org only the "ID" column is enough, or
-the galaxy and name columns; amount and notes are optional, but known resources
-do not need values for stats. The columns can have any order but notes must
-always be last. However, this is just if one of the header lines read the
-proper column names and their order.
-<pre>resourceClass;resourceName;x;ER;CR;CD;DR;FL;HR;MB;PE;OQ;SR;UT;...
-...amount;x;x;notes</PRE>
-If there is no header line it is assumed that it is exported from a crafter's
-utility, such as the JnF SWGTool that has the format of the second line above
-(but at an unbroken line of course).
-Galaxies other than the current galaxy are supposed to read
-"...;(galaxy)resourceName;...". For other tools that export SWG resources, in
-any file format, please post at the SWGAide forum at SWGCraft.org and include an
-example.
-</p>
-<blockquote> <b>How to create a file:</b> It is always possible to create a file that
-  SWGAide can import. Usually players have used a program such as OpenOffice Calc
-  or MS Excel. Then name each column header with a name that reads exactly as in
-  the <i>first&nbsp;</i> line above, stats are upper case but can be skipped for
-  known resources. Delete or move away unnecessary columns. Notes must come last.
-  Export as CSV (text) and make sure that the delimiter between columns is a comma
-  sign. Verify in a text editor. Import. </blockquote>
-<p> The import is done for the following <b>assignee: </b>
-<ul>
-  <li> To the assignee specified in the file's column for assignees; perhaps add or
-    edit the line before import. </li>
-  <li> If no assignee is specified in the file, to the assignee who is selected at the
-    list in the lower left corner of SWGAide. </li>
-  <li> Otherwise, to the current character who is selected at the Main panel. </li>
-</ul>
-</p>
-<p> SWGAide always tries to look up each resource at SWGCraft.org. This is done in
-  this order: 1) If the ID is known it is used, 2) if galaxy is specified 
-  galaxy+name is used, and 3) if the user selects so current-galaxy+name is used.
-  Otherwise, 4) if nothing is found or if the user negates No. 3, if resource
-  stats are specified for the entry they are used. </p>
+  classes SWGPets displays all creatures.</p>
 <p> <b>Notes import/update... </b> import from an in-game notes file for the character <u>who is selected at the Main panel</u>; this option is
   also used to <b>update existing entries</b> in inventory.
   In-game, type minimal information to a notes file and import
