@@ -461,14 +461,7 @@ public final class SWGGuiUtils {
     public static String getFontSizeParam () {
     	String fp = (String) SWGFrame.getPrefsKeeper().get("fontSizeParam");
     	if (fp == null) {
-    		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    		if (screen.height > 1080) {
-    			fp = "160";
-    		} else if (screen.height > 900) {
-    			fp = "130";
-    		} else {
-    			fp = "100";
-    		}
+    		fp = "100";
     	}
     	return fp;
     }
