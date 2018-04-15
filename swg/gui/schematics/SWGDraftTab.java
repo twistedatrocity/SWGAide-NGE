@@ -1687,7 +1687,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         draftCategory = new JLabel() {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(DRAFT_WIDTH, 32);
+                return new Dimension(DRAFT_WIDTH, Math.round(32 * SWGGuiUtils.fontMultiplier()) );
             }
         };
         draftCategory.setVerticalAlignment(SwingConstants.TOP);
