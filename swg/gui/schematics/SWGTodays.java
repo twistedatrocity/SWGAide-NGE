@@ -222,6 +222,8 @@ class SWGTodays extends JPanel {
      * viewer continuously. Default is {@code false}.
      */
     private boolean updateViewer;
+    
+    private static List<SWGInventoryWrapper> invW = Collections.emptyList();
 
     /**
      * Creates an instance of this type.
@@ -289,10 +291,8 @@ class SWGTodays extends JPanel {
 
         boolean hq = hqlqCheck.isSelected();
 
-        List<SWGInventoryWrapper> inv = Collections.emptyList();
-
         List<Triplet> ts = todaysTS(hq, great.isSelected(),
-                selectedAssignee.getFavorites(), inv);
+                selectedAssignee.getFavorites(), invW);
         todaysModel.setElements(ts);
         // restore table selection, if possible
         isWorking = false;
@@ -1423,12 +1423,12 @@ class SWGTodays extends JPanel {
 
         List<SWGRCWPair> rcwps = SWGSchemController.rcwPairs(hq, schems);
 
-        List<SWGInventoryWrapper> inv2 = inv;
+        invW = inv;
         if (hq && !grt) {
             int amount = ((Integer) SWGFrame.getPrefsKeeper().get(
                     "schemTodaysMinInventory",
                     Integer.valueOf(50000))).intValue();
-            inv2 = inventory(inv2, amount, SWGFrame.getSelectedGalaxy());
+            invW = inventory(invW, amount, SWGFrame.getSelectedGalaxy());
         }
 
         int days = ((Integer) SWGFrame.getPrefsKeeper().get(
@@ -1436,7 +1436,7 @@ class SWGTodays extends JPanel {
         SWGResourceSet current = current(days);
 
         List<Triplet> ts = hq
-                ? todaysHQ(rcwps, current, inv2)
+                ? todaysHQ(rcwps, current, invW)
                 : todaysLQ(rcwps, current);
 
         Collections.sort(ts, new Comparator<Triplet>() {
