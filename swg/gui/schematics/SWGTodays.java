@@ -222,8 +222,6 @@ class SWGTodays extends JPanel {
      * viewer continuously. Default is {@code false}.
      */
     private boolean updateViewer;
-    
-    private static List<SWGInventoryWrapper> invW = Collections.emptyList();
 
     /**
      * Creates an instance of this type.
@@ -292,7 +290,7 @@ class SWGTodays extends JPanel {
         boolean hq = hqlqCheck.isSelected();
 
         List<Triplet> ts = todaysTS(hq, great.isSelected(),
-                selectedAssignee.getFavorites(), invW);
+                selectedAssignee.getFavorites());
         todaysModel.setElements(ts);
         // restore table selection, if possible
         isWorking = false;
@@ -1401,8 +1399,7 @@ class SWGTodays extends JPanel {
      */
     static boolean todaysTinted() {
         return great == null
-                ? !todaysTS(true, false, assigneeSelect(),
-                        SWGSchemController.inventory()).isEmpty()
+                ? !todaysTS(true, false, assigneeSelect()).isEmpty()
                 : THIS.todaysModel.getRowCount() > 0;
     }
 
@@ -1419,16 +1416,18 @@ class SWGTodays extends JPanel {
      * @return a list of Triplet elements
      */
     private static List<Triplet> todaysTS(boolean hq, boolean grt,
-            List<SWGSchematic> schems, List<SWGInventoryWrapper> inv) {
+            List<SWGSchematic> schems) {
 
         List<SWGRCWPair> rcwps = SWGSchemController.rcwPairs(hq, schems);
 
-        invW = inv;
+       	List<SWGInventoryWrapper> inv = SWGSchemController.inventory();
+
+        List<SWGInventoryWrapper> inv2 = inv;
         if (hq && !grt) {
             int amount = ((Integer) SWGFrame.getPrefsKeeper().get(
                     "schemTodaysMinInventory",
                     Integer.valueOf(50000))).intValue();
-            invW = inventory(invW, amount, SWGFrame.getSelectedGalaxy());
+            inv2 = inventory(inv, amount, SWGFrame.getSelectedGalaxy());
         }
 
         int days = ((Integer) SWGFrame.getPrefsKeeper().get(
@@ -1436,7 +1435,7 @@ class SWGTodays extends JPanel {
         SWGResourceSet current = current(days);
 
         List<Triplet> ts = hq
-                ? todaysHQ(rcwps, current, invW)
+                ? todaysHQ(rcwps, current, inv2)
                 : todaysLQ(rcwps, current);
 
         Collections.sort(ts, new Comparator<Triplet>() {
