@@ -286,7 +286,7 @@ public class SWGResourceMgr {
      * @throws NullPointerException
      *             if the galaxy is {@code null}
      */
-    protected static final SWGResourceSet cachedSpawning(SWGCGalaxy galaxy) {
+    public static final SWGResourceSet cachedSpawning(SWGCGalaxy galaxy) {
         synchronized (cache) {
             return cache.getSpawning(galaxy);
         }

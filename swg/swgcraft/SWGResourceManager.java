@@ -987,16 +987,10 @@ public final class SWGResourceManager extends SWGResourceMgr {
      *             if the argument is {@code null}
      */
     public static void notifySubscribers(ResourceUpdate notice) {
-        // TODO: something here is breaking refreshes.
-    	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers before synchronized " + notice);
     	synchronized (subscribers) {
-    		//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers inside synchro before notify " + notice);
             for (UpdateSubscriber us : subscribers)
-                us.handleUpdate(notice);
-            
-            //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers inside synchro after notify " + notice);
+                us.handleUpdate(notice);            
         }
-    	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:notifySubscribers after synchronized " + notice);
     }
 
     /**

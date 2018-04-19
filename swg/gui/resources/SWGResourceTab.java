@@ -585,8 +585,14 @@ public final class SWGResourceTab extends JTabbedPane implements
      *         {@link SWGResourceSet#EMPTY}
      */
     SWGResourceSet spawning() {
-        if (!isGuiFinished)
+        if (!isGuiFinished) {
             galaxyUpdated(SWGFrame.getSelectedGalaxy());
+        } else {
+        	SWGResourceSet rs = SWGResourceManager.cachedSpawning(SWGFrame.getSelectedGalaxy());
+            rs.sort(ageComparator); // sort before visible for others
+            spawningResources = rs;
+        }
+   
         return spawningResources == null
                 ? SWGResourceSet.EMPTY
                 : spawningResources;
