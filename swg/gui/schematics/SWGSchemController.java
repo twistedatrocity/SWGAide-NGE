@@ -551,6 +551,8 @@ final public class SWGSchemController implements UpdateSubscriber {
     static SWGResourceSet spawning() {
         synchronized (SWGSchemController.class) {
             if (spawning == null) updateGalaxy();
+            
+            spawning = SWGResourceManager.cachedSpawning(SWGFrame.getSelectedGalaxy());
             return spawning;
         }
     }
