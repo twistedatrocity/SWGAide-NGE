@@ -176,7 +176,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * Creates a mode-less dialog of this type.
      */
     private SWGSchemResViewer() {
-        super("Used-by-Schematic Viewer", false, null);
+        super("SWGAide-NGE - Used-by-Schematic Viewer", false, null);
         // if (THIS != null) throw new IllegalStateException("No doubles");
 
         registerHelp(SWGAide.class.getResource(
@@ -502,7 +502,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
 
         final String[] spinVals = { "  Great  ", "  Good  ", "  Fair  " };
         final JSpinner spin = new JSpinner(new SpinnerListModel(spinVals));
-        spin.setMaximumSize(new Dimension(80, 99));
+        SWGGuiUtils.setDim(spin, " Great ", 50, 12, true);
         spin.setToolTipText(tt);
 
         DefaultEditor ed = new JSpinner.DefaultEditor(spin);
