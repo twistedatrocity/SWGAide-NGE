@@ -556,7 +556,7 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
      * 
      * @param gxy a galaxy constant
      */
-    void galaxy(SWGCGalaxy gxy) {
+    public void galaxy(SWGCGalaxy gxy) {
         if (gxy == null)
             return;
         if (swgcraftID > 0 && this.galaxy != null)

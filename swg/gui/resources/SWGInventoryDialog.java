@@ -1071,6 +1071,8 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         if (wrap == null && rc.isSpaceOrRecycled()) {
             SWGKnownResource kr = rc.spaceOrRecycled();
+            SWGCGalaxy gxy = getGalaxy();
+            kr.galaxy(gxy);
             wrap = new SWGInventoryWrapper(kr, assignee);
         } else if (wrap == null) {
             SWGKnownResource kr = lookupResource != null
