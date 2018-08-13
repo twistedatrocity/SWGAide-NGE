@@ -708,15 +708,15 @@ class SWGTodays extends JPanel {
         int age = ((Integer) SWGFrame.getPrefsKeeper().get(
                 "schemTodaysAlertMaxAge", Integer.valueOf(3))).intValue();
         
-        if (age < 0 || age > 6) {
+        if (age < 0 || age > 15) {
             // XXX: remove in the future, added in April 2011
             // fix for possible error in early version of this panel
-            age = 3;
+            age = 6;
             SWGFrame.getPrefsKeeper().add(
                     "schemTodaysAlertMaxAge", Integer.valueOf(3));
         }
         
-        ageSpinner = new JSpinner(new SpinnerNumberModel(age, 0, 6, 1));
+        ageSpinner = new JSpinner(new SpinnerNumberModel(age, 0, 15, 1));
         ageSpinner.setToolTipText(tt);
 
         ageSpinner.addChangeListener(new ChangeListener() {
