@@ -2670,29 +2670,6 @@ final class SWGInventoryTab extends JPanel {
         create.setEnabled(row >= 0);
         ppp.add(create);
 
-        //ppp.addSeparator();
-
-        /*JMenuItem exp = new JMenuItem("File export...");
-        exp.setToolTipText("Export the current view to CSV file");
-        exp.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionExportToFile();
-            }
-        });
-        exp.setEnabled(wrappersFiltered().size() > 0);
-        ppp.add(exp);
-
-        JMenuItem impf = new JMenuItem("File import...");
-        impf.setToolTipText("Import inventory from CSV file");
-        impf.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionImportFile();
-            }
-        });
-        ppp.add(impf); */
-
         ppp.addSeparator();
 
         final SWGCharacter toon = SWGFrame.getSelectedCharacter();
@@ -2720,6 +2697,27 @@ final class SWGInventoryTab extends JPanel {
         ppp.add(expn);
 
         ppp.addSeparator();
+        
+        JMenuItem exp = new JMenuItem("Backup to CSV...");
+        exp.setToolTipText("Backup the current view to CSV file");
+        exp.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+                actionExportToFile();
+            }
+        });
+        exp.setEnabled(wrappersFiltered().size() > 0);
+        ppp.add(exp);
+
+        JMenuItem impf = new JMenuItem("Restore from CSV...");
+        impf.setToolTipText("Import inventory from CSV file");
+        impf.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+                actionImportFile();
+            }
+        });
+        ppp.add(impf);
 
         JMenuItem copy = new JMenuItem("Galaxy copy...");
         copy.setToolTipText("Copy this inventory to another galaxy");
