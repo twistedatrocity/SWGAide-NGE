@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -26,6 +30,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import swg.SWGAide;
 import swg.crafting.SWGWeights;
@@ -302,7 +311,7 @@ final class SWGTestBench extends SWGJDialog {
         
         String header = "<h4>Ingredients:</h4>";
         
-        String colors = "<html><div align=\"center\" style=\"font-weight:bold; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;<font color='#FF0000'>Red is worse than \"Good\"." +
+        String colors = "<html><div align=\"center\" style=\"font-weight:bold; font-size:95%; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;<font color='#FF0000'>Red is worse than \"Good\"." +
         		"</font>&nbsp;<font color='#FF8C00'>Orange is \"Good\"." +
         		"</font>&nbsp;<font color='#000000'>Black is \"Great\".</font>&nbsp;&uarr;&uarr;</div>";
         for (Component c : slotsGrid.getComponents()) {
@@ -311,20 +320,44 @@ final class SWGTestBench extends SWGJDialog {
             	   if (jl != null && !jl.isEmpty()) {
             		   jl = jl.replace("[", "<strong>");
                        jl = jl.replace("]", "</strong>");
-            		   rez = rez + jl + "<br>";
+            		   rez = rez + "<h4 style=\"font-weight:normal; font-size:97%; margin:0;\">" + jl + "</h4>";
             	   }
             }
         }
-        String text = colors + header + rez;
+        String text = colors + header + "<div style=\"font-size:97%;\">" + rez + "</div>";
         
-        JLabel iL = new JLabel(text, SwingConstants.LEFT);
-        iL.setVerticalAlignment(SwingConstants.TOP);
-        iL.setFont(SWGGuiUtils.fontPlain());
+        JEditorPane iL = new JEditorPane();
+        HTMLEditorKit kit = new HTMLEditorKit();
+        iL.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        StyleConstants.setFontFamily(style, SWGGuiUtils.fontPlain().getFamily());
+        iL.setText("<html>" + text + "</html>");
+        iL.setEditable(false);
         iL.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 BorderFactory.createEmptyBorder(2, 3, 2, 0)));
         iL.setOpaque(true);
         iL.setBackground(Color.WHITE);
+        iL.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    JPopupMenu p = new JPopupMenu();
+                    Action copy = new DefaultEditorKit.CopyAction();
+                    copy.putValue(Action.NAME, "Copy text");
+                    copy.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control C"));
+                    if (iL.getSelectedText() != null) { // See if they selected something 
+                    	p.add( copy );
+                        //p.addSeparator();
+                        // Do work with String s
+                    }
+                    p.show(iL, e.getX(), e.getY());
+                }
+            }
+        });
+        
         ingredients.add(iL);
         
     }
