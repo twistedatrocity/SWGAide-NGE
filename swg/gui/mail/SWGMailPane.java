@@ -603,9 +603,14 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
     void mailDelete(boolean confirm) {
         SWGMailBox mb = toon.mailBox();
         SWGMailFolder trash = mb.folder("Trash");
+        SWGMailFolder isd = mb.folder("ISDroid");
         SWGMailFolder current = mb.folder(folderList.getSelectedValue());
 
-        if (confirm && current.equals(trash)) {
+        boolean nuke = false;
+        if (trash.equals(current) || isd.equals(current)) {
+        	nuke = true;
+        }
+        if (confirm && nuke) {
             if (!toon.galaxy().exists()) {
                 JOptionPane.showMessageDialog(folderList,
                         "Cannot delete from Trash with no path to SWG",
@@ -631,9 +636,10 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
 
         int errors = 0;
         ZString z = null;
+        
         for (int i : mailsConvertedToModel(selRows)) {
             try {
-                mb.delete(messages.get(i), current, trash.equals(current));
+                mb.delete(messages.get(i), current, nuke);
             } catch (SecurityException e) {
                 if (z == null) z = new ZString().appnl(e.getMessage());
                 ++errors;
