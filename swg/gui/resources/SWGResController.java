@@ -2163,8 +2163,10 @@ public final class SWGResController implements UpdateSubscriber {
 
         resourceDetails(kr, z);
 
-        if (!kr.isDepleted())
+        if (!kr.isDepleted()) {
+        	z.app("Server: ").appnl(kr.galaxy().getName());
             z.app("Rep by: ").appnl(kr.availableFirst().availableBy());
+        }
 
         long amount = inventoryAmount(kr, gxy);
         if (amount >= 0) {
