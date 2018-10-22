@@ -1838,7 +1838,8 @@ final class SWGHarvestingTab extends JPanel {
             case 10: {
                 float f = harv.getHopperUnits() / harv.getHopperCapacity();
                 f = Math.min(1.0f, f);
-                return Float.valueOf(100.0f * f);
+                Float value = Float.valueOf(100.0f * f);
+                return value;
             }
             case 11:
                 return harv.getNotes();

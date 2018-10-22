@@ -136,6 +136,11 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @serial int: hopper size
      */
     final int hopperSize;
+    
+    /**
+     * 
+     */
+    private boolean hopperFull = false;
 
     /**
      * Signifies whether this harvester is active or not.
@@ -540,9 +545,38 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         // 1/60/1000 (~ .0000166) is the magic number that represents how many
         // units of a resource you can harvest per millisecond
         // if you are operating at an extraction rate of 1; this is "t"
-        final double dt = 1.0 / 60000.0;
-        long t = System.currentTimeMillis() - lastUpdated;
-        return (int) (t * dt * getAER());
+    	final double dt = 1.0 / 60000.0;
+    	long t;
+    	int value;
+    	if (resource.isDepleted()) {
+        	t = resource.depleted() - lastUpdated;
+        	value = (int) (t * dt * getAER());
+        	if (value > getHopperCapacity() ) {
+            	value = getHopperCapacity();
+            	hopperFull = true;
+            }
+        	return value;
+        }
+    	
+    	if ( Math.max(getPowerRemains(), 0.0f) == 0) {
+    		t = getPowerEnds() - lastUpdated;
+    		value = (int) (t * dt * getAER());
+        	if (value > getHopperCapacity() ) {
+            	value = getHopperCapacity();
+            	hopperFull = true;
+            }
+        	return value;
+    	}
+        
+        t = System.currentTimeMillis() - lastUpdated;
+        value = (int) (t * dt * getAER());
+        if (value > getHopperCapacity() ) {
+        	value = getHopperCapacity();
+        	hopperFull = true;
+        }
+        
+        
+        return value;
     }
 
     /**
@@ -684,8 +718,15 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
 
         // compute the number of milliseconds until the power runs out
         // power / (powerRate * mod) >>> hours * ms-per-hour >>>
-        return lastUpdated
-            + ((long) (3600000 * power / (powerRate * getEnergyModifier())));
+        long ends;
+        if (hopperFull) {
+        	// hopper is full so lets not use power
+        	ends = System.currentTimeMillis() + ((long) (3600000 * power / (powerRate * getEnergyModifier())));
+        } else {
+        	ends = lastUpdated + ((long) (3600000 * power / (powerRate * getEnergyModifier())));
+        }
+        
+        return ends;
     }
 
     /**
@@ -696,7 +737,8 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @return the remaining maintenance &le; 1.0f
      */
     float getPowerRemains() {
-        return remains(getPowerEnds());
+    	float value = remains(getPowerEnds());
+        return value;
     }
 
     /**
@@ -770,6 +812,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      */
     void refreshLastUpdated() {
         lastUpdated = System.currentTimeMillis();
+        hopperFull = false;
     }
 
     /**
