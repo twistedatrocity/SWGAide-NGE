@@ -289,6 +289,28 @@ final class SWGHarvestingTab extends JPanel {
             SWGResourceTab.actionInventoryFilter(harv.getResource().rc(),
                     null, harv.getResource(), false);
     }
+    
+    /**
+     * Called when the user decides to empty an active harvester. This method
+     * resembles that the in-game owner of the harvester empties its hopper only.
+     * If the option to add-to-inventory is selected this method updates the inventory.
+     * 
+     * @param empty the selected harvester
+     */
+    private void actionActiveEmpty(SWGHarvester harv) {
+        if (harv.addToInventory)
+            SWGResController.inventoryAddAmount(
+                    Math.min(harv.getHopperCapacity(),
+                            harv.getHopperUnits()) * harv.getSeveral(),
+                    harv.getResource(), harv.getOwner().getName(),
+                    harv.getResource().galaxy());
+
+        harv.refreshHopperEmptied();
+        SWGResController.check();
+        if (harv.addToInventory)
+            SWGResourceTab.actionInventoryFilter(harv.getResource().rc(),
+                    null, harv.getResource(), false);
+    }
 
     /**
      * Called when the user mouse-clicks the table of active harvesters.
@@ -644,7 +666,7 @@ final class SWGHarvestingTab extends JPanel {
 
         JPopupMenu popup = new JPopupMenu();
 
-        JMenuItem update = new JMenuItem("Refresh harvester");
+        JMenuItem update = new JMenuItem("Refresh harvester (complete)");
         update.setToolTipText(
                 "Refresh: empty hopper and replenish maintenance and power");
         update.addActionListener(new ActionListener() {
@@ -655,6 +677,18 @@ final class SWGHarvestingTab extends JPanel {
         });
         update.setEnabled(hr != null);
         popup.add(update);
+        
+        JMenuItem empty = new JMenuItem("Empty Hopper only");
+        empty.setToolTipText(
+                "Empty: empty hopper only, leaving maint. and power alone");
+        empty.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+                actionActiveEmpty(hr);
+            }
+        });
+        empty.setEnabled(hr != null);
+        popup.add(empty);
 
         JMenuItem edit = new JMenuItem("Edit active harvester");
         edit.setToolTipText("Edit the selected, active harvester");

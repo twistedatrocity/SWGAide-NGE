@@ -156,6 +156,14 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @serial long: last updated
      */
     private long lastUpdated;
+    
+    /**
+     * The time when the hopper was last emptied by the user, in
+     * milliseconds.
+     * 
+     * @serial long: last emptied
+     */
+    private long hopperEmptied;
 
     /**
      * The amount of maintenance in the harvester, in credits.
@@ -387,12 +395,14 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      *            harvester is being deactivated this argument is considered
      */
     void activate(boolean activate, boolean reDeed) {
-        if (activate && isActive)
+        if (activate && isActive) {
             return;
-        else if (activate)
+        } else if (activate) {
             lastUpdated = System.currentTimeMillis();
-        else
+            hopperEmptied = System.currentTimeMillis();
+        } else {
             activateHelper(reDeed);
+        }
 
         isActive = activate;
     }
@@ -414,6 +424,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         resource = null;
         concentration = 0;
         lastUpdated = 0;
+        hopperEmptied = 0;
         several = 1;
         if (reDeed) {
             owner = null;
@@ -531,7 +542,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         // need to find out how many millisecond it will take to fill up the
         // hopper. The extraction rate is how many units we can harvest per
         // minute then hopper-capacity/AER * ms/minute + last-update
-        return lastUpdated + ((long) (getHopperCapacity() / getAER() * 60000L));
+        return hopperEmptied + ((long) (getHopperCapacity() / getAER() * 60000L));
     }
 
     /**
@@ -548,8 +559,12 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     	final double dt = 1.0 / 60000.0;
     	long t;
     	int value;
+    	// small check here for sanity in case dat file does not have this value saved.
+    	if ( hopperEmptied < 1) {
+    		hopperEmptied = getLastUpdated();
+    	}
     	if (resource.isDepleted()) {
-        	t = resource.depleted() - lastUpdated;
+        	t = resource.depleted() - hopperEmptied;
         	value = (int) (t * dt * getAER());
         	if (value > getHopperCapacity() ) {
             	value = getHopperCapacity();
@@ -559,7 +574,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         }
     	
     	if ( Math.max(getPowerRemains(), 0.0f) == 0) {
-    		t = getPowerEnds() - lastUpdated;
+    		t = getPowerEnds() - hopperEmptied;
     		value = (int) (t * dt * getAER());
         	if (value > getHopperCapacity() ) {
             	value = getHopperCapacity();
@@ -568,7 +583,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         	return value;
     	}
         
-        t = System.currentTimeMillis() - lastUpdated;
+        t = System.currentTimeMillis() - hopperEmptied;
         value = (int) (t * dt * getAER());
         if (value > getHopperCapacity() ) {
         	value = getHopperCapacity();
@@ -812,7 +827,15 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      */
     void refreshLastUpdated() {
         lastUpdated = System.currentTimeMillis();
+        refreshHopperEmptied();
         hopperFull = false;
+    }
+    
+    /**
+     * Updates the time for when the hopper was emptied to current time
+     */
+    void refreshHopperEmptied() {
+    	hopperEmptied = System.currentTimeMillis();
     }
 
     /**
