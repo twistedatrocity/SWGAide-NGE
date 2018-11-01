@@ -566,7 +566,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     	if (resource.isDepleted()) {
         	t = resource.depleted() - hopperEmptied;
         	value = (int) (t * dt * getAER());
-        	if (value > getHopperCapacity() ) {
+        	if (value > getHopperCapacity() || value < 0 ) {
             	value = getHopperCapacity();
             	hopperFull = true;
             }
@@ -576,7 +576,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     	if ( Math.max(getPowerRemains(), 0.0f) == 0) {
     		t = getPowerEnds() - hopperEmptied;
     		value = (int) (t * dt * getAER());
-        	if (value > getHopperCapacity() ) {
+        	if (value > getHopperCapacity() || value < 0 ) {
             	value = getHopperCapacity();
             	hopperFull = true;
             }
@@ -585,7 +585,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
         
         t = System.currentTimeMillis() - hopperEmptied;
         value = (int) (t * dt * getAER());
-        if (value > getHopperCapacity() ) {
+        if (value > getHopperCapacity() || value < 0 ) {
         	value = getHopperCapacity();
         	hopperFull = true;
         }
