@@ -1,6 +1,5 @@
 # SWGAide-NGE
-SWGAide-NGE
-
+There are some video tutorials here:  https://www.youtube.com/channel/UCpqXPk4HV44MOx8bVB3IOqA
 
 
 Installation
