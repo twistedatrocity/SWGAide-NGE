@@ -1,6 +1,5 @@
 # SWGAide-NGE
-SWGAide-NGE
-
+There are some video tutorials here:  https://www.youtube.com/channel/UCpqXPk4HV44MOx8bVB3IOqA
 
 
 Installation
@@ -94,7 +93,7 @@ file is corrupt you have three options:
    backup files. This gives you a chance to copy files to a safe place, or to
    try files other than the most recent, etc.
 2) Let SWGAide try the file SWGAide.BAK from the backup folder.
-3) Report the issue at SWGCraft.org in the SWGAide forum.
+3) Report the issue here at github in the Issues tab.
 
 
 
