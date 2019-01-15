@@ -564,11 +564,18 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
     		hopperEmptied = getLastUpdated();
     	}
     	if (resource.isDepleted()) {
-        	t = resource.depleted() - hopperEmptied;
-        	value = (int) (t * dt * getAER());
+    		String s = String.format("%1$-" + 13 + "s", resource.depleted()).replace(' ', '0');
+    		long dd = Long.parseLong(s);
+    		long dp = System.currentTimeMillis() - dd;
+    		t = System.currentTimeMillis() - hopperEmptied;
+        	int nv = (int) (t * dt * getAER());
+        	int dv = (int) (dp * dt * getAER());
+        	value = nv - dv;
         	if (value > getHopperCapacity() || value < 0 ) {
             	value = getHopperCapacity();
             	hopperFull = true;
+            } else {
+            	hopperFull = false;
             }
         	return value;
         }
