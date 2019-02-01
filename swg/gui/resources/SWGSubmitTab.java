@@ -436,10 +436,44 @@ final class SWGSubmitTab extends JPanel {
      * the current state of this component.
      */
     private void actionSubmitSingle() {
-        if (singleSubmitButton.getText().equals("Submit"))
-            submitSingle();
-        else
+        if (singleSubmitButton.getText().equals("Submit")) {
+        	
+        	final SWGMutableResource mr = singleResourceValidateAndCreate();
+        	final List<Object> res = new ArrayList<Object>();
+        	res.add(mr);
+            if (mr == null)
+                return;
+            final boolean old = historical.isSelected();
+            if (old && JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(
+                    singleSubmitButton, "Submit as old / historical?", "Confirm",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE))
+                return ;
+            
+            final SWGCGalaxy gxy = recentGalaxy;
+            final SWGResourceSet set = SWGResourceManager.getSet(gxy);
+
+            final ExecutorService exec = Executors.newSingleThreadExecutor();
+            exec.execute(new Runnable() {
+
+                public void run() {
+                    String error = "";
+                    List<SWGSimilarNameDialog.Wrapper> sim =
+                            new ArrayList<SWGSimilarNameDialog.Wrapper>();
+                    try {
+                        error = submitMulti(gxy, res, old, set, sim);
+                    } catch (Exception e) {
+                        SWGAide.printError("SWGSubmitTab:actionSubmitSingle:b", e);
+                        error = e.getMessage();
+                    }
+
+                    submitDone(gxy, error, sim);
+
+                    exec.shutdown();
+                }
+            });
+        } else {
             editApply(); // equals "Apply"
+        }
     }
 
     /**
@@ -2093,40 +2127,6 @@ final class SWGSubmitTab extends JPanel {
             }
         }
         return error.toString();
-    }
-
-    /**
-     * Helper method which submits a single resource to SWGCraft.org. Before
-     * anything is submitted the entered data is validated and if there is an
-     * error it is displayed at the GUI error label.
-     */
-    private void submitSingle() {
-
-        final SWGMutableResource mr = singleResourceValidateAndCreate();
-        if (mr == null)
-            return;
-
-        submitBefore();
-
-        final ExecutorService exec = Executors.newSingleThreadExecutor();
-        exec.execute(new Runnable() {
-
-            
-            public void run() {
-                String error = "";
-                try {
-                    Object o = submitNew(mr);
-                    error = (o instanceof String)
-                            ? (String) o
-                            : ((SWGSoapNOResResponse) o).getStatusString();
-                } catch (Exception e) {
-                    SWGAide.printError("SWGSubmitTab:singleSubmit:b", e);
-                    error = e.getMessage();
-                }
-                submitDone(mr.galaxy(), error, null);
-                exec.shutdown();
-            }
-        });
     }
 
     /**
