@@ -539,7 +539,11 @@ public final class SWGResourceSet implements Set<SWGKnownResource>,
     public SWGResourceSet subsetBy(SWGWeights weights,
         SWGResourceClass capsFrom, boolean zeroIsMax, double threshold) {
 
-        if (!weights.isValid())
+        if (threshold > 1000) {
+        	threshold = 1000;
+        }
+    	
+    	if (!weights.isValid())
             throw new IllegalArgumentException("Invalid weights: " + weights);
         if (threshold < 0 || threshold > 1000)
             throw new IllegalArgumentException("Invalid threshold: "
