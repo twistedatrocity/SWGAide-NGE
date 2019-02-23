@@ -32,7 +32,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -93,6 +95,7 @@ import swg.gui.schematics.SWGSchemResViewer;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
+import swg.model.SWGPlanet;
 import swg.model.SWGStation;
 import swg.swgcraft.SWGPets;
 import swg.swgcraft.SWGResourceManager;
@@ -244,6 +247,17 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     private JTabbedPane northEastTabbedPane;
 
+    /**
+     * The list to filter by planet.
+     */
+    private JComboBox<String> planetFilter;
+    
+    /**
+     * A planet selected by the user, or the planet that was stored in
+     * the preference keeper, or "All".
+     */
+    private SWGPlanet selectedPlanet = SWGPlanet.DUMMY;
+    
     /**
      * The tree view of the resource classes. This view is displayed at the
      * north-west area of this component, where the user can narrow down and
@@ -902,6 +916,29 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     }
 
     /**
+     * Helper method. If {code maxAgeToggle} is selected this method returns a
+     * set of resources in which all elements are younger than the the specified
+     * number of hours. Otherwise the specified argument is returned as-is.
+     * 
+     * @param resources a set of resources to filter
+     * @return a set of resources filtered on age, or the supplied argument
+     */
+    private SWGResourceSet currentFilterOnPlanet(SWGResourceSet resources) {
+
+        if (!selectedPlanet.equals(SWGPlanet.DUMMY)) {
+
+            SWGResourceSet c = new SWGResourceSet(resources.size());
+            for (SWGKnownResource r : resources)
+            	if (r.isAvailableAt(selectedPlanet)) {
+            		c.add(r);
+            	}
+
+            return c;
+        }
+        return resources;
+    }
+    
+    /**
      * Helper method which filters resources for the option "allow-zeroes". If
      * this option is selected, or if the specified filter does not contain any
      * values, then the specified set of resources is returned as-is, otherwise
@@ -966,11 +1003,15 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             if (!SWGWeights.isValid(filter))
                 set = currentFilterOnFilter(set, filter);
 
-            if (selectedGuard != null)
+            if (selectedGuard != null) {
                 set = currentFilterOnGuard(set, selectedGuard);
-            else if (selectedResourceClass != null)
+            } else if (selectedResourceClass != null) {
                 set = set.subsetBy(selectedResourceClass);
+            }
 
+            if (!selectedPlanet.equals(SWGPlanet.DUMMY)) {
+            	set = currentFilterOnPlanet(set);
+            }
             // defer this filtering, if resource class is selected the set must
             // not contain other classes and if weighted filtering this will
             // also re-sort the set if a guard is selected
@@ -1209,6 +1250,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         temporaryFilterStats = null;
         temporaryWeight = null;
+        selectedPlanet = SWGPlanet.DUMMY;
+        planetFilter.setSelectedItem("All");
 
         isBlocking = false;
     }
@@ -2044,8 +2087,14 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * @return the panel for the resource filters
      */
     private Component makeFilterPanel() {
+    	String filterToolTip = "Filter by planet";
+    	JLabel l = new JLabel("Planet: ");
+        l.setToolTipText(filterToolTip);
+    	
         Box b = Box.createHorizontalBox();
         b.add(Box.createHorizontalGlue());
+        b.add(l);
+        b.add(makeFilterPlanet(filterToolTip));
         for (Stat s : Stat.gameOrder()) {
             JTextField tf = makeFilterTextField(
                     String.format("%s - %s", s.name(), s.getDescription()),
@@ -2068,6 +2117,44 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         b.setAlignmentX((float) 55.5);
 
         return b;
+    }
+    
+    /**
+     * Helper method which creates and returns a GUI list for filtering what is
+     * written to notes file. The component is populated with names for generic
+     * resource classes which cannot spawn in the worlds of SWG and names of the
+     * 12 planets.
+     * 
+     * @param toolTip the tool tip text for this component
+     * @return a GUI list
+     */
+    private Component makeFilterPlanet(String toolTip) {
+
+        ArrayList<String> ls = new ArrayList<String>();
+
+        ls.add("All");
+        ls.addAll(SWGPlanet.names());
+
+        String[] lsArr = new String[ls.size()];
+        lsArr = ls.toArray(lsArr);
+        planetFilter = new JComboBox<String>( lsArr);
+        planetFilter.setPreferredSize(new Dimension(250, 26));
+        planetFilter.setMaximumSize(new Dimension(300, 26));
+        planetFilter.setToolTipText(toolTip);
+        planetFilter.setSelectedItem("All");
+        planetFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (planetFilter.getSelectedItem() == "All") {
+            		selectedPlanet = SWGPlanet.DUMMY;
+            	} else {
+            		selectedPlanet = SWGPlanet.fromName( (String) planetFilter.getSelectedItem());
+            	}
+            	updateCurrent();
+            }
+        });
+
+        return planetFilter;
     }
 
     /**
