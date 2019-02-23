@@ -253,8 +253,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     private JComboBox<String> planetFilter;
     
     /**
-     * A planet selected by the user, or the planet that was stored in
-     * the preference keeper, or "All".
+     * A planet selected by the user, or "All".
      */
     private SWGPlanet selectedPlanet = SWGPlanet.DUMMY;
     
@@ -916,9 +915,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     }
 
     /**
-     * Helper method. If {code maxAgeToggle} is selected this method returns a
-     * set of resources in which all elements are younger than the the specified
-     * number of hours. Otherwise the specified argument is returned as-is.
+     * Helper method. If planet is selected this method returns a
+     * set of resources that are on the planet. Otherwise the specified argument is returned as-is.
      * 
      * @param resources a set of resources to filter
      * @return a set of resources filtered on age, or the supplied argument
@@ -2120,10 +2118,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     }
     
     /**
-     * Helper method which creates and returns a GUI list for filtering what is
-     * written to notes file. The component is populated with names for generic
-     * resource classes which cannot spawn in the worlds of SWG and names of the
-     * 12 planets.
+     * Helper method which creates and returns a GUI list for filtering what
+     * resource set is returned by planet. The component is populated with names
+     * of the 12 planets.
      * 
      * @param toolTip the tool tip text for this component
      * @return a GUI list
