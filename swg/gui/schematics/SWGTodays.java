@@ -687,7 +687,7 @@ class SWGTodays extends JPanel {
         op.add(makeNorthOptionsKM(tt));
 
         SWGGuiUtils.setDim(ageSpinner, "00", 40, 25, true);
-        SWGGuiUtils.setDim(invSpinner, "00,000", 40, 25, true);
+        SWGGuiUtils.setDim(invSpinner, ",000,000", 40, 25, true);
 
         SpringUtilities.makeCompactGrid(op, 5, 2, 0, 0, 0, 1);
 
@@ -806,7 +806,7 @@ class SWGTodays extends JPanel {
         int units = ((Integer) SWGFrame.getPrefsKeeper().get(
                 "schemTodaysMinInventory", Integer.valueOf(50000))).intValue();
         invSpinner = new JSpinner(
-                new SpinnerNumberModel(units, 0, 1000000, 10000));
+                new SpinnerNumberModel(units, 0, 99000000, 10000));
         invSpinner.setToolTipText(tt);
 
         invSpinner.addChangeListener(new ChangeListener() {
@@ -1423,7 +1423,7 @@ class SWGTodays extends JPanel {
        	List<SWGInventoryWrapper> inv = SWGSchemController.inventory();
 
         List<SWGInventoryWrapper> inv2 = inv;
-        if (hq && !grt) {
+        if (hq) {
             int amount = ((Integer) SWGFrame.getPrefsKeeper().get(
                     "schemTodaysMinInventory",
                     Integer.valueOf(50000))).intValue();
