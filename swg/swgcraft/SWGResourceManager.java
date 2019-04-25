@@ -1369,31 +1369,39 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * @throws NullPointerException if the argument or something parsed is
      *         {@code null}
      */
-    public static SWGSoapEditResResponse sendRevive(
-            final SWGKnownResource resource) {
-        if (!resource.isDepleted()) return null;
+    public static SWGSoapStatusResponse sendRevive(
+            SWGKnownResource resource) {
 
-        frame.putToStatbar(String.format("Revive: %s ", resource.getName()));
+            frame.putToStatbar(String.format("Reviving: %s / %s",
+                resource.getName(), resource.rc().rcName()));
 
-        SWGSoapEditResResponse response =
-                SWGSoapManager.getSOAPHandler().sendEdit(resource, null);
-
-        if (response.isFaultless())
-            SWGResourceMgr.updateDepleted(resource, -1);
-
-        frame.putToStatbar(null);
-        final ExecutorService exec = Executors.newSingleThreadExecutor();
-        exec.execute(new Runnable() {
-
-            @Override
-            public void run() {
-                notifySubscribers(new ResourceUpdate(
-                        UpdateType.LOCAL_SUBMISSION, resource.galaxy()));
-                exec.shutdown();
+            SWGSoapStatusResponse response;
+            if (resource.id() > 0)
+                response =
+                    SWGSoapManager.getSOAPHandler().sendRespawn(resource.id());
+            else {
+                // local resource, must return a response
+                response = new SWGSoapStatusResponse(-1);
+                response.status = 1;
             }
-        });
-        return response;
-    }
+
+            if (response.isFaultless())
+                SWGResourceMgr.updateDepleted(resource, -1);
+
+            frame.putToStatbar(null);
+            final ExecutorService exec = Executors.newSingleThreadExecutor();
+            exec.execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    notifySubscribers(new ResourceUpdate(
+                            UpdateType.LOCAL_SUBMISSION, resource.galaxy()));
+                    exec.shutdown();
+                }
+            });
+
+            return response;
+        }
 
     /**
      * Helper method which determines if the resource export files at

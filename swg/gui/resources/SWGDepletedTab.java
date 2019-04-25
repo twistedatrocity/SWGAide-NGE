@@ -55,7 +55,7 @@ import swg.model.SWGCGalaxy;
 import swg.model.SWGNotes;
 import swg.model.SWGStation;
 import swg.swgcraft.SWGResourceManager;
-import swg.swgcraft.SWGSoapEditResResponse;
+import swg.swgcraft.SWGSoapStatusResponse;
 import swg.tools.ZString;
 import swg.tools.ZStuff;
 import swg.tools.ZWriter;
@@ -186,7 +186,7 @@ final class SWGDepletedTab extends JPanel {
                     "Confirm Revive", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE)) {
 
-            SWGSoapEditResResponse r = SWGResourceManager.sendRevive(kr);
+            SWGSoapStatusResponse r = SWGResourceManager.sendRevive(kr);
             SWGAide.printDebug("depl", 1, ZString.fs(
                     "SWGDepletedTab:revive: %s %s%n\t%s",
                     kr.getName(), kr.rc().rcName(), r.getStatusString()));

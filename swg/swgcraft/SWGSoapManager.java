@@ -749,6 +749,62 @@ final class SWGSoapManager extends SOAPManager {
         }
         return response;
     }
+    
+    /**
+     * Sends a "revive" message to SWGCraft.org which marks the identified
+     * resource as available at its galaxy. The status codes of the response
+     * reads the outcome. If there is an error it is intercepted and a message
+     * is added as a fault message to the response.
+     * <P>
+     * NOTE: Only {@link SWGResourceMgr} is allowed to call this method via
+     * {@link SWGResourceManager}. See {@link SWGResource} for a detailed
+     * rationale.
+     * 
+     * @param swgcraftID the unique SWGCraft ID for the resource to mark as
+     *        depleted
+     * @return the response from the server
+     * @throws IllegalArgumentException if the argument is invalid
+     */
+    synchronized SWGSoapStatusResponse sendRespawn(long swgcraftID) {
+
+        if (swgcraftID <= 0)
+            throw new IllegalArgumentException("Invalid ID: " + swgcraftID);
+
+        SWGSoapStatusResponse response = new SWGSoapStatusResponse(swgcraftID);
+
+        try {
+            setServerURL();
+
+            SOAPMessage msg = newSoapMessage();
+            SOAPBodyElement sbe = newBodyElement("SoapRespawn", msg);
+
+            // populate the body element
+            SOAPElement di = newElement("RespawnInput", sbe);
+            addChildElement("ResourceID", itos(swgcraftID), sbe, di);
+
+            di.addChildElement(newLoginChild(sbe));
+            di.addChildElement(newProgramInfoChild(sbe));
+
+            // simpleTransform(msg, System.out);
+            SOAPMessage respMsg = sendMessage(msg);
+
+            // simpleTransform(respMsg, System.out);
+            if (hasFault(respMsg, response))
+                return response;
+
+            Node n = getFirstChild(respMsg.getSOAPBody(), 1);
+            response.status = Integer.parseInt(n.getTextContent());
+            if (response.status == 999) {
+                resetUserData();
+            }
+        } catch (Exception e) {
+            String msg = "SWGSoapManager:sendRespawn: " + e.getMessage();
+            SWGAide.printDebug("soap", 1, msg);
+            response.faultMessage = msg;
+            response.faultMessageShort = e.getMessage();
+        }
+        return response;
+    }
 
     /**
      * Sends an "editResource" message to SWGCraft.org which updates the values
