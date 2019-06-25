@@ -541,9 +541,9 @@ final class SWGInventoryTab extends JPanel {
      * user is informed and nothing is done. This implementation identifies the
      * parsed resources in this order, each entry by itself:
      * <ol>
-     * <li>if ID is valid the resource data from SWGCraft.org is used, parsed
+     * <li>if ID is valid the resource data from swgaide.com is used, parsed
      * resource data is discarded, just assignee specific data is used</li>
-     * <li>else if name/galaxy is known at SWGCraft.org, see previous point</li>
+     * <li>else if name/galaxy is known at swgaide.com, see previous point</li>
      * <li>else the parsed data is used as is</li>
      * </ol>
      * <p>
@@ -880,7 +880,7 @@ final class SWGInventoryTab extends JPanel {
         importBegin();
 
         // snapshot of fields in the case the user flips to another server
-        // while processing and communicating with SWGCraft.org
+        // while processing and communicating with swgaide.com
         final String assignee = assignee();
         final SWGCGalaxy currentGxy = recentGalaxy;
         final ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -1122,7 +1122,7 @@ final class SWGInventoryTab extends JPanel {
     /**
      * Helper method which performs the actual workload for importing inventory
      * wrappers from file and returns a list of the parsed entries. If a valid
-     * ID exists this method looks up data for each entry at SWGCraft.org,
+     * ID exists this method looks up data for each entry at swgaide.com,
      * secondly its name/galaxy is tried, finally the parsed data is used as is.
      * If there is an error or if the user aborts the process an empty list is
      * returned.
@@ -1376,7 +1376,7 @@ final class SWGInventoryTab extends JPanel {
                             throw new IllegalArgumentException(
                                     "Missing name and/or galaxy");
 
-                        // try SWGCraft.org
+                        // try swgaide.com
                         frame.putToStatbar(String.format(
                                 "%s(%s) - Lookup %s @ %s",
                                 Integer.toString(importCounter),
@@ -1391,7 +1391,7 @@ final class SWGInventoryTab extends JPanel {
 
             if (res == null) {
                 // recycled...
-                // or unknown at SWGCraft.org under the given identifiers
+                // or unknown at swgaide.com under the given identifiers
                 // >>> the even harder way, create a local
 
                 // resource class
@@ -1743,7 +1743,7 @@ final class SWGInventoryTab extends JPanel {
     /**
      * Helper method which returns a resource which is interactively selected by
      * the user, or {@code null} if none was found or if the user cancels. This
-     * implementation recursively obtains suggestions from SWGCraft.org, each
+     * implementation recursively obtains suggestions from swgaide.com, each
      * turn truncating the suggested resource name to widen the scope. This
      * continues until the suggested resource name is shorter than 3 letters
      * (which is the known minimum length), or until the user selects a resource
@@ -1755,7 +1755,7 @@ final class SWGInventoryTab extends JPanel {
      * @param resNCList a list of pairs: names with their resource classes, see
      *        {@link #lookupResources(String, SWGCGalaxy)}
      * @return a resource selected by the user, or {@code null}
-     * @throws IOException if there is an I/O error with SWGCraft.org
+     * @throws IOException if there is an I/O error with swgaide.com
      */
     private SWGKnownResource lookupInteractively(String rn, String tn,
             SWGCGalaxy galaxy, List<String> resNCList) throws IOException {
@@ -1767,7 +1767,7 @@ final class SWGInventoryTab extends JPanel {
         }
         if (resNCList.size() > 0) {
             String[] strings = resNCList.toArray(new String[0]);
-            String msg = ZString.fs("\"%s\" is unknown at SWGCraft.org%n" +
+            String msg = ZString.fs("\"%s\" is unknown at swgaide.com%n" +
                     "but similar resources are found.%n%n" +
                     "Select a resource or Cancel", rn);
             String resp = (String) JOptionPane.showInputDialog(this, msg,
@@ -1793,7 +1793,7 @@ final class SWGInventoryTab extends JPanel {
 
     /**
      * Helper method which return a list of strings which denote resources known
-     * at SWGCraft.org for the specified string and galaxy. Each element is a
+     * at swgaide.com for the specified string and galaxy. Each element is a
      * line on the form {@code "name : resource class"} and each resource name
      * begins with the specified string.
      * <dl>
@@ -1815,7 +1815,7 @@ final class SWGInventoryTab extends JPanel {
      * 
      * @param string the first letters of a resource name, or its full name
      * @param galaxy the galaxy for the resource
-     * @return a list of the resources which are known at SWGCraft.org, or one
+     * @return a list of the resources which are known at swgaide.com, or one
      *         string which begins with "ERROR"
      * @throws NullPointerException if an argument is {@code null}
      */

@@ -107,7 +107,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
     /**
      * The GUI panel for depleted resources, those marked depleted at
-     * SWGCraft.org.
+     * swgaide.com.
      */
     private SWGDepletedTab depletedTab;
 
@@ -151,7 +151,7 @@ public final class SWGResourceTab extends JTabbedPane implements
     private SWGResourceSet spawningResources;
 
     /**
-     * The GUI panel for manually submitting resources to SWGCraft.org.
+     * The GUI panel for manually submitting resources to swgaide.com.
      */
     private SWGSubmitTab submitResourcesTab;
 
@@ -193,7 +193,7 @@ public final class SWGResourceTab extends JTabbedPane implements
      */
     void actionSendDepleted(final SWGKnownResource resource) {
         String msg = String.format(
-                "Send a depleted-message to SWGCraft.org.%nResource: %s - %s",
+                "Send a depleted-message to swgaide.com.%nResource: %s - %s",
                 resource.getName(), resource.rc().rcName());
         if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                 frame, msg, "Confirm depletion", JOptionPane.OK_CANCEL_OPTION,
@@ -394,7 +394,7 @@ public final class SWGResourceTab extends JTabbedPane implements
      * <b>Note:</b> This method is non-blocking and promptly obtains a set of
      * resources from the resource manager. The first set may be aged but the
      * resource manager invokes a background task which determines if there is a
-     * newer set available at SWGCraft.org. If that is the case the resource
+     * newer set available at swgaide.com. If that is the case the resource
      * manager updates SWGAide's internal cache and notifies all subscribers
      * that a new download is ready for the galaxy, including this element.
      * 
@@ -538,7 +538,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
     /**
      * Helper method which sends a depleted-message for the specified resource
-     * to SWGCraft.org via {@link SWGResourceManager}. If the resource is
+     * to swgaide.com via {@link SWGResourceManager}. If the resource is
      * successfully marked as depleted the local resource cache is updated. If
      * there is an error this method raises a GUI dialog and informs the user.
      * 
@@ -550,7 +550,7 @@ public final class SWGResourceTab extends JTabbedPane implements
 
         if (!resp.isFaultless()) {
             String msg = String.format(
-                    "Failed to deplete %s - %s%nat SWGCraft.org%n%n%s",
+                    "Failed to deplete %s - %s%nat swgaide.com%n%n%s",
                     resource.getName(), resource.rc().rcName(), resp
                             .getFaultMessage() != null
                             ? resp.getFaultMessage()

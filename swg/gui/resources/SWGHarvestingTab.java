@@ -780,7 +780,7 @@ final class SWGHarvestingTab extends JPanel {
         // send depleted message to SWGCraft.org
         JMenuItem sendDepl = new JMenuItem("Mark depleted");
         sendDepl.setToolTipText(
-                "Send message to SWGCraft.org that this resource is depleted");
+                "Send message to swgaide.com that this resource is depleted");
         sendDepl.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e1) {
                 resourceTab.actionSendDepleted(hr.getResource());

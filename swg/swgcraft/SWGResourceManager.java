@@ -89,16 +89,16 @@ import swg.tools.ZXml;
  * 
  * <PRE>{@literal <resource_data>
     <planets>
-      <planet name="Corellia" swgcraft_id="1">
+      <planet name="Corellia" swgaide_id="1">
         <resources>
-          <resource swgcraft_id="123456789">
+          <resource swgaide_id="123456789">
             <name>Hansolo</name>
             <type>Polymer</type>
-            <swgcraft_type_id>pol</swgcraft_type_id>
-            <available_swgcraft_id>12345</available_swgcraft_id>
+            <swgaide_type_id>pol</swgaide_type_id>
+            <available_swgaide_id>12345</available_swgaide_id>
             <available_timestamp>1234567890</available_timestamp>
             <available_by>zimoon</available_by>
-            <available_by_swgcraft_id>123</available_by_swgcraft_id>
+            <available_by_swgaide_id>123</available_by_swgaide_id>
             <verified>false</verified>
           </resource>
         </resources>
@@ -961,7 +961,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         for (int i = 0; i < nList.getLength(); ++i) {
             Element resElem = (Element) nList.item(i);
 
-            long id = ZXml.longFromAttr(resElem, "swgcraft_id");
+            long id = ZXml.longFromAttr(resElem, "swgaide_id");
 
             SWGMutableResource mr = (SWGMutableResource) resources.getByID(id);
 
@@ -1033,7 +1033,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (current == null)
             return; // sanity
 
-        // layout: <planet name="Lok" swgcraft_id="5">
+        // layout: <planet name="Lok" swgaide_id="5">
 
         SWGPlanetAvailabilityInfo pInfo = new SWGPlanetAvailabilityInfo(
                 SWGPlanet.fromName(current.getAttribute("name")),
@@ -1066,7 +1066,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             throw new IllegalArgumentException(
                     "Invalid argument: " + galaxy + ' ' + id);
 
-        String tok = ZXml.stringFromElem(xml, "swgcraft_type_id");
+        String tok = ZXml.stringFromElem(xml, "swgaide_type_id");
         SWGResourceClass type = SWGResourceClass.rc(tok);
         if (type.isSpaceOrRecycled()) return null;
 

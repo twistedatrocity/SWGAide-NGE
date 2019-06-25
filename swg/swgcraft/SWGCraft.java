@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
 import javax.crypto.SealedObject;
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
 
 import swg.SWGAide;
@@ -72,43 +73,43 @@ public final class SWGCraft {
     /**
      * The base URL to SWGCraft.org.
      */
-    private static final String baseURL = "http://www.swgcraft.org";
+    private static final String baseURL = "http://api.swgaide.com";
 
     /**
      * The path and file name to the schematics XML file at SWGCraft.org.
      */
     private static final String categoriesXmlPath =
-            "/dev/sendfile.php?file=categories_nge.xml";
+            "/pub/exports/categories_nge.xml";
 
     /**
      * The first part of the path to the file with current resources, the galaxy
      * name and file suffix must be supplemented.
      */
     private static final String currentResourcesPath =
-            "/dev/sendfile.php?file=currentresources_";
+            "/pub/exports/currentresources_";
 
     /**
      * The path and file name to the profession levels XML file at SWGCraft.org.
      */
     private static final String profLevelsXmlPath =
-            "/dev/sendfile.php?file=myprofsecret_nge.xml";
+            "/pub/exports/professions_nge.xml";
 
     /**
      * The path and file name to the schematics XML file at SWGCraft.org.
      */
     private static final String schematicsXmlPath =
-            "/dev/sendfile.php?file=schematics_nge.xml.gz";
+            "/pub/exports/schematics_nge.xml.gz";
 			
 	/**
      * The path and file name to the servers XML file at SWGCraft.org.
      */
     private static final String serversXmlPath =
-            "/dev/sendfile.php?file=servers_detailed.xml";
+            "/pub/exports/servers.xml";
 
     /**
      * The path to the SOAP server.
      */
-    private static final String soapServerPath = "/dev/soap/server.php";
+    private static final String soapServerPath = "/soap/server.php";
 
     /**
      * The minimum delay between obtaining the resource status file at
@@ -121,12 +122,12 @@ public final class SWGCraft {
     /**
      * The path and file name to the text status file at SWGCraft.org.
      */
-    private static final String statusTxtPath = "/dev/public/status.txt";
+    private static final String statusTxtPath = "/pub/exports/status.txt";
 
     /**
      * The path and file name to the XML status file at SWGCraft.org.
      */
-    private static final String statusXmlPath = "/dev/public/status.xml";
+    private static final String statusXmlPath = "/pub/exports/status.xml";
 
     /**
      * Do not create an instance of this class, all fields and methods are
@@ -159,7 +160,10 @@ public final class SWGCraft {
         FileOutputStream to = null;
 
         try {
-            URLConnection uc = source.openConnection();
+        	//HttpsURLConnection uc = (HttpsURLConnection) source.openConnection();
+        	URLConnection uc = source.openConnection();
+            //uc.setRequestProperty("Accept", "*/*");
+            //uc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
             from = uc.getInputStream();
 
             if (isZipped)

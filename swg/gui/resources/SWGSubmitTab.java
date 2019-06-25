@@ -86,7 +86,7 @@ import swg.tools.ZString;
 import swg.tools.ZStuff;
 
 /**
- * The GUI component for manually submitting resources to SWGCraft.org. This
+ * The GUI component for manually submitting resources to swgaide.com. This
  * type also includes the necessary logic and control. This GUI element supports
  * submitting a single resource which is typed into the GUI fields, and a parsed
  * in-game notes file for multiple resources.
@@ -96,15 +96,15 @@ import swg.tools.ZStuff;
  * instances of {@link SWGMutableResource} and {@link String}, see {code
  * multipleResources}. This component does not really handle known resources
  * other than to compare the state between the parsed object and the known
- * object and submit a possible difference to SWGCraft.org.
+ * object and submit a possible difference to swgaide.com.
  * <P>
  * Known resource are not "edited" via this component but they can be amended
  * to. For example, a known resource without stats is updated if the user adds
- * stats to it via the notes file and submits the data to SWGCraft.org. The same
+ * stats to it via the notes file and submits the data to swgaide.com. The same
  * holds for adding a planet or several to a known resource.<BR/>
  * XXX: Add support to edit stats. Suggested: add a tag "edit" so the syntax
  * will be "edit,name,stats...". Using this flag would allow the user to
- * override current stats and send an edit-resource message to SWGCraft.org.
+ * override current stats and send an edit-resource message to swgaide.com.
  * <P>
  * This component does not add or subtract from the local cache of resources,
  * nor any other GUI component, but let the resource manager handle that job.
@@ -190,7 +190,7 @@ final class SWGSubmitTab extends JPanel {
      * The resource objects are either new resources or duplicates of locally
      * cached, known resources. This component does not handle known resources
      * other than to compare the state between the parsed object and the known
-     * object and submit a possible difference to SWGCraft.org.
+     * object and submit a possible difference to swgaide.com.
      */
     private List<Object> multipleResources;
 
@@ -362,7 +362,7 @@ final class SWGSubmitTab extends JPanel {
 
     /**
      * Called when the users selects to submit multiple resources to
-     * SWGCraft.org. This method performs the following actions:
+     * swgaide.com. This method performs the following actions:
      * <OL>
      * <LI>Submits resources that the user have marked as depleted in the notes
      * file.</LI>
@@ -370,7 +370,7 @@ final class SWGSubmitTab extends JPanel {
      * which are ready to submit as new.</LI>
      * <LI>Submits resources which are new or amended to.</LI>
      * </OL>
-     * The communication with SWGCraft.org executes on a worker thread.
+     * The communication with swgaide.com executes on a worker thread.
      */
     
     private void actionSubmitMulti() {
@@ -508,7 +508,7 @@ final class SWGSubmitTab extends JPanel {
      * Called when the user selects to write the current resources to the notes
      * file {code notesFileName}. The resources are filtered on age and by the
      * selected resource class or planet. Also resources which are expected to
-     * spawn in the worlds but are missing at SWGCraft.org are included.
+     * spawn in the worlds but are missing at swgaide.com are included.
      * 
      * @param writeButton the source of the triggered event
      */
@@ -642,7 +642,7 @@ final class SWGSubmitTab extends JPanel {
     /**
      * Helper method which enables or disables user input while a background
      * thread is processing. The argument is {@code false} during uploads to
-     * SWGCraft.org, and {@code true} when no background job is executing. This
+     * swgaide.com, and {@code true} when no background job is executing. This
      * method must be called symmetrically by the dispatcher, which must make
      * sure to release the locker also in the case of errors.
      * 
@@ -906,7 +906,7 @@ final class SWGSubmitTab extends JPanel {
      * returns a resource object parsed from the line. The resource is always of
      * type {@link SWGMutableResource}, also when it is a locally
      * <I>known&nbsp;</I> resource, which allows for this component to amend to
-     * it for later submission to SWGCraft.org.
+     * it for later submission to swgaide.com.
      * 
      * @param line the string to parse
      * @param nonHarv {@code true} if resources which are impossible to harvest
@@ -1161,7 +1161,7 @@ final class SWGSubmitTab extends JPanel {
         bottom.add(makeHistorical());
 
         bottom.add(Box.createHorizontalGlue());
-        String submitToolTip = "Submit multiple resources to SWGCraft.org";
+        String submitToolTip = "Submit multiple resources to swgaide.com";
         bottom.add(makeMultiSubmitButton(submitToolTip));
 
         bottom.add(makeRCPFilterList(filterToolTip));
@@ -1299,7 +1299,7 @@ final class SWGSubmitTab extends JPanel {
 
     /**
      * Helper method which creates and returns a GUI button. The returned button
-     * is the component which initiates submission to SWGCraft.org of the
+     * is the component which initiates submission to swgaide.com of the
      * resources displayed at the main table.
      * 
      * @param toolTip the tool tip text for this component
@@ -1618,7 +1618,7 @@ final class SWGSubmitTab extends JPanel {
     private void resetSingleSubmitButton() {
         singleSubmitButton.setText("Submit");
         singleSubmitButton
-                .setToolTipText("Submit resource data to SWGCraft.org");
+                .setToolTipText("Submit resource data to swgaide.com");
     }
 
     /**
@@ -1830,7 +1830,7 @@ final class SWGSubmitTab extends JPanel {
 
     /**
      * Helper method which initiates the GUI before submission of resources to
-     * SWGCraft.org begins.
+     * swgaide.com begins.
      */
     private void submitBefore() {
         enableUserActions(false);
@@ -1841,7 +1841,7 @@ final class SWGSubmitTab extends JPanel {
     }
 
     /**
-     * Helper method which from the specified list submits to SWGCraft.org
+     * Helper method which from the specified list submits to swgaide.com
      * resources which the user has marked as depleted. Only locally cached,
      * known resources are submitted.
      * 
@@ -1876,7 +1876,7 @@ final class SWGSubmitTab extends JPanel {
     }
 
     /**
-     * Helper method which sends a depleted message to SWGCraft.org for the
+     * Helper method which sends a depleted message to swgaide.com for the
      * specified resource. This method also updates the specified GUI list.
      * 
      * @param kr the depleted resource
@@ -1958,7 +1958,7 @@ final class SWGSubmitTab extends JPanel {
     }
 
     /**
-     * Helper method which sends an edit message to SWGCraft.org derived from
+     * Helper method which sends an edit message to swgaide.com derived from
      * the mutable resource. It is assumed the the mutable resource has some
      * difference compared to the known resource. This method compares the two
      * and invokes the appropriate method at the resource manager. If there is
@@ -2034,7 +2034,7 @@ final class SWGSubmitTab extends JPanel {
     }
 
     /**
-     * Helper method which submits the specified resource to SWGCraft.org as a
+     * Helper method which submits the specified resource to swgaide.com as a
      * new resource. If the name of the resource is too similar to a resource
      * the resource manager aborts and returns a {@link SWGSoapNOResResponse}
      * with a reference to the similar resource. Otherwise this method always
@@ -2064,7 +2064,7 @@ final class SWGSubmitTab extends JPanel {
     }
 
     /**
-     * Helper method which submits the specified resource to SWGCraft.org as a
+     * Helper method which submits the specified resource to swgaide.com as a
      * historical resource. This method always returns a string, if there is an
      * error the string reads the error message, otherwise an empty string.
      * 
@@ -2428,7 +2428,7 @@ final class SWGSubmitTab extends JPanel {
         z.app(" ---  \"").app(txt).appnl("\"");
 
         z.app("# Printed: name, resource class, age");
-        z.appnl(" ||| if only a resource class >>> missing at SWGCraft.org");
+        z.appnl(" ||| if only a resource class >>> missing at swgaide.com");
 
         z.app("# REPLACE: newName, rc, stats ||| do not edit");
         z.appnl(" rc (res-class), let line stay if nothing changed");
@@ -2479,7 +2479,7 @@ final class SWGSubmitTab extends JPanel {
      * {@link SWGKnownResource} and {@link SWGResourceClass}, objects which are
      * mandatory in the worlds of SWG.
      * 
-     * @param spawning a set of spawning resources, as reported to SWGCraft.org
+     * @param spawning a set of spawning resources, as reported to swgaide.com
      * @param crl a list of mandatory resource classes
      * @return a list of spawning resources and resource classes
      */
@@ -2569,7 +2569,7 @@ final class SWGSubmitTab extends JPanel {
 
     /**
      * Helper method which returns a set of resources which are listed at
-     * SWGCraft.org without stats. If no such resource exists an empty list is
+     * swgaide.com without stats. If no such resource exists an empty list is
      * returned.
      * 
      * @param set a set of current resources

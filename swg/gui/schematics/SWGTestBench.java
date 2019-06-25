@@ -79,7 +79,7 @@ import swg.tools.ZString;
  * resource class does not match nothing happens</li>
  * <li>if no slot is selected the resource fills <i>the first empty </i> slot
  * that accepts it; resource slots are iterated in the same order they appear in
- * the XML file that is downloaded from SWGCraft.org</li>
+ * the XML file that is downloaded from swgaide.com</li>
  * </ul>
  * </li> </ul>
  * <p>

@@ -58,13 +58,13 @@ import swg.tools.ZString;
  * resources. Many of these are accessed within the Resources section but some
  * collections and supportive features have global visibility. This type does
  * not replace the resource manager which handles all the communication with
- * SWGCraft.org and the local cache of known resources; this type is in some
+ * swgaide.com and the local cache of known resources; this type is in some
  * manner the controller in the MVC pattern and controls the access and mutation
  * of collections related to resources.
  * <p>
  * This type manages the collections of of defined resource guards, monitors,
  * resource inventories, harvesters and their related collections of users. When
- * a communication with SWGCraft.org is complete this type scans the collections
+ * a communication with swgaide.com is complete this type scans the collections
  * and if anything is triggered this type handles alerts and alarms via sound
  * and visible effects.
  * <p>
@@ -79,7 +79,7 @@ import swg.tools.ZString;
  * and/or the user's selected main galaxy, but it iterates over <i>all&nbsp;</i>
  * active harvesters and monitors. For each galaxy with active harvesters and
  * monitors a set of current resources is requested from the resource manager;
- * this may trigger a download from SWGCraft.org which, once finished, fires off
+ * this may trigger a download from swgaide.com which, once finished, fires off
  * another notification that triggers a new scan.
  * <p>
  * On purpose this type just scans resource guards for the current galaxy. The

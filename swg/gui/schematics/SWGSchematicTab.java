@@ -537,7 +537,7 @@ public final class SWGSchematicTab extends JTabbedPane {
         } catch (ParseException e) {/* ignore */
         }
         frame.putToLogbar_2(String.format(
-                "%s schematics from SWGCraft.org (%s)",
+                "%s schematics from swgaide.com (%s)",
                 ZNumber.asText(nbr, true, true), ld));
     }
 

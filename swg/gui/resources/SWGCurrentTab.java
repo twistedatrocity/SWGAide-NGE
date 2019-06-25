@@ -759,7 +759,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         }
         ZString z = new ZString();
         if (!append) {
-            z.app("SWGAide -- SWGCraft.org -- ");
+            z.app("SWGAide -- SWGAide.com -- ");
             z.appnl(ZStuff.dateString(true)).nl();
         }
         SWGResController.resourceDetails(kr, z);
@@ -1046,7 +1046,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     
     /**
      * Helper method which displays some info at SWGAide's log bar, the number
-     * of resources on display and the most recent fetch from SWGCraft.org.
+     * of resources on display and the most recent fetch from SWGAide.com.
      * 
      * @param set the set of resources to parse info from
      */
@@ -1066,7 +1066,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time * 1000L);
 
-        String tstr = String.format("%d resources (%s) from SWGCraft.org",
+        String tstr = String.format("%d resources (%s) from SWGAide.com",
                 Integer.valueOf(set.size()),
                 n.get(Calendar.DAY_OF_MONTH) != c.get(Calendar.DAY_OF_MONTH)
                         ? DateFormat.getDateTimeInstance(
@@ -1137,10 +1137,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         ppp.addSeparator();
 
-        // send depleted message to SWGCraft.org
+        // send depleted message to SWGAide.com
         JMenuItem sendDepl = new JMenuItem("Mark depleted");
         sendDepl.setToolTipText(
-                "Send depleted message to SWGCraft.org about this resource");
+                "Send depleted message to SWGAide.com about this resource");
         sendDepl.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e1) {
                 resourceTab.actionSendDepleted(res);
@@ -2651,7 +2651,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         JMenuItem markDepleted = new JMenuItem("Mark depleted");
         markDepleted.setToolTipText(
-                "Send depleted message to SWGCraft.org about this resource");
+                "Send depleted message to SWGAide.com about this resource");
         markDepleted.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e1) {
                 resourceTab.actionSendDepleted(res);

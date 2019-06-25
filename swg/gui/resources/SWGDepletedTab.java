@@ -443,7 +443,7 @@ final class SWGDepletedTab extends JPanel {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time.longValue() * 1000L);
         String tstr = String.format(
-                "%s depleted the last %s days (%d:%d) from SWGCraft.org",
+                "%s depleted the last %s days (%d:%d) from swgaide.com",
                 Integer.valueOf(depl.size()),
                 Integer.valueOf(SWGResource.RETIREMENT),
                 Integer.valueOf(c.get(Calendar.HOUR_OF_DAY)),

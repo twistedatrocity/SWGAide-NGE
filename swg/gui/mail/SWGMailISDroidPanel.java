@@ -2498,7 +2498,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         if (continu && count >= 10) {
             JOptionPane.showMessageDialog(mailPane.folderList,
                     String.format("Some resources could not be marked%n" +
-                            "as %s at SWGCraft.org", isDepl
+                            "as %s at swgaide.com", isDepl
                             ? "depleted"
                             : "available"), "Error",
                     JOptionPane.WARNING_MESSAGE);

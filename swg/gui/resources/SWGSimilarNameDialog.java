@@ -28,7 +28,7 @@ import swg.swgcraft.SWGSoapNOResResponse;
 import swg.swgcraft.SWGSoapStatusResponse;
 
 /**
- * This dialog is used by clients that submit new resources to SWGCraft.org. A
+ * This dialog is used by clients that submit new resources to swgaide.com. A
  * client displays this dialog if a resource name is very similar to an existing
  * resource and the dialog presents the user with decisions and choices.
  * <p>

@@ -454,7 +454,7 @@ final class SWGResourceClassUse extends JPanel {
             ZWriter wr = ZWriter.newTextWriterExc(f, false);
             wr.writeExc("# SWGAide: Resource Class Use for ");
             wr.writelnExc(p);
-            wr.writelnExc("# Data by SWGCraft.org");
+            wr.writelnExc("# Data by swgaide.com");
             wr.eol();
 
             for (int i = 0; i < resClassTreeModel.elementCount(); ++i) {

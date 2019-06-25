@@ -1161,7 +1161,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 (mt == JOptionPane.WARNING_MESSAGE
                         ? ""
                         : "\nExit SWGAide, read the log files, and\n" +
-                                "report errors at SWGCraft, please"));
+                                "report errors at swgaide.com, please"));
 
         if (displayConfirmDialog(s, "Confirm exit", mt)) {
 
@@ -1342,9 +1342,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @return a menu item for the Options menu, SWGCraft options
      */
     private JMenuItem optionsSWGCraftMenuItem() {
-        optionsCraftMenuItem = new JMenuItem("SWGCraft...");
+        optionsCraftMenuItem = new JMenuItem("SWGAide...");
         optionsCraftMenuItem
-            .setToolTipText("Options for connecting to SWGCraft");
+            .setToolTipText("Options for connecting to swgaide.com");
         optionsCraftMenuItem.setMnemonic('S');
         optionsCraftMenuItem.addActionListener(new ActionListener() {
 
@@ -1619,7 +1619,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		"Originally Created by Simon Gronlund\n" +
                 "Zimoon @ Chimaera\n" +
                 "Oarun @ Chilastra\n\n" +
-                "Resource and schematic data is provided by SWGCraft.org\n" +
+                "Resource and schematic data is provided by swgaide.com and SWGCraft.org\n" +
                 "Creature harvesting data is obtained from SWGPets.com\n" +
                 "Credits to SciGuy and Onyx for food & drink buff data\n\n" +
                 "Your support for SWGCraft and SWGPets is important",

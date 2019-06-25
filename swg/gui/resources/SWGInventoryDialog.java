@@ -60,10 +60,10 @@ import swg.tools.ZTraversalPolicy;
  * However, while editing a wrapper only the amount and notes are editable, and
  * if the SWGCraft ID is unknown also the stats and the galaxy chooser are
  * enabled. The other components are disabled and they should be, certainly so
- * for resources which are known at SWGCraft.org. In any case, this decision
+ * for resources which are known at swgaide.com. In any case, this decision
  * makes it somewhat easier to maintain the call chains.
  * <p>
- * XXX: Add so this dialog suggests to submit resources unknown at SWGCraft.org
+ * XXX: Add so this dialog suggests to submit resources unknown at swgaide.com
  * as an old resource.
  * 
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
@@ -117,7 +117,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
     private boolean isGuiUpdating;
 
     /**
-     * A button for the action to look up resources at SWGCraft.org.
+     * A button for the action to look up resources at swgaide.com.
      */
     private JButton lookupButton;
 
@@ -126,7 +126,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * looked up a resource and only one was found this member references it,
      * otherwise this member is {@code null}. This reference makes it possible
      * for SWGAide to surpass stat-limits for resources which are known at
-     * SWGCraft.org even if it has stats outside limits. It is 100% certain that
+     * swgaide.com even if it has stats outside limits. It is 100% certain that
      * such resources exist, perhaps just at Mustafar.
      */
     private SWGKnownResource lookupResource;
@@ -145,7 +145,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
     /**
      * An input field for the name of the resource. This component is also used
-     * during "lookup" to display multiple resources returned from SWGCraft.org.
+     * during "lookup" to display multiple resources returned from swgaide.com.
      * <p>
      * <b>Note: </b>This field is disabled while editing a wrapper.
      */
@@ -376,7 +376,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
                 msg = "One or several stats are outside caps.\n"
                         + "Verify the stats, if they are correct press OK,\n"
                         + "otherwise Cancel, correct the resource at\n"
-                        + "SWGCraft.org, and then add to inventory";
+                        + "swgaide.com, and then add to inventory";
                 return JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                         SWGAide.frame(), msg, "Outside caps",
                         JOptionPane.OK_CANCEL_OPTION,
@@ -408,11 +408,11 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
     /**
      * Helper method to {@code lookupButton}. This method executes in two
      * logical phases, the latter is split up determined by the result obtained
-     * from SWGCraft.org:
+     * from swgaide.com:
      * <ol>
      * <li>Validate the text from the resource name input field, possibly just
      * initial letters.</li>
-     * <li>Lookup the input at SWGCraft.org and obtain a list of possible
+     * <li>Lookup the input at swgaide.com and obtain a list of possible
      * resources.</li>
      * </ol>
      * <p>
@@ -473,7 +473,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         if (response.size() == 0) {
             errorMsg = String.format(
-                    "No resource %s at %s is found at SWGCraft.org",
+                    "No resource %s at %s is found at swgaide.com",
                     resName, gxy.getName());
             resourceClassNameList.setEnabled(true);
         } else if (response.size() == 1 && response.get(0).startsWith("ERROR"))
@@ -599,7 +599,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
     private Box makeNResName(Vector<Component> travOrder) {
         Box box = Box.createHorizontalBox();
         box.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), " Lookup at SWGCraft.org "));
+                BorderFactory.createEtchedBorder(), " Lookup at swgaide.com "));
 
         JComboWiderPopup<String> rnl = new JComboWiderPopup<String>();
         rnl.setEditable(true);
@@ -645,14 +645,14 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         box.add(Box.createHorizontalStrut(3));
 
         JButton lb = new JButton("Lookup");
-        lb.setToolTipText("Lookup resource name at SWGCraft.org");
+        lb.setToolTipText("Lookup resource name at swgaide.com");
         lb.setMnemonic('L');
         lb.addActionListener(this);
         travOrder.add(lb);
         lookupButton = lb;
 
         JLabel lbl = new JLabel(" ");
-        lbl.setToolTipText("Lookup resource name at SWGCraft.org");
+        lbl.setToolTipText("Lookup resource name at swgaide.com");
 
         Box lbb = Box.createVerticalBox();
         lbb.add(lbl);
@@ -709,7 +709,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
             }
         });
         rcnl.setToolTipText(
-                "If resource is unknown at SWGCraft.org, select a resource class");
+                "If resource is unknown at swgaide.com, select a resource class");
         travOrder.add(rcnl);
         resourceClassNameList = rcnl;
         box.add(rcnl);
@@ -871,7 +871,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
     /**
      * Helper method which returns an instance of a resource with the specified
      * name which origins from the galaxy selected at the galaxy chooser. This
-     * method always returns an instance, if it is known at SWGCraft.org it also
+     * method always returns an instance, if it is known at swgaide.com it also
      * has a valid ID. Only if there is an error a dialog is displayed and
      * {@code null} is returned.
      * 
@@ -889,7 +889,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
             return SWGResourceManager.getInstance(mr);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(galaxyList,
-                    "Communication error with SWGCraft.org\n" + e.getMessage(),
+                    "Communication error with swgaide.com\n" + e.getMessage(),
                     "Lookup failure", JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
@@ -899,7 +899,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * Helper method which returns an instance of a resource with the specified
      * name which origins from the galaxy selected at the galaxy chooser. This
      * method returns the instance which is cached locally. If the requested
-     * resource is not cached locally and if it is unknown at SWGCraft.org, or
+     * resource is not cached locally and if it is unknown at swgaide.com, or
      * if there is an error a dialog is displayed and {@code null} is returned.
      * 
      * @param resName the name for the resource
@@ -917,8 +917,8 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
         if (res == null) {
             JOptionPane.showMessageDialog(galaxyList, err == null
-                    ? "No such resource at SWGCraft.org"
-                    : "Communication error with SWGCraft.org\n" + err,
+                    ? "No such resource at swgaide.com"
+                    : "Communication error with swgaide.com\n" + err,
                     "Lookup failure", JOptionPane.INFORMATION_MESSAGE);
             return null;
         }
@@ -926,7 +926,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
     }
 
     /**
-     * This method requests resource info from SWGCraft.org for the specified
+     * This method requests resource info from swgaide.com for the specified
      * resource name and the galaxy which is selected at the galaxy chooser. If
      * no resource is found or if there is a network error a dialog displays a
      * message and this method does nothing further. If a resource is obtained
@@ -936,7 +936,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * <dd>Use the obtained resource info to populate the GUI dialog</dd>
      * <dt>Edit inventory entry</dt>
      * <dd>The user wants to lookup unknown resource stats at SWGCraft. <br/>
-     * If the stats exist at SWGCraft.org <u>and</u> the values are different,
+     * If the stats exist at swgaide.com <u>and</u> the values are different,
      * the GUI is updated but updating the wrapper is deferred until the users
      * selects OK; this is possible only for resources without SWGCraft ID.
      * Otherwise this method does nothing further.</dd>
@@ -963,7 +963,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
 
                 if (mr == null) {
                     JOptionPane.showMessageDialog(galaxyList, 
-                            "Resource unknown at SWGCraft.org",
+                            "Resource unknown at swgaide.com",
                             "Unknown", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
@@ -971,7 +971,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
                 if (!mr.getName().equals(kr.getName())
                         || mr.rc() != kr.rc()) {
                     String msg = String.format("<html>"
-                            + "Resource from SWGCraft.org is different<br/>"
+                            + "Resource from swgaide.com is different<br/>"
                             + "Aborting<br/><TABLE>"
                             + "<TR><TD>Galaxy:</TD><TD>%s</TD></TR>"
                             + "<TR><TD>Name:</TD><TD>%s</TD></TR>"
@@ -994,7 +994,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
                 amount.requestFocusInWindow();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(galaxyList,
-                        "Communication error with SWGCraft.org\n"
+                        "Communication error with swgaide.com\n"
                                 + e.getMessage(),
                         "Lookup failure", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -1183,7 +1183,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * valid SWGCraft ID, or if it is a space-or-recycled class, the mentioned
      * input fields are disabled. Otherwise, the galaxy selection list and the
      * stat input fields are enabled; this is a locally known resource, unknown
-     * at SWGCraft.org.
+     * at swgaide.com.
      * 
      * @param wrapper an inventory wrapper, or {@code null}
      */

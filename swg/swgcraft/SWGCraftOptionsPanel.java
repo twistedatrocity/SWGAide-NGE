@@ -37,7 +37,7 @@ import swg.tools.ZCrypto;
 import swg.tools.ZString;
 
 /**
- * A GUI dialog for user options and preferences related to SWGCraft.org.
+ * A GUI dialog for user options and preferences related to swgaide.com.
  * 
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Europe-Chimaera.Zimoon
@@ -52,7 +52,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     private JCheckBox autoUpdateGalaxyResources;
 
     /**
-     * The GUI text field for the base URL to SWGCraft.org.
+     * The GUI text field for the base URL to swgaide.com.
      */
     private JTextField baseURL;
 
@@ -73,7 +73,7 @@ public class SWGCraftOptionsPanel extends JDialog {
 
     /**
      * A GUI text field for the user's password for communication with
-     * SWGCraft.org.
+     * swgaide.com.
      */
     private JPasswordField passWord;
 
@@ -109,7 +109,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     private JComboBox<String> timeZones;
 
     /**
-     * A GUI text field for the user name used to connect to SWGCraft.org.
+     * A GUI text field for the user name used to connect to swgaide.com.
      */
     private JTextField userName;
 
@@ -125,7 +125,7 @@ public class SWGCraftOptionsPanel extends JDialog {
      *            the application's GUI frame
      */
     public SWGCraftOptionsPanel(final SWGFrame frame) {
-        super(frame, "SWGCraft Options", false);
+        super(frame, "SWGAide Options", false);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -299,7 +299,7 @@ public class SWGCraftOptionsPanel extends JDialog {
             z.app(info.getFaultMessage());
         else {
             z.appnl("User name and/or password are invalid,");
-            z.appnl("or you have not registered at SWGCraft.org");
+            z.appnl("or you have not registered at swgaide.com");
             z.app(info.getFaultMessage());
         }
         z.nl().nl();
@@ -353,7 +353,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     }
 
     /**
-     * Returns the path to the file of current-resources at SWGCraft.org. If the
+     * Returns the path to the file of current-resources at swgaide.com. If the
      * string equals {@link SWGCraft#getCurrentResourcesPath()}, or if its
      * length is zero, {@code null} is returned.
      * 
@@ -369,7 +369,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     }
 
     /**
-     * Returns the path to the SOAP server at SWGCraft.org. If the string equals
+     * Returns the path to the SOAP server at swgaide.com. If the string equals
      * {@link SWGCraft#getSOAPServerPath()}, or if its length is zero, {@code
      * null} is returned.
      * 
@@ -384,7 +384,7 @@ public class SWGCraftOptionsPanel extends JDialog {
     }
 
     /**
-     * Returns the path to the status text file at SWGCraft.org. If the string
+     * Returns the path to the status text file at swgaide.com. If the string
      * equals {@link SWGCraft#getStatusFileTXT()}, or if its length is zero,
      * {@code null} is returned.
      * 
@@ -538,17 +538,17 @@ public class SWGCraftOptionsPanel extends JDialog {
      */
     private Component makeServerPanel() {
         JPanel srvP = new JPanel();
-        srvP.setBorder(BorderFactory.createTitledBorder("SWGCraft data"));
-        srvP.setLayout(new BoxLayout(srvP, BoxLayout.Y_AXIS));
+        //srvP.setBorder(BorderFactory.createTitledBorder("SWGAide.com data"));
+        //srvP.setLayout(new BoxLayout(srvP, BoxLayout.Y_AXIS));
 
         JPanel first = makeServerFirstRow();
-        srvP.add(first);
+        //srvP.add(first);
 
         JPanel second = makeServerSecondRow();
-        srvP.add(second);
+        //srvP.add(second);
 
         JPanel third = makeServerThirdRow();
-        srvP.add(third);
+        //srvP.add(third);
 
         return srvP;
     }
@@ -648,14 +648,14 @@ public class SWGCraftOptionsPanel extends JDialog {
         JPanel uPanel = new JPanel();
         uPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         uPanel.setBorder(BorderFactory
-            .createTitledBorder("User info for SWGCraft"));
+            .createTitledBorder("User info for SWGAide.com"));
 
         JLabel uname = new JLabel("User name: ");
-        uname.setToolTipText("User name used at SWGCraft");
+        uname.setToolTipText("User name used at SWGAide.com");
         uPanel.add(uname);
 
         userName = new JTextField(8);
-        userName.setToolTipText("User name used at SWGCraft");
+        userName.setToolTipText("User name used at SWGAide.com");
         uPanel.add(userName);
 
         String name = (String) SWGFrame.getPrefsKeeper().get("optionUserName");
@@ -666,11 +666,11 @@ public class SWGCraftOptionsPanel extends JDialog {
         uPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
         JLabel pwd = new JLabel("Password: ");
-        pwd.setToolTipText("Password for SWGCraft (never sent anywhere)");
+        pwd.setToolTipText("Password for SWGAide.com (never sent anywhere)");
         uPanel.add(pwd);
 
         passWord = new JPasswordField(8);
-        passWord.setToolTipText("Password for SWGCraft (never sent anywhere)");
+        passWord.setToolTipText("Password for SWGAide.com (never sent anywhere)");
         uPanel.add(passWord);
 
         String pswd = SWGCraft.getPassword();
@@ -682,7 +682,7 @@ public class SWGCraftOptionsPanel extends JDialog {
 
         verifyUserInfo = new JButton("Verify");
         verifyUserInfo.setMnemonic('V');
-        verifyUserInfo.setToolTipText("Verify user info with SWGCraft");
+        verifyUserInfo.setToolTipText("Verify user info with SWGAide.com");
         verifyUserInfo.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {

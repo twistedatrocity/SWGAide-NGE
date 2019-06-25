@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * This constant uniquely identifies a profession within SWG. The constant reads
- * the name of the profession and an ID which is just used at SWGCraft.org. This
+ * the name of the profession and an ID which is just used at swgaide.com. This
  * type does not provide any methods to obtain profession specific data, any
  * such information is obtained from {@link SWGProfessionManager}.
  * 
@@ -88,7 +88,7 @@ public enum SWGProfession {
 	UNKNOWN("Unknown", 13);
 
     /**
-     * The ID used at SWGCraft.org for this profession.
+     * The ID used at swgaide.com for this profession.
      */
     private final int swgcraftID;
 
@@ -103,7 +103,7 @@ public enum SWGProfession {
      * @param professionName
      *            the proper name for the profession
      * @param swgCraftID
-     *            the ID at SWGCraft.org for the profession
+     *            the ID at swgaide.com for the profession
      */
     private SWGProfession(String professionName, int swgCraftID) {
         name = professionName;
@@ -124,7 +124,7 @@ public enum SWGProfession {
     }
 
     /**
-     * Returns the ID that is used at SWGCraft.org for this profession.
+     * Returns the ID that is used at swgaide.com for this profession.
      * 
      * @return the SWGCraft ID
      */

@@ -59,7 +59,7 @@ final class SWGSoapManager extends SOAPManager {
     /**
      * The constant target name space for the SOAP server at SWGCraft.org.
      */
-    private static final String TARGET_NAME_SPACE = "urn:swgcraft";
+    private static final String TARGET_NAME_SPACE = "urn:swgaide";
 
     /**
      * The cached password to SWGCraft.org for the current user, this value is
@@ -231,7 +231,7 @@ final class SWGSoapManager extends SOAPManager {
     private SOAPElement newLoginChild(SOAPBodyElement sbe) throws Exception {
         SOAPElement lse = newElement("Login", sbe);
         addChildElement("userid", itos(getUserID()), sbe, lse);
-        addChildElement("md5pass", getEncryptedPassword(), sbe, lse);
+        addChildElement("md5pass", SWGCraft.getUserPassword(), sbe, lse);
         return lse;
     }
 
@@ -328,7 +328,7 @@ final class SWGSoapManager extends SOAPManager {
             if (hasFault(respMsg, response))
                 return response;
 
-            Node n = getFirstChild(respMsg.getSOAPBody(), 2);
+            Node n = getFirstChild(respMsg.getSOAPBody(), 1);
             response.parseNode(n);
         } catch (Exception e) {
             String s = "SWGSoapManager:requestResource(id): " + e.getMessage();

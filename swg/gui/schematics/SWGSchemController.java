@@ -544,7 +544,7 @@ final public class SWGSchemController implements UpdateSubscriber {
     /**
      * Returns a set of resources that are spawning at the current galaxy, or an
      * empty set if the user has not selected a character or if there is no
-     * resource reported at SWGCraft.org.
+     * resource reported at swgaide.com.
      * 
      * @return a set of spawning resources
      */
@@ -582,7 +582,7 @@ final public class SWGSchemController implements UpdateSubscriber {
      * Returns an instance of experimental weights for the specified schematic,
      * or {@code null}. This method returns the experimental weights of the
      * first group and its first line, as they are listed in the schematics XML
-     * file from SWGCraft.org. If the schematic is {@code null} or LQ this
+     * file from swgaide.com. If the schematic is {@code null} or LQ this
      * method returns {@code null}, see {@link #weightsWidest(SWGSchematic)}.
      * 
      * @param schem a schematic

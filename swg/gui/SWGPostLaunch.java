@@ -143,6 +143,12 @@ final class SWGPostLaunch {
             docsWriteIndex(fList, iMap, dPath);
             docsWriteIndex();
             saveInfoFile("docs/translate.txt");
+            //saveInfoFile("docs/main.css");
+            /*InputStream in =
+                    SWGAide.class.getResourceAsStream(jPath + '/' + "main.css");
+            File f = new File("docs", "main.css");
+            copyFile(in, f);
+            in.close(); */
         } catch (Exception e) {
             SWGAide.printError("SWGPostLaunch:docsCopy", e);
         }
@@ -294,8 +300,8 @@ final class SWGPostLaunch {
         wr.eol();
 
         docsWrite(wr, DOCS_INTRO);
-        docsLink(wr, "http://www.swgcraft.org/forums/viewforum.php?f=43",
-                "<nobr>SWGAide @ SWGCraft.org</nobr>");
+        docsLink(wr, "https://swgaide.com/swgaide.html",
+                "<nobr>SWGAide @ swgaide.com</nobr>");
 
         wr.writelnExc("<p><p><p>");
 
@@ -387,8 +393,8 @@ final class SWGPostLaunch {
         wr.writelnExc("</h3>");
 
         docsWrite(wr, DOCS_INTRO);
-        docsLink(wr, "http://www.swgcraft.org/forums/viewforum.php?f=43",
-                "<nobr>SWGAide @ SWGCraft.org</nobr>");
+        docsLink(wr, "https://swgaide.com/swgaide.html",
+                "<nobr>SWGAide @ swgaide.com</nobr>");
 
         wr.writelnExc("<p><table border=0 cellpadding=1>");
 

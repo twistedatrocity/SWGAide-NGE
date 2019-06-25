@@ -1147,7 +1147,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             return getShoppingHelper(schem, 1);
         } catch (Exception e) {
             String s = String.format(
-                    "Error, report the following at SWGCraft.org:%n"
+                    "Error, report the following at swgaide.com:%n"
                             + "Schematic name: %s%nSchematic ID: %s%n"
                             + "In SWGAide:getShoppingList%nThanks",
                     schem.getName(), Integer.toString(schem.getID()));

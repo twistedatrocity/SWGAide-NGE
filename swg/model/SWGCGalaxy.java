@@ -68,10 +68,10 @@ public class SWGCGalaxy implements Serializable {
                         && n.getNodeName().equals("server")) {
                     Element cur = (Element) n;
                     // Initialize a server and throw it in our list
-                    String name = cur.getAttribute("name");
-                    int swgcraftID = ZXml.intFromAttr(cur, "swgcraft_id");
-                    String swgcraftName = cur.getAttribute("swgcraft_name");
-                    // System.out.println(cur);
+                    String swgcraftName = cur.getAttribute("name");
+                    int swgcraftID = ZXml.intFromAttr(cur, "swgaide_id");
+                    String name = cur.getAttribute("folder_name");
+                    //System.out.println(cur);
                     boolean active = ZXml.booleanFromAttr(cur, "active");
                     SWGCGalaxy galaxy =
                             new SWGCGalaxy(name, swgcraftName, swgcraftID,
@@ -137,7 +137,7 @@ public class SWGCGalaxy implements Serializable {
     /**
      * Returns the proper name for this galaxy constant. This method returns the
      * shorter name for the European galaxies, and TestCenter which is spelled
-     * Test Center at SWGCraft.org.
+     * Test Center at swgaide.com.
      * 
      * @return the name
      */
@@ -157,7 +157,7 @@ public class SWGCGalaxy implements Serializable {
 
     /**
      * Returns the SWGCraft galaxy ID for this constant. This is the integer
-     * which is used in SOAP actions with SWGCraft.org.
+     * which is used in SOAP actions with swgaide.com.
      * 
      * @return the id
      */

@@ -211,7 +211,7 @@ public class SWGMainTab extends JSplitPane {
             SWGAide.printError("SWGMainTab:makeTree", e);
             JOptionPane.showMessageDialog(frame,
                     "Error creating GUI tree, see log\n" +
-                            "file and report at SWGCraft.org\n\n" +
+                            "file and report at swgaide.com\n\n" +
                             "Exiting", "Error",
                     JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
