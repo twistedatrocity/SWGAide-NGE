@@ -35,6 +35,7 @@ import swg.model.SWGCGalaxy;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.ZCrypto;
 import swg.tools.ZString;
+import javax.swing.JTextPane;
 
 /**
  * A GUI dialog for user options and preferences related to swgaide.com.
@@ -286,6 +287,7 @@ public class SWGCraftOptionsPanel extends JDialog {
 
         SWGSoapUserDetailedResponse info = handler.requestUserInfoDetailed();
         if (info.isFaultless()) {
+        	SWGFrame.verified = true;
             JOptionPane.showMessageDialog(verifyUserInfo,
                 "User name and password are correct", "Valid",
                 JOptionPane.INFORMATION_MESSAGE);
@@ -295,9 +297,9 @@ public class SWGCraftOptionsPanel extends JDialog {
 
         // else
         ZString z = new ZString();
-        if (info.getFaultMessage().startsWith("Temporary")) 
+        if (info.getFaultMessage().startsWith("Temporary")) {
             z.app(info.getFaultMessage());
-        else {
+        } else {
             z.appnl("User name and/or password are invalid,");
             z.appnl("or you have not registered at swgaide.com");
             z.app(info.getFaultMessage());

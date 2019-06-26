@@ -70,7 +70,6 @@ import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGProfessionManager;
 import swg.model.SWGUniverse;
-import swg.swgcraft.SWGCraft;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftOptionsPanel;
 import swg.swgcraft.SWGResourceManager;
@@ -254,6 +253,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * The main tabbed main pane, used by all application logic
      */
     private JTabbedPane tabPane = null;
+    
+    /**
+     * Global variable for if user has verified credentials
+     */
+    public static Boolean verified = false;
 
     /**
      * Creates a SWGFrame object
@@ -730,6 +734,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         } // else: ini does not exist
         prefsKeeper = new SimplePrefsKeeper();
         getPrefsKeeper().add("prefsKeeperBackupDate", Long.valueOf(0));
+        verified = (Boolean) prefsKeeper.get("optionVerified");
         return true;
     }
 
@@ -1746,7 +1751,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         	int ord3 = Integer.parseInt(vparts[2]);
         	
         	/**
-        	 * Begin conversion of old Inventory map, taking ito account any duplicates and trying to fix them
+        	 * Begin conversion of old Inventory map, taking into account any duplicates and trying to fix them
         	 */
         	// checks if version in dat file older than or equal to 0.1.9
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 9 ) {
