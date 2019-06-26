@@ -6,18 +6,19 @@ Installation
 
 Create a new folder for SWGAide-NGE, anywhere you want.
 
-Drag and drop the SWGAide-NGE.exe file in the new folder.
+Drag and drop the SWGAide-NGE.exe file in to the new folder.
 
 Double click the icon for SWGAide-NGE.exe to launch it.
 
 SWGAide guides you through its initialization. Actually, you just have to
 verify (or possibly find) the folder for StarWarsGalaxies; you cannot make
-a useful installation of SWGAide without SWG.
+a useful installation of SWGAide without SWG installed. You may also wish to
+skip the scanning phase and manually choose your SWG game folder.
 
 SWGAide creates several folders and files its directory; they are all self
 explanatory.
 
-Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use seperate installation folders.
+Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use separate installation folders.
 
 
 Usage
@@ -32,8 +33,9 @@ The Main panel's left-hand side displays
 2) galaxies at which you have a character, or have had
 3) files such as aliases, macros, and notes files
 
-You can only see characters who have saved mails. To be able to read game-mails
-in SWGAide you must, in-game and for each character, execute the command,
+SWGAide tries to find all characters, however sometimes it can only find characters
+who have saved mails. To be able to read game-mails in SWGAide you must,
+in-game and for each character, execute the command,
 
     /mailsave
 
@@ -67,7 +69,7 @@ The latter group could gather and submit all kinds of data that could be useful
 in SWGAide and post that at the SWGAide forum at SWGCraft.org. Or anything else
 that is useful for other players, at any format or syntax.
 Developers are welcomed to download the source code from github,
-browse the code but PM me before going ahead to implement stuff.
+browse the code but DM me on discord before going ahead to implement stuff.
 
 
 
@@ -105,5 +107,5 @@ Uninstall
 
 SWGAide does not add anything to the Windows Registry and it does not spread
 files all over your computer. SWGAide is contained within the folder you created
-for SWGAide. Save the "mails" folder and other files which you want to keep and
+for SWGAide. Save the "mails" folder and other files which you want to keep,
 then delete SWGAide's folder ... and done.
