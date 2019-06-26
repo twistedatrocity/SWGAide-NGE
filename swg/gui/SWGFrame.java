@@ -1888,6 +1888,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGCraftCache.updateCache();
         		// we must clear the resource cache for ID integer sanity
         		SWGResourceManager.clearcache();
+        		SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
         		try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -1896,6 +1897,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		// add the new prefs key for verified credentials
         		Boolean verified = false;
         		SWGFrame.getPrefsKeeper().add("optionVerified", verified);
+        		SWGFrame.getPrefsKeeper().add("resourceInventoryMap", new TreeMap<String,Map<String, List<Object>>>());
         		SWGResourceManager.updateMainGalaxy();
         	}
         } else {

@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -45,6 +46,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -90,6 +92,7 @@ import swg.model.SWGStation;
 import swg.swgcraft.SWGResourceManager;
 import swg.swgcraft.SWGResourceTuple;
 import swg.swgcraft.SWGSoapListResResponse;
+import swg.swgcraft.SWGSoapNOResResponse;
 import swg.tools.ZCSV;
 import swg.tools.ZHtml;
 import swg.tools.ZNumber;
@@ -1255,8 +1258,9 @@ final class SWGInventoryTab extends JPanel {
                             Integer.toString(importCounter),
                             Integer.toString(importLines), Long.toString(id)));
                     res = SWGResourceManager.getInstance(id);
-                    if (res == null)
-                        throw new IllegalArgumentException("Invalid ID column");
+                    if (res == null) {
+                        //throw new IllegalArgumentException("Invalid ID column");
+                    }
                 }
             }
 
@@ -1297,7 +1301,7 @@ final class SWGInventoryTab extends JPanel {
                     if (!gn[1].isEmpty())
                         name = ZString.tac(gn[1]);
 
-                    if (gxy == null && !fileReadIsRecycled(gn)) {
+                    if (gxy != null && !fileReadIsRecycled(gn)) {
                         // recycled have no galaxy and is handled later
 
                         if (gn[0] != null) {
@@ -1384,7 +1388,6 @@ final class SWGInventoryTab extends JPanel {
                                 name, gxy.getName()));
 
                         res = SWGResourceManager.getInstance(name, gxy);
-
                     } // gxy + recycled
                 } // resource name -- order[2]
             } // res == null
@@ -1426,8 +1429,25 @@ final class SWGInventoryTab extends JPanel {
                     SWGMutableResource mr = new SWGMutableResource(name, cls);
                     mr.galaxy(gxy);
                     mr.stats(fileReadStats(splitted, order), true);
+                    
+                	if (order[3] >= 0 && !splitted[order[3]].isEmpty()) {
+                        long id = ZNumber.longExc(splitted[order[3]]);
+                        if(id > 0) {
+                        	/** this is if it failed the former id/name checks above
+                        	 * it's likely a valid resource but came from an swgcraft database
+                        	 * and the id's obviously wont match swgaide.com
+                        	 * so lets just go ahead and report as historical then use THAT id
+                        	 */
+                        	SWGSoapNOResResponse sr = SWGResourceManager.sendOld(mr);
+                        	if(sr.isFaultless()) {
+                        		res = SWGResourceManager.getInstance(sr.getSWGCraftID());
+                        	}
+                        } else {
+                        	res = SWGResourceManager.getInstance(mr);
+                        }
+                	}
 
-                    res = SWGResourceManager.getInstance(mr);
+                    
                     if (res == null) { // sanity
                         SWGAide.printError("SWGInventoryTab:fileReadWrapper",
                                 new IllegalArgumentException(
@@ -2581,178 +2601,185 @@ final class SWGInventoryTab extends JPanel {
                 ? kr.rc()
                 : null;
 
-        ppp.add(SWGSchemResViewer.displayMenu(kr, this));
-        updateViewer = true; // by chance, it is reset if...
-
-        ppp.add(SWGSchemController.resClassUse(rc));
-
-        ppp.addSeparator();
-
-        JMenuItem neww = new JMenuItem("Create...");
-        neww.setToolTipText("Create a new entry for this galaxy");
-        neww.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e1) {
-                dialog().showAndBegin(null);
-            }
-        });
-        ppp.add(neww);
-
-        JMenuItem edit = new JMenuItem("Edit...");
-        edit.setToolTipText("Edit the selected entry");
-        edit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e1) {
-                dialog().showAndBegin(wr);
-            }
-        });
-        edit.setEnabled(row >= 0);
-        ppp.add(edit);
-
-        JMenu mgm = new JMenu("Manage");
-        ppp.add(mgm);
-
-        final List<SWGInventoryWrapper> dl = duplicates();
-        JMenuItem dupl = new JMenuItem("Find duplicates");
-        dupl.setToolTipText("Filter to find duplicate resource entries");
-        dupl.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e1) {
-                resetBottomPanel();
-                wrappers = dl;
-                tableModel.fireTableDataChanged();
-            }
-        });
-        dupl.setEnabled(!dl.isEmpty());
-        mgm.add(dupl);
-
-        final String s = wr == null
-                ? "All"
-                : wr.getAssignee();
-        JMenuItem merg = new JMenuItem(String.format("Merge to \"%s\"", s));
-        merg.setToolTipText(String.format(
-                "Merge all duplicate resource entries to \"%s\"", s));
-        merg.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e1) {
-                actionDuplicatesMerge(s, dl);
-            }
-        });
-        merg.setEnabled(!dl.isEmpty());
-        mgm.add(merg);
-
-        JMenuItem move = new JMenuItem(String.format("Move from \"%s\"...", s));
-        move.setToolTipText(String.format(
-                "Move visible resource entries from \"%s\" to...", s));
-        move.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e1) {
-                actionMove(s);
-            }
-        });
-        mgm.add(move);
-
-        ppp.addSeparator();
-
-        if (rc != null && rc.isSub(SWGCreatureResources.class))
-            ppp.add(SWGResController.creatureHarvMenu(
-                    (SWGCreatureResources) rc, null));
-
-        JMenuItem create = new JMenuItem("Create guard...");
-        create.setToolTipText("Create a guard based in the selected entry");
-        create.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionGuardCreate(row);
-            }
-        });
-        create.setEnabled(row >= 0);
-        ppp.add(create);
-
-        ppp.addSeparator();
-
-        final SWGCharacter toon = SWGFrame.getSelectedCharacter();
-
-        JMenuItem impn = new JMenuItem("Import / Update from notes...");
-        impn.setToolTipText("Import / Update inventory from in-game notes file");
-        impn.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionImportNotes(toon);
-            }
-        });
-        impn.setEnabled(toon != null);
-        ppp.add(impn);
-
-        JMenuItem expn = new JMenuItem("Export to notes...");
-        expn.setToolTipText("Export current display to in-game notes file");
-        expn.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionExportNotes(toon);
-            }
-        });
-        expn.setEnabled(toon != null && toon.galaxy().exists());
-        ppp.add(expn);
-
-        ppp.addSeparator();
-        
-        JMenuItem exp = new JMenuItem("Backup to CSV...");
-        exp.setToolTipText("Backup the current view to CSV file");
-        exp.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionExportToFile();
-            }
-        });
-        exp.setEnabled(wrappersFiltered().size() > 0);
-        ppp.add(exp);
-
-        JMenuItem impf = new JMenuItem("Restore from CSV...");
-        impf.setToolTipText("Import inventory from CSV file");
-        impf.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionImportFile();
-            }
-        });
-        ppp.add(impf);
-
-        JMenuItem copy = new JMenuItem("Galaxy copy...");
-        copy.setToolTipText("Copy this inventory to another galaxy");
-        copy.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionCopyAll();
-            }
-        });
-        copy.setEnabled(SWGResController.inventory(recentGalaxy).size() > 0);
-        ppp.add(copy);
-
-        ppp.addSeparator();
-
-        JMenuItem delall = new JMenuItem("Delete all");
-        delall.setToolTipText("Delete all entries of the current view");
-        delall.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionDeleteEntries();
-            }
-        });
-        delall.setEnabled(wrappersFiltered().size() > 0);
-        ppp.add(delall);
-
-        JMenuItem del = new JMenuItem("Delete entry");
-        del.setToolTipText("Delete the selected entry");
-        del.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionDeleteEntry(row);
-            }
-        });
-        del.setEnabled(row >= 0);
-        ppp.add(del);
+        if(SWGFrame.verified == true) {
+	        ppp.add(SWGSchemResViewer.displayMenu(kr, this));
+	        updateViewer = true; // by chance, it is reset if...
+	
+	        ppp.add(SWGSchemController.resClassUse(rc));
+	
+	        ppp.addSeparator();
+	
+	        JMenuItem neww = new JMenuItem("Create...");
+	        neww.setToolTipText("Create a new entry for this galaxy");
+	        neww.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e1) {
+	                dialog().showAndBegin(null);
+	            }
+	        });
+	        ppp.add(neww);
+	
+	        JMenuItem edit = new JMenuItem("Edit...");
+	        edit.setToolTipText("Edit the selected entry");
+	        edit.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e1) {
+	                dialog().showAndBegin(wr);
+	            }
+	        });
+	        edit.setEnabled(row >= 0);
+	        ppp.add(edit);
+	
+	        JMenu mgm = new JMenu("Manage");
+	        ppp.add(mgm);
+	
+	        final List<SWGInventoryWrapper> dl = duplicates();
+	        JMenuItem dupl = new JMenuItem("Find duplicates");
+	        dupl.setToolTipText("Filter to find duplicate resource entries");
+	        dupl.addActionListener(new ActionListener() {
+	            
+	            @Override
+	            public void actionPerformed(ActionEvent e1) {
+	                resetBottomPanel();
+	                wrappers = dl;
+	                tableModel.fireTableDataChanged();
+	            }
+	        });
+	        dupl.setEnabled(!dl.isEmpty());
+	        mgm.add(dupl);
+	
+	        final String s = wr == null
+	                ? "All"
+	                : wr.getAssignee();
+	        JMenuItem merg = new JMenuItem(String.format("Merge to \"%s\"", s));
+	        merg.setToolTipText(String.format(
+	                "Merge all duplicate resource entries to \"%s\"", s));
+	        merg.addActionListener(new ActionListener() {
+	            
+	            @Override
+	            public void actionPerformed(ActionEvent e1) {
+	                actionDuplicatesMerge(s, dl);
+	            }
+	        });
+	        merg.setEnabled(!dl.isEmpty());
+	        mgm.add(merg);
+	
+	        JMenuItem move = new JMenuItem(String.format("Move from \"%s\"...", s));
+	        move.setToolTipText(String.format(
+	                "Move visible resource entries from \"%s\" to...", s));
+	        move.addActionListener(new ActionListener() {
+	            
+	            @Override
+	            public void actionPerformed(ActionEvent e1) {
+	                actionMove(s);
+	            }
+	        });
+	        mgm.add(move);
+	
+	        ppp.addSeparator();
+	
+	        if (rc != null && rc.isSub(SWGCreatureResources.class))
+	            ppp.add(SWGResController.creatureHarvMenu(
+	                    (SWGCreatureResources) rc, null));
+	
+	        JMenuItem create = new JMenuItem("Create guard...");
+	        create.setToolTipText("Create a guard based in the selected entry");
+	        create.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionGuardCreate(row);
+	            }
+	        });
+	        create.setEnabled(row >= 0);
+	        ppp.add(create);
+	
+	        ppp.addSeparator();
+	
+	        final SWGCharacter toon = SWGFrame.getSelectedCharacter();
+	
+	        JMenuItem impn = new JMenuItem("Import / Update from notes...");
+	        impn.setToolTipText("Import / Update inventory from in-game notes file");
+	        impn.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionImportNotes(toon);
+	            }
+	        });
+	        impn.setEnabled(toon != null);
+	        ppp.add(impn);
+	
+	        JMenuItem expn = new JMenuItem("Export to notes...");
+	        expn.setToolTipText("Export current display to in-game notes file");
+	        expn.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionExportNotes(toon);
+	            }
+	        });
+	        expn.setEnabled(toon != null && toon.galaxy().exists());
+	        ppp.add(expn);
+	
+	        ppp.addSeparator();
+	        
+	        JMenuItem exp = new JMenuItem("Backup to CSV...");
+	        exp.setToolTipText("Backup the current view to CSV file");
+	        exp.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionExportToFile();
+	            }
+	        });
+	        exp.setEnabled(wrappersFiltered().size() > 0);
+	        ppp.add(exp);
+	
+	        JMenuItem impf = new JMenuItem("Restore from CSV...");
+	        impf.setToolTipText("Import inventory from CSV file");
+	        impf.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionImportFile();
+	            }
+	        });
+	        ppp.add(impf);
+	
+	        JMenuItem copy = new JMenuItem("Galaxy copy...");
+	        copy.setToolTipText("Copy this inventory to another galaxy");
+	        copy.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionCopyAll();
+	            }
+	        });
+	        copy.setEnabled(SWGResController.inventory(recentGalaxy).size() > 0);
+	        ppp.add(copy);
+	
+	        ppp.addSeparator();
+	
+	        JMenuItem delall = new JMenuItem("Delete all");
+	        delall.setToolTipText("Delete all entries of the current view");
+	        delall.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionDeleteEntries();
+	            }
+	        });
+	        delall.setEnabled(wrappersFiltered().size() > 0);
+	        ppp.add(delall);
+	
+	        JMenuItem del = new JMenuItem("Delete entry");
+	        del.setToolTipText("Delete the selected entry");
+	        del.addActionListener(new ActionListener() {
+	            
+	            public void actionPerformed(ActionEvent e1) {
+	                actionDeleteEntry(row);
+	            }
+	        });
+	        del.setEnabled(row >= 0);
+	        ppp.add(del);
+        } else {
+        	JLabel warn = new JLabel("Please verify your account credentials first");
+        	warn.setBorder(new EmptyBorder(10, 10, 10, 10));
+        	ppp.add(warn);
+        	
+        }
 
         ppp.show(table, e.getX(), e.getY());
     }
