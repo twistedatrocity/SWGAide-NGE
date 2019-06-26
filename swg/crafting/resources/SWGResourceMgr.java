@@ -135,6 +135,15 @@ public class SWGResourceMgr {
     public final void clear() {
         cache.clear();
     }
+    
+    /**
+     * Clears all contents from the resource cache. This method must only be
+     * used if there is an error loading the SWGAide.DAT file, to make room for
+     * loading a backup file, if one exists.
+     */
+    public static void clearcache() {
+    	cache.clear();
+    }
 
     /**
      * This implementation executes some exit routines for this instance, such

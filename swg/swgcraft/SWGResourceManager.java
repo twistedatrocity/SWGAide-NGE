@@ -157,7 +157,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
     /**
      * The timer which fires automatic updates for the user's main galaxy.
      */
-    private transient Timer timer = null;
+    private transient static Timer timer = null;
 
     /**
      * Creates an instance of this type which together with
@@ -218,7 +218,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * Stops and releases the automatic update timer. If there is an update in
      * progress it is not aborted but future updates are disabled.
      */
-    void stopAutoUpdate() {
+    static void stopAutoUpdate() {
         if (timer != null) {
             timer.stop();
             timer = null;
@@ -231,7 +231,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * selected a main galaxy at the options panel for SWGCraft.org this method
      * rather disables auto-updating, writes a message to SWGAide's log file.
      */
-    void updateMainGalaxy() {
+    public static void updateMainGalaxy() {
         Integer gid = (Integer) SWGFrame.getPrefsKeeper().get("optionMainGalaxy");
         if (gid == 0) {
             stopAutoUpdate();

@@ -1880,14 +1880,17 @@ public class SWGFrame extends JFrame implements ComponentListener,
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 20 ) {
         		SWGCraftCache.getserversXMLpath().delete();
         		SWGCraftCache.updateCache();
+        		// we must clear the resource cache for ID integer sanity
+        		SWGResourceManager.clearcache();
         		try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//
 				}
+        		// add the new prefs key for verified credentials
         		Boolean verified = false;
         		SWGFrame.getPrefsKeeper().add("optionsVerified", verified);
+        		SWGResourceManager.updateMainGalaxy();
         	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
