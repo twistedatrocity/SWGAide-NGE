@@ -288,6 +288,7 @@ public class SWGCraftOptionsPanel extends JDialog {
         SWGSoapUserDetailedResponse info = handler.requestUserInfoDetailed();
         if (info.isFaultless()) {
         	SWGFrame.verified = true;
+        	SWGFrame.getPrefsKeeper().add("optionVerified", SWGFrame.verified);
             JOptionPane.showMessageDialog(verifyUserInfo,
                 "User name and password are correct", "Valid",
                 JOptionPane.INFORMATION_MESSAGE);

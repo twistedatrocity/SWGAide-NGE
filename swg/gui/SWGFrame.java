@@ -729,12 +729,13 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 initSWGClient();
                 updatePreLaunch();
                 initCheckBackupPrefsKeeperNecessary();
+                verified = (Boolean) prefsKeeper.get("optionVerified");
                 return false;
             }
         } // else: ini does not exist
         prefsKeeper = new SimplePrefsKeeper();
         getPrefsKeeper().add("prefsKeeperBackupDate", Long.valueOf(0));
-        verified = (Boolean) prefsKeeper.get("optionVerified");
+        
         return true;
     }
 
@@ -1894,7 +1895,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 				}
         		// add the new prefs key for verified credentials
         		Boolean verified = false;
-        		SWGFrame.getPrefsKeeper().add("optionsVerified", verified);
+        		SWGFrame.getPrefsKeeper().add("optionVerified", verified);
         		SWGResourceManager.updateMainGalaxy();
         	}
         } else {
