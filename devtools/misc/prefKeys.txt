@@ -22,6 +22,7 @@ optionUserName              String
 optionPassWord              String
 optionTimeZone              String
 optionTimeZoneValue         Double
+optionVerified				Boolean		# true if user credentials have been verified
 
 optionBaseURL               String        # this should have been named 
 optionResourcePath          String        # swgcraftOptionXXX

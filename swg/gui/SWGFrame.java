@@ -1886,6 +1886,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+        		Boolean verified = false;
+        		SWGFrame.getPrefsKeeper().add("optionsVerified", verified);
         	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
