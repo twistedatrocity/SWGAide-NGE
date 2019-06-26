@@ -12,7 +12,6 @@ import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
 import javax.crypto.SealedObject;
-import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
 
 import swg.SWGAide;

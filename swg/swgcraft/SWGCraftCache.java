@@ -170,6 +170,10 @@ public final class SWGCraftCache {
         }
         return null;
     }
+    
+    public static File getserversXMLpath() {
+    	return serversXML;
+    }
 
     /**
      * Returns an XML document for the cached profession levels file, or {@code

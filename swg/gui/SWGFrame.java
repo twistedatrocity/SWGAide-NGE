@@ -70,6 +70,7 @@ import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGProfessionManager;
 import swg.model.SWGUniverse;
+import swg.swgcraft.SWGCraft;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftOptionsPanel;
 import swg.swgcraft.SWGResourceManager;
@@ -1875,6 +1876,17 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("notesPaneFontSize");
         	}
         	// XXX End font size update ^^
+        	// checks if version in dat file older than or equal to 0.1.20
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 20 ) {
+        		SWGCraftCache.getserversXMLpath().delete();
+        		SWGCraftCache.updateCache();
+        		try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
