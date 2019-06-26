@@ -35,7 +35,6 @@ import swg.model.SWGCGalaxy;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.ZCrypto;
 import swg.tools.ZString;
-import javax.swing.JTextPane;
 
 /**
  * A GUI dialog for user options and preferences related to swgaide.com.
