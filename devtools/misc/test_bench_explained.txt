@@ -1,0 +1,42 @@
+# This calculates the value used for a single slot stat, the same formula is used for all
+# Lets use OQ for Ihaomic in a cryo chamber just as an example
+# stat and schem values
+v = 716            # value of res OQ stat
+rescap = 1000      # cap for OQ on this res
+units = 8          # number of units this slot calls for
+rslots = 4         # number of total res slots in this schem
+weight = 33%       # weight of stat for this schem slot
+wd = weight / 100  # adjusted weight this schem/slot (snipped to 10 decimals below for brevity)
+
+# u1 u2 u3 u4 etc is the amount of units required for each slot
+
+# formula  (v / rescap * 1000) * (units / (u1+u2+u3+1u4)) * wd
+# see below for verbose formula
+
+
+adjcap = v / rescap * 1000
+
+# add up all units to get total
+tunits = 10 + 5 + 8 + 16     # this is your 100% unit quantity  39
+
+# get % of units from slot:
+sw = units / tunits     # 8 / 39 comes out with .20512  (I snipped the remaining decimals for brevity)
+
+newvalue = adjcap * sw * wd
+#eg 716 * .20512 * .3333333333 = 48.955 which is the res text for OQ you see in test bench. 
+
+
+# Stat average line on 4 slots with any missing accounted for
+# s1 s2 s3 etc come from the above formula (newvalue) for each res slot.
+# formula (s1 + s2 + s3 + s4) / (slots - missing) = StatAverage
+# verbose formula below.
+slots = 4
+missing = 0
+adjslots = slots - missing    # adjslots is 4
+StatAverage = (s1 + s2 + s3 + s4) / adjslots
+
+# repeat above for each stat type that schem calls for (eg CD/SR/UT etc) and for each res slot. 
+# In this example we would only need to do CD.
+
+## Add up All Averages
+StatAverage1 + StatAverage2 = Overall result.
