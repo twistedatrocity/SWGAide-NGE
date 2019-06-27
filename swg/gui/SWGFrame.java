@@ -1889,6 +1889,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		// we must clear the resource cache for ID integer sanity
         		SWGResourceManager.clearcache();
         		SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceGeneralMap");
         		try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -1898,7 +1900,21 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		Boolean verified = false;
         		SWGFrame.getPrefsKeeper().add("optionVerified", verified);
         		SWGFrame.getPrefsKeeper().add("resourceInventoryMap", new TreeMap<String,Map<String, List<Object>>>());
-        		SWGResourceManager.updateMainGalaxy();
+        		//SWGResourceManager.updateMainGalaxy();
+        		JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
+                		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
+                JDialog d = pane.createDialog(null, "SWGAide-NGE Upgrade Complete");
+                d.pack();
+                d.setModal(false);
+                d.setVisible(true);
+                while (pane.getValue() == JOptionPane.UNINITIALIZED_VALUE) {
+                  try {
+                    Thread.sleep(100);
+                  } catch (InterruptedException e) {
+                	  //
+                  }
+                }
+        		doExit();
         	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
