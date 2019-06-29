@@ -14,6 +14,10 @@
   <restartOnCrash>false</restartOnCrash>
   <manifest>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\swgaide.manifest</manifest>
   <icon>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\icon.ico</icon>
+  <singleInstance>
+    <mutexName>zibzibboogeywoogey</mutexName>
+    <windowTitle>SWGAide-NGE</windowTitle>
+  </singleInstance>
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
@@ -25,4 +29,16 @@
     <opt>-XX:MinHeapFreeRatio=40</opt>
     <opt>-XX:+UseG1GC</opt>
   </jre>
+  <versionInfo>
+    <fileVersion>1.0.1.21</fileVersion>
+    <txtFileVersion>0.9.9-MrMiagi-0.1.21</txtFileVersion>
+    <fileDescription>SWGAide-NGE</fileDescription>
+    <copyright>swgaide.com 2019</copyright>
+    <productVersion>1.0.1.21</productVersion>
+    <txtProductVersion>0.9.9-MrMiagi-0.1.21</txtProductVersion>
+    <productName>SWGAide-NGE</productName>
+    <companyName>swgaide.com</companyName>
+    <internalName>SWGAide-NGE</internalName>
+    <originalFilename>SWGAide-NGE.exe</originalFilename>
+  </versionInfo>
 </launch4jConfig>
