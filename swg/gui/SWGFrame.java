@@ -58,11 +58,13 @@ import javax.swing.Timer;
 import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.resources.SWGResource;
+import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.common.FontOptionsPanel;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.resources.SWGHarvester;
 import swg.gui.resources.SWGResourceTab;
 import swg.gui.schematics.SWGSchematicTab;
 import swg.gui.trade.SWGTradeTab;
@@ -454,7 +456,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * 
      * @see SWGDoTask
      */
-    public static void doExit() {
+    public static void doExit(String ver) {
 
         for (SWGDoTask dx : exitList) {
             try {
@@ -469,7 +471,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             && getPrefsKeeper().get("swgUniverse") != null) {
             
             File dat = new File("SWGAide.DAT");
-            while (!getPrefsKeeper().store(dat)) {
+            while (!getPrefsKeeper().store(dat, "0")) {
                 // XXX: Investigate how to remove this workaround
                 // There is a risk that some background thread changes something
                 // in SWGAide.DAT while it being stored, try again in 100 ms
@@ -482,6 +484,10 @@ public class SWGFrame extends JFrame implements ComponentListener,
         }
         SWGAide.printStop();
         System.exit(0);
+    }
+    
+    public static void doExit() {
+    	doExit("0");
     }
 
     /**
@@ -1855,7 +1861,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                   }
                 }
                 // call the doExit() so things get saved to the DAT
-                doExit();
+                doExit("0.9.9-MrMiagi-0.1.10");
         	}
         	// XXX End of Inventory Map conversion. ^^
         	/*
@@ -1884,6 +1890,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         	// XXX End font size update ^^
         	// checks if version in dat file older than or equal to 0.1.20
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 20 ) {
+        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch doing upgrade  Data: " + pkver);
         		SWGCraftCache.getserversXMLpath().delete();
         		SWGCraftCache.updateCache();
         		// we must clear the resource cache for ID integer sanity
@@ -1891,6 +1898,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
         		SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
         		SWGFrame.getPrefsKeeper().remove("resourceGeneralMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceActiveHarvesterMap");
         		try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -1900,6 +1908,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		Boolean verified = false;
         		SWGFrame.getPrefsKeeper().add("optionVerified", verified);
         		SWGFrame.getPrefsKeeper().add("resourceInventoryMap", new TreeMap<String,Map<String, List<Object>>>());
+        		SWGFrame.getPrefsKeeper().add("resourceGeneralMap", new HashMap<String, SWGResourceSet>());
+        		SWGFrame.getPrefsKeeper().add("resourceActiveHarvesterMap", new HashMap<SWGCGalaxy, List<SWGHarvester>>());
         		//SWGResourceManager.updateMainGalaxy();
         		JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
                 		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
@@ -1914,8 +1924,25 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 	  //
                   }
                 }
-        		doExit();
+        		doExit("0.9.9-MrMiagi-0.1.21");
         	}
+        	// checks if version in dat file older than or equal to 0.1.21
+        	/*if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
+        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch doing upgrade  Data: " + pkver);
+        		SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceGeneralMap");
+        		SWGFrame.getPrefsKeeper().remove("resourceActiveHarvesterMap");
+        		try {
+        			Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                	//
+                }
+        		SWGFrame.getPrefsKeeper().add("resourceInventoryMap", new TreeMap<String,Map<String, List<Object>>>());
+        		SWGFrame.getPrefsKeeper().add("resourceGeneralMap", new HashMap<String, SWGResourceSet>());
+        		SWGFrame.getPrefsKeeper().add("resourceActiveHarvesterMap", new HashMap<SWGCGalaxy, List<SWGHarvester>>());
+        		//doExit();
+        	}*/
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"

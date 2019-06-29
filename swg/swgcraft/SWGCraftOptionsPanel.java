@@ -192,8 +192,10 @@ public class SWGCraftOptionsPanel extends JDialog {
             Boolean.valueOf(autoUpdateGalaxyResources.isSelected()));
         if (autoUpdateGalaxyResources.isSelected())
             SWGFrame.getResourceManager().startAutoUpdate();
-        else
-            SWGFrame.getResourceManager().stopAutoUpdate();
+		else {
+			SWGFrame.getResourceManager();
+			SWGResourceManager.stopAutoUpdate();
+		}
     }
 
     /**

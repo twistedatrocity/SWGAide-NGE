@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import swg.SWGAide;
@@ -257,11 +258,15 @@ public final class SimplePrefsKeeper implements Serializable {
      * @return {@code true} if this instance was successfully written, {@code
      *         false} otherwise
      */
-    public synchronized boolean store(File target) {
+    public synchronized boolean store(File target, String ver) {
         ObjectOutputStream out = null;
         try {
             out = new ObjectOutputStream(new FileOutputStream(target));
-            out.writeObject(SWGConstants.version);
+            if(ver.length() < 2) {
+            	out.writeObject(SWGConstants.version);
+            } else {
+            	out.writeObject(ver);
+            }
             out.writeObject(this);
             return true;
         } catch (Throwable e) {
@@ -279,6 +284,17 @@ public final class SimplePrefsKeeper implements Serializable {
         ZString z = new ZString("SimplePrefsKeeper[");
         return z.app("size=").app(table.size()).app(']').toString();
     }
+    
+    /**
+     * 
+     * @param dat
+     * @return {@code true} if this instance was successfully written, {@code
+     *         false} otherwise
+     */
+    public synchronized boolean store(File dat) {
+    	String v = "0";
+    	return store(dat, v);
+	}
 
     /**
      * Loads and returns an instance of this type from the specified file, using
@@ -368,4 +384,5 @@ public final class SimplePrefsKeeper implements Serializable {
                 } catch (Exception e1) {/* ignore */}
         }
     }
+
 }
