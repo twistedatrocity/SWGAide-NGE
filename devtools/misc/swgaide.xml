@@ -30,12 +30,12 @@
     <opt>-XX:+UseG1GC</opt>
   </jre>
   <versionInfo>
-    <fileVersion>1.0.1.21</fileVersion>
-    <txtFileVersion>0.9.9-MrMiagi-0.1.21</txtFileVersion>
+    <fileVersion>1.0.1.22</fileVersion>
+    <txtFileVersion>0.9.9-MrMiagi-0.1.22</txtFileVersion>
     <fileDescription>SWGAide-NGE</fileDescription>
     <copyright>swgaide.com 2019</copyright>
-    <productVersion>1.0.1.21</productVersion>
-    <txtProductVersion>0.9.9-MrMiagi-0.1.21</txtProductVersion>
+    <productVersion>1.0.1.22</productVersion>
+    <txtProductVersion>0.9.9-MrMiagi-0.1.22</txtProductVersion>
     <productName>SWGAide-NGE</productName>
     <companyName>swgaide.com</companyName>
     <internalName>SWGAide-NGE</internalName>
