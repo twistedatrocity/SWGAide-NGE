@@ -32,7 +32,7 @@ import swg.tools.ZString;
  * @author <a href="mailto:simongronlun@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
+public final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
 
     /*
      * Comments: In October 2009 this type was refactored, mainly as a
@@ -92,7 +92,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: local concentration
      */
-    private int concentration;
+    public int concentration;
 
     /**
      * The number of expertise points in <I>Harvester Energy
@@ -104,7 +104,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: energyEfficiencyLevel
      */
-    private int energyEfficiencyLevel;
+    public int energyEfficiencyLevel;
 
     /**
      * The level of the Entertainer buff <I>Harvester Fair&nbsp;</I> that
@@ -116,7 +116,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: harvestFair
      */
-    private int harvestFair;
+    public int harvestFair;
 
     /**
      * The number of expertise points in <I>Advanced Harvesting
@@ -128,7 +128,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: harvestingTechnologyLevel
      */
-    private int harvestingTechnologyLevel;
+    public int harvestingTechnologyLevel;
 
     /**
      * The fixed hopper capacity size for this harvester, in units.
@@ -147,7 +147,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial boolean: isActive
      */
-    private boolean isActive;
+    public boolean isActive;
 
     /**
      * The time when the harvester was last updated by the user, in
@@ -155,7 +155,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial long: last updated
      */
-    private long lastUpdated;
+    public long lastUpdated;
     
     /**
      * The time when the hopper was last emptied by the user, in
@@ -163,7 +163,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial long: last emptied
      */
-    private long hopperEmptied;
+    public long hopperEmptied;
 
     /**
      * The amount of maintenance in the harvester, in credits.
@@ -185,7 +185,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: maintenanceEfficiencyLevel
      */
-    private int maintenanceEfficiencyLevel;
+    public int maintenanceEfficiencyLevel;
 
     /**
      * The fixed base maintenance consumption rate for this harvester, in
@@ -219,7 +219,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial string: notes
      */
-    private String notes;
+    public String notes;
 
     /**
      * The current owner of this harvester.
@@ -235,7 +235,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial harvester owner
      */
-    private SWGHarvesterOwner owner;
+    public SWGHarvesterOwner owner;
 
     /**
      * The current level of power in the harvester, in units. If the harvester
@@ -274,7 +274,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial current resource
      */
-    private SWGKnownResource resource;
+    public SWGKnownResource resource;
 
     /**
      * Signifies whether the harvester is self-powered or not.
@@ -291,7 +291,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int cluster count
      */
-    private int several = 1;
+    public int several = 1;
 
     /**
      * This represents how many points of <I>Harvester Storage
@@ -303,7 +303,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * 
      * @serial int: storageEfficiencyLevel
      */
-    private int storageEfficiencyLevel;
+    public int storageEfficiencyLevel;
 
     /**
      * The type of harvester this object is, for example: Elite Mineral,
@@ -1003,7 +1003,7 @@ final class SWGHarvester implements Serializable, Comparable<SWGHarvester> {
      * @param selfPowered
      *            {@code true} to set this harvester in self-powered mode
      */
-    void setSelfPowered(boolean selfPowered) {
+    public void setSelfPowered(boolean selfPowered) {
         if (!type.contains("Energy"))
             this.selfPowered = selfPowered;
     }

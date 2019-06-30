@@ -269,7 +269,7 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
      * 
      * @serial long: ID
      */
-    private long swgcraftID = -1;
+    public long swgcraftID = -1;
 
     /**
      * The resource class for this instance. This member must be a spawnable

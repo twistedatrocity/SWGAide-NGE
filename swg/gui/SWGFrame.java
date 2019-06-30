@@ -57,6 +57,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import swg.SWGAide;
 import swg.SWGConstants;
+import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -65,6 +66,7 @@ import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
 import swg.gui.resources.SWGHarvester;
+import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResourceTab;
 import swg.gui.schematics.SWGSchematicTab;
 import swg.gui.trade.SWGTradeTab;
@@ -471,7 +473,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             && getPrefsKeeper().get("swgUniverse") != null) {
             
             File dat = new File("SWGAide.DAT");
-            while (!getPrefsKeeper().store(dat, "0")) {
+            while (!getPrefsKeeper().store(dat, ver)) {
                 // XXX: Investigate how to remove this workaround
                 // There is a risk that some background thread changes something
                 // in SWGAide.DAT while it being stored, try again in 100 ms
@@ -1927,22 +1929,133 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		doExit("0.9.9-MrMiagi-0.1.21");
         	}
         	// checks if version in dat file older than or equal to 0.1.21
-        	/*if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
-        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch doing upgrade  Data: " + pkver);
-        		SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
-        		SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
+        		Map<Object, Map<String, List<Object>>> oldMap =
+                        (Map<Object, Map<String, List<Object>>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceInventoryMap",
+                                new TreeMap<Object,
+                                Map<String, List<Object>>>());
+        		Set<Object> glist = new TreeSet<Object>();
+        		oldMap.forEach( (g,v) -> {
+                	glist.add(g.toString());
+                });
+        		Set<Object> alist = new TreeSet<Object>();
+        		oldMap.forEach( (g,v) -> {
+                	v.forEach( (ass, d) -> {
+                		Object k = g + "@" + ass;
+                		alist.add(k);
+                	});
+                });
+        		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch dump alist  Data: " + alist);
+        		TreeSet<Object> anlist = new TreeSet<Object>();
+        		Set<Object> tmpr = new LinkedHashSet();
+        		List<Object> tmpnr = new ArrayList();
+        		HashMap<String, List<Object>> tmpags = new HashMap<String, List<Object>>();
+                Map<String, Map<String, List<Object>>> tempmap = new HashMap<String, Map<String, List<Object>>>();
+                for (Object g : glist) {
+                	for (Object o : alist) {
+                		String[] parts1 = o.toString().split("@");
+                    	String gxy = parts1[0];
+                    	String a = parts1[1];
+                    	if(g.toString().equals(gxy)) {
+                    		anlist.add(a);
+                    		Iterator<Entry<Object, Map<String, List<Object>>>> parent = oldMap.entrySet().iterator();
+                            while (parent.hasNext()) {
+                                Entry<Object, Map<String, List<Object>>> parentPair = parent.next();
+                                String gg = parentPair.getKey().toString();
+                                if(gg.equals(gxy)) {
+	                                Iterator<Entry<String, List<Object>>> child = (parentPair.getValue()).entrySet().iterator();
+	                                while (child.hasNext()) {
+	                                    Map.Entry childPair = child.next();
+	                                    String ass = childPair.getKey().toString();
+	                                    List<Object> d = (List<Object>) childPair.getValue();
+	                                    if(ass.equals(a)) {
+                    						for (Object res : d) {
+                    							SWGInventoryWrapper wr = (SWGInventoryWrapper) res;
+                    							if(wr.getResource().id() < 1000000) {
+                    								tmpr.add(res);
+                    							} else {
+                    								SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch Removing Invalid Resource ID  Data: " + res);
+                    							}
+                        						
+                        					}
+                    					}
+	
+	                                    child.remove(); // avoids a ConcurrentModificationException
+	                                }
+                                }
+
+                            }
+                    		tmpnr.clear();
+        					tmpnr.addAll(tmpr);
+        					tmpags.put(a, tmpnr);
+        					
+        					tmpr = new LinkedHashSet();
+        			        tmpnr = new ArrayList();
+                    	}
+                    	tempmap.put(g.toString(), tmpags);
+                	}
+                	tmpags = new HashMap<String, List<Object>>();
+                	anlist = new TreeSet<Object>();
+                	}
+                SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch tempmap  Data: " + tempmap);
+                
+                SWGFrame.getPrefsKeeper().remove("resourceInventoryMap");
+                
+                Map<String, Map<String, List<Object>>> inventoryMap =
+                        (Map<String, Map<String, List<Object>>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceInventoryMap",
+                                new TreeMap<String,
+                                Map<String, List<Object>>>());
+                inventoryMap.putAll(tempmap);
+                
+                Map<SWGCGalaxy, List<SWGHarvester>> harvs = (Map<SWGCGalaxy, List<SWGHarvester>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceActiveHarvesterMap",
+                                new HashMap<SWGCGalaxy, List<SWGHarvester>>());
+
+        		harvs.forEach( (g,v) -> {
+        			List<SWGHarvester> harvies = harvs.get(g);
+        			if (harvies.size() > 0) {
+        				for (int i = 0; i < harvies.size(); i++) {
+        					SWGHarvester hv = harvies.get(i);
+        					Boolean active = hv.isActive;
+        					if(active) {
+        						SWGKnownResource kr = hv.resource;
+        						//Long rid = kr.swgcraftID;
+        						if(kr.swgcraftID > 1000000) {
+        							hv.isActive = false;
+        							hv.notes = null;
+        					        hv.resource = null;
+        					        hv.concentration = 0;
+        					        hv.lastUpdated = 0;
+        					        hv.hopperEmptied = 0;
+        					        hv.several = 1;
+        					        hv.owner = null;
+        					        hv.setSelfPowered(false);
+        					        hv.storageEfficiencyLevel = 0;
+        					        hv.maintenanceEfficiencyLevel = 0;
+        					        hv.energyEfficiencyLevel = 0;
+        					        hv.harvestingTechnologyLevel = 0;
+        					        hv.harvestFair = 0;
+        							SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch tempmap  Data: " + kr);
+        						}
+        					}
+        					SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch tempmap  Data: " + hv);
+        				}
+        			}
+                });
         		SWGFrame.getPrefsKeeper().remove("resourceGeneralMap");
-        		SWGFrame.getPrefsKeeper().remove("resourceActiveHarvesterMap");
         		try {
         			Thread.sleep(1000);
                 } catch (InterruptedException e) {
                 	//
                 }
-        		SWGFrame.getPrefsKeeper().add("resourceInventoryMap", new TreeMap<String,Map<String, List<Object>>>());
         		SWGFrame.getPrefsKeeper().add("resourceGeneralMap", new HashMap<String, SWGResourceSet>());
-        		SWGFrame.getPrefsKeeper().add("resourceActiveHarvesterMap", new HashMap<SWGCGalaxy, List<SWGHarvester>>());
-        		//doExit();
-        	}*/
+        		doExit("0.9.9-MrMiagi-0.1.22");
+        	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"

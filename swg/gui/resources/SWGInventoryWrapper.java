@@ -82,7 +82,7 @@ public final class SWGInventoryWrapper implements Serializable,
     /**
      * A private constructor only used by {@link #DUMMY}.
      */
-    private SWGInventoryWrapper() {
+    public SWGInventoryWrapper() {
         // should not be used unless for the dummy
         resource = null;
         assignee = "";

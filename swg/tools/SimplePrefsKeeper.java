@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import swg.SWGAide;
