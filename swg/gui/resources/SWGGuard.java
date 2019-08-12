@@ -161,8 +161,9 @@ public final class SWGGuard implements
         if (!resourceClass.getClass().isAssignableFrom(
                 r.rc().getClass()))
             return false;
-        if (r.stats().sum() <= 0)
-            return true; // this is a possible match, a stat-less resource
+        // XXX lets not alert on resources with zero stats mmkay
+        /*if (r.stats().sum() <= 0)
+            return true; // this is a possible match, a stat-less resource */
 
         boolean ret = acceptHelper(r, guardValues);
         return (ret && guardValues2nd != null)
