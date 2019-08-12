@@ -54,7 +54,7 @@ public class SWGConstants {
     /**
      * The URL to the SWGAide home and download page.
      */
-    public static final String swgAideURL = "https://github.com/twistedatrocity/SWGAide-NGE";
+    public static final String swgAideURL = "https://swgaide.com/";
     
     /**
      * The URL to the SWGAide releases page.
