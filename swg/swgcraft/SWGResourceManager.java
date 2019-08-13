@@ -346,6 +346,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
 
             //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:downloadHelper update reslist");
             SWGResourceList resList = localXmlParse(cf, galaxy);
+            //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager:downloadHelper2 update reslist:" + resList);
             updateFromDownload(resList);
             statusLocalWrite(galaxy, statusTime);
 
@@ -365,7 +366,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             return;
         } catch (Exception e) {
             SWGAide.printDebug("cmgr", 1,
-                    "SWGResourceManager:downloadHelper2: " + e.getMessage());
+                    "SWGResourceManager:downloadHelper2: " + e.toString());
             e.printStackTrace(System.out);
 
             JOptionPane.showMessageDialog(frame,
@@ -958,7 +959,8 @@ public final class SWGResourceManager extends SWGResourceMgr {
         SWGResourceList resources = new SWGResourceList(COLLECTION_SIZE);
 
         NodeList nList = xml.getElementsByTagName("resource");
-        for (int i = 0; i < nList.getLength(); ++i) {
+        int length = nList.getLength();
+        for (int i = 0; i < length; ++i) {
             Element resElem = (Element) nList.item(i);
 
             long id = ZXml.longFromAttr(resElem, "swgaide_id");
@@ -973,7 +975,6 @@ public final class SWGResourceManager extends SWGResourceMgr {
 
             resourceAddPlanet(mr, resElem);
         }
-
         return resources.toReturn();
     }
 
@@ -1023,24 +1024,21 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (mr == null || xml == null)
             throw new NullPointerException("An argument is null");
 
-        Element current = xml;
-        while (current != null
-                && !current.getNodeName().equalsIgnoreCase("planet")) {
-            // traverse up the XML document two levels to determine the planet
-            current = (Element) current.getParentNode();
+        NodeList pList = xml.getElementsByTagName("planet");
+        int length = pList.getLength();
+        for (int i = 0; i < length; ++i) {
+        	Element pElem = (Element) pList.item(i);
+
+            int pid = ZXml.intFromAttr(pElem, "swgaide_id");
+            if(pid>0) {
+	            SWGPlanetAvailabilityInfo pInfo = new SWGPlanetAvailabilityInfo(
+	                    SWGPlanet.fromID(pid),
+	                    ZXml.longFromElem(xml, "available_timestamp"),
+	                    ZXml.stringFromElem(xml, "available_by"));
+	
+	            mr.availability(pInfo);
+            }
         }
-
-        if (current == null)
-            return; // sanity
-
-        // layout: <planet name="Lok" swgaide_id="5">
-
-        SWGPlanetAvailabilityInfo pInfo = new SWGPlanetAvailabilityInfo(
-                SWGPlanet.fromName(current.getAttribute("name")),
-                ZXml.longFromElem(xml, "available_timestamp"),
-                ZXml.stringFromElem(xml, "available_by"));
-
-        mr.availability(pInfo);
     }
 
     /**
@@ -1542,15 +1540,10 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (galaxy == null)
             throw new IllegalArgumentException("Galaxy is null");
 
-        String gxy = galaxy.getName();
-
-        gxy = gxy.toLowerCase(Locale.ENGLISH);
-		gxy = gxy.replace(' ', '_');
-        if (gxy.startsWith("test"))
-            gxy = "test_center"; // the form used for export files
+        Integer gid = galaxy.id();
 
         ZString z = new ZString(SWGCraft.getBaseURL());
-        z.app(SWGCraft.getCurrentResourcesPath()).app(gxy).app('.').app(suffix);
+        z.app(SWGCraft.getCurrentResourcesPath()).app(gid).app('.').app(suffix);
         try {
             return new URL(z.toString());
         } catch (MalformedURLException e) {
