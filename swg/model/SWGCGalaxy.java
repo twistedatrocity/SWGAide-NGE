@@ -71,11 +71,11 @@ public class SWGCGalaxy implements Serializable {
                     String swgcraftName = cur.getAttribute("name");
                     int swgcraftID = ZXml.intFromAttr(cur, "swgaide_id");
                     String name = cur.getAttribute("folder_name");
-                    String type = cur.getAttribute("type");
                     //System.out.println(cur);
                     boolean active = ZXml.booleanFromAttr(cur, "active");
                     SWGCGalaxy galaxy =
-                            new SWGCGalaxy(name, swgcraftName, swgcraftID, type, active);
+                            new SWGCGalaxy(name, swgcraftName, swgcraftID,
+                                    active);
                     servers.add(galaxy);
                 }
             }
@@ -110,11 +110,6 @@ public class SWGCGalaxy implements Serializable {
      * The SWGCraft galaxy ID for this constant.
      */
     private final int id;
-    
-    /**
-     * The type of this galaxy constant. e.g. precu or nge
-     */
-    private final String type;
 
     /**
      * The name of this galaxy constant.
@@ -130,14 +125,12 @@ public class SWGCGalaxy implements Serializable {
      * @param name the name of the galaxy
      * @param swgcraftName the name of the server as used on SWGCraft
      * @param id the SWGCraft galaxy ID
-     * @param type the type of the server (precu or nge)
      * @param active {@code false} if the galaxy is closed down
      */
-    private SWGCGalaxy(String name, String swgcraftName, int id, String type, boolean active) {
+    private SWGCGalaxy(String name, String swgcraftName, int id, boolean active) {
         this.name = name;
         this.swgcraftName = swgcraftName;
         this.id = id;
-        this.type = type;
         this.active = active;
     }
 
@@ -170,16 +163,6 @@ public class SWGCGalaxy implements Serializable {
      */
     public int id() {
         return id;
-    }
-    
-    /**
-     * Returns the type for this constant. This is the type
-     * which is used in determining which prof/cats xml files to use.
-     * 
-     * @return the type
-     */
-    public String type() {
-        return type;
     }
 
     /**
@@ -332,7 +315,7 @@ public class SWGCGalaxy implements Serializable {
             return fromName("SWG Legends"); 
         }
         SWGCGalaxy defaultGalaxy =
-                new SWGCGalaxy("SWG Legends", "SWG Legends", 138, "nge", true);
+                new SWGCGalaxy("SWG Legends", "SWG Legends", 138, true);
         servers.add(defaultGalaxy);
         return defaultGalaxy;
     }
