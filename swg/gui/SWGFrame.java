@@ -2153,8 +2153,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @return a character
      */
     public static SWGCharacter getSelectedCharacter() {
-        return (SWGCharacter) SWGFrame.getPrefsKeeper().get(
-                "currentlySelectedCharacter");
+        return (SWGCharacter) SWGFrame.getPrefsKeeper().get("currentlySelectedCharacter");
     }
 
     /**
