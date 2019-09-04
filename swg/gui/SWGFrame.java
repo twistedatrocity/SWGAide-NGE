@@ -859,17 +859,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         });
         helpMenu.add(gnl);
 
-        JMenuItem stm = new JMenuItem("Statement");
-        stm.setMnemonic('S');
-        stm.addActionListener(new AbstractAction() {
-
-            public void actionPerformed(ActionEvent e) {
-                showStatement();
-            }
-
-        });
-        helpMenu.add(stm);
-
         JMenuItem lic = new JMenuItem("License text");
         lic.setMnemonic('L');
         lic.addActionListener(new AbstractAction() {
@@ -1701,13 +1690,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
             startScreen.dispose();
             startScreen = null;
         }
-    }
-
-    /**
-     * Shows the help screen with a statement on misc issues I want to vent
-     */
-    protected void showStatement() {
-        SWGHelp.display(SWGAide.class.getResource("docs/statement_en.html"));
     }
 
     /**
