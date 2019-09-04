@@ -344,7 +344,7 @@ final class SWGLaboratoryTab extends JPanel {
      * the adjusted value.
      */
     private void actionReslimitSlider() {
-        Integer[] vl = new Integer[8];
+        Integer[] vl = new Integer[18];
         for (int i = 0; i < vl.length; ++i)
             vl[i] = Integer.valueOf(i + 3);
         Integer v = Integer.valueOf(resourceModel.resourceLimit());
@@ -1547,7 +1547,7 @@ final class SWGLaboratoryTab extends JPanel {
         void resourceLimit(Integer limit) {
             int lt = limit.intValue();
             if (lt == this.resLimit) return;
-            this.resLimit = lt < 3 || lt > 10
+            this.resLimit = lt < 3 || lt > 20
                     ? 3
                     : lt;
             setElements(wraps);
