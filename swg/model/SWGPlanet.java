@@ -270,6 +270,9 @@ public enum SWGPlanet implements SWGGui {
     public static boolean isValid(String name) {
         if (name.startsWith("Yavin")) // variations Yavin4 and Yavin IV
             return true;
+        
+        if (name.startsWith("Kash")) // variations Kashyyyk
+            return true;
 
         return names().contains(name);
     }
