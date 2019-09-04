@@ -7,11 +7,11 @@ import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 
 import javax.crypto.SealedObject;
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
 
 import swg.SWGAide;
@@ -72,7 +72,7 @@ public final class SWGCraft {
     /**
      * The base URL to SWGCraft.org.
      */
-    private static final String baseURL = "http://api.swgaide.com";
+    private static final String baseURL = "https://swgaide.com";
 
     /**
      * The path and file name to the schematics XML file at SWGCraft.org.
@@ -121,7 +121,7 @@ public final class SWGCraft {
     /**
      * The path and file name to the text status file at SWGCraft.org.
      */
-    private static final String statusTxtPath = "/pub/exports/status.txt";
+    private static final String statusTxtPath = "/resources/res_status.php";
 
     /**
      * The path and file name to the XML status file at SWGCraft.org.
@@ -157,12 +157,10 @@ public final class SWGCraft {
 
         InputStream from = null;
         FileOutputStream to = null;
+        HttpsURLConnection uc = (HttpsURLConnection) source.openConnection();
 
         try {
-        	//HttpsURLConnection uc = (HttpsURLConnection) source.openConnection();
-        	URLConnection uc = source.openConnection();
-            //uc.setRequestProperty("Accept", "*/*");
-            //uc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        	
             from = uc.getInputStream();
 
             if (isZipped)
@@ -198,6 +196,7 @@ public final class SWGCraft {
         } finally {
             try {
                 from.close();
+                uc.disconnect();
             } catch (Exception e) { /* ignore exception */
             }
             try {
