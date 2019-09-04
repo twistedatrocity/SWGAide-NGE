@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import org.w3c.dom.Document;
 
@@ -221,7 +222,7 @@ public final class SWGCraftCache {
     /**
      * Helper method which returns the most recent modification date for the
      * specified URL; the returned string is on the form YYYY-MM-DD. This method
-     * invokes {@link URLConnection#getLastModified()}; if the service provider
+     * invokes {@link HttpsURLConnection#getLastModified()}; if the service provider
      * does not return the true modification date the return value is undefined,
      * or "1970-01-01", or "0". If there is an error it is caught, a message is
      * logged, and this method returns "0".
@@ -232,8 +233,11 @@ public final class SWGCraftCache {
      */
     private static String lastModified(URL url) {
         try {
-            URLConnection conn = url.openConnection();
-            return long2date(conn.getLastModified());
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+            conn.setRequestMethod("HEAD");
+            String result = long2date(conn.getLastModified());
+            conn.disconnect();
+            return result;
         } catch (Exception e) {
             SWGAide.printDebug("cach", 1,
                 "SWGCraftCache:lastModified: " + e.getMessage());
@@ -494,9 +498,11 @@ public final class SWGCraftCache {
         if (!file.exists())
             return true;
 
+        Boolean result = false;
         String localDate = localDate(file);
         String remoteDate = lastModified(url);
-        return (remoteDate.compareTo(localDate) > 0);
+        result = (remoteDate.compareTo(localDate) > 0);
+        return result;
     }
 
     /**
