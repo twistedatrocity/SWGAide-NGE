@@ -1,9 +1,9 @@
 package swg.swgcraft;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +76,7 @@ public final class SWGPets {
      * @throws IOException if there us an error
      */
     private static List<String> content(URL u) throws IOException {
-        URLConnection uc = u.openConnection();
+        HttpURLConnection uc = (HttpURLConnection) u.openConnection();
         ZReader sr = ZReader.newTextReader(uc.getInputStream());
 
         List<String> ret = new ArrayList<String>(128);
@@ -84,7 +84,7 @@ public final class SWGPets {
             ret.add(line);
         
         sr.close();
-
+        uc.disconnect();
         return ret;
     }
 
