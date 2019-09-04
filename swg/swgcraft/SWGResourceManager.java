@@ -1024,7 +1024,10 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (mr == null || xml == null)
             throw new NullPointerException("An argument is null");
 
-        NodeList pList = xml.getElementsByTagName("planet");
+       
+        NodeList planets = xml.getElementsByTagName("planets");
+        Element wrapper = (Element) planets.item(0);
+        NodeList pList = wrapper.getElementsByTagName("planet");
         int length = pList.getLength();
         for (int i = 0; i < length; ++i) {
         	Element pElem = (Element) pList.item(i);
