@@ -344,7 +344,7 @@ final class SWGLaboratoryTab extends JPanel {
      * the adjusted value.
      */
     private void actionReslimitSlider() {
-        Integer[] vl = new Integer[28];
+        Integer[] vl = new Integer[48];
         for (int i = 0; i < vl.length; ++i)
             vl[i] = Integer.valueOf(i + 3);
         Integer v = Integer.valueOf(resourceModel.resourceLimit());
@@ -1354,7 +1354,7 @@ final class SWGLaboratoryTab extends JPanel {
          * The limit for the number of resources to display per experiment
          * wrapper, the wrapper excluded.
          */
-        private int resLimit = 5;
+        private int resLimit = 50;
 
         /**
          * A list of experiment wrappers for the selected schematic.
@@ -1547,7 +1547,7 @@ final class SWGLaboratoryTab extends JPanel {
         void resourceLimit(Integer limit) {
             int lt = limit.intValue();
             if (lt == this.resLimit) return;
-            this.resLimit = lt < 3 || lt > 30
+            this.resLimit = lt < 3 || lt > 50
                     ? 3
                     : lt;
             setElements(wraps);
