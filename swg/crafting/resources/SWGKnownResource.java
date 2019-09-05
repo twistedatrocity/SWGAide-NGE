@@ -90,6 +90,7 @@ public final class SWGKnownResource extends SWGResource implements Serializable 
         // copy fields and defensively create objects
         depleted(res.depleted());
         availabilityCopy(res, this);
+        waypointCopy(res, this);
         stats(res.safeStats()); // one copying is enuff
         galaxy(res.galaxy()); // set galaxy before ID
         if (res.id() > 0)
@@ -140,10 +141,18 @@ public final class SWGKnownResource extends SWGResource implements Serializable 
         Map<SWGPlanet, SWGPlanetAvailabilityInfo> pam =
                 (Map<SWGPlanet, SWGPlanetAvailabilityInfo>) ois.readObject();
         deserialPam(pam);
-
         deserialStats((SWGResourceStats) ois.readObject());
         deserialID(ois.readLong());
         deserialRC((SWGResourceClass) ois.readObject());
+     // XXX wrap this in a try
+        try {
+    		@SuppressWarnings("unchecked")
+            Map<Integer, SWGWayPointInfo> way =
+                    (Map<Integer, SWGWayPointInfo>) ois.readObject();
+            deserialWay(way);
+        }catch(Exception e) {
+        	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGKnownResource: could not read waypoint map from objectstream");
+        }
     }
 
     /**
@@ -197,6 +206,7 @@ public final class SWGKnownResource extends SWGResource implements Serializable 
         oos.writeObject(safeStats());
         oos.writeLong(id());
         oos.writeObject(rc());
+        oos.writeObject(serialWayMap());
     }
 
     /**

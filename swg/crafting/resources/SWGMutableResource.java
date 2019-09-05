@@ -97,6 +97,11 @@ public final class SWGMutableResource extends SWGResource {
     public void availability(SWGPlanetAvailabilityInfo pi) {
         super.availability(pi);
     }
+    
+    @Override
+    public void waypointAdd(SWGWayPointInfo wi) {
+        super.waypointAdd(wi);
+    }
 
     @Override
     public void depleted(boolean isDepleted) {

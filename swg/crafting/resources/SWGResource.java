@@ -283,6 +283,17 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
      * @serial resource class
      */
     private SWGResourceClass type;
+    
+    /**
+     * A map of waypoint records. These are the waypoints where this
+     * resource is/was spawning. Not many days after this resource is depleted
+     * this member is set to {@code null}.
+     * <p>
+     * For known resources only the resource manager should update this map.
+     * 
+     * @serial map of waypoints
+     */
+    private Map<Integer, SWGWayPointInfo> waypointMap;
 
     /**
      * A field which a client may use in whatever fashion, no precaution is made
@@ -299,6 +310,71 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
         // used only by the sub-classes
     }
 
+    /**
+     * Returns a copy of the list of waypoints for where this resource is
+     * available. If waypoint is unknown an empty list is returned. Not many
+     * days after this resource is depleted this information is purged.
+     * 
+     * @return a list of waypoints, or an empty list
+     */
+    public final List<SWGWayPointInfo> waypoints() {
+        if (waypointMap == null)
+            return Collections.emptyList();
+
+        return new ArrayList<SWGWayPointInfo>(waypointMap.values());
+    }
+    
+    /**
+     * Returns a record of this resource's availability at the specified planet,
+     * or {@code null}. If this resource is not available at the planet this
+     * method returns {@code null}. Not many days after this resource is
+     * depleted the availability information is purged.
+     * 
+     * @param p a planet constant
+     * @return an availability record, or {@code null}
+     */
+    public final SWGWayPointInfo waypoint(Integer wid) {
+        return (waypointMap == null)
+                ? null
+                : waypointMap.get(wid);
+    }
+    
+    /**
+     * Adds the argument to the waypoint map. If a record exists for the
+     * waypoint of the record it is replaced.
+     * 
+     * @param wi a waypoint record
+     * @throws NullPointerException if the argument is {@code null}
+     */
+    void waypointAdd(SWGWayPointInfo wi) {
+        if (wi == null)
+            throw new NullPointerException("Argument is null");
+
+        synchronized (name) { // map may be null
+            if (waypointMap == null)
+                waypointMap = new HashMap
+                        <Integer, SWGWayPointInfo>();
+
+            waypointMap.put(wi.wid(), wi);
+        }
+    }
+    
+    /**
+     * Removes the record for the identified planet from the availability map.
+     * If no record exists for the planet this method does nothing.
+     * <p>
+     * For known resources only the resource manager should update this state.
+     * 
+     * @param p the planet to remove
+     */
+    final void waypointRemove(int wid) {
+        if (waypointMap != null && wid > 0) {
+            synchronized (name) {
+                waypointMap.remove(wid);
+            }
+        }
+    }
+    
     /**
      * Returns a copy of the list of planets for where this resource is
      * available. If availability is unknown an empty list is returned. Not many
@@ -528,6 +604,15 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
     void deserialStats(SWGResourceStats s) {
         stats = s;
     }
+    
+    /**
+     * Helper method only for deserialization; sets the waypoint availability map.
+     * 
+     * @param way the map
+     */
+    void deserialWay(Map<Integer, SWGWayPointInfo> way) {
+        waypointMap = way;
+    }
 
     /**
      * Returns the galaxy constant for where this resource spawned, or {@code
@@ -722,6 +807,15 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
     final Map<SWGPlanet, SWGPlanetAvailabilityInfo> serialAvailMap() {
         return planetAvailMap;
     }
+    
+    /**
+     * Helper method only for serialization; returns the waypoint map.
+     * 
+     * @return the waypoint map
+     */
+    final Map<Integer, SWGWayPointInfo> serialWayMap() {
+        return waypointMap;
+    }
 
     /**
      * Returns a copy of the resource stats, or {@link SWGResourceStats#BLANK}.
@@ -793,6 +887,31 @@ public abstract class SWGResource implements Comparable<SWGResource>, SWGGui {
                         pi.availableDate, pi.availableBy));
             }
             target.planetAvailMap = cpy;
+        }
+    }
+    
+    /**
+     * Helper method for sub-types. This implementation defensively creates new
+     * objects for the values of {@code source} and sets the map for {@code
+     * target}. If the source map is {@code null} or empty, this method does
+     * nothing.
+     * 
+     * @param source the instance to copy from
+     * @param target the instance to copy to
+     */
+    static void waypointCopy(SWGResource source, SWGResource target) {
+        if (source.waypointMap == null || source.waypointMap.size() <= 0)
+            return;
+
+        synchronized (source.name) {
+            Map<Integer, SWGWayPointInfo> cpy =
+                    new HashMap<Integer, SWGWayPointInfo>();
+
+            for (Integer wid : source.waypointMap.keySet()) {
+                SWGWayPointInfo wi = source.waypoint(wid);
+                cpy.put(wid, new SWGWayPointInfo(wid, wi.wptext));
+            }
+            target.waypointMap = cpy;
         }
     }
 }
