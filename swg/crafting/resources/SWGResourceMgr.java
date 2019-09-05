@@ -656,6 +656,29 @@ public class SWGResourceMgr {
             else if (isTrusted)
                 known.availabilityRemove(pl);
         }
+        
+        // waypoint map
+        // XXX this could be prettier. Just basic for now.
+        if(known.waypoints().equals(other.waypoints())) {
+        	// do nothing
+        } else {
+        	// add any missing
+        	for (SWGWayPointInfo wi : other.waypoints()) {
+                SWGWayPointInfo wai = known.waypoint(wi.wid);
+                if (wai == null) {
+                    known.waypointAdd(wi);
+                    //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceMgr: add waypoint: " + wi.toString());
+                }
+            }
+        	// remove any not in the new list
+        	for (SWGWayPointInfo wi : known.waypoints()) {
+        		SWGWayPointInfo wai = other.waypoint(wi.wid);
+        		if (wai == null) {
+                    known.waypointRemove(wi.wid);
+                    //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceMgr: remove waypoint: " + wi.toString());
+                }
+        	}
+        }
 
         // stats
         if (other.stats().hasValues()
