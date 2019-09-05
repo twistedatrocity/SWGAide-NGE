@@ -38,6 +38,7 @@ import swg.crafting.resources.SWGResourceList;
 import swg.crafting.resources.SWGResourceMgr;
 import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.resources.SWGResourceStats;
+import swg.crafting.resources.SWGWayPointInfo;
 import swg.crafting.resources.types.SWGFiberplast;
 import swg.crafting.resources.types.SWGOrganic;
 import swg.gui.SWGFrame;
@@ -972,8 +973,25 @@ public final class SWGResourceManager extends SWGResourceMgr {
                 if (mr == null) continue; // may be a space resource, ignore
                 resources.add(mr);
             }
-
             resourceAddPlanet(mr, resElem);
+            // parse waypoints
+            // TODO finish this
+            NodeList waypoints = resElem.getElementsByTagName("waypoints");
+            Element wrapper = (Element) waypoints.item(0);
+            NodeList wList = wrapper.getElementsByTagName("waypoint");
+            int wlength = wList.getLength();
+            if(wlength>0) {
+            	for (int w = 0; w < wlength; ++w) {
+            		Element wp = (Element) wList.item(w);
+            		int wid = ZXml.intFromAttr(wp, "swgaide_id");
+            		String wptext = ZXml.stringFromElem(wp, "wptext");
+            		if(wid>0) {
+            			SWGWayPointInfo wInfo = new SWGWayPointInfo(wid, wptext);
+            			mr.waypointAdd(wInfo);
+            		}
+            		//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGResourceManager: waypoint Data: " + wid + " " + wptext);
+            	}
+            }
         }
         return resources.toReturn();
     }
