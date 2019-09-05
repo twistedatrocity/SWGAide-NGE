@@ -35,6 +35,7 @@ import swg.crafting.resources.SWGPlanetAvailabilityInfo;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceFilter;
 import swg.crafting.resources.SWGResourceSet;
+import swg.crafting.resources.SWGWayPointInfo;
 import swg.crafting.resources.types.SWGCreatureResources;
 import swg.crafting.resources.types.SWGEgg;
 import swg.crafting.resources.types.SWGOrganic;
@@ -2166,6 +2167,11 @@ public final class SWGResController implements UpdateSubscriber {
         if (!kr.isDepleted()) {
         	z.app("Server: ").appnl(kr.galaxy().getName());
             z.app("Rep by: ").appnl(kr.availableFirst().availableBy());
+            if(!kr.waypoints().isEmpty()) {
+            	for (SWGWayPointInfo wi : kr.waypoints()) {
+            		z.app(wi.wptext()).appnl(";");
+            	}
+            }
         }
 
         long amount = inventoryAmount(kr, gxy);
