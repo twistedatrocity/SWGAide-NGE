@@ -1,0 +1,10 @@
+/AbstractFileComparator.class
+/CompositeFileComparator.class
+/DefaultFileComparator.class
+/DirectoryFileComparator.class
+/ExtensionFileComparator.class
+/LastModifiedFileComparator.class
+/NameFileComparator.class
+/PathFileComparator.class
+/ReverseComparator.class
+/SizeFileComparator.class
