@@ -230,10 +230,14 @@ public class SWGMainTab extends JSplitPane {
 
         SWGUniverse u;
         u = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgUniverse");
+        if (u.exists())
+			try {
+				SWGInitialize.scanAll(u, false);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         SWGRoot.createPopulatedTree(u, treeRoot, this);
-
-        u = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgTestCenter");
-        if (u != null) SWGRoot.createPopulatedTree(u, treeRoot, this);
 
         return treeRoot;
     }
