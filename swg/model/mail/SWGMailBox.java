@@ -17,6 +17,7 @@ import swg.model.SWGGalaxy;
 import swg.model.mail.SWGMailMessage.Type;
 import swg.tools.ZString;
 import swg.tools.ZWriter;
+import org.apache.commons.io.FileUtils;
 
 /**
  * This type models the core of a basic mail client. Mails are sorted on
@@ -619,7 +620,13 @@ public final class SWGMailBox implements Serializable {
         swgDirPath = null;
         return this;
     }
-
+    
+    public void deleteLocalDir (File d) {
+    	String ld = d.toString();
+    	FileUtils.deleteQuietly(new File(ld));
+    	return;
+    }
+    
     /**
      * Returns a relative path to a directory used by this mailbox. This path is
      * on the form "mails\Station\Galaxy\Character" which is relative SWGAide,
@@ -639,7 +646,7 @@ public final class SWGMailBox implements Serializable {
      * 
      * @return an absolute path, or a dummy file
      */
-    File swgPath() {
+    public File swgPath() {
         if (swgDirPath == null)
             swgDirPath = owner.galaxy().exists()
                     ? new File(owner.galaxy().swgPath(),
