@@ -1,6 +1,7 @@
 package swg.gui.resources;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -2601,7 +2602,7 @@ final class SWGInventoryTab extends JPanel {
                 ? kr.rc()
                 : null;
 
-        if(SWGFrame.verified == true) {
+        if(SWGFrame.verified != null && SWGFrame.verified == true) {
 	        ppp.add(SWGSchemResViewer.displayMenu(kr, this));
 	        updateViewer = true; // by chance, it is reset if...
 	
@@ -2775,7 +2776,9 @@ final class SWGInventoryTab extends JPanel {
 	        del.setEnabled(row >= 0);
 	        ppp.add(del);
         } else {
-        	JLabel warn = new JLabel("Please verify your account credentials first");
+        	JLabel warn = new JLabel("<html>If you have not already, please create and verify account at swgaide.com and <br>input your account credentials in Options -> SwgAide, then click verify button.<br>Once verified, inventory functions should be unlocked.<br>This is due to some inventory functions using the website API.</html>");
+        	warn.setOpaque(true);
+        	warn.setBackground(Color.WHITE);
         	warn.setBorder(new EmptyBorder(10, 10, 10, 10));
         	ppp.add(warn);
         	
