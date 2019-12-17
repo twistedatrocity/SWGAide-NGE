@@ -73,7 +73,7 @@ SWGAide is Open Source
 
 Java developers and also non-programmers are warmly welcomed. 
 The latter group could gather and submit all kinds of data that could be useful
-in SWGAide and post that at the SWGAide forum at SWGCraft.org. Or anything else
+in SWGAide and post that at the SWGAide forum at https://swgaide.com/ Or anything else
 that is useful for other players, at any format or syntax.
 Developers are welcomed to download the source code from github,
 browse the code but DM me on discord before going ahead to implement stuff.
@@ -105,7 +105,7 @@ All reports, requests, criticism, or whatever you report is warmly welcomed:
 
 https://github.com/twistedatrocity/SWGAide-NGE/issues
 
-You may also use the forum for discussion of SWGAide at http://www.swgcraft.org/forums/viewforum.php?f=43
+You may also use the forum for discussion of SWGAide at https://swgaide.com/
 
 
 

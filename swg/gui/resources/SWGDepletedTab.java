@@ -181,7 +181,7 @@ final class SWGDepletedTab extends JPanel {
      */
     private void actionRevive(SWGKnownResource kr) {
         if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(this,
-                    "Submit \"revive\" to SWGCraft.org for:\n" +
+                    "Submit \"revive\" to swgaide.com for:\n" +
                             kr.getName() + ", " + kr.rc().rcName(),
                     "Confirm Revive", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE)) {

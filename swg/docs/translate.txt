@@ -17,7 +17,7 @@ translate second. Probably the confusion is an indication that my
 English needs to be improved.
 
 It is OK to translate just one file or one at a time over a period.
-At the forum at SWGCraft.org, communicate what you are doing to avoid
+At the forum at swgaide.com, communicate what you are doing to avoid
 double work with other players.
 
 Do not change the HTML tags in the files, just translate the text in
@@ -67,7 +67,7 @@ docs folder do.
 Initiate -- Engage -- Finish
 ============================
 
-A) Announce your intent at SWGAide's forum at SWGCraft.org
+A) Announce your intent at SWGAide's forum at swgaide.com
 
 B) You will work with three files at a time:
    1) The original English file
@@ -77,7 +77,7 @@ B) You will work with three files at a time:
 C) If there is a change to the original file while you are 
    translating we will communicate the changed text to you, this
    means that you must announce what you are doing at SWGAide's
-   forum at SWGCraft.org, otherwise we cannot tell you.
+   forum at swgaide.com, otherwise we cannot tell you.
 
 D) Send the translated file and the index_xx.txt file to Zimoon. 
 

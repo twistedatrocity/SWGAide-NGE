@@ -12,11 +12,16 @@ Double click the icon for SWGAide-NGE.exe to launch it.
 
 SWGAide guides you through its initialization. Actually, you just have to
 verify (or possibly find) the folder for StarWarsGalaxies; you cannot make
-a useful installation of SWGAide without SWG installed. You may also wish to
-skip the scanning phase and manually choose your SWG game folder.
+a useful installation of SWGAide without SWG installed.
 
 SWGAide creates several folders and files its directory; they are all self
 explanatory.
+
+To fully utilize SWGAide you (inventory features and resource reporting), you may wish to create
+an account on https://swgaide.com/ via the forum. Please check your spam folder for the email 
+verification link. Once you have verified via email, you then go into the app Options -> SWGAide
+and input your forum username and password, click verify to test. Once complete you will have unlocked
+all features of the app.
 
 Note: The Pre-CU version of SWGAide cannot live in the same folder as the NGE one, please use separate installation folders.
 
@@ -66,7 +71,7 @@ SWGAide is Open Source
 
 Java developers and also non-programmers are warmly welcomed. 
 The latter group could gather and submit all kinds of data that could be useful
-in SWGAide and post that at the SWGAide forum at SWGCraft.org. Or anything else
+in SWGAide and post that at the SWGAide forum at https://swgaide.com/ Or anything else
 that is useful for other players, at any format or syntax.
 Developers are welcomed to download the source code from github,
 browse the code but DM me on discord before going ahead to implement stuff.
@@ -86,7 +91,7 @@ file is corrupt you have three options:
    backup files. This gives you a chance to copy files to a safe place, or to
    try files other than the most recent, etc.
 2) Let SWGAide try the file SWGAide.BAK from the backup folder.
-3) Report the issue at SWGCraft.org in the SWGAide forum.
+3) Report the issue at github
 
 
 
@@ -98,7 +103,7 @@ All reports, requests, criticism, or whatever you report is warmly welcomed:
 
 https://github.com/twistedatrocity/SWGAide-NGE/issues
 
-You may also use the forum for discussion of SWGAide at http://www.swgcraft.org/forums/viewforum.php?f=43
+You may also use the forum for discussion of SWGAide at https://swgaide.com/
 
 
 

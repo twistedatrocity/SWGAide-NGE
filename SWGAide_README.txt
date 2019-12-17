@@ -71,7 +71,7 @@ SWGAide is Open Source
 
 Java developers and also non-programmers are warmly welcomed. 
 The latter group could gather and submit all kinds of data that could be useful
-in SWGAide and post that at the SWGAide forum at SWGCraft.org. Or anything else
+in SWGAide and post that at the SWGAide forum at https://swgaide.com/ Or anything else
 that is useful for other players, at any format or syntax.
 Developers are welcomed to download the source code from github,
 browse the code but DM me on discord before going ahead to implement stuff.
@@ -91,7 +91,7 @@ file is corrupt you have three options:
    backup files. This gives you a chance to copy files to a safe place, or to
    try files other than the most recent, etc.
 2) Let SWGAide try the file SWGAide.BAK from the backup folder.
-3) Report the issue at SWGCraft.org in the SWGAide forum.
+3) Report the issue at github
 
 
 

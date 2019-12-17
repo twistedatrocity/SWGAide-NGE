@@ -2330,7 +2330,7 @@ public final class SWGMailISDroidPanel extends JPanel {
             if (response.getStatus() == 7) {
                 z.appnl("seems to be an old resource.");
                 z.appnl("See the help text (F1) on how to");
-                z.app("fix this issue at SWGCraft.org");
+                z.app("fix this issue at swgaide.com");
             } else {
                 z.app("ERROR: \"");
                 z.appnl(response.getStatusString()).app("\":");
