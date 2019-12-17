@@ -69,7 +69,7 @@ public final class SWGInitialize extends JPanel {
     /**
      * The frame holding the tabbed pane embracing this panel
      */
-    private SWGFrame frame;
+    private static SWGFrame frame;
 
     /**
      * The file system folder for SWG.
@@ -407,7 +407,7 @@ public final class SWGInitialize extends JPanel {
      *        accumulating but is the current result, ranging 0 to 100.
      * @param first {@code true} if this is first-time initialization
      */
-    private void publishProgess(final String str, final int step, boolean first) {
+    private static void publishProgess(final String str, final int step, boolean first) {
         if (first) {
             try {
                 SwingUtilities.invokeAndWait(new Runnable() {
@@ -438,7 +438,7 @@ public final class SWGInitialize extends JPanel {
      * @param b {@code true} if it is a first-time scan
      * @throws Exception if there is an error
      */
-    void scanAll(final SWGUniverse universe, boolean b) throws Exception {
+    public static void scanAll(final SWGUniverse universe, boolean b) throws Exception {
         frame.putToStatbar("Scanning SWG directories");
         frame.putToLogbar_2(frame.progressBar);
 
@@ -506,7 +506,7 @@ public final class SWGInitialize extends JPanel {
      * 
      * @param universe the universe to scan
      */
-    private void scanForAliases(SWGUniverse universe) {
+    private static void scanForAliases(SWGUniverse universe) {
         if (universe == null)
             return;
 
@@ -528,7 +528,7 @@ public final class SWGInitialize extends JPanel {
      * @param base the log status base value
      * @param limit the log status upper limit
      */
-    private void scanForCharacters(final SWGUniverse univ, int base, int limit) {
+    private static void scanForCharacters(final SWGUniverse univ, int base, int limit) {
         if (univ == null) return;
 
         // TODO: walk through all initialization steps and slim and grease them,
@@ -589,7 +589,7 @@ public final class SWGInitialize extends JPanel {
      * @param base the status log base value
      * @param limit the status log upper limit
      */
-    private void scanForGalaxies(SWGUniverse univ, int base, int limit) {
+    private static void scanForGalaxies(SWGUniverse univ, int base, int limit) {
         if (univ == null)
             return;
 
@@ -617,7 +617,7 @@ public final class SWGInitialize extends JPanel {
      * 
      * @param univ the universe to scan
      */
-    private void scanForMails(SWGUniverse univ) {
+    private static void scanForMails(SWGUniverse univ) {
         if (univ == null) return;
 
         Collection<SWGStation> stations = univ.stations();
@@ -647,7 +647,7 @@ public final class SWGInitialize extends JPanel {
      * @param univ the universe to scan
      * @throws Exception if there is an error
      */
-    private void scanForStations(SWGUniverse univ) throws Exception {
+    private static void scanForStations(SWGUniverse univ) throws Exception {
         if (univ == null)
             return;
 
@@ -689,7 +689,7 @@ public final class SWGInitialize extends JPanel {
      * @param swg the common SWG universe
      * @return a test-center object, or {@code null}
      */
-    private SWGUniverse testCenterFind(SWGUniverse swg) {
+    private static SWGUniverse testCenterFind(SWGUniverse swg) {
         SWGUniverse testCenter = (SWGUniverse)
                 SWGFrame.getPrefsKeeper().get("swgTestCenter");
 
