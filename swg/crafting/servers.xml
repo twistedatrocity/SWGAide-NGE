@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<servers>
+  <server name="Aftermath" swgaide_id="136" folder_name="Aftermath" type="precu" active="yes"/>
+  <server name="Ahazi" swgaide_id="1" folder_name="Ahazi" type="nge" active="no"/>
+  <server name="Anarchy Rising" swgaide_id="132" folder_name="AnarchyRises" type="precu" active="no"/>
+  <server name="Andromeda" swgaide_id="134" folder_name="Andromeda" type="precu" active="no"/>
+  <server name="Aurora" swgaide_id="141" folder_name="Aurora" type="precu" active="yes"/>
+  <server name="Basilisk" swgaide_id="106" folder_name="Basilisk" type="precu" active="yes"/>
+  <server name="Basilisk (Pre-wipe)" swgaide_id="105" folder_name="Basilisk (Pre-wipe)" type="precu" active="no"/>
+  <server name="Bloodfin" swgaide_id="2" folder_name="Bloodfin (Official)" type="precu" active="no"/>
+  <server name="Bloodfin Emulator" swgaide_id="115" folder_name="Bloodfin" type="precu" active="no"/>
+  <server name="Bloodfin Emulator (Pre-wipe)" swgaide_id="112" folder_name="Bloodfin Emulator (Pre-wipe)" type="nge" active="no"/>
+  <server name="Bria" swgaide_id="3" folder_name="Bria" type="nge" active="no"/>
+  <server name="Chilastra" swgaide_id="4" folder_name="Chilastra" type="nge" active="no"/>
+  <server name="Chimaera" swgaide_id="5" folder_name="Europe-Chimaera" type="nge" active="no"/>
+  <server name="Corbantis" swgaide_id="6" folder_name="Corbantis" type="nge" active="no"/>
+  <server name="Eclipse" swgaide_id="7" folder_name="Eclipse" type="nge" active="no"/>
+  <server name="Eclipse Reborn" swgaide_id="116" folder_name="Eclipse Reborn" type="nge" active="no"/>
+  <server name="Empire in Flames" swgaide_id="135" folder_name="Starsider" type="precu" active="yes"/>
+  <server name="Exile Test Center" swgaide_id="108" folder_name="Exile Server Test Center" type="nge" active="no"/>
+  <server name="Farstar" swgaide_id="8" folder_name="Europe-Farstar" type="nge" active="no"/>
+  <server name="Flurry" swgaide_id="9" folder_name="Flurry" type="nge" active="no"/>
+  <server name="Galactic Rebellion" swgaide_id="127" folder_name="Galactic Rebellion" type="precu" active="no"/>
+  <server name="Galactic Rebellion (Pre-Wipe)" swgaide_id="119" folder_name="Galactic Rebellion" type="precu" active="no"/>
+  <server name="Gorath" swgaide_id="10" folder_name="Gorath" type="nge" active="no"/>
+  <server name="Hydian-way" swgaide_id="129" folder_name="Hydian-way" type="precu" active="yes"/>
+  <server name="Hydian-way (Pre-Wipe)" swgaide_id="121" folder_name="Hydian-way" type="precu" active="no"/>
+  <server name="Inactive SWGCraft.co.uk" swgaide_id="102" folder_name="Inactive SWGCraft.co.uk" type="nge" active="no"/>
+  <server name="Indominus" swgaide_id="140" folder_name="Indominus" type="nge" active="no"/>
+  <server name="Infinity" swgaide_id="11" folder_name="Europe-Infinity" type="nge" active="no"/>
+  <server name="Intrepid" swgaide_id="12" folder_name="Intrepid" type="nge" active="no"/>
+  <server name="Kauri" swgaide_id="13" folder_name="Kauri" type="nge" active="no"/>
+  <server name="Kettemoor" swgaide_id="14" folder_name="Kettemoor" type="nge" active="no"/>
+  <server name="Liberator" swgaide_id="103" folder_name="Liberator" type="nge" active="no"/>
+  <server name="Lowca" swgaide_id="15" folder_name="Lowca" type="nge" active="no"/>
+  <server name="Naritus" swgaide_id="16" folder_name="Naritus" type="nge" active="no"/>
+  <server name="none" swgaide_id="151" folder_name="none" type="precu" active="no"/>
+  <server name="Prophecy: Redemption " swgaide_id="143" folder_name="Redemption" type="nge" active="yes"/>
+  <server name="Prophecy: Vengeance" swgaide_id="144" folder_name="Vengeance" type="nge" active="yes"/>
+  <server name="Radiant" swgaide_id="17" folder_name="Radiant" type="nge" active="no"/>
+  <server name="Relics of Corbantis" swgaide_id="137" folder_name="relicsofcorbantis" type="precu" active="yes"/>
+  <server name="Remastered" swgaide_id="145" folder_name="SWGRemastered" type="precu" active="yes"/>
+  <server name="Revelation" swgaide_id="123" folder_name="Revelation" type="precu" active="no"/>
+  <server name="Scylla" swgaide_id="18" folder_name="Scylla" type="nge" active="no"/>
+  <server name="Shadowfire" swgaide_id="19" folder_name="Shadowfire" type="nge" active="no"/>
+  <server name="ShadowfireEmu" swgaide_id="130" folder_name="ShadowfireEmu" type="precu" active="no"/>
+  <server name="Star Wars Galaxies Awakening" swgaide_id="118" folder_name="Awakening Server" type="precu" active="yes"/>
+  <server name="Stardust" swgaide_id="142" folder_name="Stardust" type="precu" active="no"/>
+  <server name="Starsider" swgaide_id="20" folder_name="Starsider" type="nge" active="no"/>
+  <server name="Sunrunner" swgaide_id="21" folder_name="Sunrunner" type="nge" active="no"/>
+  <server name="SWG Beyond" swgaide_id="153" folder_name="Beyond" type="nge" active="yes"/>
+  <server name="SWG Legends" swgaide_id="138" folder_name="Omega" type="nge" active="yes"/>
+  <server name="SWG Reckoning" swgaide_id="117" folder_name="Reckoning Server" type="precu" active="yes"/>
+  <server name="SWG Resurrection" swgaide_id="128" folder_name="SWG Resurrection Live Server" type="precu" active="yes"/>
+  <server name="SWG-Europa" swgaide_id="126" folder_name="Europa" type="precu" active="yes"/>
+  <server name="SWG: Sanctuary" swgaide_id="150" folder_name="swgsanctuary" type="precu" active="yes"/>
+  <server name="SWG:Europe" swgaide_id="120" folder_name="SWGEurope" type="nge" active="no"/>
+  <server name="SWGCanon" swgaide_id="109" folder_name="Tarkin" type="nge" active="no"/>
+  <server name="SWGChoice" swgaide_id="125" folder_name="SWGChoice" type="precu" active="no"/>
+  <server name="SWGCraft.co.uk" swgaide_id="99" folder_name="SWGCraft.co.uk" type="precu" active="yes"/>
+  <server name="SWGFlurry" swgaide_id="149" folder_name="SWGFlurry" type="precu" active="yes"/>
+  <server name="SWGNebula" swgaide_id="139" folder_name="SWGNebula" type="precu" active="no"/>
+  <server name="Tarkin" swgaide_id="133" folder_name="Tarkin II" type="precu" active="no"/>
+  <server name="Tarkins Revenge" swgaide_id="152" folder_name="TarkinsRevenge" type="precu" active="yes"/>
+  <server name="Tarquinas" swgaide_id="22" folder_name="Tarquinas" type="nge" active="no"/>
+  <server name="TCPrime" swgaide_id="100" folder_name="TCPrime" type="nge" active="no"/>
+  <server name="Tempest" swgaide_id="23" folder_name="Tempest" type="nge" active="no"/>
+  <server name="Test Center" swgaide_id="101" folder_name="Test Center" type="nge" active="no"/>
+  <server name="Test Center: Nova" swgaide_id="114" folder_name="Test Center: Nova" type="precu" active="yes"/>
+  <server name="Test Center: Nova (Pre-Wipe 1)" swgaide_id="111" folder_name="Test Center: Nova (Pre-Wipe 1)" type="nge" active="no"/>
+  <server name="Test Center: Nova (Pre-Wipe 2)" swgaide_id="104" folder_name="Test Center: Nova (Pre-Wipe 2)" type="nge" active="no"/>
+  <server name="The Rising SWG" swgaide_id="131" folder_name="TheRising" type="precu" active="no"/>
+  <server name="Valcyn" swgaide_id="24" folder_name="Valcyn" type="nge" active="no"/>
+  <server name="Wanderhome" swgaide_id="25" folder_name="Wanderhome" type="nge" active="no"/>
+</servers>
