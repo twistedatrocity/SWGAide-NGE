@@ -1091,7 +1091,7 @@ public final class SWGResController implements UpdateSubscriber {
         else if (status > 0 && statusColor != Color.PINK)
             statusColor = SWGGuiUtils.colorAlert;
 
-        if (updateGUI) {
+        if (updateGUI && statusColor != null) {
             SWGAide.frame().getTabPane().setBackgroundAt(2, statusColor);
             SWGResourceTab.currentUpdateGUI();
             statusColor = null;
