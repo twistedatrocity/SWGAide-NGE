@@ -37,8 +37,6 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io.serialization"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common"/>
         <file path="/SWGAide-NGE/swg/SWGAide-history.txt"/>
-        <file path="/SWGAide-NGE/SWGAide-history.txt"/>
-        <file path="/SWGAide-NGE/SWGAide_README.txt"/>
         <file path="/SWGAide-NGE/swg/servers.xml"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.trade"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.images"/>
