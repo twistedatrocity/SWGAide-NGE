@@ -117,7 +117,7 @@ public class SWGMainTab extends JSplitPane {
         });
 
         tree.setRootVisible(false);
-        tree.setMinimumSize(new Dimension(150, 150));
+        tree.setMinimumSize(new Dimension(200, 150));
         tree.getSelectionModel().setSelectionMode(
                 TreeSelectionModel.SINGLE_TREE_SELECTION);
 
@@ -129,7 +129,7 @@ public class SWGMainTab extends JSplitPane {
             tree.expandRow(0);
 
         JScrollPane leftPane = new JScrollPane(tree);
-        leftPane.setMinimumSize(new Dimension(150, 150));
+        leftPane.setMinimumSize(new Dimension(200, 150));
         this.setLeftComponent(leftPane);
         this.setRightComponent(new JLabel());
 
