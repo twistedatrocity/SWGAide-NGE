@@ -24,7 +24,7 @@ import swg.crafting.resources.SWGResourceStats;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
 import swg.tools.SOAPManager;
-import swg.tools.ZCrypto;
+//import swg.tools.ZCrypto;
 import swg.tools.ZNumber;
 import swg.tools.ZString;
 
@@ -60,14 +60,6 @@ final class SWGSoapManager extends SOAPManager {
      * The constant target name space for the SOAP server at SWGCraft.org.
      */
     private static final String TARGET_NAME_SPACE = "urn:swgaide";
-
-    /**
-     * The cached password to SWGCraft.org for the current user, this value is
-     * in the hashed form which is sent over the Internet.
-     * 
-     * @see #resetUserData()
-     */
-    private String hashedUserPassword;
 
     /**
      * The cached user ID at SWGCraft.org for the current user.
@@ -130,31 +122,6 @@ final class SWGSoapManager extends SOAPManager {
                 addChildElement(s.getName(), validateInt(v), sbe, st);
             }
         }
-    }
-
-    /**
-     * Helper method that returns the encrypted form of the current user's
-     * password for SWGCraft.org. The encryption is performed locally, using an
-     * encryption key and initialization vector obtained from SWGCraft.org. If
-     * the response is a SOAP fault message {@code null} is returned.
-     * <P>
-     * This implementation caches the value until it is reset by
-     * {@link #resetUserData()}.
-     * 
-     * @return the encrypted password for the current user, or {@code null}
-     */
-    private String getEncryptedPassword() {
-        if (hashedUserPassword == null) {
-            // request the encryption key and IV from SWGCraft.org
-            // for use in encrypting the password using AES cryptography
-            SWGSoapCryptKeyResponse e = requestEncryptionKey();
-            if (!e.isFaultless())
-                return null;
-
-            hashedUserPassword = ZCrypto.encryptedAES(
-                    SWGCraft.getUserPassword(), e.getKey(), e.getIV());
-        }
-        return hashedUserPassword;
     }
 
     /**
@@ -252,47 +219,6 @@ final class SWGSoapManager extends SOAPManager {
         addChildElement("Name", "SWGAide", sbe, lse);
         addChildElement("Version", SWGConstants.version, sbe, lse);
         return lse;
-    }
-
-    /**
-     * Helper method that requests from SWGCraft.org a new key and
-     * initialization vector for the AES encryption algorithm. If there is an
-     * error it is intercepted and a message is written to SWGAide's error log,
-     * as well as added as a fault message in the returned object. If there is
-     * an error it is intercepted and a message is added as a fault message to
-     * the response.
-     * 
-     * @see ZCrypto#encryptedAES(String, String, String)
-     * @return a new key and initialization vector for AES encryption
-     */
-    private SWGSoapCryptKeyResponse requestEncryptionKey() {
-
-        SWGSoapCryptKeyResponse response = new SWGSoapCryptKeyResponse();
-
-        try {
-            setServerURL();
-
-            SOAPMessage msg = newSoapMessage();
-            SOAPBodyElement sbe = newBodyElement("CryptKeyIV", msg);
-
-            newProgramInfoChild(sbe);
-
-            SOAPMessage respMsg = sendMessage(msg);
-            if (hasFault(respMsg, response))
-                return response;
-
-            // simpleTransform(response, System.out);
-
-            Node n = getFirstChild(respMsg.getSOAPBody(), 2);
-            response.parseNode(n);
-        } catch (Exception e) {
-            String msg =
-                    "SWGSoapManager:requestEncryptionKey: " + e.getMessage();
-            SWGAide.printDebug("soap", 1, msg);
-            response.faultMessage = msg;
-            response.faultMessageShort = e.getMessage();
-        }
-        return response;
     }
 
     /**
@@ -562,7 +488,7 @@ final class SWGSoapManager extends SOAPManager {
             SWGAide.printDebug("soap", 1,
                     "SWGSoapManager:requestUserInfoDetailed_a: "
                             + e.getMessage());
-            response.faultMessage = "Connection error!\nIs SWGCraft.org down?";
+            response.faultMessage = "Connection error!\nIs swgaide.com down?";
             response.faultMessageShort = "Internet error";
         } catch (Exception e) {
             String msg =
@@ -629,7 +555,6 @@ final class SWGSoapManager extends SOAPManager {
      * refresh {@link #hashedUserPassword} and {@link #userID}.
      */
     synchronized void resetUserData() {
-        hashedUserPassword = null;
         userID = -1;
     }
 
@@ -1028,60 +953,6 @@ final class SWGSoapManager extends SOAPManager {
     static String itos(long i) {
         return Long.toString(i);
     }
-
-    // /**
-    // * For testing purposes only
-    // */
-    // public static void main(String... args) throws Exception {
-    // SWGSoapManager sp = new SWGSoapManager();
-
-    // SWGCraftUserInfoID sui = sp.getUserInfo("Zimoon");
-    // SWGCraftUserInfoName sui = sp.getUserInfo(171);
-    // SWGCraftUserDetailedInfo sui = sp.getDetailedUserInfo();
-
-    // SWGCraftResourceInfo sui = sp
-    // .getResourceInfo("SWGCraft.co.uk", "");
-
-    // SWGCraftAddResourceResponse sui = sp.addResource("aspdothertestine",
-    // "SWGCraft.co.uk", "Corellia", "Desh Copper", 0, 0, 0, 0, 0, 0,
-    // 0, 0, 0, 0, 0);// 843623
-
-    // SWGSoapEditResResponse sui =
-    // sp.editResource("", "SWGCraft.co.uk", "Desh Copper", 843623, 500,
-    // 2, 2, 0, 0, 222, 505, 1, 0, 343, 333, "test");
-
-    // SWGCraftAddResourceResponse sui = sp.addResource("doubletestfive",
-    // "SWGCraft.co.uk", "Corellia", "Desh Copper", 500, 0, 0, 0, 0,
-    // 0, 0, 0, 0, 0, 0);
-
-    // int id = sui.getSwgResID();
-    // SWGCraftAddAvailableResponse sui = sp.addAvailable(843623,
-    // "SWGCraft.co.uk", "");
-
-    // SWGCraftStatusResponse sui = sp.despawnResource(843623);
-
-    // SWGCraftAddAvailableResponse sui = sp.addAvailable(743796,
-    // "SWGCraft.co.uk", "Endor");
-
-    // SWGCraftCryptKeyResponse sui = sp.getCryptoKey();
-    // String sui = sp.getHashPass();
-
-    // SWGSoapListResResponse sui =
-    // sp.requestResources("SWGCraft.co.uk", "azu");
-    //
-    // SWGSoapResourceResponse sui = sp.requestResource(670317);
-    //
-    // SWGMutableResource mr = new SWGMutableResource("Testsendoldfifth",
-    // SWGDeshCopper.getInstance());
-    // mr.galaxy(SWGCGalaxy.SWGCRAFT_CO_UK);
-    // SWGKnownResource kr = new SWGKnownResource(mr);
-    // SWGSoapNOResResponse sui = sp.sendOld(kr);
-    //
-    // System.err.println(sui.toString() + ' '//
-    // + (sui.faultMessage != null
-    // ? sui.faultMessage
-    // : ""));
-    // }
 
     /**
      * Returns the {@code int} value from the element contained in the list of
