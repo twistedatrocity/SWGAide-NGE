@@ -284,8 +284,6 @@ public final class SWGInitialize extends JPanel {
 
         SWGFrame.getPrefsKeeper().add("swgUniverse", universe);
 
-        testCenterFind(universe);
-
         final JButton okButton = new JButton("Done");
         okButton.setEnabled(false);
         okButton.setMnemonic('D');
