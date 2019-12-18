@@ -410,15 +410,15 @@ public final class SWGInitialize extends JPanel {
     private static void publishProgess(final String str, final int step, boolean first) {
         if (first) {
             try {
-                SwingUtilities.invokeAndWait(new Runnable() {
-
-                    
+            	Thread t = new Thread(new Runnable() {
                     public void run() {
-                        if (str != null)
+                        if (str != null) {
                             frame.putToLogbar_1(str);
-                        frame.progressBar.setValue(step);
+                            frame.progressBar.setValue(step);
+                        }
                     }
                 });
+            	t.start();
             } catch (Exception e) {
                 SWGAide.printError("SWGInitialize:publishProgress:", e);
             }
@@ -442,58 +442,19 @@ public final class SWGInitialize extends JPanel {
         frame.putToStatbar("Scanning SWG directories");
         frame.putToLogbar_2(frame.progressBar);
 
-        final SWGUniverse tc = testCenterFind(universe);
-
         publishProgess("Scanning for aliases", 1, b);
         scanForAliases(universe);
-        scanForAliases(tc);
 
         publishProgess("Scanning for station(s)", 20, b);
         scanForStations(universe);
         publishProgess(null, 25, b);
-        scanForStations(tc);
 
         publishProgess("Scanning for galaxies", 30, b);
         scanForGalaxies(universe, 30, 35);
-        publishProgess("Scanning for galaxies (TC)", 35, b);
-        scanForGalaxies(tc, 35, 40);
 
         publishProgess("Scanning for characters", 40, b);
         scanForCharacters(universe, 40, 65);
-        publishProgess("Scanning for characters (TC)", 65, b);
-        scanForCharacters(tc, 65, 70);
 
-        if (((Boolean) SWGFrame.getPrefsKeeper().get(
-                "mailCopyToSWGAide", Boolean.TRUE)).booleanValue()) {
-            // otherwise on demand and first-time after update to 0.9.0
-
-            final ExecutorService exec = Executors.newSingleThreadExecutor();
-
-            exec.execute(new Runnable() {
-
-                
-                @Override
-                public void run() {
-                    scanForMails(universe);
-                    scanForMails(tc);
-                    if (SWGMailMessage.hasError) {
-                        JOptionPane.showMessageDialog(frame,
-                                "Problems reading some mails.\nSee the \"logs" +
-                                        "\\mail-error.txt\" for details",
-                                "Error parsing mails",
-                                JOptionPane.ERROR_MESSAGE);
-					}
-					
-					scanForGalaxies(universe, 30, 35);
-					scanForGalaxies(tc, 35, 40);
-					scanForCharacters(universe, 40, 65);
-					scanForCharacters(tc, 65, 70);
-
-                    frame.beginPostLaunchTasks();
-                    exec.shutdown();
-                }
-            });
-        }
         publishProgess("", 100, b);
         frame.putToStatbar("Scanning finished");
     }
