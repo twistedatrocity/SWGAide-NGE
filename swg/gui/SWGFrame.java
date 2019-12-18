@@ -1270,7 +1270,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @param step the value with which to continue updating the splash screen
      * @see SWGInitialize#iniateStart()
      */
-    private void initTabPane(JPanel pane, boolean firstTime, double step) {
+    @SuppressWarnings("static-access")
+	private void initTabPane(JPanel pane, boolean firstTime, double step) {
         tabPane = new JTabbedPane();
         pane.add(tabPane, BorderLayout.CENTER);
 
