@@ -89,7 +89,7 @@ final class SWGPostLaunch {
      * @param in an input stream
      * @param out a target file
      */
-    private void copyFile(InputStream in, File out) {
+    private static void copyFile(InputStream in, File out) {
         ZReader sr = ZReader.newByteReader(in);
         if (sr != null) sr.copy(out);
         sr.close();
@@ -550,7 +550,7 @@ final class SWGPostLaunch {
      * 
      * @param file the file to read and save
      */
-    private void saveInfoFile(String file) {
+    static void saveInfoFile(String file) {
         InputStream in = SWGAide.class.getResourceAsStream(file);
         copyFile(in, new File(file));
     }
