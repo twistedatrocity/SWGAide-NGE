@@ -52,11 +52,6 @@ public class SWGCraftOptionsPanel extends JDialog {
     private JCheckBox autoUpdateGalaxyResources;
 
     /**
-     * The GUI text field for the base URL to swgaide.com.
-     */
-    private JTextField baseURL;
-
-    /**
      * A GUI list of galaxies from which to select one main galaxy.
      */
     private JComboBox<String> galaxyList;
@@ -78,30 +73,9 @@ public class SWGCraftOptionsPanel extends JDialog {
     private JPasswordField passWord;
 
     /**
-     * A GUI text field for the current-resource path that should be
-     * concatenated with the base URL.
-     */
-    private JTextField resourcePath;
-
-    /**
      * A GUI button to save user info to the preference keeper.
      */
     private JButton saveUserInfo;
-
-    /**
-     * The GUI check-box which unlocks the text fields for SWGCraft settings.
-     */
-    private JCheckBox serverUnlock;
-
-    /**
-     * A GUI text field for the path to the SOAP server.
-     */
-    private JTextField soapPath;
-
-    /**
-     * A GUI text field for the path to the server status file.
-     */
-    private JTextField statusPath;
 
     /**
      * The GUI component from which to select the user's time zone.
@@ -140,8 +114,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         contentPane.add(first);
 
         contentPane.add(makeUserInfoPanel());
-
-        contentPane.add(makeServerPanel());
 
         contentPane.getInputMap().put(KeyStroke.getKeyStroke("F1"), "showHelp");
         contentPane.getActionMap().put("showHelp", new AbstractAction() {
@@ -204,12 +176,6 @@ public class SWGCraftOptionsPanel extends JDialog {
      */
     private void actionClose() {
         SWGFrame.getPrefsKeeper().add("optionsGeneralLocation", getLocation());
-        SWGFrame.getPrefsKeeper().add("optionBaseURL", getBaseURL());
-        SWGFrame.getPrefsKeeper().add("optionResourcePath", getResourcePath());
-        SWGFrame.getPrefsKeeper().add("optionStatusFile", getStatusPath());
-        SWGFrame.getPrefsKeeper().add("optionSOAPpath", getSOAPpath());
-        if (serverUnlock.isSelected())
-            serverUnlock.doClick();
         SWGHelp.remove(helpUrl);
         isOpen = false;
     }
@@ -253,18 +219,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         value = value.replace("½", ".5");
         Double zon = new Double(value);
         SWGFrame.getPrefsKeeper().add("optionTimeZoneValue", zon);
-    }
-
-    /**
-     * This method is called when the user toggles possibility to edit the
-     * server data text fields.
-     */
-    private void actionUnlockServerData() {
-        boolean b = serverUnlock.isSelected();
-        baseURL.setEnabled(b);
-        resourcePath.setEnabled(b);
-        statusPath.setEnabled(b);
-        soapPath.setEnabled(b);
     }
 
     /**
@@ -327,19 +281,6 @@ public class SWGCraftOptionsPanel extends JDialog {
     }
 
     /**
-     * Returns the base URL as a string. If the string equals
-     * {@link SWGCraft#getBaseURL()}, or if its length is zero, {@code null} is
-     * returned.
-     * 
-     * @return the base URL as a string, or {@code null}
-     */
-    private String getBaseURL() {
-        String burl = baseURL.getText().trim();
-        if (burl.equals(SWGCraft.getBaseURL()) || burl.isEmpty()) return null;
-        return burl;
-    }
-
-    /**
      * Returns the encrypted argument as a {@link SealedObject}. If there is an
      * error {@code null} is returned.
      * 
@@ -354,52 +295,6 @@ public class SWGCraftOptionsPanel extends JDialog {
             SWGAide.printError("SWGCraftOptionsPanel:getEncrypted", e);
         }
         return null;
-    }
-
-    /**
-     * Returns the path to the file of current-resources at swgaide.com. If the
-     * string equals {@link SWGCraft#getCurrentResourcesPath()}, or if its
-     * length is zero, {@code null} is returned.
-     * 
-     * @return the path to the file of current-resources, or {@code null}
-     */
-    private String getResourcePath() {
-        String str = resourcePath.getText();
-        str = str.replace("%BASE%", "");
-        str = str.replace("%GALAXY%.xml.gz", "").trim();
-        if (str.equals(SWGCraft.getCurrentResourcesPath()) || str.isEmpty())
-            return null;
-        return str;
-    }
-
-    /**
-     * Returns the path to the SOAP server at swgaide.com. If the string equals
-     * {@link SWGCraft#getSOAPServerPath()}, or if its length is zero, {@code
-     * null} is returned.
-     * 
-     * @return the path to the SOAP server, or {@code null}
-     */
-    private String getSOAPpath() {
-        String soap = soapPath.getText();
-        soap = soap.replaceAll("%BASE%", "").trim();
-        if (soap.equals(SWGCraft.getSOAPServerPath()) || soap.isEmpty())
-            return null;
-        return soap;
-    }
-
-    /**
-     * Returns the path to the status text file at swgaide.com. If the string
-     * equals {@link SWGCraft#getStatusFileTXT()}, or if its length is zero,
-     * {@code null} is returned.
-     * 
-     * @return the path to the status text file, or {@code null}
-     */
-    private String getStatusPath() {
-        String stat = statusPath.getText();
-        stat = stat.replace("%BASE%", "").trim();
-        if (stat.equals(SWGCraft.getStatusFileTXT()) || stat.isEmpty())
-            return null;
-        return stat;
     }
 
     /**
@@ -487,131 +382,6 @@ public class SWGCraftOptionsPanel extends JDialog {
         glxPanel.add(Box.createGlue());
 
         return glxPanel;
-    }
-
-    /**
-     * Returns a panel containing a label with {@code labelText}.
-     * 
-     * @param labelText
-     *            the text
-     * @return a panel containing a label
-     */
-    private JPanel makePanelRow(String labelText) {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel label = new JLabel(labelText);
-        label.setMinimumSize(new Dimension(90, 20));
-        label.setMaximumSize(new Dimension(90, 20));
-        label.setPreferredSize(new Dimension(90, 20));
-        panel.add(label);
-        return panel;
-    }
-
-    /**
-     * Returns a GUI component for the SWGCraft settings.
-     * 
-     * @return a GUI component for the SWGCraft settings
-     */
-    private JPanel makeServerFirstRow() {
-        JPanel first = makePanelRow("Base URL: ");
-
-        String baseURLs =
-            (String) SWGFrame.getPrefsKeeper().get("optionBaseURL");
-        baseURLs = baseURLs != null
-            ? baseURLs
-            : SWGCraft.getBaseURL();
-        baseURL = new JTextField(baseURLs, 32);
-        baseURL.setEnabled(false);
-        first.add(baseURL);
-
-        serverUnlock = new JCheckBox("Unlock");
-        serverUnlock.setToolTipText("Unlock the input fields for editing");
-        serverUnlock.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                actionUnlockServerData();
-            }
-        });
-        first.add(serverUnlock);
-        return first;
-    }
-
-    /**
-     * Returns a GUI component for editing URLs to SWGCraft.
-     * 
-     * @return a GUI component for editing URLs to SWGCraft
-     */
-    private Component makeServerPanel() {
-        JPanel srvP = new JPanel();
-        //srvP.setBorder(BorderFactory.createTitledBorder("SWGAide.com data"));
-        //srvP.setLayout(new BoxLayout(srvP, BoxLayout.Y_AXIS));
-
-        JPanel first = makeServerFirstRow();
-        //srvP.add(first);
-
-        JPanel second = makeServerSecondRow();
-        //srvP.add(second);
-
-        JPanel third = makeServerThirdRow();
-        //srvP.add(third);
-
-        return srvP;
-    }
-
-    /**
-     * Returns a GUI component for the SWGCraft settings.
-     * 
-     * @return a GUI component for the SWGCraft settings
-     */
-    private JPanel makeServerSecondRow() {
-        JPanel second = makePanelRow("Resource path: ");
-
-        String resPath =
-            (String) SWGFrame.getPrefsKeeper().get("optionResourcePath");
-        resPath = resPath != null
-            ? resPath
-            : SWGCraft.getCurrentResourcesPath();
-        resPath = "%BASE%" + resPath + "%GALAXY%.xml.gz";
-        resourcePath = new JTextField(resPath, 38);
-        resourcePath.setToolTipText("Part of URL to server resource data");
-        resourcePath.setEnabled(false);
-        second.add(resourcePath);
-        return second;
-    }
-
-    /**
-     * Returns a GUI component for the SWGCraft settings.
-     * 
-     * @return a GUI component for the SWGCraft settings
-     */
-    private JPanel makeServerThirdRow() {
-        JPanel third = makePanelRow("Status file: ");
-
-        String statStr =
-            (String) SWGFrame.getPrefsKeeper().get("optionStatusFile");
-        statStr = statStr != null
-            ? statStr
-            : SWGCraft.getStatusFileTXT();
-        statStr = "%BASE%" + statStr;
-        statusPath = new JTextField(statStr, 16);
-        statusPath.setToolTipText("Part of URL to the server status file");
-        statusPath.setEnabled(false);
-        third.add(statusPath);
-
-        JLabel soap = new JLabel("    SOAP: ");
-        third.add(soap);
-
-        String soapStr =
-            (String) SWGFrame.getPrefsKeeper().get("optionSOAPpath");
-        soapStr = soapStr != null
-            ? soapStr
-            : SWGCraft.getSOAPServerPath();
-        soapStr = "%BASE%" + soapStr;
-        soapPath = new JTextField(soapStr, 16);
-        soapPath.setToolTipText("Part of URL to the SOAP server");
-        soapPath.setEnabled(false);
-        third.add(soapPath);
-
-        return third;
     }
 
     /**
