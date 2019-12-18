@@ -613,43 +613,6 @@ public final class SWGInitialize extends JPanel {
     }
 
     /**
-     * Helper method which determines if SWG also contains a test-center
-     * directory and returns an object for it if it exists. This is if the user
-     * also plays or played at TestCenter. TC contains a file structure that
-     * equals to the base SWG client, just one folder deeper. The argument
-     * determines the base directory for SWGAide. If the test-center does not
-     * already exist in the file SWGAide.DAT it is created but not populated. If
-     * no test-center exists {@code null} is returned.
-     * 
-     * @param swg the common SWG universe
-     * @return a test-center object, or {@code null}
-     */
-    private static SWGUniverse testCenterFind(SWGUniverse swg) {
-        SWGUniverse testCenter = (SWGUniverse)
-                SWGFrame.getPrefsKeeper().get("swgTestCenter");
-
-        // XXX: testcenter may be empty but exists in the DAT file, how to deal
-        // with that now? If it also has data in the SWGAide file structure we
-        // cannot really remove it
-        if (testCenter != null)
-            return testCenter;
-
-        File tc = new File(swg.swgPath(), "testcenter");
-        File tcp = new File(tc, "profiles");
-        if (tcp.exists()) {
-            try {
-                testCenter = new SWGUniverse(tc, true);
-                SWGFrame.getPrefsKeeper().add("swgTestCenter", testCenter);
-                return testCenter;
-            } catch (Throwable e) {
-                SWGAide.printDebug(
-                        "init", 1, "SWGUniverse:testCenterFind: " + e);
-            }
-        }
-        return null;
-    }
-
-    /**
      * Updates various data structures to the current version. This method
      * invokes helper methods and if an upgrade is required the helper method
      * carries out the task. Otherwise the helper methods do nothing.
