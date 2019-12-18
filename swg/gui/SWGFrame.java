@@ -151,6 +151,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * A flag which is set to true when the GUI is finished.
      */
     private boolean isGuiFinished;
+    
+    /**
+     * A flag which is set to true when the tabs are finished.
+     */
+    private static boolean tabsComplete = false;
 
     /**
      * The log bar number 1
@@ -1414,6 +1419,15 @@ public class SWGFrame extends JFrame implements ComponentListener,
         tabPane.setMnemonicAt(3, KeyEvent.VK_S);
 
         splashProgressBar.setValue((int) (5 * step));
+        tabsComplete = true;
+    }
+    
+    /**
+     * Returns status of {@link populateTabPane}
+     * @return boolean
+     */
+    public static boolean tabsComplete () {
+    	return tabsComplete;
     }
 
     /**

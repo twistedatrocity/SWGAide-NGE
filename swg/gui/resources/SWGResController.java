@@ -1086,12 +1086,23 @@ public final class SWGResController implements UpdateSubscriber {
      * @param updateGUI {@code true} to update the Resource tab
      */
     private static void guiStatus(int status, boolean updateGUI) {
-        if (status < 0)
+    	boolean tw = false;
+    	while(!tw) {
+    		try {
+				Thread.sleep(100);
+				tw = SWGFrame.tabsComplete();
+			} catch (InterruptedException e) {
+				SWGAide.printError("SWGResController:guiStatus", e);
+			}
+    	}
+    	
+    	if (status < 0) {
             statusColor = Color.PINK;
-        else if (status > 0 && statusColor != Color.PINK)
-            statusColor = SWGGuiUtils.colorAlert;
+    	} else if (status > 0 && statusColor != Color.PINK) {
+    		statusColor = SWGGuiUtils.colorAlert;
+    	}
 
-        if (updateGUI && statusColor != null) {
+        if (updateGUI) {
             SWGAide.frame().getTabPane().setBackgroundAt(2, statusColor);
             SWGResourceTab.currentUpdateGUI();
             statusColor = null;
