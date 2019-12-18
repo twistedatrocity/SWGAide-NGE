@@ -1285,14 +1285,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
             splashProgressBar.setValue((int) (3 * step));
         } else {
             populateTabPane(step);
-            try {
-                if (universe.exists()) initialize.scanAll(universe, false);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, String.format(
-                        "Initialization error:%n%s%nSee log file",
-                        e.getMessage()), "Error", JOptionPane.ERROR_MESSAGE);
-                SWGAide.printError("SWGFrame:init", e);
-            }
             putToLogbar_2(null);
             putToStatbar(null);
         }

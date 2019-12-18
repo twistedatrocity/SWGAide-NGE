@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -317,12 +319,7 @@ public final class SWGInitialize extends JPanel {
 					}
 				}, UpdateType.SERVERS);
                 SWGCraftCache.updateCache();
-                // initiating another scan here to try and get everything.
-                try {
-					scanAll(universe, false);
-				} catch (Exception e) {
-					SWGAide.printError("SWGInitialize:iniateUniverseReal", e);
-				}
+                
                 frame.putToStatbar("Downloading remote files...");
                 return null;
             }
@@ -451,7 +448,15 @@ public final class SWGInitialize extends JPanel {
         publishProgess("Scanning for characters", 40, b);
         scanForCharacters(universe, 40, 65);
         
-        frame.beginPostLaunchTasks();
+        final ExecutorService exec = Executors.newSingleThreadExecutor();
+        exec.execute(new Runnable() {
+        	@Override
+        	public void run() {
+        		frame.beginPostLaunchTasks();
+        		exec.shutdown();
+        	}
+        });
+        
 
         publishProgess("", 100, b);
         frame.putToStatbar("Scanning finished");
