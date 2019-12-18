@@ -554,6 +554,11 @@ final class SWGPostLaunch {
         InputStream in = SWGAide.class.getResourceAsStream(file);
         copyFile(in, new File(file));
     }
+    
+    static void saveInfoFile(String src, String dst) {
+        InputStream in = SWGAide.class.getResourceAsStream(src);
+        copyFile(in, new File(dst));
+    }
 
     /**
      * Helper method which determines if this instance of SWGAide equals the

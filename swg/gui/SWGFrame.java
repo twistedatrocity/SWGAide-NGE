@@ -711,15 +711,15 @@ public class SWGFrame extends JFrame implements ComponentListener,
         // Only seed if the files do not exist. e.g. first time install.
         File f = new File(SWGConstants.repositoryPath + "/categories.xml");
         if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile(f.toString());
+        SWGPostLaunch.saveInfoFile("categories.xml", f.toString());
         }
         f = new File(SWGConstants.repositoryPath + "/professions.xml");
         if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile(f.toString());
+        SWGPostLaunch.saveInfoFile("professions.xml", f.toString());
         }
         f = new File(SWGConstants.repositoryPath + "/servers.xml");
         if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile(f.toString());
+        SWGPostLaunch.saveInfoFile("servers.xml", f.toString());
         }
 
         if (SWGConstants.DEV_DEBUG)
