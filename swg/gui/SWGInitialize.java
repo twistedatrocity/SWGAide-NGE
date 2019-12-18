@@ -5,10 +5,7 @@ import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -39,7 +36,6 @@ import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 import swg.model.SWGStation;
 import swg.model.SWGUniverse;
-import swg.model.mail.SWGMailMessage;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 
@@ -454,6 +450,8 @@ public final class SWGInitialize extends JPanel {
 
         publishProgess("Scanning for characters", 40, b);
         scanForCharacters(universe, 40, 65);
+        
+        frame.beginPostLaunchTasks();
 
         publishProgess("", 100, b);
         frame.putToStatbar("Scanning finished");
@@ -564,33 +562,6 @@ public final class SWGInitialize extends JPanel {
             publishProgess(null, (int) (base + up++), true);
         }
         publishProgess(null, limit, true);
-    }
-
-    /**
-     * Scans the specified universe for mails. This implementation scans all
-     * stations, and for each station it scans its galaxies, and for each galaxy
-     * its characters, and for each character its mails.
-     * <p>
-     * The first phase is just done within SWGAide's mail folder and does not
-     * change anything at the hard disk. Stray mails are picked up and added to
-     * the character's mailbox. Mails that are deleted within SWGAide's mail
-     * folder are removed from the mailbox.
-     * 
-     * @param univ the universe to scan
-     */
-    private static void scanForMails(SWGUniverse univ) {
-        if (univ == null) return;
-
-        Collection<SWGStation> stations = univ.stations();
-        for (SWGStation stn : stations) {
-            List<SWGGalaxy> galaxies = stn.galaxies();
-            for (SWGGalaxy gxy : galaxies) {
-                List<SWGCharacter> chars = gxy.characters();
-                for (SWGCharacter ch : chars) {
-                    ch.mailBox().fetch();
-                }
-            }
-        }
     }
 
     /**
