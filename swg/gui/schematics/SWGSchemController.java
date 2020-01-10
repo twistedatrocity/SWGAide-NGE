@@ -465,15 +465,13 @@ final public class SWGSchemController implements UpdateSubscriber {
         Collections.sort(rl, SWGRCWPair.comparator(kr));
         Collections.sort(rl, SWGRCWPair.comparatorRC(true));
 
-        List<SWGSchematic> tmp = new ArrayList<SWGSchematic>(rl.size() * 3);
         List<SWGSac> ret = new ArrayList<SWGSac>(rl.size());
         for (SWGRCWPair r : rl) {
             double w = ((SWGWeights) r.filter()).rate(kr, r.rc(), true);
             if (w < limit) continue;
 
             for (SWGSchematic s : r.schematics())
-                if (SWGSchematicsManager.isQuality(s) && !tmp.contains(s)) {
-                    tmp.add(s);
+                if (SWGSchematicsManager.isQuality(s)) {
                     ret.add(new SWGSac(s, Double.valueOf(w), r));
                 }
         }
