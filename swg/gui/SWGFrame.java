@@ -1,6 +1,7 @@
 package swg.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -37,10 +38,13 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,6 +59,12 @@ import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.border.EtchedBorder;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
+
 import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.resources.SWGKnownResource;
@@ -977,6 +987,22 @@ public class SWGFrame extends JFrame implements ComponentListener,
         initEditMenu(bar);
         initOptionsMenu(bar);
         initHelpMenu(bar);
+        
+        JButton donate = new JButton("Contribute");
+        donate.setBackground(Color.orange);
+        donate.setForeground(Color.BLACK);
+        bar.add(Box.createHorizontalGlue());
+        donate.setFocusPainted(false);
+        
+        donate.setToolTipText("Contribute to SWGAide");
+        donate.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent e) {
+                showDonate();
+            }
+        });
+        
+        bar.add(donate);
 
         return bar;
     }
@@ -1650,6 +1676,57 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 "Credits to SciGuy and Onyx for food & drink buff data\n\n" +
                 "Your support for SWGCraft and SWGPets is important",
                 "About", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    /**
+     * Shows a donate dialogue pane
+     */
+    protected void showDonate() {
+    	
+    	JDialog d = new JDialog(this, "Contribute");
+    	d.setLayout(new BorderLayout());
+    	
+    	JPanel hpanel = new JPanel(new BorderLayout());
+        String header = "<h4 style='text-align:center;' >Contribute to SWGAide</h4>";
+        
+        String text = header + "<div style=\"font-size:97%;\"><blockquote>Your contribution will help immensely in keeping the infrastructure systems and development needed to keep SWGAide alive and growing.</blockquote></div>";
+        
+        JEditorPane iL = new JEditorPane();
+        HTMLEditorKit kit = new HTMLEditorKit();
+        iL.setEditorKit(kit);
+        StyleSheet styleSheet = kit.getStyleSheet();
+        Style style = styleSheet.getStyle("body");
+        StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        StyleConstants.setFontFamily(style, SWGGuiUtils.fontPlain().getFamily());
+        iL.setText("<html>" + text + "</html>");
+        iL.setEditable(false);
+        iL.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
+                BorderFactory.createEmptyBorder(2, 3, 2, 0)));
+        iL.setOpaque(true);
+        iL.setBackground(Color.WHITE);
+        hpanel.add(iL);
+        JPanel bpanel = new JPanel(new BorderLayout());
+        JButton donate = new JButton("Click Here to Contribute");
+        donate.setBackground(Color.orange);
+        donate.setForeground(Color.BLACK);
+        donate.setFocusPainted(false);
+        
+        donate.setToolTipText("Contribute to SWGAide");
+        donate.addActionListener(new AbstractAction() {
+
+            public void actionPerformed(ActionEvent e) {
+            	ZHtml.browser("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=L5GGWZ6Z2ZUSY&source=url");
+            	d.setVisible(false);
+            }
+        });
+        bpanel.add(donate);
+        d.add(hpanel, BorderLayout.CENTER);
+        d.add(bpanel, BorderLayout.SOUTH);
+        d.setSize(500, 300); 
+
+        d.setLocationRelativeTo(null);
+        d.setVisible(true); 
     }
 
     /**
