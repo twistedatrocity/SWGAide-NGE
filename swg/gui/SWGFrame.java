@@ -1689,7 +1689,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     	JPanel hpanel = new JPanel(new BorderLayout());
         String header = "<h4 style='text-align:center;' >Contribute to SWGAide</h4>";
         
-        String text = header + "<div style=\"font-size:97%;\"><blockquote>Your contribution will help immensely in keeping the infrastructure systems and development needed to keep SWGAide alive and growing.</blockquote></div>";
+        String text = header + "<div style=\"font-size:97%;\"><blockquote>Your contribution will help immensely in keeping the infrastructure systems and ongoing development needed to keep SWGAide alive and growing.</blockquote></div>";
         
         JEditorPane iL = new JEditorPane();
         HTMLEditorKit kit = new HTMLEditorKit();
