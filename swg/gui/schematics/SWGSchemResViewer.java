@@ -205,6 +205,8 @@ public final class SWGSchemResViewer extends SWGJDialog {
         Dimension dim = (Dimension) SWGFrame.getPrefsKeeper().get(
                 "schemRes4SchemDialogDimension", new Dimension(600, 400));
         pp = SWGGuiUtils.ensureOnScreen(pp, dim);
+        Dimension md = new Dimension(800,500);
+        this.setMinimumSize(md);
         setLocation(pp);
         setSize(dim);
     }
@@ -575,7 +577,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                 new SWGResourceStatRenderer(tm));
 
         int w;
-        w = SWGGuiUtils.fontWidth(schemTable, "1 000.00", schemTable.getFont());
+        w = SWGGuiUtils.fontWidth(schemTable, "1 000.000", schemTable.getFont());
         SWGGuiUtils.tableSetColumnWidths(schemTable, 1, 999, w, 5);
         SWGGuiUtils.setRowHeight(schemTable);
 
@@ -835,9 +837,14 @@ public final class SWGSchemResViewer extends SWGJDialog {
         @Override
         public Object getValueAt(int row, int col) {
             SWGSac sac = schematics.get(row);
-            return col == 0
-                    ? ((SWGSchematic) sac.obj).getName()
-                    : (Double) sac.object(0);
+            String expname = sac.object(2).toString();
+            if(col ==0) {
+            	String tname = ((SWGSchematic) sac.obj).getName();
+            	String sname = "<html><span style='font-weight:normal;'>" + tname + "</span> <span style='font-size:80%'>(" + expname + ")</span></html>";
+            	return sname;
+            } else {
+            	return (Double) sac.object(0);
+            }
         }
     }
 }

@@ -466,14 +466,24 @@ final public class SWGSchemController implements UpdateSubscriber {
         Collections.sort(rl, SWGRCWPair.comparatorRC(true));
 
         List<SWGSac> ret = new ArrayList<SWGSac>(rl.size());
+        Object ex = new Object();
         for (SWGRCWPair r : rl) {
             double w = ((SWGWeights) r.filter()).rate(kr, r.rc(), true);
             if (w < limit) continue;
 
-            for (SWGSchematic s : r.schematics())
+            for (SWGSchematic s : r.schematics()) {
                 if (SWGSchematicsManager.isQuality(s)) {
-                    ret.add(new SWGSac(s, Double.valueOf(w), r));
+                	List<SWGExperimentGroup> gr = s.getExperimentGroups();
+                	for (SWGExperimentGroup g : gr) {
+                		for (SWGExperimentLine l : g.getExperimentalLines()) {
+                			if(l.getWeights().equals(r.filter())) {
+                				ex = l.getDescription();
+                			}
+                		}
+                	}
+                    ret.add(new SWGSac(s, Double.valueOf(w), r, ex));
                 }
+            }
         }
 
         return ret;
