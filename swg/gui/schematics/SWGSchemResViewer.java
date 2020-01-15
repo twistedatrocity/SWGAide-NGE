@@ -391,7 +391,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      */
     private void display(SWGKnownResource kr) {
         currentRes = kr;
-        schematics = SWGSchemController.schematics(kr, rateLimit, false);
+        schematics = SWGSchemController.schematics(kr, rateLimit, true);
 
         if (namedLQ.isSelected())
             schematics.addAll(0, SWGSchemController.schematicsLQNamed(kr));
