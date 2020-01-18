@@ -305,7 +305,7 @@ public final class SWGAliases implements
         File[] fls = ud.listFiles(new FileFilter() {
             public boolean accept(File f) {
                 String fn = f.getName().toLowerCase();
-                return (f.isFile() && !fn.endsWith("tre")
+                return (f.isFile() && !fn.endsWith("tre") && !fn.endsWith(".tres")
                         && !fn.endsWith("dll") && !fn.endsWith("bmp")
                         && !fn.endsWith("exe") && !fn.endsWith("doc")
                         && !fn.endsWith("cfg") && !fn.endsWith("pdf")
