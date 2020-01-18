@@ -116,11 +116,16 @@ public final class SWGRoot extends SWGTreeNode {
      */
     private static void addAliasNodes(SWGUniverseNode un, SWGRoot root) {
         List<SWGAliases> als = un.universe().aliases();
-        for (SWGAliases a : als) {
-            SWGAliasesNode an = new SWGAliasesNode(a);
-            root.setFocusNode(an);
-            un.add(an);
+        if(!als.isEmpty()) {
+        	SWGLeafNode leaf = new SWGLeafNode("Aliases");
+        	un.add(leaf);
+        	for (SWGAliases a : als) {
+                SWGAliasesNode an = new SWGAliasesNode(a);
+                root.setFocusNode(an);
+                leaf.add(an);
+            }
         }
+        
     }
 
     /**
@@ -157,7 +162,6 @@ public final class SWGRoot extends SWGTreeNode {
 
         List<SWGGalaxy> gxs = sn.station().galaxies();
         Collections.sort(gxs);
-
         for (SWGGalaxy gxy : gxs) {
             if (!mt.hiddenNodes.containsKey(SWGGalaxyNode.hideString(gxy))) {
                 SWGGalaxyNode gn = new SWGGalaxyNode(gxy);
@@ -178,9 +182,11 @@ public final class SWGRoot extends SWGTreeNode {
      */
     private static void addMacroNode(SWGStationNode sn, SWGRoot root) {
         SWGMacros macros = sn.station().macros();
-        SWGMacrosNode mn = new SWGMacrosNode(macros);
-        root.setFocusNode(mn);
-        sn.add(mn);
+        if(macros.exists()) {
+	        SWGMacrosNode mn = new SWGMacrosNode(macros);
+	        root.setFocusNode(mn);
+	        sn.add(mn);
+        }
     }
 
     /**
@@ -193,10 +199,14 @@ public final class SWGRoot extends SWGTreeNode {
      */
     private static void addNotesNodes(SWGStationNode sn, SWGRoot root) {
         List<SWGNotes> nl = sn.station().notes();
-        for (SWGNotes notes : nl) {
-            SWGNotesNode nn = new SWGNotesNode(notes);
-            root.setFocusNode(nn);
-            sn.add(nn);
+        if(!nl.isEmpty()) {
+	        SWGLeafNode leaf = new SWGLeafNode("Notes");
+	        sn.add(leaf);
+	        for (SWGNotes notes : nl) {
+	            SWGNotesNode nn = new SWGNotesNode(notes);
+	            root.setFocusNode(nn);
+	            leaf.add(nn);
+	        }
         }
     }
 
@@ -257,7 +267,7 @@ public final class SWGRoot extends SWGTreeNode {
         SWGUniverseNode un = new SWGUniverseNode(u);
         root.setFocusNode(un);
         root.add(un);
-
+        
         addStationNodes(un, root, mt);
         addAliasNodes(un, root);
 
