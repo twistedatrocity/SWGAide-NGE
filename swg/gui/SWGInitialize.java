@@ -280,7 +280,7 @@ public final class SWGInitialize extends JPanel {
         frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
         swgDir = fc.getSelectedFile();
-        final SWGUniverse universe = new SWGUniverse(swgDir, false);
+        final SWGUniverse universe = new SWGUniverse(swgDir);
 
         SWGFrame.getPrefsKeeper().add("swgUniverse", universe);
 

@@ -124,10 +124,8 @@ public final class SWGUniverse implements Serializable, SWGGui {
      * @param isTC {@code true} if this denotes "test-center"
      * @throws Throwable if the path is invalid, see {@link #swgPath(File)}
      */
-    public SWGUniverse(File swgDir, boolean isTC) throws Throwable {
-        this.name = isTC
-                ? "TC"
-                : "SWG";
+    public SWGUniverse(File swgDir) throws Throwable {
+        this.name = "SWG";
         swgPath(swgDir);
 
         this.aliases = new SWGAliasesList();
