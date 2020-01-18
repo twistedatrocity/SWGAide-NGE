@@ -4,11 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -529,16 +528,11 @@ public final class SWGSchematicTab extends JTabbedPane {
      */
     void updateStatbar2() {
         int nbr = SWGSchematicsManager.getAmount();
-        String ld = SWGCraftCache.localDate(SWGCraftCache.schemXML);
-        try {
-            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
-            Date d = df.parse(ld);
-            ld = df.format(d);
-        } catch (ParseException e) {/* ignore */
-        }
+        LocalDateTime ld = SWGCraftCache.localDate(SWGCraftCache.schemXML);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern( "uuuu-MM-dd" );
         frame.putToLogbar_2(String.format(
                 "%s schematics from swgaide.com (%s)",
-                ZNumber.asText(nbr, true, true), ld));
+                ZNumber.asText(nbr, true, true), ld.format(fmt)));
     }
 
     /**

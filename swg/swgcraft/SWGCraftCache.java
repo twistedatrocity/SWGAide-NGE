@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -231,18 +235,20 @@ public final class SWGCraftCache {
      *            the URL to return a modification date for
      * @return a date at the form YYYY-MM-DD, or "0"
      */
-    private static String lastModified(URL url) {
+    private static LocalDateTime lastModified(URL url) {
         try {
+        	LocalDateTime ld = null;
             HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setRequestMethod("HEAD");
-            String result = long2date(conn.getLastModified());
+            ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(conn.getLastModified()), ZoneId.of("UTC") );
             conn.disconnect();
-            return result;
+            //SWGAide.printDebug("debug", 9, "SWGCraftCache:lastModified " + url.toString() + " Remote Date: " + ld.toEpochSecond(ZoneOffset.UTC));
+            return ld;
         } catch (Exception e) {
             SWGAide.printDebug("cach", 1,
                 "SWGCraftCache:lastModified: " + e.getMessage());
         }
-        return "0";
+        return null;
     }
 
     /**
@@ -257,9 +263,10 @@ public final class SWGCraftCache {
      * @param file a local file
      * @return a date at the form YYYY-MM-DD, or "0"
      */
-    public static String localDate(File file) {
+    public static LocalDateTime localDate(File file) {
         String date = "0";
-
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss zzz" );
+        LocalDateTime ld = null;
         ZReader sr = ZReader.newTextReader(file);
         if (sr != null) {
             String helper = "last_updated=\"";
@@ -269,60 +276,26 @@ public final class SWGCraftCache {
                 if (f >= 0) {
                     f = f + helper.length();
                     int l = line.indexOf('\"', f);
-                    if (l >= 0 && l < line.length())
+                    if (l >= 0 && l < line.length()) {
                         date = line.substring(f, l);
+                        if(date.length()>10) {
+                        	ld = LocalDateTime.parse( date , fmt );
+                        }else {
+                        	ld = LocalDateTime.parse( date + " 00:00:00 UTC" , fmt );
+                        }
+                    }
                     break;
                 }
             }
             sr.close();
         }
-        if (date.equals("0"))
-            date = long2date(file.lastModified());
-
-        return date;
+        
+        //SWGAide.printDebug("debug", 9, "SWGCraftCache:localDate " + file.toString() + " XML Date: " + ld.toEpochSecond(ZoneOffset.UTC));
+        if (date.equals("0")) {
+            ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), TimeZone.getDefault().toZoneId() );
+        }
+        return ld;
     }
-
-    /**
-     * Helper method which returns a date on the form YYYY-MM-DD for the
-     * specified argument. The argument is milliseconds since the epoch, which
-     * begun 19070-01-01:00.00.00, compare {@link System#currentTimeMillis()}.
-     * 
-     * @param date
-     *            the value as milliseconds since the epoch
-     * @return a date at the form YYYY-MM-DD
-     */
-    private static String long2date(long date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(date);
-
-        return String.format("%1$tY-%1$tm-%1$td", cal);
-    }
-
-    // /**
-    // * Just for testing purposes
-    // *
-    // * @param args
-    // */
-    // public static void main(String... args){
-    // System.err.println("testing");
-    // updateCache();
-    // // System.err.println(lastModified(urlCategories()));
-    // // System.err.println(localDate(catXML));
-    // // System.err.println(updateExists(catXML, urlCategories()));
-    // }
-
-    // /**
-    // * Helper method which notifies listeners that have subscribed for updates
-    // * to categories.
-    // */
-    // @SuppressWarnings("unused")
-    // private static void notifyCatSubscribers() {
-    // synchronized (categorySubscribers) {
-    // CacheUpdate up = new CacheUpdate(CacheUpdate.UpdateType.CATEGORIES);
-    // for (UpdateSubscriber s : categorySubscribers)
-    // s.handleUpdate(up);
-    // }
-    // }
 
     /**
      * Helper method which notifies listeners that have subscribed for updates
@@ -499,8 +472,8 @@ public final class SWGCraftCache {
             return true;
 
         Boolean result = false;
-        String localDate = localDate(file);
-        String remoteDate = lastModified(url);
+        LocalDateTime localDate = localDate(file);
+        LocalDateTime remoteDate = lastModified(url);
         result = (remoteDate.compareTo(localDate) > 0);
         return result;
     }
