@@ -721,21 +721,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         checkForDirectory("misc");
         checkForDirectory("temp");
         checkForDirectory("trash");
-        
-        // Seed these first so we dont have to worry about lag during first time initialization.
-        // Only seed if the files do not exist. e.g. first time install.
-        File f = new File(SWGConstants.repositoryPath + "/categories.xml");
-        if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile("categories.xml", f.toString());
-        }
-        f = new File(SWGConstants.repositoryPath + "/professions.xml");
-        if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile("professions.xml", f.toString());
-        }
-        f = new File(SWGConstants.repositoryPath + "/servers.xml");
-        if(!f.isFile()) {
-        SWGPostLaunch.saveInfoFile("servers.xml", f.toString());
-        }
 
         if (SWGConstants.DEV_DEBUG)
             SWGConstants.setCacheDirectory(new File("temp"));
