@@ -17,7 +17,6 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.schematics"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.docs"/>
-        <file path="/SWGAide-NGE/swg/professions.xml"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model.mail"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg{SWGConstants.java"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources"/>
@@ -27,7 +26,6 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg{SWGAide.java"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.model"/>
-        <file path="/SWGAide-NGE/swg/categories.xml"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io.filefilter"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common.images"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.tree"/>
@@ -37,7 +35,6 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io.serialization"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.common"/>
         <file path="/SWGAide-NGE/swg/SWGAide-history.txt"/>
-        <file path="/SWGAide-NGE/swg/servers.xml"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.trade"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui.images"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.tools"/>
