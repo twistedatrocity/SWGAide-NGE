@@ -106,6 +106,9 @@ public abstract class SWGTreeNode extends DefaultMutableTreeNode {
 
     @Override
     public final String toString() {
+    	if(userObject instanceof java.lang.String) {
+    		return (String) userObject;
+    	}
         return userObject != null
                 ? ((SWGGui) userObject).getName()
                 : "error";
