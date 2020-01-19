@@ -7,7 +7,9 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -242,7 +244,10 @@ public final class SWGCraftCache {
             conn.setRequestMethod("HEAD");
             ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(conn.getLastModified()), ZoneId.of("UTC") );
             conn.disconnect();
-            //SWGAide.printDebug("debug", 9, "SWGCraftCache:lastModified " + url.toString() + " Remote Date: " + ld.toEpochSecond(ZoneOffset.UTC));
+            ld = ld.truncatedTo(ChronoUnit.HOURS);
+            if(SWGConstants.DEV_DEBUG) {
+            	SWGAide.printDebug("debug", 9, "SWGCraftCache:lastModified " + url.toString() + " Remote Date: " + ld.toEpochSecond(ZoneOffset.UTC));
+            }
             return ld;
         } catch (Exception e) {
             SWGAide.printDebug("cach", 1,
@@ -290,9 +295,13 @@ public final class SWGCraftCache {
             sr.close();
         }
         
-        //SWGAide.printDebug("debug", 9, "SWGCraftCache:localDate " + file.toString() + " XML Date: " + ld.toEpochSecond(ZoneOffset.UTC));
+        
         if (date.equals("0")) {
             ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), TimeZone.getDefault().toZoneId() );
+        }
+        ld = ld.truncatedTo(ChronoUnit.HOURS);
+        if(SWGConstants.DEV_DEBUG) {
+        	SWGAide.printDebug("debug", 9, "SWGCraftCache:localDate " + file.toString() + " XML Date: " + ld.toEpochSecond(ZoneOffset.UTC));
         }
         return ld;
     }
@@ -472,9 +481,14 @@ public final class SWGCraftCache {
             return true;
 
         Boolean result = false;
-        LocalDateTime localDate = localDate(file);
-        LocalDateTime remoteDate = lastModified(url);
-        result = (remoteDate.compareTo(localDate) > 0);
+        LocalDateTime ld = localDate(file);
+        LocalDateTime rd = lastModified(url);
+        if (ld.compareTo(rd) != 0) {
+        	result = true;
+        	if(SWGConstants.DEV_DEBUG) {
+        		SWGAide.printDebug("debug", 9, "SWGCraftCache:updateExists : getting new file " + file.toString() + " LD: " + ld.toEpochSecond(ZoneOffset.UTC) + " RD: " + rd.toEpochSecond(ZoneOffset.UTC) );
+        	}
+        }
         return result;
     }
 
