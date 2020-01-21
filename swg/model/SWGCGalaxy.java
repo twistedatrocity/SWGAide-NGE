@@ -72,10 +72,11 @@ public class SWGCGalaxy implements Serializable {
                     int swgcraftID = ZXml.intFromAttr(cur, "swgaide_id");
                     String name = cur.getAttribute("folder_name");
                     //System.out.println(cur);
+                    String type = cur.getAttribute("type");
+                    boolean custom = ZXml.booleanFromAttr(cur, "custom_schematics");
                     boolean active = ZXml.booleanFromAttr(cur, "active");
                     SWGCGalaxy galaxy =
-                            new SWGCGalaxy(name, swgcraftName, swgcraftID,
-                                    active);
+                            new SWGCGalaxy(name, swgcraftName, swgcraftID, type, custom, active);
                     servers.add(galaxy);
                 }
             }
@@ -105,6 +106,12 @@ public class SWGCGalaxy implements Serializable {
      * denotes that it is closed down.
      */
     private final boolean active;
+    
+    /**
+     * Denotes if this galaxy constant has custom schematics; {@code false}
+     * denotes that it has stock schematics.
+     */
+    private final boolean custom;
 
     /**
      * The SWGCraft galaxy ID for this constant.
@@ -115,6 +122,11 @@ public class SWGCGalaxy implements Serializable {
      * The name of this galaxy constant.
      */
     private final String name;
+    
+    /**
+     * The type of this galaxy constant, either precu or nge.
+     */
+    private final String type;
 
     /**
      * The name of this galaxy constant on SWGCraft.
@@ -127,10 +139,12 @@ public class SWGCGalaxy implements Serializable {
      * @param id the SWGCraft galaxy ID
      * @param active {@code false} if the galaxy is closed down
      */
-    private SWGCGalaxy(String name, String swgcraftName, int id, boolean active) {
+    private SWGCGalaxy(String name, String swgcraftName, int id, String type, boolean custom, boolean active) {
         this.name = name;
         this.swgcraftName = swgcraftName;
         this.id = id;
+        this.type = type;
+        this.custom = custom;
         this.active = active;
     }
 
@@ -143,6 +157,15 @@ public class SWGCGalaxy implements Serializable {
      */
     public String getName() {
         return swgcraftName;
+    }
+    
+    /**
+     * Returns the type for this galaxy constant. e.g. precu or nge
+     * 
+     * @return the type
+     */
+    public String getType() {
+        return type;
     }
 
     /**
@@ -190,6 +213,16 @@ public class SWGCGalaxy implements Serializable {
                     && this.isActive() == other.isActive();
         }
         return false;
+    }
+    
+    /**
+     * Returns {@code true} if this galaxy constant has custom schematics,
+     * {@code false} if it does not.
+     * 
+     * @return {@code false} if this galaxy is stock schematics only
+     */
+    public boolean isCustom() {
+        return custom;
     }
 
     /**
@@ -315,7 +348,7 @@ public class SWGCGalaxy implements Serializable {
             return fromName("SWG Legends"); 
         }
         SWGCGalaxy defaultGalaxy =
-                new SWGCGalaxy("SWG Legends", "SWG Legends", 138, true);
+                new SWGCGalaxy("SWG Legends", "SWG Legends", 138, "nge", true, true);
         servers.add(defaultGalaxy);
         return defaultGalaxy;
     }
