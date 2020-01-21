@@ -70,6 +70,11 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * A constant for the ID of the top-most category that is named "All".
      */
     public static final int ALL = 0;
+    
+    /**
+     * A constant for the type of the top-most category that is named "All".
+     */
+    public static final String ALLTYPE = "ALL";
 
     /**
      * A list of sub-categories which fall into this category, or {@code null}
@@ -98,6 +103,11 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * "Component".
      */
     private final String name;
+    
+    /**
+     * The proper type for this category. Either precu or nge
+     */
+    private final String type;
 
     /**
      * The unique SWGCraft ID for the parent category that contains this
@@ -117,7 +127,7 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * specified XML element, see {@link #SWGCategory(String, int, int)} for
      * details. The element is on the form
      * 
-     * <pre>{@literal <category id="0" parent_id="0" name="Name" />}</pre>
+     * <pre>{@literal <category id="0" type="precu" parent_id="0" name="Name" />}</pre>
      * 
      * <b>Notice:</b> This constructor should only be invoked by
      * SWGCategoryManager which maintains the singleton property for this type
@@ -136,6 +146,7 @@ public final class SWGCategory implements Comparable<SWGCategory> {
     SWGCategory(Element xml) {
         this(
             ZXml.stringFromAttr(xml, "name"),
+            ZXml.stringFromAttr(xml, "type"),
             ZXml.intFromAttr(xml, "id"),
             ZXml.intFromAttr(xml, "parent_id"));
     }
@@ -155,6 +166,8 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * 
      * @param name
      *            the proper name for this category
+     * @param type
+     *            the proper type for this category
      * @param id
      *            the unique ID for this category
      * @param pid
@@ -165,7 +178,7 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * @throws NullPointerException
      *             if name is {@code null}
      */
-    SWGCategory(String name, int id, int pid) {
+    SWGCategory(String name, String type, int id, int pid) {
         if (name == null)
             throw new NullPointerException("Name is null");
         if (name.isEmpty())
@@ -176,6 +189,7 @@ public final class SWGCategory implements Comparable<SWGCategory> {
                 name, Integer.valueOf(id), Integer.valueOf(pid)));
 
         this.name = name;
+        this.type = type;
         this.id = id;
         parentID = pid;
     }
@@ -329,6 +343,15 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      */
     public String getName() {
         return name;
+    }
+    
+    /**
+     * Returns the proper type for this category.
+     * 
+     * @return the name
+     */
+    public String getType() {
+        return type;
     }
 
     /**
