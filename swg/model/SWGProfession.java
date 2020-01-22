@@ -1,4 +1,4 @@
-package swg.crafting.schematics;
+package swg.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

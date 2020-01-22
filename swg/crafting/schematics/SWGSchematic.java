@@ -9,6 +9,8 @@ import org.w3c.dom.NodeList;
 
 import swg.SWGAide;
 import swg.crafting.Quality;
+import swg.model.SWGProfession;
+import swg.model.SWGProfessionLevel;
 import swg.model.SWGProfessionManager;
 import swg.tools.ZHtml;
 import swg.tools.ZString;

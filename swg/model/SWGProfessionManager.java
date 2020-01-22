@@ -11,8 +11,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import swg.SWGAide;
-import swg.crafting.schematics.SWGProfession;
-import swg.crafting.schematics.SWGProfessionLevel;
 import swg.gui.SWGFrame;
 import swg.swgcraft.SWGCraftCache;
 import swg.tools.ZXml;

@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import swg.SWGAide;
-import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.common.SWGGui;
+import swg.model.SWGProfession;
 import swg.tools.ZString;
 
 /**

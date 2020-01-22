@@ -23,6 +23,8 @@ import swg.crafting.UpdateSubscriber;
 import swg.crafting.resources.SWGResourceClass;
 import swg.gui.SWGFrame;
 import swg.model.SWGCGalaxy;
+import swg.model.SWGProfession;
+import swg.model.SWGProfessionLevel;
 import swg.model.SWGProfessionManager;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftCache.CacheUpdate;

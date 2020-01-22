@@ -1,4 +1,4 @@
-package swg.crafting.schematics;
+package swg.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
-import swg.model.SWGAbility;
-import swg.model.SWGAttribute;
-import swg.model.SWGSkill;
 import swg.tools.ZHtml;
 import swg.tools.ZString;
 import swg.tools.ZXml;
