@@ -24,6 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import swg.SWGAide;
+import swg.SWGConstants;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -93,6 +94,11 @@ public final class SWGSchematicTab extends JTabbedPane {
     final SWGFrame frame;
 
     /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
+    
+    /**
      * The URL for the main help page for schematics. This is the page which is
      * displayed when a sub-panel does not have its own help pages.
      */
@@ -139,6 +145,7 @@ public final class SWGSchematicTab extends JTabbedPane {
 
     public SWGSchematicTab(SWGFrame frame) {
         this.frame = frame;
+        galaxy = null;
 
         schemSelectAlways = schematicSelectAlwaysMenu();
 
@@ -292,9 +299,20 @@ public final class SWGSchematicTab extends JTabbedPane {
      */
     private void focusGained() {
         if (frame.getTabPane().getSelectedComponent() == this) {
-            if (!isGuiFinished) make();
-
-            verifyCharacterSelected();
+            
+        	if (SWGFrame.getSelectedCharacter() == null) {
+                JOptionPane.showMessageDialog(this,
+                        "No character selected at main panel",
+                        "Unknown character & galaxy", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        	
+        	if (!isGuiFinished) make();
+            
+            SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        	if(galaxy == null && gxy != null) {
+        		galaxy = gxy;
+        	}
             SWGSchemController.updateGalaxy();
 
             SWGHelp.push(helpPage);
