@@ -11,11 +11,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import swg.SWGAide;
-import swg.crafting.UpdateNotification;
-import swg.crafting.UpdateSubscriber;
+import swg.crafting.schematics.SWGProfession;
+import swg.crafting.schematics.SWGProfessionLevel;
 import swg.gui.SWGFrame;
 import swg.swgcraft.SWGCraftCache;
-import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 import swg.tools.ZXml;
 
 /**
@@ -40,7 +39,7 @@ import swg.tools.ZXml;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-public final class SWGProfessionManager implements UpdateSubscriber {
+public final class SWGProfessionManager  {
 
     /**
      * A map of profession ability objects, mapped by their proper names. For
@@ -75,13 +74,13 @@ public final class SWGProfessionManager implements UpdateSubscriber {
         abilities = new HashMap<String, SWGAbility>(0);
 
         init();
-        SWGCraftCache.addSubscriber(this, UpdateType.PROF_LEVELS);
+        //SWGCraftCache.addSubscriber(this, UpdateType.PROF_LEVELS);
     }
 
-    @Override
+    /*@Override
     public void handleUpdate(UpdateNotification u) {
         init();
-    }
+    }*/
 
     /**
      * Helper method which initiates the collections of profession level
@@ -250,7 +249,7 @@ public final class SWGProfessionManager implements UpdateSubscriber {
     public static SWGProfessionLevel getLevel(SWGProfession prof, int level) {
         if (prof == null)
             throw new NullPointerException("Profession is null");
-        if (prof == SWGProfession.ALL)
+        if (prof == SWGProfession.getFromID(SWGProfession.ALL))
             throw new IllegalArgumentException("Invalid profession: ALL");
         if (level <= 0 || level > SWGProfessionLevel.MAX_LEVEL)
             throw new IllegalArgumentException("Invalid level: " + level);
@@ -269,7 +268,7 @@ public final class SWGProfessionManager implements UpdateSubscriber {
      * @return a list of profession level objects
      */
     public static List<SWGProfessionLevel> getLevels() {
-        return getLevels(SWGProfession.ALL);
+        return getLevels(SWGProfession.getFromID(SWGProfession.ALL));
     }
 
     /**
@@ -307,7 +306,7 @@ public final class SWGProfessionManager implements UpdateSubscriber {
     public static List<SWGProfessionLevel> getLevels(
         SWGProfession profession, int maxLevel) {
 
-        if (profession == SWGProfession.ALL)
+        if (profession == SWGProfession.getFromID(SWGProfession.ALL))
             throw new IllegalArgumentException("Invalid profession: ALL");
 
         synchronized (levels) {
@@ -337,7 +336,7 @@ public final class SWGProfessionManager implements UpdateSubscriber {
             throw new IllegalArgumentException("Invalid level: " + lvl);
 
         List<SWGProfessionLevel> ret = new ArrayList<SWGProfessionLevel>(
-            p == SWGProfession.ALL
+            p == SWGProfession.getFromID(SWGProfession.ALL)
             ? 350
             : 25);
 

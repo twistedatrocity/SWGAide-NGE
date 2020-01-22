@@ -1,4 +1,4 @@
-package swg.model;
+package swg.crafting.schematics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import swg.model.SWGAbility;
+import swg.model.SWGAttribute;
+import swg.model.SWGSkill;
 import swg.tools.ZHtml;
 import swg.tools.ZString;
 import swg.tools.ZXml;
@@ -80,7 +83,7 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
      * The maximum level for a character in SWG, commonly named as Combat Level
      * (CL)
      */
-    public static final int MAX_LEVEL = 90;
+    public static final int MAX_LEVEL = 100049;
 
     /**
      * A list of abilities awarded at this profession level, or {@code null} if
@@ -149,7 +152,7 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
         desc = d;
         abilities = null;
         attributes = null;
-        profession = SWGProfession.ALL;
+        profession = SWGProfession.getFromID(SWGProfession.ALL);
         rewards = null;
         skills = null;
         title = null;
@@ -176,7 +179,7 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
      * @param xml
      *            the XML element for the created profession level
      */
-    SWGProfessionLevel(SWGProfession profession, Element xml) {
+    public SWGProfessionLevel(SWGProfession profession, Element xml) {
 
         this.profession = profession;
         name = ZXml.stringFromAttr(xml, "name");
@@ -198,68 +201,10 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
             ? ZXml.stringFromAttr(se, "name")
             : null;
 
-        // TODO: the provided element actually contains information for
-        // abilities, skills, etc. Implement somehow.
-        // NodeList nl; // temporary node lists for lists
-        // int nlLen; // temporary variable for node-list length
-        //
-        // // for each element "ability", obtain an object and add it to the
-        // list
-        // nl = xml.getElementsByTagName("ability");
-        // nlLen = nl.getLength();
-        // abilities = (nlLen > 0)
-        // ? new ArrayList<SWGAbility>(nlLen)
-        // : null;
         abilities = null;
-        // for (int i = 0; i < nlLen; ++i) {
-        // // <ability name="" amount="" />
-        // Element e = (Element) nl.item(i);
-        // String n = ZXml.getStringFromAttribute(e, "name");
-        // SWGAbility ab = SWGProfessionManager.getAbility(n);
-        // if (ab == null)
-        // throw new IllegalArgumentException("Invalid ability: " + n);
-        // abilities.add(ab);
-        // }
-        //
-        // // for each element "skill", create an object and add it to the list
-        // nl = xml.getElementsByTagName("skill");
-        // nlLen = nl.getLength();
-        // skills = (nlLen > 0)
-        // ? new ArrayList<SWGSkill>(nlLen)
-        // : null;
         skills = null;
-        // for (int i = 0; i < nlLen; ++i) {
-        // // <skill name="" amount="" />
-        // Element e = (Element) nl.item(i);
-        // String n = ZXml.getStringFromAttribute(e, "name");
-        // int a = ZXml.getIntegerFromAttribute(e, "amount");
-        // skills.add(new SWGSkill(n, a));
-        // }
-        //
-        // // for each element "skill", create an object and add it to the list
-        // nl = xml.getElementsByTagName("attribute");
-        // nlLen = nl.getLength();
-        // attributes = (nlLen > 0)
-        // ? new ArrayList<SWGAttribute>(nlLen)
-        // : null;
         attributes = null;
-        // for (int i = 0; i < nlLen; ++i) {
-        // // <attribute name="" amount="" />
-        // Element e = (Element) nl.item(i);
-        // String n = ZXml.getStringFromAttribute(e, "name");
-        // int a = ZXml.getIntegerFromAttribute(e, "amount");
-        // attributes.add(new SWGAttribute(n, a));
-        // }
-        //
-        // // for each element "reward", add its name to the list
-        // nl = xml.getElementsByTagName("reward");
-        // nlLen = nl.getLength();
-        // rewards = (nlLen > 0)
-        // ? new ArrayList<String>(nlLen)
-        // : null;
         rewards = null;
-        // for (int i = 0; i < nlLen; ++i)
-        // rewards.add(ZXml.getStringFromAttribute(se, "name"));
     }
 
     public int compareTo(SWGProfessionLevel o) {
@@ -369,53 +314,10 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
         return title;
     }
 
-    // /**
-    // * Returns a formatted string which reads all sensible data from this
-    // * profession level. The returned string is formatted over several
-    // indented
-    // * lines for easy reading.
-    // *
-    // * @return a string representation of this instance
-    // */
-    // public String prettyPrint() {
-    // ZString z = new ZString("Level: ");
-    // z.app(name).app(" (").app(level).app(") for ");
-    // z.appnl(profession.getNameShort());
-    // z.app('\t').appnl(desc);
-    // if (title != null)
-    // z.app('\t').app(title);
-    //
-    // if (abilities != null) {
-    // z.appnl("\tAbilities: ");
-    // for (SWGAbility a : abilities)
-    // z.app("\t\t").appnl(a.toString());
-    // }
-    //
-    // if (skills != null) {
-    // z.appnl("\tSkills: ");
-    // for (SWGSkill s : skills)
-    // z.app("\t\t").appnl(s.toString());
-    // }
-    //
-    // if (rewards != null) {
-    // z.appnl("\tRewards: ");
-    // for (String r : rewards)
-    // z.appnl("\t\t").app(r);
-    // }
-    //
-    // if (attributes != null) {
-    // z.appnl("\tModifiers: ");
-    // for (SWGAttribute a : attributes)
-    // z.app("\t\t").appnl(a.toString());
-    // }
-    //
-    // return z.toString();
-    // }
-
     @Override
     public String toString() {
         ZString z = new ZString("SWGProfessionLevel").app('[').app(name);
-        z.app(" (").app(level).app(") :: ").app(profession.getNameShort());
+        z.app(" (").app(level).app(") :: ").app(profession.getName());
         return z.app(']').toString();
     }
 
