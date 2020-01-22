@@ -36,7 +36,9 @@ public final class ZXml {
     public static boolean booleanFromAttr(Element el, String attr) {
         String r = trimmedStringFromAttribute(el, attr);
         if (r.isEmpty() || !(r.equals("yes") || r.equals("no")))
-            throw new IllegalArgumentException("No boolean: " + attr + "=" + r);
+            //throw new IllegalArgumentException("No boolean: " + attr + "=" + r);
+        	// FFS just return false;
+        	return r.equals("no");
 
         return r.equals("yes");
     }

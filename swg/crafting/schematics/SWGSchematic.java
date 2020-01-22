@@ -9,8 +9,6 @@ import org.w3c.dom.NodeList;
 
 import swg.SWGAide;
 import swg.crafting.Quality;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
 import swg.model.SWGProfessionManager;
 import swg.tools.ZHtml;
 import swg.tools.ZString;
@@ -166,6 +164,26 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
      * obsolete and no longer maintained.
      */
     private final int id;
+    
+    /**
+     * The game base for this schematic. Either precu or nge
+     */
+    private final String base;
+    
+    /**
+     * Denotes whether schematic is vanilla stock, or server custom.
+     */
+    private final boolean custom;
+    
+    /**
+     * Denotes if schematic overrides another id.
+     */
+    private final int override_id;
+    
+    /**
+     * Denotes server id for schematic if it is custom and/or override
+     */
+    private final int server_id;
 
     /**
      * A flag which denotes if if possible to create a manufacture schematic
@@ -264,6 +282,10 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
             SWGAide.printDebug("scmc", 1,
                     "SWGSchematic: missing category: " + name + " SWGCRAFT_ID: " +id);
 		}*/
+        base = ZXml.stringFromAttr(xml, "base");
+        custom = ZXml.booleanFromAttr(xml, "custom");
+        override_id = ZXml.intFromAttr(xml, "override_id");
+        server_id = ZXml.intFromAttr(xml, "server_id");
 
         List<String> cl = ZXml.commentsFromElem(xml);
         screen = cl.contains("Screenshot available");
@@ -481,6 +503,38 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     public int getID() {
         return id;
     }
+    
+    /**
+     * Returns the game base, either precu or nge
+     * @return either precu or nge
+     */
+    public String getBase() {
+    	return base;
+    }
+    
+    /**
+     * Returns true if schematic is custom
+     * @return boolean
+     */
+    public boolean isCustom() {
+    	return custom;
+    }
+    
+    /**
+     * Returns override_id for schematic. If greater than 0 then this overrides a schematic
+     * @return override_id
+     */
+    public int getOverride() {
+    	return override_id;
+    }
+    
+    /**
+     * Returns server_id of schematic if set will be greater than 0
+     * @return server_if if greater than 0
+     */
+    public int getServer() {
+    	return server_id;
+    }
 
     /**
      * Returns the proper name for this schematic, not {@code null}.
@@ -528,7 +582,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
                 Object[] pair = skillLevels[i];
                 if (pair[0] == null) // error
                     pl = SWGProfessionLevel.ERROR;
-                else if (pair[0] == SWGProfession.ALL) // profession ALL
+                else if (pair[0] == SWGProfession.getFromID(SWGProfession.ALL)) // profession ALL
                     pl = SWGProfessionLevel.NOVICE;
                 else {
                     try {
