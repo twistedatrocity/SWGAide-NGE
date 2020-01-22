@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,6 +34,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import swg.SWGAide;
+import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
@@ -41,7 +43,7 @@ import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
 import swg.gui.common.SWGListCellRenderer;
 import swg.gui.common.SWGListModel;
-import swg.model.SWGProfession;
+import swg.model.SWGCGalaxy;
 
 /**
  * This type is a dialog for managing schematics assignees. The GUI elements are
@@ -442,8 +444,9 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * @return a GUI element
      */
     private Component makeCenterProfessionChooser() {
-        SWGProfession[] pls = SWGProfession.values();
-        professionChooser = new JComboBox<SWGProfession>(pls) {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<String> pls = SWGProfession.getNames(gxy.getType());
+        professionChooser = new JComboBox<SWGProfession>((ComboBoxModel<SWGProfession>) pls) {
             @Override
             public Dimension getMaximumSize() {
                 Dimension d = super.getMaximumSize();
@@ -459,7 +462,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
         professionChooser.setRenderer(new SWGListCellRenderer<SWGProfession>() {
             @Override
             protected String labelString(SWGProfession value) {
-                return value.getNameShort();
+                return value.getName();
             }
         });
 

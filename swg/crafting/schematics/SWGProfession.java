@@ -202,15 +202,34 @@ public final class SWGProfession implements Serializable {
     }
 
     /**
-     * Returns a list of sub-categories which are contained by this category, or
-     * an empty list. The returned list is <b>read-only</b>.
+     * Returns a list of professions. The returned list is <b>read-only</b>.
      * 
-     * @return a list of sub-categories, or {@link Collections#EMPTY_LIST}
+     * @return a list of professions, or {@link Collections#EMPTY_LIST}
      */
     public static List<SWGProfession> getProfessions() {
         if (professions == null)
             return Collections.emptyList();
         return professions;
+    }
+    
+    /**
+     * Returns a list of professions, filtered by game type in SWG.
+     * 
+     * @param type The type to be filtered e.g. precu, nge or ALL
+     * @return a list of profession objects
+     */
+    public static List<SWGProfession> getProfessions(String type) {
+    	if (professions == null)
+            return Collections.emptyList();
+    	
+        ArrayList<SWGProfession> ret = new ArrayList<SWGProfession>();
+        for (SWGProfession p : getProfessions()) {
+        	if(p.type.equals(type) || p.type.equals(ALLTYPE)) {
+        		ret.add(p);
+        	}
+        }
+        
+        return ret;
     }
 
     /**
@@ -226,7 +245,7 @@ public final class SWGProfession implements Serializable {
     }
 
     /**
-     * Returns a list with names of professions in SWG.
+     * Returns a list with names of professions, filtered by game type in SWG.
      * <p>
      * The order of the list is alphabetical but Traders first, the very first
      * element is "All".

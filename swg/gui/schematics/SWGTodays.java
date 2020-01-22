@@ -61,6 +61,7 @@ import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.resources.types.SWGCreatureResources;
 import swg.crafting.resources.types.SWGFloraResources;
 import swg.crafting.resources.types.SWGOrganic;
+import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
@@ -78,7 +79,6 @@ import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
-import swg.model.SWGProfession;
 import swg.tools.SpringUtilities;
 import swg.tools.ZNumber;
 import swg.tools.ZString;
@@ -1136,14 +1136,15 @@ class SWGTodays extends JPanel {
      */
     private static List<SWGSchematicAssignee> assigneeProfession() {
         if (professionAssignees != null) return professionAssignees;
-
-        List<SWGProfession> pl = Arrays.asList(SWGProfession.values());
+        
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<SWGProfession> pl = Arrays.asList( SWGProfession.filter( gxy.getType() ) );
 
         List<SWGSchematicAssignee> ret =
                 new ArrayList<SWGSchematicAssignee>(pl.size());
 
         for (SWGProfession p : pl) {
-            String n = "Pro: " + p.getNameShort();
+            String n = "Pro: " + p.getName();
             SWGSchematicAssignee a = new SWGSchematicAssignee(n);
             for (SWGSchematic s : SWGSchematicsManager.getSchematics(p))
                 a.addFavorite(s);
@@ -1190,7 +1191,7 @@ class SWGTodays extends JPanel {
         }
 
         return ass.getName().equals("Pro: All")
-                ? SWGSchematicsManager.getSchematics(SWGProfession.ALL)
+                ? SWGSchematicsManager.getSchematics(SWGProfession.getFromID(SWGProfession.ALL))
                 : ass.getFavorites();
     }
 

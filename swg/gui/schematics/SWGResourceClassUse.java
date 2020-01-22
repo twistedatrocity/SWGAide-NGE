@@ -57,6 +57,8 @@ import swg.crafting.resources.SWGResourceClassTree;
 import swg.crafting.resources.SWGResourceFilter;
 import swg.crafting.schematics.SWGExperimentGroup;
 import swg.crafting.schematics.SWGExperimentLine;
+import swg.crafting.schematics.SWGProfession;
+import swg.crafting.schematics.SWGProfessionLevel;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -65,8 +67,7 @@ import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
 import swg.gui.common.SWGListCellRenderer;
 import swg.gui.resources.SWGResController;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
+import swg.model.SWGCGalaxy;
 import swg.tools.ZString;
 import swg.tools.ZWriter;
 
@@ -448,7 +449,7 @@ final class SWGResourceClassUse extends JPanel {
      */
     private void actionWriteResourceClasses() {
         String p = (String) professionBox.getSelectedItem();
-        String fn = SWGProfession.getFromName(p).getNameShort();
+        String fn = SWGProfession.getFromName(p).getName();
         File f = new File("crafting", fn + "_res_class_use.txt");
         try {
             ZWriter wr = ZWriter.newTextWriterExc(f, false);
@@ -913,7 +914,8 @@ final class SWGResourceClassUse extends JPanel {
      * @return a GUI component
      */
     private Component makeWestProfessionChooser() {
-        List<String> pl = SWGProfession.getNames(true);
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<String> pl = SWGProfession.getNames(gxy.getType());
         pl.add("- - - - -");
         String all = pl.get(0);
         pl.set(0, "<select a profession>");
@@ -964,7 +966,7 @@ final class SWGResourceClassUse extends JPanel {
 
                 SWGProfession p = SWGProfession.getFromName(s);
                 actionProfessionSelected(p);
-                resetProf.setText(p.getNameAbbr());
+                resetProf.setText(p.getName());
 
                 if (first) {
                     resetProf.setEnabled(true);

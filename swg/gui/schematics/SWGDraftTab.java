@@ -89,10 +89,11 @@ import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
 import swg.gui.resources.SWGResController;
 import swg.gui.schematics.SWGSchematicTreeModel.TNode;
+import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
+import swg.crafting.schematics.SWGProfession;
+import swg.crafting.schematics.SWGProfessionLevel;
 import swg.model.SWGStation;
 import swg.tools.SpringUtilities;
 import swg.tools.ZHtml;
@@ -218,6 +219,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * A dialog to add favorite schematic for a selected assignee.
      */
     private FavoriteDialog favoriteDialog;
+    
+    /**
+     * List of filtered professions based on selected galaxy
+     */
+    private String[] filteredProfs;
 
     /**
      * A menu item used in SWGAide's frame, the Edit menu.
@@ -228,6 +234,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * A string recently searched for, or {@code null}.
      */
     private String findTxt;
+    
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * A helper flag that denotes if we are updating the GUI or not.
@@ -287,7 +298,10 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * A profession selected by the user, or the profession that was stored in
      * the preference keeper, or "All".
      */
-    private SWGProfession selectedProfession = SWGProfession.ALL;
+    private SWGProfession selectedProfession = SWGProfession.getFromID(SWGProfession.ALL);
+    
+    private JComboBox<String> profcombo;
+    private DefaultComboBoxModel<String> profModel = new DefaultComboBoxModel<String>();
 
     /**
      * A schematic selected by the user, or {@code null}. This member is not
@@ -341,8 +355,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         super(JSplitPane.HORIZONTAL_SPLIT);
 
         schemTab = owner;
-
         tracer = new Tracer();
+        
+        galaxy = null;
 
         make();
 
@@ -599,7 +614,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             // a filter prohibit the display
             String pros = "";
             for (SWGProfessionLevel pl : schem.getSkillLevels())
-                pros += pl.getProfession().getNameShort() + '\n';
+                pros += pl.getProfession().getName() + '\n';
             if (schem.getExpertise() != null)
                 for (Object[] obj : schem.getExpertise()) {
                     pros += ((SWGProfession) obj[0]).getName() + '\n';
@@ -1247,6 +1262,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private String draftData(SWGSchematic s) {
         final String padd = "<td width=\"50\"></td>";
 
+        String base = s.getBase();
+        if( (s.isCustom() || s.getOverride()>0) && s.getServer()>0) {
+        	SWGCGalaxy gxy = SWGCGalaxy.fromID(s.getServer());
+        	base = s.getBase() + " - Server Specific for: " + gxy.getName();
+        }
         String xp = (s.getSkillLevels().isEmpty()
                 || s.getSkillLevels().get(0).
                         getLevel() < SWGProfessionLevel.MAX_LEVEL)
@@ -1274,6 +1294,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 "<td colspan=\"2\"><nobr>%s &minus; %s</nobr></td></tr>" +
                 "<tr valign=\"top\"><td>Level:</td>" +
                 "<td colspan=\"2\">%s</td></tr>" +
+                "<tr><td>Game Base:</td><td>%s</td></tr>" +
                 "<tr><td>Base XP:</td><td %s</td></tr>" +
                 "<tr><td>Type:</td><td colspan=\"2\">%s</td></tr>" +
                 "<tr><td>Manufacture: &nbsp;</td>" +
@@ -1282,6 +1303,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 SWGSchematicTab.intOrUnknown(s.getComplexity()),
                 SWGSchematicTab.complexityToolStation(s.getComplexity()),
                 draftDataProLevels(s),
+                base,
                 xp,
                 draftDataType(s),
                 s.isManufacturable()
@@ -1330,7 +1352,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             else if (p.getName().equals("Novice"))
                 z.app("Novice");
             else
-                z.app(p.getProfession().getNameShort())
+                z.app(p.getProfession().getName())
                         .app("&nbsp;(").app(p.getLevel()).app(')');
             z.app("<br/>");
         }
@@ -1559,6 +1581,16 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * items to the frame's menu bar.
      */
     void focusGained() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(gxy)) {
+    		setFilteredProfs();
+    		profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
+    		profcombo.setModel(profModel);
+    		galaxy = gxy;
+    	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
 
@@ -2097,40 +2129,10 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private Component makeWestFilterPanel() {
         Box h = Box.createHorizontalBox();
-        h.add(makeWestFProfessionChooser());
-        h.add(makeWestFLevelChooser());
+        makeWestFProfessionChooser();
+        h.add(profcombo);
         h.add(makeWestFSchematicsChooser());
         return h;
-    }
-
-    /**
-     * Helper method which creates and returns a profession level chooser. The
-     * user selects a maximum value from a spinner in the range 0 to 90.
-     * 
-     * @return a GUI component
-     */
-    private Component makeWestFLevelChooser() {
-        selectedLevel = (Integer) SWGFrame.getPrefsKeeper().get(
-                "schemDraftSelectedProfLevel",
-                Integer.valueOf(SWGProfessionLevel.MAX_LEVEL));
-
-        final JSpinner spinner = new JSpinner(new SpinnerNumberModel(
-                selectedLevel.intValue(), 0, SWGProfessionLevel.MAX_LEVEL, 1));
-        spinner.setToolTipText("Filter by maximum profession level");
-        Dimension d = new Dimension(40, 25);
-        spinner.setMaximumSize(d);
-        spinner.setPreferredSize(d);
-
-        spinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                selectedLevel = (Integer) spinner.getValue();
-                SWGFrame.getPrefsKeeper().add(
-                        "schemDraftSelectedProfLevel", selectedLevel);
-                actionFilterSchematics();
-            }
-        });
-        return spinner;
     }
 
     /**
@@ -2141,28 +2143,26 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private Component makeWestFProfessionChooser() {
         selectedProfession = (SWGProfession) SWGFrame.getPrefsKeeper().get(
-                "schemDraftSelectedProfession", SWGProfession.ALL);
+                "schemDraftSelectedProfession", SWGProfession.getFromID(SWGProfession.ALL));
+    	profcombo = new JComboBox<String>();
+    	profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
+    	profcombo.setModel(profModel);
+        profcombo.setToolTipText("Filter by profession");
 
-        List<String> pl = SWGProfession.getNames(false);
-        String[] plArr = new String[pl.size()];
-    	plArr = pl.toArray(plArr);
-		final JComboBox<String> cb = new JComboBox<String>(plArr);
-        cb.setToolTipText("Filter by profession");
+        SWGGuiUtils.setDim(profcombo, "Profession", 100, 25, false);
 
-        SWGGuiUtils.setDim(cb, "Profession", 100, 25, false);
-
-        cb.setSelectedItem(selectedProfession.getNameShort());
-        cb.addActionListener(new ActionListener() {
+        profcombo.setSelectedItem(selectedProfession.getName());
+        profcombo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedProfession = SWGProfession.getFromName(
-                        (String) cb.getSelectedItem());
+                        (String) profcombo.getSelectedItem());
                 SWGFrame.getPrefsKeeper().add(
                         "schemDraftSelectedProfession", selectedProfession);
                 actionFilterSchematics();
             }
         });
-        return cb;
+        return profcombo;
     }
 
     /**
@@ -2560,6 +2560,20 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         return false;
     }
 
+    private void setFilteredProfs() {
+    	List<String> pl = SWGProfession.getNames(SWGFrame.getSelectedGalaxy().getType());
+        String[] plArr = new String[pl.size()];
+    	plArr = pl.toArray(plArr);
+    	filteredProfs = plArr;
+    }
+    
+    private String[] getFilteredProfs() {
+    	if(filteredProfs == null) {
+    		setFilteredProfs();
+    	}
+    	return filteredProfs;
+    }
+    
     /**
      * Returns a filtered list of schematics, its content is the result of what
      * the user has selected. The list may be empty, filtered, or all

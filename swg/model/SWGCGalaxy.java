@@ -64,8 +64,7 @@ public class SWGCGalaxy implements Serializable {
             NodeList nl = main.getChildNodes();
             for (int j = 0; j < nl.getLength(); ++j) {
                 Node n = nl.item(j);
-                if (n.getNodeType() == Node.ELEMENT_NODE
-                        && n.getNodeName().equals("server")) {
+                if (n.getNodeType() == Node.ELEMENT_NODE && n.getNodeName().equals("server")) {
                     Element cur = (Element) n;
                     // Initialize a server and throw it in our list
                     String swgcraftName = cur.getAttribute("name");

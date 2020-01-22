@@ -1,6 +1,5 @@
 package swg.crafting.schematics;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,8 +22,8 @@ import swg.crafting.UpdateNotification;
 import swg.crafting.UpdateSubscriber;
 import swg.crafting.resources.SWGResourceClass;
 import swg.gui.SWGFrame;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
+import swg.model.SWGCGalaxy;
+import swg.model.SWGProfessionManager;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftCache.CacheUpdate;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
@@ -91,6 +90,11 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * A map of categories, mapped by the proper name of the category.
      */
     private static List<SWGCategory> categories;
+    
+	@SuppressWarnings("unused")
+	private SWGProfession profession;
+	@SuppressWarnings("unused")
+	private SWGProfessionManager profman;
 
     /**
      * An array of integer pairs that translates a schematic ID to the minimum
@@ -280,6 +284,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         schematics = new ArrayList<SWGSchematic>(0); // dummy for now
 
         categories = new ArrayList<SWGCategory>(0); // dummy for now
+        profession = null;
+        profman = null;
 
         SWGCraftCache.addSubscriber(this, UpdateType.SCHEMATICS);
 
@@ -302,28 +308,13 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         return null;
     }
 
-    /**
-     * Helper method which splits the specified line and returns an array of
-     * strings. The returned object contains the category's ID, PID, and name,
-     * in that order.
-     * 
-     * @param line a category
-     * @return an array of strings
-     */
-    private String[] catSplitLine(String line) {
-        String[] split = line.split(";");
-        split[0] = split[0].trim();
-        split[1] = split[1].trim();
-        split[2] = split[2].trim();
-        return split;
-    }
-
     @Override
     public void handleUpdate(UpdateNotification u) {
         if (u.getClass() == CacheUpdate.class
                 && (((CacheUpdate) u).type == UpdateType.SCHEMATICS
                     // treat them the same for now
-                || ((CacheUpdate) u).type == UpdateType.CATEGORIES))
+                || ((CacheUpdate) u).type == UpdateType.CATEGORIES
+        		|| ((CacheUpdate) u).type == UpdateType.PROF_LEVELS))
             init();
     }
 
@@ -347,17 +338,13 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                 public void run() {
                     try {
                         initFoodDrinkMap();
-                        
+                        profession = new SWGProfession();
+                        profman = new SWGProfessionManager();
                         List<SWGCategory> cats = initCats();
-
                         List<SWGSchematic> sl = initSchems();
                         if (sl == null)
                             return;
                         initFini(sl, cats);
-
-                        // testCategories();
-                        // testPrintSchems(scs);
-                        // testPrettyPrintSchems(scs);
                     } catch (Throwable e) {
                         SWGAide.printError("SWGSchematicsManager:init", e);
                     }
@@ -379,7 +366,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      */
     private List<SWGCategory> initCats() {
         ArrayList<SWGCategory> cl = new ArrayList<SWGCategory>(300);
-        cl.add(new SWGCategory("All", SWGCategory.ALL, SWGCategory.ALL));
+        cl.add(new SWGCategory("All", SWGCategory.ALLTYPE, SWGCategory.ALL, SWGCategory.ALL));
 
         Document doc = SWGCraftCache.getCategories();
         if (doc != null)
@@ -388,11 +375,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             SWGAide.printDebug("schm", 1,
                     "SWGSchematicsManager:initCats: XML doc is null");
 
-        // parse optional categories from file bundled in JAR file
-        parseCatsCSV(cl);
-
         // for schematics with unknown category
-        cl.add(new SWGCategory("UNKNOWN", Integer.MAX_VALUE, SWGCategory.ALL));
+        cl.add(new SWGCategory("UNKNOWN", SWGCategory.ALLTYPE, Integer.MAX_VALUE, SWGCategory.ALL));
 
         initCatsFini(cl);
 
@@ -438,8 +422,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                     @Override
                     public int compare(SWGProfessionLevel o1,
                             SWGProfessionLevel o2) {
-                        return o1.getProfession().getNameShort().compareTo(
-                                o2.getProfession().getNameShort());
+                        return o1.getProfession().getName().compareTo(
+                                o2.getProfession().getName());
                     }
                 };
 
@@ -468,49 +452,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                 });
         }
 
-        // XXX: remove when found all spelling errors and such
-        // The synchronization objects are alive until garbage collected, once
-        // the collections are replaced any consecutive invocation locks on the
-        // new objects. This way we do not risk concurrent exceptions in clients
-        // that have used getSchematics().
-
-        // final String padd =
-        // "                                        ";
-        // HashSet<String> set = new HashSet<String>(400);
-        // for (SWGSchematic el : schems) {
-        // if (el == null) continue;
-        // for (SWGExperimentGroup eg : el.getExperimentGroups()) {
-        // StringBuilder sb = new StringBuilder(256);
-        //
-        // // XXX: for misspelled names
-        // String s = eg.getDescription();
-        // if (s == null)
-        // sb.append(el.getName()).append(el.getID()).append(padd);
-        // else
-        // sb.append(s).append(padd);
-        // sb.delete(42, 999);
-        //
-        // for (SWGExperimentLine exl : eg.getExperimentalLines()) {
-        // exl.getWeights().toString(sb);
-        // sb.append("\t\t");
-        // set.add(sb.toString());
-        // }
-        // }
-        // }
-        // String[] sa = set.toArray(new String[0]);
-        // Arrays.sort(sa);
-        // try {
-        // FileWriter fw = new FileWriter("abababab.txt");
-        // for (String el : sa) {
-        // fw.write(el);
-        // fw.write(SWGConstants.EOL);
-        // }
-        // fw.flush();
-        // fw.close();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
-
         synchronized (schematics) {
             schematics = schems;
         }
@@ -518,23 +459,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         synchronized (categories) {
             categories = cats;
         }
-
-        // FIXME remove when no use for this anymore
-        // List<String> crl = new ArrayList<String>(128);
-        // for (SWGSchematic el : schems) {
-        // if (el != null && !el.getSkillLevels().isEmpty()
-        // && el.getSkillLevels().get(0).
-        // getProfession() == SWGProfession.STRUCTURES
-        // && el.isManufacturable()
-        // && el.getCrateSize()
-        // ==0
-        // //> 0
-        // )
-        // crl.add("\n" + //el.getCrateSize() + ' ' +
-        // el.getName());
-        // }
-        // Collections.sort(crl);
-        // System.err.println(crl);
 
         notifySubscribers();
     }
@@ -597,29 +521,15 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         ArrayList<SWGSchematic> sl = null;
         Document doc = SWGCraftCache.getSchematics();
         if (doc != null) {
-            sl = initSchemsBegin(highestID + 1);
+            sl = new ArrayList<SWGSchematic>(highestID+1);
+            for (int i = 0; i < highestID+1; ++i) {
+                sl.add(null); // fill it up to get the slots
+            }
             parseSchems(doc, sl);
         } else
             SWGAide.printDebug("schm", 1,
                     "SWGSchematicsManager:initSchems: XML doc is null");
         return sl;
-    }
-
-    /**
-     * Helper method which returns a null-padded list for schematics with the
-     * specified size. The list is filled with {@code null} to make it possible
-     * to insert elements at any {@code index <= highestID}. The specified size
-     * is supposed to be {@code highestID + 1}.
-     * 
-     * @param size the size for the returned list, {@code (highestID + 1)}
-     * @return a null-padded list
-     */
-    private ArrayList<SWGSchematic> initSchemsBegin(int size) {
-        ArrayList<SWGSchematic> ret = new ArrayList<SWGSchematic>(size);
-        for (int i = 0; i < size; ++i)
-            ret.add(null); // fill it up to get the slots
-
-        return ret;
     }
 
     /**
@@ -678,39 +588,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                                     (Element) ns.item(i), "name")));
                 }
             }
-        }
-    }
-
-    /**
-     * Helper method which parses a bundled file that contains categories which
-     * are appended to the specified list. This method does not replace existing
-     * categories. The bundled file comes with the JAR file and is only used in
-     * special cases. If the file does not exist this method does nothing.
-     * 
-     * @param cats a list of existing categories
-     */
-    private void parseCatsCSV(ArrayList<SWGCategory> cats) {
-        ZReader sr = null;
-    	try {
-            URL u = SWGCategory.class.getResource("categories.csv");
-            if (u == null)
-                return;
-
-            sr = ZReader.newTextReader(u.openStream());
-            if (sr == null) return;
-
-            List<String> sl = sr.lines(true, true);
-            for (String line : sl) {
-                String[] split = catSplitLine(line);
-                SWGCategory c = new SWGCategory(split[2],
-                        Integer.parseInt(split[0]), Integer.parseInt(split[1]));
-                if (!cats.contains(c))
-                    cats.add(c);
-            }
-        } catch (Throwable e) {
-            SWGAide.printError("SWGSchematicsManager:parseCatsCSV", e);
-        } finally {
-        	sr.close();
         }
     }
 
@@ -1069,8 +946,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @throws IllegalArgumentException if an argument is invalid
      * @throws NullPointerException if the argument is {@code null}
      */
-    public static List<SWGSchematic> getSchematics(
-            SWGProfession prof, int min, int max) {
+    public static List<SWGSchematic> getSchematics(SWGProfession prof, int min, int max) {
         if (prof == null)
             throw new NullPointerException("Argument is null");
         if (min < -1 || min > max)
@@ -1322,77 +1198,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
     public static int maxSchematicID() {
         return highestID;
     }
-
-    // /**
-    // * /** For testing purposes only
-    // *
-    // * @param args
-    // */
-    // public static void main(String... args) {
-    // SWGCraftCache.updateCache();
-    // SWGSchematicsManager sm = new SWGSchematicsManager();
-    // List<SWGSchematic> sl = sm.initSchems();
-    // List<SWGCategory> cl = sm.initCats();
-    // for (SWGCategory c : cl)
-    // System.err.println(c);
-    // for (SWGSchematic s : sl)
-    // if (s != null)
-    // System.err.println(s);
-    //
-    // }
-
-    // /**
-    // * Testing method only
-    // */
-    // private static void testCategories() {
-    // List<String> lk = new ArrayList<String>(getCategoryNames());
-    // Collections.sort(lk);
-    // for (String k : lk)
-    // System.out.println(k);
-    // 
-    // System.out.println("size="+lk.size());
-    // }
-
-    // /**
-    // * Testing method only
-    // *
-    // * @param list
-    // */
-    // private static void testPrintSchems(List<SWGSchematic> list) {
-    // int i = 0, j = 0;
-    // for (SWGSchematic s : list) {
-    // if (s != null)
-    // System.out.println(s.toString());
-    // else {
-    // System.out.println("empty slöt id=" + i);
-    // ++j;
-    // }
-    // ++i;
-    // }
-    // System.out.println("size=" + list.size());
-    // System.out.println("null=" + j);
-    // }
-
-    // /**
-    // * Testing method only
-    // *
-    // * @param list
-    // */
-    // private static void testPrettyPrintSchems(List<SWGSchematic> list) {
-    // try {
-    // FileWriter fw = new FileWriter("schem_pp.txt");
-    // for (SWGSchematic s : list)
-    // if (s != null) {
-    // fw.write(s.prettyPrint());
-    // fw.write(SWGConstants.EOL);
-    // }
-    // fw.flush();
-    // fw.close();
-    // } catch (IOException e) {
-    // Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
 
     /**
      * Removes the specified client from the list of subscribers. If the client

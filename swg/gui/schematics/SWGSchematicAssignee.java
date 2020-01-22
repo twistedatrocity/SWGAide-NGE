@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import swg.SWGAide;
+import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.common.SWGGui;
-import swg.model.SWGProfession;
 import swg.tools.ZString;
 
 /**
@@ -94,7 +94,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
     SWGSchematicAssignee(String assignee) {
         this.setAssignee(assignee);
         this.favIDs = new ArrayList<Integer>();
-        this.profession = SWGProfession.ALL;
+        this.profession = SWGProfession.getFromID(SWGProfession.ALL);
     }
 
     /**
@@ -236,7 +236,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
     void setProfession(SWGProfession profession) {
         if (this == DEFAULT) return;
         this.profession = profession == null
-                ? SWGProfession.ALL
+                ? SWGProfession.getFromID(SWGProfession.ALL)
                 : profession;
     }
 
