@@ -82,7 +82,6 @@ import swg.gui.schematics.SWGSchematicTab;
 import swg.gui.trade.SWGTradeTab;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
-import swg.model.SWGProfessionManager;
 import swg.model.SWGUniverse;
 import swg.swgcraft.SWGCraftCache;
 import swg.swgcraft.SWGCraftOptionsPanel;
@@ -218,10 +217,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     private SWGPostLaunch postLaunch;
 
-    /**
-     * The profession manager for SWGAide.
-     */
-    private SWGProfessionManager professionManager;
 
     /**
      * The progress bar for the log bar at the main frame
@@ -345,7 +340,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     void beginPostLaunchTasks() {
         resourceManager.startAutoUpdate();
-        SWGCraftCache.updateCache();
         postLaunch = new SWGPostLaunch(this);
         postLaunch.postLaunch();        
         startBackupTimer();
@@ -420,7 +414,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
         splashProgressBar.setValue((int) step);
 
         // in this order: profession-levels MUST exist before schematics
-        professionManager = new SWGProfessionManager();
+        // XXX profession manager really needs moved to schematics
+        //professionManager = new SWGProfessionManager();
+        SWGCraftCache.updateCacheBlocking();
         schematicsManager = new SWGSchematicsManager();
 
         setJMenuBar(initMenuBar());
@@ -635,15 +631,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
             optionsFont = new FontOptionsPanel(this);
         }
         return optionsFont;
-    }
-
-    /**
-     * Returns the profession manager for SWGAide.
-     * 
-     * @return the profession manager
-     */
-    SWGProfessionManager getProfessionManager() {
-        return professionManager;
     }
 
     /**
