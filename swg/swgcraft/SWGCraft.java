@@ -78,7 +78,7 @@ public final class SWGCraft {
      * The path and file name to the schematics XML file at SWGCraft.org.
      */
     private static final String categoriesXmlPath =
-            "/pub/exports/categories_nge.xml";
+            "/pub/exports/categories_unity.xml";
 
     /**
      * The first part of the path to the file with current resources, the galaxy
@@ -91,13 +91,13 @@ public final class SWGCraft {
      * The path and file name to the profession levels XML file at SWGCraft.org.
      */
     private static final String profLevelsXmlPath =
-            "/pub/exports/professions_nge.xml";
+            "/pub/exports/professions_unity.xml";
 
     /**
      * The path and file name to the schematics XML file at SWGCraft.org.
      */
     private static final String schematicsXmlPath =
-            "/pub/exports/schematics_nge.xml.gz";
+            "/pub/exports/schematics_unity.xml.gz";
 			
 	/**
      * The path and file name to the servers XML file at SWGCraft.org.

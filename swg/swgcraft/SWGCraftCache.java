@@ -55,16 +55,14 @@ public final class SWGCraftCache {
     // support for category subscribers ??
 
     /**
-     * A list of clients which subscribe for notifications regarding categories.
-     * This static list is instantiated when this type is first loaded.
-     */
-    private static final List<UpdateSubscriber> categorySubscribers =
-        new ArrayList<UpdateSubscriber>();
-
-    /**
      * The abstract file for the categories XML file.
      */
     private static final File catXML = new File("crafting", "categories.xml");
+    
+    /**
+     * The abstract file for the professions XML file.
+     */
+    private static final File profXML = new File("crafting", "professions.xml");
 	
 	/**
      * The abstract file for the servers XML file.
@@ -72,14 +70,29 @@ public final class SWGCraftCache {
     private static final File serversXML = new File("crafting", "servers.xml");
     
 	/**
-     * A list of clients which subscribe for notifications regarding server
-     * information. This static list is instantiated when this type is
-     * first loaded.
-     */
-    private static final List<UpdateSubscriber> serversSubscribers =
-            new ArrayList<UpdateSubscriber>();
+	 * The abstract file for the schematics XML file.
+	 */
+	public static final File schemXML = new File("crafting", "schematics.xml");
 
-    /**
+	// XXX: implement hourly checks for updates ??
+	// support for category subscribers ??
+	
+	/**
+	 * A list of clients which subscribe for notifications regarding server
+	 * information. This static list is instantiated when this type is
+	 * first loaded.
+	 */
+	private static final List<UpdateSubscriber> serversSubscribers =
+	        new ArrayList<UpdateSubscriber>();
+
+	/**
+	 * A list of clients which subscribe for notifications regarding categories.
+	 * This static list is instantiated when this type is first loaded.
+	 */
+	private static final List<UpdateSubscriber> categorySubscribers =
+	    new ArrayList<UpdateSubscriber>();
+
+	/**
      * A list of clients which subscribe for notifications regarding profession
      * level information. This static list is instantiated when this type is
      * first loaded.
@@ -88,21 +101,11 @@ public final class SWGCraftCache {
         new ArrayList<UpdateSubscriber>();
 
     /**
-     * The abstract file for the categories XML file.
-     */
-    private static final File profXML = new File("crafting", "professions.xml");
-
-    /**
      * A list of clients which subscribe for notifications regarding schematics.
      * This static list is instantiated when this type is first loaded.
      */
     private static final List<UpdateSubscriber> schemSubscribers =
         new ArrayList<UpdateSubscriber>();
-
-    /**
-     * The abstract file for the schematics XML file.
-     */
-    public static final File schemXML = new File("crafting", "schematics.xml");
 
     /**
      * This type should not be instantiated.
@@ -402,7 +405,44 @@ public final class SWGCraftCache {
         }
         return false;
     }
-
+    
+    /**
+     * Exact same thing as updateCache but this one does not run in background.
+     * This is necessary for startup when files do not exist, we don't want things clashing
+     * until these files are retrieved.
+     */
+    
+    public static void updateCacheBlocking() {
+    	try {
+            if (update(profXML, urlProfLevels(), false))
+                notifySubscribers(UpdateType.PROF_LEVELS);
+        } catch (MalformedURLException e) {
+            SWGAide.printError("SWGCraftCache:updatCache:prof", e);
+        }
+        boolean catUpdated = false;// XXX: maybe remove later
+        try {
+            if (update(catXML, urlCategories(), false))
+                catUpdated = true; // notifyCatSubscribers();
+        } catch (MalformedURLException e) {
+            SWGAide.printError("SWGCraftCache:updatCache:cat", e);
+        }
+        try {
+			if(update(serversXML, urlServers(), false))
+            {
+            	notifySubscribers(UpdateType.SERVERS);
+            }
+        } catch (MalformedURLException e) {
+            SWGAide.printError("SWGCraftCache:updatCache:servers", e);
+        }
+        try {
+            if (update(schemXML, urlSchematics(), true)
+                || catUpdated)
+                notifySubscribers(UpdateType.SCHEMATICS);
+        } catch (MalformedURLException e) {
+            SWGAide.printError("SWGCraftCache:updatCache:schem", e);
+        }
+    }
+    
     /**
      * Updates the local cache of files maintained by this type. More
      * specifically, this method invokes several helper methods and for one by
@@ -477,8 +517,12 @@ public final class SWGCraftCache {
      * @return {@code true} if an update exists
      */
     private static boolean updateExists(File file, URL url) {
-        if (!file.exists())
+        if (!file.exists()) {
+        	if(SWGConstants.DEV_DEBUG) {
+        		SWGAide.printDebug("debug", 9, "SWGCraftCache:filenotexists : getting new file " + file.toString() );
+        	}
             return true;
+        }
 
         Boolean result = false;
         LocalDateTime ld = localDate(file);
