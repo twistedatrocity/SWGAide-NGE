@@ -129,7 +129,8 @@ public final class SWGCharacter implements
      * @return a galaxy constant
      */
     public SWGCGalaxy gxy() {
-        return homeGalaxy.gxy();
+    	SWGCGalaxy gxy = SWGCGalaxy.fromName(homeGalaxy.getName());
+        return gxy;
     }
 
     @Override

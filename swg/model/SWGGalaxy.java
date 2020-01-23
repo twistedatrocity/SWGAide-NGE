@@ -180,6 +180,15 @@ public final class SWGGalaxy implements
     /**
      * {@inheritDoc}
      * <p>
+     * The name as obtained from {@link SWGCGalaxy#getName()}.
+     */
+    public String getType() {
+        return galaxy.getType();
+    }
+    
+    /**
+     * {@inheritDoc}
+     * <p>
      * The name as obtained from {@link SWGCGalaxy#getNameComplete()}.
      */
 	public String getNameComplete() {
@@ -192,7 +201,8 @@ public final class SWGGalaxy implements
      * @return a galaxy constant
      */
     public SWGCGalaxy gxy() {
-        return galaxy;
+    	SWGCGalaxy gxy = SWGCGalaxy.fromID(galaxy.id());
+        return gxy;
     }
 
     @Override
