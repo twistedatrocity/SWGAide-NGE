@@ -1584,6 +1584,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     		profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
     		profcombo.setModel(profModel);
     		galaxy = gxy;
+    		schemTreeModel = new SWGSchematicTreeModel();
+    		schemTree.setModel(schemTreeModel);
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
