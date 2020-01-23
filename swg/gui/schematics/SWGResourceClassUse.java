@@ -57,6 +57,8 @@ import swg.crafting.resources.SWGResourceClassTree;
 import swg.crafting.resources.SWGResourceFilter;
 import swg.crafting.schematics.SWGExperimentGroup;
 import swg.crafting.schematics.SWGExperimentLine;
+import swg.crafting.schematics.SWGProfession;
+import swg.crafting.schematics.SWGProfessionLevel;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -66,8 +68,6 @@ import swg.gui.common.SWGHelp;
 import swg.gui.common.SWGListCellRenderer;
 import swg.gui.resources.SWGResController;
 import swg.model.SWGCGalaxy;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
 import swg.tools.ZString;
 import swg.tools.ZWriter;
 

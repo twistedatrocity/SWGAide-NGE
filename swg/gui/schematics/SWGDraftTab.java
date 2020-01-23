@@ -80,6 +80,8 @@ import swg.crafting.schematics.SWGCategory;
 import swg.crafting.schematics.SWGComponentSlot;
 import swg.crafting.schematics.SWGExperimentGroup;
 import swg.crafting.schematics.SWGExperimentLine;
+import swg.crafting.schematics.SWGProfession;
+import swg.crafting.schematics.SWGProfessionLevel;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -92,8 +94,6 @@ import swg.gui.schematics.SWGSchematicTreeModel.TNode;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
-import swg.model.SWGProfession;
-import swg.model.SWGProfessionLevel;
 import swg.model.SWGStation;
 import swg.tools.SpringUtilities;
 import swg.tools.ZHtml;
@@ -2561,7 +2561,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     }
 
     private void setFilteredProfs() {
-    	List<String> pl = SWGProfession.getNames(SWGFrame.getSelectedGalaxy().getType());
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	List<String> pl = SWGProfession.getNames(gxy.getType());
         String[] plArr = new String[pl.size()];
     	plArr = pl.toArray(plArr);
     	filteredProfs = plArr;

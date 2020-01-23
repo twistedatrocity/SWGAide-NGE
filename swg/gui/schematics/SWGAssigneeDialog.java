@@ -34,6 +34,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import swg.SWGAide;
+import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
@@ -43,7 +44,6 @@ import swg.gui.common.SWGJDialog;
 import swg.gui.common.SWGListCellRenderer;
 import swg.gui.common.SWGListModel;
 import swg.model.SWGCGalaxy;
-import swg.model.SWGProfession;
 
 /**
  * This type is a dialog for managing schematics assignees. The GUI elements are
