@@ -136,6 +136,8 @@ public class SWGCGalaxy implements Serializable {
      * @param name the name of the galaxy
      * @param swgcraftName the name of the server as used on SWGCraft
      * @param id the SWGCraft galaxy ID
+     * @param type the game type
+     * @param custom true if custom schematics
      * @param active {@code false} if the galaxy is closed down
      */
     private SWGCGalaxy(String name, String swgcraftName, int id, String type, boolean custom, boolean active) {
