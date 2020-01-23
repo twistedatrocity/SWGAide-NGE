@@ -1,7 +1,10 @@
 package swg.model;
 
 /**
- * This is a DUMMY class so OLD dat files don't implode. It's not actually used anywhere.
+ * This is a DUMMY class so OLD dat files don't implode. It's not actually used anywhere, as the
+ * new SWGProfession class is NOT an enumerator.
+ * This just needs to exist in swg.model so when an OLD dat file loads, the serialized object can find the class
+ * and not throw an exception.
  */
 public enum SWGProfession {
     /**

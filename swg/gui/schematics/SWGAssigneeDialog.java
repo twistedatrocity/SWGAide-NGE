@@ -469,10 +469,9 @@ final class SWGAssigneeDialog extends SWGJDialog {
         professionChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SWGProfession p = (SWGProfession)
-                        professionChooser.getSelectedItem();
-
-                List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p);
+                SWGProfession p = (SWGProfession) professionChooser.getSelectedItem();
+                SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+                List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p, gxy);
 
                 Collections.sort(sl);
                 ((SWGListModel<SWGSchematic>) schematicsList.getModel()).setElements(sl);

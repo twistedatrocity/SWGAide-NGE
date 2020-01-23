@@ -24,7 +24,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import swg.SWGAide;
-import swg.SWGConstants;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -545,27 +544,13 @@ public final class SWGSchematicTab extends JTabbedPane {
      * date for downloaded schematics.
      */
     void updateStatbar2() {
-        int nbr = SWGSchematicsManager.getAmount();
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        int nbr = SWGSchematicsManager.getAmount(gxy);
         LocalDateTime ld = SWGCraftCache.localDate(SWGCraftCache.schemXML);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern( "uuuu-MM-dd" );
         frame.putToLogbar_2(String.format(
                 "%s schematics from swgaide.com (%s)",
                 ZNumber.asText(nbr, true, true), ld.format(fmt)));
-    }
-
-    /**
-     * Helper method which updates this type. If a character is selected at the
-     * main panel this method updates the temporary collections of spawning
-     * resources and inventory resources for the galaxy that pertains to the
-     * character; this is always done in the case the user adds resources to the
-     * inventory. Otherwise, if no character is selected this method displays a
-     * dialog to warn the user.
-     */
-    private void verifyCharacterSelected() {
-        if (SWGFrame.getSelectedCharacter() == null)
-            JOptionPane.showMessageDialog(this,
-                    "No character selected at main panel",
-                    "Unknown character & galaxy", JOptionPane.WARNING_MESSAGE);
     }
 
     /**

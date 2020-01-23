@@ -1146,7 +1146,7 @@ class SWGTodays extends JPanel {
         for (SWGProfession p : pl) {
             String n = "Pro: " + p.getName();
             SWGSchematicAssignee a = new SWGSchematicAssignee(n);
-            for (SWGSchematic s : SWGSchematicsManager.getSchematics(p))
+            for (SWGSchematic s : SWGSchematicsManager.getSchematics(p,gxy))
                 a.addFavorite(s);
 
             ret.add(a);
@@ -1171,6 +1171,7 @@ class SWGTodays extends JPanel {
         String pn = (String) SWGFrame.getPrefsKeeper().get(
                 "schemTodaysAlertDefaultAss");
 
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
         SWGSchematicAssignee ass = null;
         if (pn == null) {
         	pn = "Pro: All";
@@ -1191,7 +1192,7 @@ class SWGTodays extends JPanel {
         }
 
         return ass.getName().equals("Pro: All")
-                ? SWGSchematicsManager.getSchematics(SWGProfession.getFromID(SWGProfession.ALL))
+                ? SWGSchematicsManager.getSchematics(SWGProfession.getFromID(SWGProfession.ALL),gxy)
                 : ass.getFavorites();
     }
 

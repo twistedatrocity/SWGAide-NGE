@@ -575,11 +575,13 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param cats the list to add categories to
      */
     private void parseCats(Document doc, ArrayList<SWGCategory> cats) {
-        NodeList ns = doc.getChildNodes().item(0).getChildNodes();
+    	Element main = (Element) doc.getElementsByTagName("categories").item(0);
+    	NodeList ns = main.getChildNodes();
         for (int i = 0; i < ns.getLength(); i++) {
-            if (ns.item(i).getNodeType() == Node.ELEMENT_NODE) {
+        	Node n = ns.item(i);
+            if (n.getNodeType() == Node.ELEMENT_NODE && n.getNodeName().equals("category")) {
                 try {
-                    Element e = (Element) ns.item(i);
+                    Element e = (Element) n;
                     cats.add(new SWGCategory(e));
                 } catch (Exception e) {
                     SWGAide.printDebug("schm", 1, String.format(
@@ -753,14 +755,13 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * Returns the number of available schematics. This is the amount that
      * managed by this type and it may possibly differ from what is exported
      * from SWGCraft.org, though that is currently not the case.
-     * 
+     * XXX need to put this through a better filter.
      * @return number of available schematics
      */
-    public static int getAmount() {
+    public static int getAmount(SWGCGalaxy gxy) {
         int ret = 0;
-        if (schematics != null)
-            for (SWGSchematic e : schematics)
-                if (e != null) ++ret;
+        List<SWGSchematic> schems = getSchematics(gxy);
+        ret = schems.size();
 
         return ret;
     }
@@ -771,8 +772,16 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * 
      * @return a read-only list of all categories
      */
-    public static List<SWGCategory> getCategories() {
-        return categories;
+    public static List<SWGCategory> getCategories(SWGCGalaxy gxy) {
+    	List<SWGCategory> ret = new ArrayList<SWGCategory>();
+    	synchronized (categories) {
+            for (SWGCategory c : categories) {
+            	if(c.getType().equals(gxy.getType())) {
+            		ret.add(c);
+            	}
+            }
+    	}
+        return ret;
     }
 
     /**
@@ -781,10 +790,10 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param id the unique ID for the category
      * @return a category, or {@code null}
      */
-    public static SWGCategory getCategory(int id) {
+    public static SWGCategory getCategory(int id, String type) {
         synchronized (categories) {
             for (SWGCategory c : categories)
-                if (id == c.getID())
+                if (id == c.getID() && ( c.getType().equals(type) || c.getType().equals("ALL") ) )
                     return c;
 
             return null;
@@ -863,12 +872,22 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * 
      * @return a list of all schematics
      */
-    public static List<SWGSchematic> getSchematics() {
+    public static List<SWGSchematic> getSchematics(SWGCGalaxy gxy) {
         synchronized (schematics) {
-            List<SWGSchematic> ret = new ArrayList<SWGSchematic>(schemCount);
-            for (SWGSchematic s : schematics)
-                if (s != null) ret.add(s);
-
+            List<SWGSchematic> ret = new ArrayList<SWGSchematic>();
+            List<SWGSchematic> o = new ArrayList<SWGSchematic>();
+            for (SWGSchematic s : schematics) {
+                if (s != null && s.getBase().equals(gxy.getType()) && (s.getServer() == 0 || s.getServer() == gxy.id())) {
+                	ret.add(s);
+                	if(s.getOverride()>0) {
+                		o.add(s);
+                	}
+                }
+            }
+            for(SWGSchematic s : o) {
+            	SWGSchematic d = getSchematic(s.getOverride());
+            	ret.remove(d);
+            }
             return ret;
         }
     }
@@ -919,9 +938,9 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @return a modifiable list of schematics, or an empty list
      * @throws NullPointerException if the argument is {@code null}
      */
-    public static List<SWGSchematic> getSchematics(SWGProfession profession) {
+    /*public static List<SWGSchematic> getSchematics(SWGProfession profession) {
         return getSchematics(profession, -1, SWGProfessionLevel.MAX_LEVEL);
-    }
+    }*/
 
     /**
      * Returns a list of schematics which are awarded the specified profession
@@ -946,27 +965,23 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @throws IllegalArgumentException if an argument is invalid
      * @throws NullPointerException if the argument is {@code null}
      */
-    public static List<SWGSchematic> getSchematics(SWGProfession prof, int min, int max) {
-        if (prof == null)
+    public static List<SWGSchematic> getSchematics(SWGProfession prof, SWGCGalaxy gxy) {
+        if (prof == null || gxy == null)
             throw new NullPointerException("Argument is null");
-        if (min < -1 || min > max)
-            throw new IllegalArgumentException("Invalid min: " + min);
-        if (max < 0 || max > SWGProfessionLevel.MAX_LEVEL)
-            throw new IllegalArgumentException("Invalid max: " + max);
 
         synchronized (schematics) {
-            ArrayList<SWGSchematic> ret =
-                    new ArrayList<SWGSchematic>(schematics.size());
-
+            ArrayList<SWGSchematic> ret = new ArrayList<SWGSchematic>();
+            List<SWGSchematic> o = new ArrayList<SWGSchematic>();
             for (SWGSchematic s : schematics)
-                if (s != null) {
+                if (s != null && s.getBase().equals(gxy.getType()) && (s.getServer() == 0 || s.getServer() == gxy.id()) ) {
                     boolean found = false;
                     if (s.getExpertise() != null) {
                         for (Object[] obj : s.getExpertise())
                             if (prof.equalsProfession((SWGProfession) obj[0])) {
-                                int l = expertiseLevel(s);
-                                if (l <= max && l >= min)
-                                    ret.add(s);
+                            	ret.add(s);
+                            	if(s.getOverride()>0) {
+                            		o.add(s);
+                            	}
                                 // one schematic is enough but because this kind
                                 // of schematics are not regular and the skill
                                 // level for a particular schematic is the same
@@ -977,14 +992,19 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                     }
                     if (!found)
                         for (SWGProfessionLevel p : s.getSkillLevels()) {
-                            if (prof.equalsProfession(p.getProfession())
-                                    && p.getLevel() <= max
-                                    && min <= p.getLevel()) {
+                            if (prof.equalsProfession(p.getProfession()) ) {
+                            	if(s.getOverride()>0) {
+                            		o.add(s);
+                            	}
                                 ret.add(s);
                                 break; // one schematic is enough
                     }
                         }
                 }
+            for(SWGSchematic s : o) {
+            	SWGSchematic d = getSchematic(s.getOverride());
+            	ret.remove(d);
+            }
             return ret;
         }
     }
@@ -1018,9 +1038,9 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param schem a schematic
      * @return a list of resource class elements, or {@code null}
      */
-    public static List<ResourceAmount> getShopping(SWGSchematic schem) {
+    public static List<ResourceAmount> getShopping(SWGSchematic schem, String type) {
         try {
-            return getShoppingHelper(schem, 1);
+            return getShoppingHelper(schem, 1, type);
         } catch (Exception e) {
             String s = String.format(
                     "Error, report the following at swgaide.com:%n"
@@ -1044,14 +1064,14 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param m a multiplier
      * @return a list of resource class elements, or an empty list
      */
-    private static List<ResourceAmount> getShoppingHelper(SWGCategory c, int m) {
+    private static List<ResourceAmount> getShoppingHelper(SWGCategory c, int m, String type) {
         if (c.getSchematics().size() + c.getCategories().size() != 1)
             return Collections.emptyList();
 
         if (c.getSchematics().size() > 0)
-            return getShoppingHelper(c.getSchematics().get(0), m);
+            return getShoppingHelper(c.getSchematics().get(0), m,type);
 
-        return getShoppingHelper(c.getCategories().get(0), m);
+        return getShoppingHelper(c.getCategories().get(0), m,type);
     }
 
     /**
@@ -1062,7 +1082,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param m a multiplier
      * @return a list of resource class elements
      */
-    private static List<ResourceAmount> getShoppingHelper(SWGSchematic s, int m) {
+    private static List<ResourceAmount> getShoppingHelper(SWGSchematic s, int m, String type) {
         List<ResourceAmount> ret = new ArrayList<ResourceAmount>();
 
         for (SWGResourceSlot rs : s.getResourceSlots()) {
@@ -1079,11 +1099,11 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                 continue;
             if (cs.getType().equals("schematic"))
                 getShoppingMerge(getShoppingHelper(
-                        getSchematic(cs.getSchematicId()), cs.getAmount() * m),
+                        getSchematic(cs.getSchematicId()), cs.getAmount() * m, type),
                         ret);
             else
                 getShoppingMerge(getShoppingHelper(
-                        getCategory(cs.getCategoryId()), cs.getAmount() * m),
+                        getCategory(cs.getCategoryId(),type), cs.getAmount() * m,type),
                         ret);
         }
 
@@ -1183,7 +1203,9 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         if (c == null) return false;
         int cid = c.getID();
         return (cid == 433 || cid == 476 || cid == 479 || cid == 481
-                || cid == 483 || cid == 579 || cid == 580 || cid == 626);
+                || cid == 483 || cid == 579 || cid == 580 || cid == 626
+                || cid == 1181 || cid == 1224 || cid == 1227 || cid == 1229
+                || cid == 1231 || cid == 1327 || cid == 1328 || cid == 1374);
     }
 
     /**
@@ -1233,14 +1255,14 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @param s2 a schematic
      * @return the amount of s1 that is used first-hand in s2, or 0
      */
-    public static int schemCompAmount(SWGSchematic s1, SWGSchematic s2) {
+    public static int schemCompAmount(SWGSchematic s1, SWGSchematic s2, String type) {
         int ret = 0;
         for (SWGComponentSlot cs : s2.getComponentSlots())
             if (cs.getType().equals("schematic")
                     && getSchematic(cs.getSchematicId()) == s1)
                 ret += cs.getAmount();
             else if (cs.getType().equals("category"))
-                for (SWGSchematic s : getCategory(cs.getCategoryId()).getSchematics())
+                for (SWGSchematic s : getCategory(cs.getCategoryId(),type).getSchematics())
                     if (s == s1) ret += cs.getAmount();
 
         return ret;

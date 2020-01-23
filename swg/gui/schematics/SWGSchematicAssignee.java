@@ -10,7 +10,9 @@ import swg.SWGAide;
 import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
+import swg.gui.SWGFrame;
 import swg.gui.common.SWGGui;
+import swg.model.SWGCGalaxy;
 import swg.tools.ZString;
 
 /**
@@ -141,10 +143,11 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * @return a sorted list of favorite schematics, or an empty list
      */
     List<SWGSchematic> getFavorites() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
         synchronized (favIDs) {
             if (favorites == null) {
                 if (this == DEFAULT) {
-                    favorites = SWGSchematicsManager.getSchematics();
+                    favorites = SWGSchematicsManager.getSchematics(gxy);
                 } else {
                     favorites = new ArrayList<SWGSchematic>(favIDs.size() + 16);
                     Iterator<Integer> iter;

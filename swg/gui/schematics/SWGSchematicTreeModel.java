@@ -16,6 +16,7 @@ import swg.crafting.schematics.SWGCategory;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
+import swg.model.SWGCGalaxy;
 import swg.swgcraft.SWGCraftCache.CacheUpdate;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
 
@@ -149,14 +150,16 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
      * @return an ordered list of children, or an empty list
      */
     private List<TNode> getChildElements(TNode node) {
-
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
         // only categories may have children
         if (node != null && node.getContent() instanceof SWGCategory) {
             ArrayList<TNode> ret = new ArrayList<TNode>();
             SWGCategory cat = (SWGCategory) node.getContent();
-            addElements(cat.getCategories(), ret);
-            addElements(filterSchematics(cat.getSchematics()), ret);
-            addElements(cat.getItems(), ret);
+            if(cat.getType().equals(gxy.getType()) || cat.getType().equals("ALL") ) {
+	            addElements(cat.getCategories(), ret);
+	            addElements(filterSchematics(cat.getSchematics()), ret);
+	            addElements(cat.getItems(), ret);
+            }
 
             if (!hideEmptyCategoryNodes)
                 return ret; // display all
@@ -168,8 +171,7 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
                         || tn.getContent() instanceof String
                         || getChildElements(tn).size() > 0
                         || (tn.getContent() instanceof SWGCategory
-                                && SWGSchematicsManager.isSpecial(
-                                        (SWGCategory) tn.getContent())))
+                                && SWGSchematicsManager.isSpecial((SWGCategory) tn.getContent()) ) )
                     ret2.add(tn); // is or has content >>> keep it
             }
             return ret2;
@@ -187,7 +189,8 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
     }
 
     public Object getRoot() {
-        SWGCategory c = SWGSchematicsManager.getCategory(0);
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        SWGCategory c = SWGSchematicsManager.getCategory(0, gxy.getType());
         return c == null ? null : new TNode(c);
     }
 
@@ -249,6 +252,7 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
      * @return a sorted list of nodes, or {@code null}
      */
     private List<TNode> pathFromCategory(SWGCategory c) {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
         SWGCategory cc = c;
         List<TNode> nodes = new ArrayList<TNode>();
         while (cc != null) {
@@ -258,7 +262,7 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
             if (cc.getID() == 0)
                 break; // top category aka "All"
 
-            cc = SWGSchematicsManager.getCategory(cc.getParentID());
+            cc = SWGSchematicsManager.getCategory(cc.getParentID(), gxy.getType());
         }
         if (cc == null)
             return null;
@@ -301,8 +305,9 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
         SWGSchematic s = SWGSchematicsManager.getSchematic(sid);
         if (s == null || (matcher != null && !matcher.contains(s)))
             return null;
-
-        SWGCategory c = SWGSchematicsManager.getCategory(s.getCategory());
+        
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        SWGCategory c = SWGSchematicsManager.getCategory(s.getCategory(), gxy.getType());
         List<TNode> nodes = pathFromCategory(c);
         if (nodes == null)
             return null;

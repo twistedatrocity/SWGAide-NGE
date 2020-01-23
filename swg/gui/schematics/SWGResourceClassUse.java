@@ -253,9 +253,8 @@ final class SWGResourceClassUse extends JPanel {
             setResClassContent(null);
             return;
         }
-
-        List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(
-                p, 0, SWGProfessionLevel.MAX_LEVEL);
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p,gxy);
         List<SWGResourceClass> wanted = SWGSchematicsManager.getResClasses(sl);
         setResClassContent(wanted);
         
@@ -1150,8 +1149,8 @@ final class SWGResourceClassUse extends JPanel {
 
         String pn = (String) professionBox.getSelectedItem();
         SWGProfession p = SWGProfession.getFromName(pn);
-        List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(
-                p, 0, SWGProfessionLevel.MAX_LEVEL);
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p,gxy);
         sl = SWGSchematicsManager.getSchematics(sl, rc, displayMoreSchems);
         sl = SWGSchemController.schematics(sl, schematicsDisplayHqLqAll);
 

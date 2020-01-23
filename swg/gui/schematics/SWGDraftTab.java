@@ -289,12 +289,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private SWGCategory selectedCategory;
 
     /**
-     * A profession level selected by the user, or the level that was stored in
-     * the preference keeper, or the default level which is 90.
-     */
-    private Integer selectedLevel = Integer.valueOf(90);
-
-    /**
      * A profession selected by the user, or the profession that was stored in
      * the preference keeper, or "All".
      */
@@ -448,7 +442,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         } else if (rcl != null && rcl.slot instanceof SWGComponentSlot) {
             final SWGComponentSlot sl = (SWGComponentSlot) rcl.slot;
             SWGCategory cat = SWGSchematicsManager.
-                    getCategory(sl.getCategoryId());
+                    getCategory(sl.getCategoryId(),galaxy.getType());
             if (sl.getType().equals("item")
                     || SWGSchematicsManager.isSpecial(cat)) {
                 popup.add(informationMenu(rcl, sl.getType().equals("item")
@@ -527,8 +521,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * {@link #actionSchematicSelected(SWGSchematic, JButton, boolean)}.
      */
     private void actionFilterSchematics() {
-        filteredSchematics = SWGSchematicsManager.getSchematics(
-                selectedProfession, -1, selectedLevel.intValue());
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        filteredSchematics = SWGSchematicsManager.getSchematics(selectedProfession, gxy);
 
         isUpdatingGUI = true;
         schemTreeModel.setSchematics(filteredSchematics);
@@ -593,7 +587,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         int fact = factoryAmount();
         int fc = (direction == null && selectedSchematic != null)
                 ? fact * SWGSchematicsManager.schemCompAmount(
-                        schem, selectedSchematic)
+                        schem, selectedSchematic, galaxy.getType())
                 : 0;
         boolean isSame = selectedSchematic == schem;
         selectedSchematic = schem;
@@ -783,7 +777,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             if (o instanceof SWGSchematic) {
                 SWGSchematic s = (SWGSchematic) o;
                 int fc = SWGSchematicsManager.schemCompAmount(
-                        selectedSchematic, s);
+                        selectedSchematic, s, galaxy.getType());
                 if (fc > 0) {
                     int ft = factoryAmount() / fc;
                     if (ft > 0) factoryAmount.setValue(Integer.valueOf(ft));
@@ -795,7 +789,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         } else if (src.equals("Up") && selectedCategory != null
                 && selectedCategory.getID() > SWGCategory.ALL)
             displayCategoryPath(SWGSchematicsManager.getCategory(
-                    selectedCategory.getParentID()), traceForward);
+                    selectedCategory.getParentID(), galaxy.getType()), traceForward);
     }
 
     /**
@@ -1106,7 +1100,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                         : err);
             } else if (cs.getType().equals("category")) {
                 SWGCategory cc =
-                        SWGSchematicsManager.getCategory(cs.getCategoryId());
+                        SWGSchematicsManager.getCategory(cs.getCategoryId(), galaxy.getType());
                 z.app(cc != null
                         ? cc.getName()
                         : err);
@@ -1228,7 +1222,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                         slot.getSchematicId()).getName();
             if (slot.getType().equals("category"))
                 ret = SWGSchematicsManager.getCategory(
-                        slot.getCategoryId()).getName();
+                        slot.getCategoryId(), galaxy.getType()).getName();
             if (slot.getType().equals("item"))
                 ret = slot.getItemName();
             if (ret != null)
@@ -1322,10 +1316,10 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private String draftDataCategory(SWGSchematic s) {
         String err = "<html><font color=\"red\"><b>Error</b></font>, %s</html>";
-        SWGCategory c = SWGSchematicsManager.getCategory(s.getCategory());
+        SWGCategory c = SWGSchematicsManager.getCategory(s.getCategory(), galaxy.getType());
         if (c == null)
             return String.format(err, "");
-        SWGCategory p = SWGSchematicsManager.getCategory(c.getParentID());
+        SWGCategory p = SWGSchematicsManager.getCategory(c.getParentID(),galaxy.getType());
         if (p == null)
             return String.format(err, c.getName());
 
@@ -1642,6 +1636,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * user selects the schematics tab for the first time.
      */
     private void make() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	galaxy = gxy;
         this.setLeftComponent(makeWest());
         this.setRightComponent(makeCenter());
 
@@ -1654,7 +1650,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     sid.intValue());
         if (selectedSchematic != null)
             selectedCategory = SWGSchematicsManager.getCategory(
-                    selectedSchematic.getCategory());
+                    selectedSchematic.getCategory(), gxy.getType());
 
         actionFilterSchematics();
         display(selectedSchematic);
@@ -2298,7 +2294,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        jsp.setMinimumSize(new Dimension(240, 100));
+        jsp.setMinimumSize(new Dimension(300, 100));
 
         return jsp;
     }
@@ -2353,7 +2349,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                         : "ERROR");
             } else if (cs.getType().equals("category")) {
                 SWGCategory cc = SWGSchematicsManager.getCategory(
-                        cs.getCategoryId());
+                        cs.getCategoryId(), galaxy.getType());
                 z.app(cc != null
                         ? cc.getName()
                         : "ERROR");
@@ -2429,7 +2425,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @return a sorted list, or {@code null}
      */
     private List<ResourceAmount> shoppingResourcesSorted(SWGSchematic schem) {
-        List<ResourceAmount> ral = SWGSchematicsManager.getShopping(schem);
+        List<ResourceAmount> ral = SWGSchematicsManager.getShopping(schem, galaxy.getType());
         if (ral != null)
             Collections.sort(ral, new Comparator<ResourceAmount>() {
 
@@ -2500,13 +2496,13 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         List<SWGCategory> cats = new ArrayList<SWGCategory>();
         int id = schem.getCategory();
         while (id > SWGCategory.ALL) {
-            SWGCategory c = SWGSchematicsManager.getCategory(id);
+            SWGCategory c = SWGSchematicsManager.getCategory(id, galaxy.getType());
             cats.add(c);
             id = c.getParentID();
         }
 
         // scan all schematics
-        for (SWGSchematic s : SWGSchematicsManager.getSchematics()) {
+        for (SWGSchematic s : SWGSchematicsManager.getSchematics(galaxy)) {
             for (SWGComponentSlot cs : s.getComponentSlots()) {
                 // direct use
                 id = cs.getSchematicId();
@@ -2518,7 +2514,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 // use via component category
                 id = cs.getCategoryId();
                 if (id > 0) {
-                    SWGCategory c = SWGSchematicsManager.getCategory(id);
+                    SWGCategory c = SWGSchematicsManager.getCategory(id, galaxy.getType());
                     if (cats.contains(c) && !ret.contains(s)) ret.add(s);
                 }
             }
@@ -2823,7 +2819,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                             actionSchematicSelected(s, null, false);
                         } else if (cs.getType().equals("category")) {
                             displayCategoryPath(SWGSchematicsManager.
-                                    getCategory(cs.getCategoryId()),
+                                    getCategory(cs.getCategoryId(), galaxy.getType()),
                                     traceForward);
                         }
                     }

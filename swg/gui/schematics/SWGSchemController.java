@@ -28,6 +28,7 @@ import swg.gui.SWGFrame;
 import swg.gui.common.SWGSac;
 import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
+import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.swgcraft.SWGCraftCache.CacheUpdate;
 import swg.swgcraft.SWGCraftCache.CacheUpdate.UpdateType;
@@ -294,7 +295,8 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @return a list of rcw-pairs
      */
     private static List<SWGRCWPair> rcwPairsInit() {
-        List<SWGSchematic> schems = SWGSchematicsManager.getSchematics();
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<SWGSchematic> schems = SWGSchematicsManager.getSchematics(gxy);
         List<SWGRCWPair> ret = new ArrayList<SWGRCWPair>(schems.size() / 2); // rough
         for (SWGSchematic s : schems) {
             boolean hq = SWGSchematicsManager.isQuality(s);
