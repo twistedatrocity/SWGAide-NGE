@@ -156,7 +156,7 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
             ArrayList<TNode> ret = new ArrayList<TNode>();
             SWGCategory cat = (SWGCategory) node.getContent();
             if(cat.getType().equals(gxy.getType()) || cat.getType().equals("ALL") ) {
-	            addElements(cat.getCategories(), ret);
+	            addElements(cat.getCategories(gxy), ret);
 	            addElements(filterSchematics(cat.getSchematics()), ret);
 	            addElements(cat.getItems(), ret);
             }

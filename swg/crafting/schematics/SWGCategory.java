@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import swg.model.SWGCGalaxy;
 import swg.tools.ZString;
 import swg.tools.ZXml;
 
@@ -307,9 +308,29 @@ public final class SWGCategory implements Comparable<SWGCategory> {
      * @return a list of sub-categories, or {@link Collections#EMPTY_LIST}
      */
     public List<SWGCategory> getCategories() {
-        if (categories == null)
+        if (categories == null) {
             return Collections.emptyList();
+        }
         return categories;
+    }
+    
+    /**
+     * Returns a list of sub-categories which are contained by this category and galaxy, or
+     * an empty list. The returned list is <b>read-only</b>.
+     * 
+     * @return a list of sub-categories, or {@link Collections#EMPTY_LIST}
+     */
+    public List<SWGCategory> getCategories(SWGCGalaxy gxy) {
+        if (categories == null) {
+            return Collections.emptyList();
+        }
+        List<SWGCategory> ret = new ArrayList<SWGCategory>();
+        for(SWGCategory c : categories) {
+        	if(c.getType().equals(gxy.getType())) {
+        		ret.add(c);
+        	}
+        }
+        return ret;
     }
 
     /**
