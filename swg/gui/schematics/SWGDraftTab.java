@@ -1589,6 +1589,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     		assignee = null;
     		selectedSchematic = null;
     		actionFilterSchematics();
+    		actionSchematicSelected(null, null, false);
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
@@ -1647,18 +1648,19 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         this.setRightComponent(makeCenter());
 
         // now it is time to trigger GUI calls
-        Integer sid = (Integer) SWGFrame.getPrefsKeeper().get(
-                /* Small Glass --- anyone has it */
+        /*Integer sid = (Integer) SWGFrame.getPrefsKeeper().get(
+                // Small Glass --- anyone has it 
                 "schemDraftSelectedSchematic", Integer.valueOf(690));
         if (sid != null)
             selectedSchematic = SWGSchematicsManager.getSchematic(
                     sid.intValue());
         if (selectedSchematic != null)
             selectedCategory = SWGSchematicsManager.getCategory(
-                    selectedSchematic.getCategory(), gxy.getType());
+                    selectedSchematic.getCategory(), gxy.getType());*/
 
         actionFilterSchematics();
-        display(null);
+        selectedSchematic = null;
+        display(selectedSchematic);
 
         setDividerLocation(280);
         actionAdjustWidths();
