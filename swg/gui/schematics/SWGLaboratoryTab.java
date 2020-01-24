@@ -24,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -76,6 +77,7 @@ import swg.gui.common.SWGListModel;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
+import swg.model.SWGCGalaxy;
 import swg.tools.SpringUtilities;
 import swg.tools.ZNumber;
 
@@ -113,6 +115,11 @@ final class SWGLaboratoryTab extends JPanel {
      * A string recently searched for, or {@code null}.
      */
     private String findTxt;
+    
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * The URL for the schematics laboratory help page. This is the page which
@@ -167,6 +174,13 @@ final class SWGLaboratoryTab extends JPanel {
      * The container for this GUI element, the schematic tab.
      */
     final SWGSchematicTab schemTab;
+    
+    /**
+     * Used to see if the NW Schemchooser has been built.
+     */
+    private boolean schemListDone = false;
+    
+    private SWGListModel<SWGSchematic> schemModel;
 
     /**
      * The most recently selected resource, or {@code null}.
@@ -537,6 +551,16 @@ final class SWGLaboratoryTab extends JPanel {
      * this element is yet a stub it is populated.
      */
     void focusGained() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(gxy) && schemListDone) {
+    		actionAssigneeSelected(null);
+    		schemModel = new SWGListModel<SWGSchematic>();
+            schematicList.setModel(schemModel);
+    		galaxy = gxy;
+    	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
 
@@ -1086,7 +1110,9 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWSchemChooser() {
-        schematicList = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
+        schematicList = new JList<SWGSchematic>();
+        schemModel = new SWGListModel<SWGSchematic>();
+        schematicList.setModel(schemModel);
         schematicList.setToolTipText("Select a schematic");
         schematicList.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
@@ -1120,6 +1146,7 @@ final class SWGLaboratoryTab extends JPanel {
                 BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                 " Schematics "));
         hb.add(jsp);
+        schemListDone = true;
         return hb;
     }
 

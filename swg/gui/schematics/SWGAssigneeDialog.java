@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -95,6 +96,11 @@ final class SWGAssigneeDialog extends SWGJDialog {
      * A combo box for selecting a profession.
      */
     private JComboBox<SWGProfession> professionChooser;
+    private DefaultComboBoxModel<String> profModel;
+    /**
+     * List of filtered professions based on selected galaxy
+     */
+    private String[] filteredProfs;
 
     /**
      * A list for all schematics or a filtered set.
@@ -445,8 +451,8 @@ final class SWGAssigneeDialog extends SWGJDialog {
      */
     private Component makeCenterProfessionChooser() {
     	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
-        List<String> pls = SWGProfession.getNames(gxy.getType());
-        professionChooser = new JComboBox<SWGProfession>((ComboBoxModel<SWGProfession>) pls) {
+        //List<String> pls = SWGProfession.getNames(gxy.getType());
+        professionChooser = new JComboBox<SWGProfession>() {
             @Override
             public Dimension getMaximumSize() {
                 Dimension d = super.getMaximumSize();
@@ -454,16 +460,17 @@ final class SWGAssigneeDialog extends SWGJDialog {
                 return d;
             }
         };
+        profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
         professionChooser.setToolTipText(
                 "Select a profession for the left-hand list of schematics");
         professionChooser.setBorder(BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                         " Profession "));
         professionChooser.setRenderer(new SWGListCellRenderer<SWGProfession>() {
-            @Override
-            protected String labelString(SWGProfession value) {
-                return value.getName();
-            }
+           /* @Override
+            protected String labelString(String value) {
+                return value.toString();
+            }*/
         });
 
         professionChooser.addActionListener(new ActionListener() {
@@ -620,6 +627,21 @@ final class SWGAssigneeDialog extends SWGJDialog {
             ((SWGSchematicTab)parent).notifyAssigneeUsers();
         }
     }
+    
+    private void setFilteredProfs() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	List<String> pl = SWGProfession.getNames(gxy.getType());
+        String[] plArr = new String[pl.size()];
+    	plArr = pl.toArray(plArr);
+    	filteredProfs = plArr;
+    }
+    
+    private String[] getFilteredProfs() {
+    	if(filteredProfs == null) {
+    		setFilteredProfs();
+    	}
+    	return filteredProfs;
+    }
 
     @Override
     public void setVisible(boolean b) {
@@ -629,6 +651,7 @@ final class SWGAssigneeDialog extends SWGJDialog {
             super.setVisible(false);
             return;
         }
+        setFilteredProfs();
 
         if (schematicsList.getModel().getSize() <= 0) // first time
             professionChooser.setSelectedItem(SWGProfession.ALL);

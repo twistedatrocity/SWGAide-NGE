@@ -1586,6 +1586,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     		galaxy = gxy;
     		schemTreeModel = new SWGSchematicTreeModel();
     		schemTree.setModel(schemTreeModel);
+    		assignee = null;
+    		selectedSchematic = null;
+    		actionFilterSchematics();
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
@@ -1655,7 +1658,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     selectedSchematic.getCategory(), gxy.getType());
 
         actionFilterSchematics();
-        display(selectedSchematic);
+        display(null);
 
         setDividerLocation(280);
         actionAdjustWidths();

@@ -62,6 +62,11 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * @serial a list of integers for schematic IDs
      */
     private List<Integer> favIDs;
+    
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * A temporary list of schematics that the player selects as favorites for
@@ -144,6 +149,13 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      */
     List<SWGSchematic> getFavorites() {
     	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(gxy)) {
+    		favorites = null;
+    		galaxy = gxy;
+    	}
         synchronized (favIDs) {
             if (favorites == null) {
                 if (this == DEFAULT) {
