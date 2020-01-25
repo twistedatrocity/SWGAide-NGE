@@ -301,7 +301,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * A schematic selected by the user, or {@code null}. This member is not
      * stored in the DAT file but its integer ID.
      */
-    private SWGSchematic selectedSchematic;
+    private static SWGSchematic selectedSchematic;
 
     /**
      * The GUI element for displaying a shopping list.
@@ -1558,7 +1558,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         if (f == null || f.trim().isEmpty()) return;
 
         findTxt = f;
-        List<SWGSchematic> res = SWGSchematicsManager.findSchematics(findTxt);
+        List<SWGSchematic> res = SWGSchematicsManager.findSchematics(findTxt,galaxy);
         if (res.size() <= 0)
             JOptionPane.showMessageDialog(traceUp,
                     String.format("Find failed for \"%s\"", findTxt),
@@ -1586,10 +1586,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     		galaxy = gxy;
     		schemTreeModel = new SWGSchematicTreeModel();
     		schemTree.setModel(schemTreeModel);
-    		assignee = null;
+    		assignee = SWGSchematicAssignee.DEFAULT;
     		selectedSchematic = null;
     		actionFilterSchematics();
     		actionSchematicSelected(null, null, false);
+    		display(null);
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
@@ -1608,6 +1609,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 for (JMenuItem mi : menuItemsNavigate)
                     schemTab.frame.optionsMenuRemove(mi);
         }
+    }
+    
+    public static SWGSchematic getSelectedSchematic() {
+    	
+    	return selectedSchematic;
     }
 
     /**
@@ -1660,7 +1666,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         actionFilterSchematics();
         selectedSchematic = null;
-        display(selectedSchematic);
+        display(null);
 
         setDividerLocation(280);
         actionAdjustWidths();

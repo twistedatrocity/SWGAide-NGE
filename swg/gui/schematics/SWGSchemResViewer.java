@@ -53,6 +53,7 @@ import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
 import swg.gui.common.SWGJTable;
+import swg.gui.common.SWGListModel;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.gui.common.SWGSac;
 import swg.gui.resources.SWGInventoryWrapper;
@@ -109,6 +110,15 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * for the layout of a sac.
      */
     private SWGSac currentSchem;
+    
+    /**
+     * The SWGFrame that is calling this class.
+     */
+    private SWGFrame frame;
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * A comparator for LQ schematics; this object returns 0 if {@code o.rc() ==
@@ -168,6 +178,11 @@ public final class SWGSchemResViewer extends SWGJDialog {
     private List<SWGSac> schematics;
 
     /**
+     * The Schematic Tab
+     */
+    private SWGSchematicTab schemTab;
+    
+    /**
      * The table for schematics.
      */
     private SWGJTable schemTable;
@@ -175,9 +190,11 @@ public final class SWGSchemResViewer extends SWGJDialog {
     /**
      * Creates a mode-less dialog of this type.
      */
-    private SWGSchemResViewer() {
+    private SWGSchemResViewer(SWGFrame fr) {
         super("SWGAide-NGE - Used-by-Schematic Viewer", false, null);
         // if (THIS != null) throw new IllegalStateException("No doubles");
+        this.frame = fr;
+        this.schemTab = SWGFrame.getSchematicTab(fr);
 
         registerHelp(SWGAide.class.getResource(
                 "docs/help_resources_schematics_viewer_en.html"));
@@ -265,8 +282,9 @@ public final class SWGSchemResViewer extends SWGJDialog {
         SWGSchematic s = (SWGSchematic) sac.obj;
 
         JPopupMenu ppp = new JPopupMenu();
-
-        ppp.add(SWGSchemController.schematicSelectMenu(s, null));
+        
+        SWGSchemController sc = new SWGSchemController(SWGFrame.getSchematicTab(frame));
+        ppp.add(sc.schematicSelectMenu(s, null));
 
         ppp.show(schemTable, e.getX(), e.getY());
     }
@@ -389,12 +407,26 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * 
      * @param kr a known resource
      */
-    private void display(SWGKnownResource kr) {
+    private void display(SWGKnownResource kr, SWGFrame fr) {
+    	this.frame = fr;
+    	this.schemTab = SWGFrame.getSchematicTab(fr);
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(kr.galaxy())) {
+    		galaxy = gxy;
+    		THIS = new SWGSchemResViewer(fr);
+    		THIS.display(kr,frame);
+    		return;
+    	}
         currentRes = kr;
-        schematics = SWGSchemController.schematics(kr, rateLimit, true);
+        
+        SWGSchemController sc = new SWGSchemController(schemTab);
+        schematics = sc.schematics(kr, rateLimit, true, gxy);
 
         if (namedLQ.isSelected())
-            schematics.addAll(0, SWGSchemController.schematicsLQNamed(kr));
+            schematics.addAll(0, sc.schematicsLQNamed(kr));
 
         resNameClass.setText(String.format(" %s (%s) ",
                 kr.getName(), kr.rc().rcName()));
@@ -523,7 +555,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                 else
                     rateLimit = SWGGuiUtils.statLimits[0] * 1000.0;
 
-                display(currentRes);
+                display(currentRes,frame);
             }
         });
         br.add(spin);
@@ -540,7 +572,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (currentRes != null) display(currentRes);
+                if (currentRes != null) display(currentRes,frame);
                 SWGFrame.getPrefsKeeper().add("schemRes4SchemNamedLQ",
                         Boolean.valueOf(namedLQ.isSelected()));
             }
@@ -635,7 +667,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * @return a menu item
      */
     public static JMenuItem displayMenu(
-            final SWGKnownResource kr, final JComponent c) {
+            final SWGKnownResource kr, final JComponent c,SWGFrame fr) {
 
         JMenuItem dm = new JMenuItem("Schematics viewer");
         dm.setToolTipText(kr == null
@@ -648,7 +680,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SWGSchemResViewer.client = c;
-                updateDisplay(kr, c);
+                updateDisplay(kr, c,fr);
                 THIS.setVisible(true);
             }
         });
@@ -673,11 +705,11 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * @param c an invoking client
      * @return {@code false} if the client must stop invoking this method
      */
-    public static boolean updateDisplay(SWGKnownResource kr, JComponent c) {
-        if (THIS == null) THIS = new SWGSchemResViewer();
+    public static boolean updateDisplay(SWGKnownResource kr, JComponent c, SWGFrame fr) {
+        if (THIS == null) THIS = new SWGSchemResViewer(fr);
         if (c != client) return false;
 
-        THIS.display(kr);
+        THIS.display(kr,fr);
         return true;
     }
 

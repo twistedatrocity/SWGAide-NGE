@@ -24,7 +24,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -522,7 +521,7 @@ final class SWGLaboratoryTab extends JPanel {
         if (f == null || f.trim().isEmpty()) return;
 
         findTxt = f;
-        List<SWGSchematic> res = SWGSchematicsManager.findSchematics(findTxt);
+        List<SWGSchematic> res = SWGSchematicsManager.findSchematics(findTxt, galaxy);
         if (res.size() <= 0)
             JOptionPane.showMessageDialog(assigneeCombo,
                     String.format("Find failed for \"%s\"", findTxt),
@@ -625,11 +624,7 @@ final class SWGLaboratoryTab extends JPanel {
 
         actionAssigneeSelected(null); // populate assignee combo
         isGuiFinished = true;
-        Integer tsid = (Integer) SWGFrame.getPrefsKeeper().get("schemDraftSelectedSchematic", Integer.valueOf(690));
-        SWGSchematic tsel = null;
-        if (tsid != null)
-            tsel = SWGSchematicsManager.getSchematic(tsid.intValue());
-        
+        SWGSchematic tsel = SWGDraftTab.getSelectedSchematic();
         if (tsel != null)
             schemSelect(tsel);
     }

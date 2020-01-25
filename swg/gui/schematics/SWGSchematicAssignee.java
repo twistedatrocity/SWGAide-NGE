@@ -158,7 +158,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
     	}
         synchronized (favIDs) {
             if (favorites == null) {
-                if (this == DEFAULT) {
+                if (this.equals(DEFAULT) || this.getName().equals("Pro: All")) {
                     favorites = SWGSchematicsManager.getSchematics(gxy);
                 } else {
                     favorites = new ArrayList<SWGSchematic>(favIDs.size() + 16);

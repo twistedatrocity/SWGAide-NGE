@@ -286,6 +286,14 @@ public class SWGFrame extends JFrame implements ComponentListener,
         progressBar = initProgressBar();
         // from now on, see delayedConstructor(this) invoked from SWGAide
     }
+    
+    public static SWGSchematicTab getSchematicTab (SWGFrame frame) {
+       return frame.getSchemTab(); 
+    }
+  
+    private SWGSchematicTab getSchemTab() {
+    	return schematicTab;
+    }
 
     /**
      * Adds an object containing a callback to the list of callbacks that will
@@ -1801,6 +1809,10 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updatePreLaunch() {
+    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfession");
+    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfLevel");
+    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedSchematic");
+    	//doExit();
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
         if (pkver.contains("MrMiagi")) {
         	String[] parts = pkver.split("-MrMiagi-");

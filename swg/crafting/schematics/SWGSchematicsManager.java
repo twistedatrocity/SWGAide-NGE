@@ -656,7 +656,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             subscribers.add(subscriber);
         }
     }
-
+    
     /**
      * Helper method which returns the minimum skill for the specified
      * schematic, or 0 if its minimum level is unknown.
@@ -693,8 +693,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @return a list of schematics
      * @throws NullPointerException if the argument is {@code null}
      */
-    public static List<SWGSchematic> findSchematics(String string) {
-        List<SWGSchematic> all = getSchematicsNull();
+    public static List<SWGSchematic> findSchematics(String string, SWGCGalaxy gxy) {
+        List<SWGSchematic> all = getSchematicsNull(gxy);
         if (all.isEmpty())
             return Collections.emptyList();
 
@@ -719,8 +719,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * @return a list of schematics
      * @throws NullPointerException if the argument is {@code null}
      */
-    public static List<SWGSchematic> findSchematics(SWGResourceClass rClass) {
-        List<SWGSchematic> all = getSchematicsNull();
+    public static List<SWGSchematic> findSchematics(SWGResourceClass rClass,SWGCGalaxy gxy) {
+        List<SWGSchematic> all = getSchematicsNull(gxy);
         if (all.isEmpty())
             return Collections.emptyList();
 
@@ -846,23 +846,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
             if (schematics.size() <= 0)
                 return null; // init failed or not run yet
             return schematics.get(id);
-        }
-    }
-
-    /**
-     * Returns a list of schematic names. The returned list <b>is not</b>
-     * read-only.
-     * 
-     * @return a modifiable list names
-     */
-    public static List<String> getSchematicNames() {
-        synchronized (schematics) {
-            ArrayList<String> ret = new ArrayList<String>(schematics.size());
-            for (SWGSchematic s : schematics)
-                if (s != null)
-                    ret.add(s.getName());
-
-            return ret;
         }
     }
 
@@ -1020,8 +1003,15 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * 
      * @return a read-only list of all schematics and {@code null} elements
      */
-    public static List<SWGSchematic> getSchematicsNull() {
-        return schematics;
+    public static List<SWGSchematic> getSchematicsNull(SWGCGalaxy gxy) {
+    	List<SWGSchematic> ret = new ArrayList<SWGSchematic>();
+    	for(SWGSchematic s : schematics) {
+    		if(s.getBase().equals(gxy.getType())) {
+    			ret.add(s);
+    		}
+    	}
+    	
+        return ret;
     }
 
     /**

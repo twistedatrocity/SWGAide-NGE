@@ -86,6 +86,7 @@ import swg.gui.common.SWGTextInputDialogue;
 import swg.gui.common.SWGTextInputDialogue.TextValidation;
 import swg.gui.schematics.SWGSchemController;
 import swg.gui.schematics.SWGSchemResViewer;
+import swg.gui.schematics.SWGSchematicTab;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
@@ -710,7 +711,7 @@ final class SWGInventoryTab extends JPanel {
             if (row >= 0) {
                 row = table.convertRowIndexToModel(row);
                 updateViewer = SWGSchemResViewer.updateDisplay(
-                        wrappersFiltered().get(row).getResource(), this);
+                        wrappersFiltered().get(row).getResource(), this, frame);
             }
         }
     }
@@ -2603,10 +2604,11 @@ final class SWGInventoryTab extends JPanel {
                 : null;
 
         if(SWGFrame.verified != null && SWGFrame.verified == true) {
-	        ppp.add(SWGSchemResViewer.displayMenu(kr, this));
+	        ppp.add(SWGSchemResViewer.displayMenu(kr, this, frame));
 	        updateViewer = true; // by chance, it is reset if...
-	
-	        ppp.add(SWGSchemController.resClassUse(rc));
+	        SWGSchematicTab schemTab = SWGFrame.getSchematicTab(frame);
+	        SWGSchemController sc = new SWGSchemController(schemTab);
+	        ppp.add(sc.resClassUse(rc));
 	
 	        ppp.addSeparator();
 	

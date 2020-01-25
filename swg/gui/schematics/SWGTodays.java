@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -144,6 +143,16 @@ class SWGTodays extends JPanel {
      * A list at which to select an assignee.
      */
     private JList<SWGSchematicAssignee> assigneeList;
+    
+    /**
+     * Reference to SWGFrame
+     */
+    private SWGFrame frame;
+    
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * A convenience constant array of stats in game order.
@@ -196,6 +205,14 @@ class SWGTodays extends JPanel {
      * The component which is the parent for this instance, the tabbed pane.
      */
     private final SWGSchematicTab schemTab;
+    
+    /**
+     * Used to see if the NW Schemchooser has been built.
+     */
+    private boolean schemListDone = false;
+    
+    private SWGListModel<SWGSchematic> schemModel;
+    private SWGListModel<SWGSchematicAssignee> assModel;
 
     /**
      * The currently selected assignee, or {@code null}.
@@ -230,6 +247,7 @@ class SWGTodays extends JPanel {
      */
     SWGTodays(SWGSchematicTab parent) {
         this.schemTab = parent;
+        this.frame = SWGAide.frame();
 
         helpPage = SWGAide.class.getResource(
                 "docs/help_schematics_todays_en.html");
@@ -280,15 +298,16 @@ class SWGTodays extends JPanel {
                 : null;
         selectedAssignee = o;
 
-        if (selectedAssignee == null) {
-            guiClear();
-            return;
+        if (selectedAssignee == null || selectedAssignee.getName().equals("Pro: All")) {
+            //guiClear();
+            //return;
+        	selectedAssignee = SWGSchematicAssignee.DEFAULT;
         }
 
         isWorking = true;
 
         boolean hq = hqlqCheck.isSelected();
-
+//XXX fix this selctor
         List<Triplet> ts = todaysTS(hq, great.isSelected(),
                 selectedAssignee.getFavorites());
         todaysModel.setElements(ts);
@@ -355,7 +374,7 @@ class SWGTodays extends JPanel {
                 ppp.add(SWGResController.inventoryFilterMenu(rc, wg, ir, false));
 
                 ppp.addSeparator();
-                ppp.add(SWGSchemResViewer.displayMenu(tr, this));
+                ppp.add(SWGSchemResViewer.displayMenu(tr, this, frame));
                 updateViewer = true; // by chance, it is reset if...
                 ppp.addSeparator();
 
@@ -399,7 +418,7 @@ class SWGTodays extends JPanel {
                 schematics(tri, selectedAssignee));
         if (updateViewer)
             updateViewer = SWGSchemResViewer.updateDisplay(
-                    tri.current, this);
+                    tri.current, this, frame);
 
     }
 
@@ -443,6 +462,21 @@ class SWGTodays extends JPanel {
      * this element is yet a stub it is populated.
      */
     void focusGained() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(gxy) && schemListDone) {
+    		galaxy = gxy;
+    		guiClear();
+    		assigneeProfession(true);
+    		schemModel = new SWGListModel<SWGSchematic>();
+            schematics.setModel(schemModel);
+            assModel = new SWGListModel<SWGSchematicAssignee>();
+            assigneeList.setModel(assModel);
+            guiUpdate();
+            assigneeSelect();
+    	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
             synchronized (this) {
@@ -492,7 +526,7 @@ class SWGTodays extends JPanel {
         assigneeList.clearSelection();
 
         List<SWGSchematicAssignee> as = SWGSchematicTab.assignees();
-        as.addAll(assigneeProfession());
+        as.addAll(assigneeProfession(false));
 
         ((SWGListModel<SWGSchematicAssignee>) assigneeList.getModel()).setElements(as);
 
@@ -572,7 +606,9 @@ class SWGTodays extends JPanel {
      * @return a GUI component
      */
     private Component makeNorthASList() {
-        assigneeList = new JList<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
+        assigneeList = new JList<SWGSchematicAssignee>();
+        assModel = new SWGListModel<SWGSchematicAssignee>();
+        assigneeList.setModel(assModel);
         assigneeList.setToolTipText("Select assignee for favorite schematics");
         assigneeList.setCellRenderer(new SWGListCellRenderer<SWGGui>() {
             @Override
@@ -856,7 +892,9 @@ class SWGTodays extends JPanel {
      * @return a GUI component
      */
     private Component makeNorthSchematicsList() {
-        schematics = new JList<SWGSchematic>(new SWGListModel<SWGSchematic>());
+        schematics = new JList<SWGSchematic>();
+        schemModel = new SWGListModel<SWGSchematic>();
+        schematics.setModel(schemModel);
         schematics.setCellRenderer(new SWGListCellRenderer<SWGSchematic>() {
             @Override
             protected String labelString(SWGSchematic value) {
@@ -896,6 +934,7 @@ class SWGTodays extends JPanel {
 
         JScrollPane jsp = new JScrollPane(schematics);
         hb.add(jsp);
+        schemListDone = true;
         return hb;
     }
 
@@ -1134,11 +1173,11 @@ class SWGTodays extends JPanel {
      * 
      * @return a list of assignees
      */
-    private static List<SWGSchematicAssignee> assigneeProfession() {
-        if (professionAssignees != null) return professionAssignees;
+    private static List<SWGSchematicAssignee> assigneeProfession(boolean reset) {
+        if (professionAssignees != null && !reset) return professionAssignees;
         
         SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
-        List<SWGProfession> pl = Arrays.asList( SWGProfession.filter( gxy.getType() ) );
+        List<SWGProfession> pl = SWGProfession.getProfessions(gxy.getType());
 
         List<SWGSchematicAssignee> ret =
                 new ArrayList<SWGSchematicAssignee>(pl.size());
@@ -1178,7 +1217,7 @@ class SWGTodays extends JPanel {
         }
 
         List<SWGSchematicAssignee> al = pn.startsWith("Pro: ")
-                ? assigneeProfession()
+                ? assigneeProfession(false)
                 : SWGSchematicTab.assignees();
         for (SWGSchematicAssignee a : al) {
             if (a.getName().equals(pn)) {
@@ -1190,10 +1229,13 @@ class SWGTodays extends JPanel {
         if (THIS != null) {
             THIS.assigneeList.setSelectedValue(ass, true);
         }
-
-        return ass.getName().equals("Pro: All")
-                ? SWGSchematicsManager.getSchematics(SWGProfession.getFromID(SWGProfession.ALL),gxy)
-                : ass.getFavorites();
+        List<SWGSchematic> ret;
+        if(ass.getName().equals("Pro: All") || ass.equals(SWGSchematicAssignee.DEFAULT)) {
+        	ret = SWGSchematicsManager.getSchematics(SWGProfession.getFromID(SWGProfession.ALL),gxy);
+        } else {
+        	ret = ass.getFavorites();
+        }
+        return ret;
     }
 
     /**
@@ -1399,7 +1441,7 @@ class SWGTodays extends JPanel {
      * 
      * @return {@code true} if some resources outshine inventory
      */
-    static boolean todaysTinted() {
+    boolean todaysTinted() {
         return great == null
                 ? !todaysTS(true, false, assigneeSelect()).isEmpty()
                 : THIS.todaysModel.getRowCount() > 0;
@@ -1417,10 +1459,12 @@ class SWGTodays extends JPanel {
      * @param inv an inventory list, may be empty
      * @return a list of Triplet elements
      */
-    private static List<Triplet> todaysTS(boolean hq, boolean grt,
+    private List<Triplet> todaysTS(boolean hq, boolean grt,
             List<SWGSchematic> schems) {
 
-        List<SWGRCWPair> rcwps = SWGSchemController.rcwPairs(hq, schems);
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	SWGSchemController sc = new SWGSchemController(schemTab);
+    	List<SWGRCWPair> rcwps = sc.rcwPairs(hq, schems, gxy);
 
        	List<SWGInventoryWrapper> inv = SWGSchemController.inventory();
 

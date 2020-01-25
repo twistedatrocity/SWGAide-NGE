@@ -92,6 +92,7 @@ import swg.gui.common.SWGTextInputDialogue;
 import swg.gui.common.SWGTextInputDialogue.TextValidation;
 import swg.gui.schematics.SWGSchemController;
 import swg.gui.schematics.SWGSchemResViewer;
+import swg.gui.schematics.SWGSchematicTab;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
@@ -171,6 +172,11 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     private final JTextField[] filterFields = new JTextField[Stat.COUNT];
 
+    /**
+     * Reference for SWGFrame
+     */
+    private SWGFrame frame;
+    
     /**
      * A list of resource guards for the current galaxy.
      */
@@ -291,6 +297,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      * selected.
      */
     private SWGResourceClass selectedResourceClass;
+    
+    private SWGSchemController schemController;
 
     /**
      * Integer values at the filter input fields.
@@ -316,6 +324,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     SWGCurrentTab(final SWGResourceTab resourceTab) {
         this.resourceTab = resourceTab;
+        this.frame = SWGAide.frame();
+        SWGSchematicTab st = SWGFrame.getSchematicTab(frame);
+        schemController = new SWGSchemController(st);
 
         helpPage = SWGAide.class.getResource("docs/help_resources__en.html");
 
@@ -395,7 +406,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         if (updateViewer)
             updateViewer = SWGSchemResViewer.updateDisplay(
-                    selectedResource, this);
+                    selectedResource, this, frame);
     }
 
     /**
@@ -1110,7 +1121,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             if (!n.isEmpty()) s = s + ": \n" + n;
         }
 
-        ppp.add(SWGSchemResViewer.displayMenu(res, this));
+        ppp.add(SWGSchemResViewer.displayMenu(res, this, frame));
         updateViewer = true; // by chance, it is reset if...
 
         ppp.addSeparator();
@@ -1152,7 +1163,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         SWGResourceClass rc = res.rc();
         ppp.add(SWGResController.inventoryFilterMenu(rc, null, res, true));
-        ppp.add(SWGSchemController.resClassUse(rc));
+        ppp.add(schemController.resClassUse(rc));
 
         if (rc != null && rc.isSub(SWGCreatureResources.class))
             ppp.add(SWGResController.creatureHarvMenu((SWGCreatureResources)
@@ -1687,7 +1698,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 ? g.logic()
                 : null);
         popup.add(SWGResController.inventoryFilterMenu(rc, w, null, false));
-        popup.add(SWGSchemController.resClassUse(rc));
+        popup.add(schemController.resClassUse(rc));
         if (rc != null && rc.isSub(SWGCreatureResources.class))
             popup.add(SWGResController.creatureHarvMenu(
                     (SWGCreatureResources) rc, guardsTable));
@@ -2632,8 +2643,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         ppp.addSeparator();
 
         ppp.add(SWGResController.currentSelectMenu(res));
-        ppp.add(SWGSchemController.resClassUse(rc));
-        ppp.add(SWGSchemResViewer.displayMenu(res, this));
+        ppp.add(schemController.resClassUse(rc));
+        ppp.add(SWGSchemResViewer.displayMenu(res, this, frame));
         updateViewer = true; // by chance, it is reset if...
 
         if (rc != null && rc.isSub(SWGCreatureResources.class))
@@ -2778,7 +2789,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         popup.add(makeResClassDisableColoring());
         popup.add(makeResClassCreateGuardMenu(rc));
-        popup.add(SWGSchemController.resClassUse(rc));
+        popup.add(schemController.resClassUse(rc));
         if (rc.isSub(SWGCreatureResources.class))
             popup.add(SWGResController.creatureHarvMenu(
                     (SWGCreatureResources) rc, resourceClassTree));

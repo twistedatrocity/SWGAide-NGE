@@ -54,7 +54,7 @@ final class SWGRCWPair implements Comparable<SWGRCWPair> {
      * <p>
      * This list <b>is read-only</b>.
      */
-    private final List<SWGSchematic> schematics;
+    private List<SWGSchematic> schematics;
 
     /**
      * Creates an instance of this type for the given arguments. Use {@code

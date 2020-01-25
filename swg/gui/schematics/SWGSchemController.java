@@ -54,6 +54,11 @@ import swg.swgcraft.SWGResourceManager;
 final public class SWGSchemController implements UpdateSubscriber {
 
     /**
+     * The currently selected galaxy
+     */
+	private SWGCGalaxy galaxy;
+	
+	/**
      * A list of inventory wrappers for the current galaxy. This member is an
      * empty list until a character is selected.
      */
@@ -67,7 +72,7 @@ final public class SWGSchemController implements UpdateSubscriber {
     /**
      * A reference to the GUI schematics tab.
      */
-    private static SWGSchematicTab schemTab;
+    private SWGSchematicTab schemTab;
 
     /**
      * A list of schematic wrappers.
@@ -87,13 +92,14 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @throws IllegalStateException if an instance already exists
      */
     @SuppressWarnings("unchecked")
-    SWGSchemController(SWGSchematicTab schemTab) {
+	public
+    SWGSchemController(SWGSchematicTab sTab) {
         // if (expGroupTitlesFirstPrio != null)
         // throw new IllegalStateException("An instance exists already");
 
         // "schemExpGroupTitlesFirstPrio"
 
-        SWGSchemController.schemTab = schemTab;
+        schemTab = sTab;
 
         schemWrappers = (List<SWGSchematicWrapper>) SWGFrame.getPrefsKeeper().
                 get("schemWrappers", new ArrayList<SWGSchematicWrapper>());
@@ -209,8 +215,8 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param hq {@code true} for HQ schematics
      * @param ls a list of RCWPairs
      */
-    static void rcwPair(SWGSchematic s, boolean hq, List<SWGRCWPair> ls) {
-        for (SWGRCWPair r : rcwPairs())
+    void rcwPair(SWGSchematic s, boolean hq, List<SWGRCWPair> ls, SWGCGalaxy gxy) {
+        for (SWGRCWPair r : rcwPairs(gxy))
             if (hq == r.isHQ() && r.schematics().contains(s) && !ls.contains(r))
                 ls.add(r);
     }
@@ -233,11 +239,23 @@ final public class SWGSchemController implements UpdateSubscriber {
      * 
      * @return a list of pairs
      */
-    static List<SWGRCWPair> rcwPairs() {
+    List<SWGRCWPair> rcwPairs(SWGCGalaxy gxy) {
+    	SWGCGalaxy sgxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = sgxy;
+    	}
         synchronized (SWGRCWPair.class) {
-            if (rcwPairs == null)
-                rcwPairs = rcwPairsInit();
-
+        	if (rcwPairs != null) {
+        		for (SWGRCWPair p : rcwPairs) {
+        			if(!p.schematics().get(0).getBase().equals(galaxy.getType())) {
+        				rcwPairs = null;
+        				break;
+        			}
+        		}
+        	}
+            if (rcwPairs == null) {
+                rcwPairs = rcwPairsInit(gxy);
+            }
             return rcwPairs;
         }
     }
@@ -255,10 +273,10 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param schems a list of schematics
      * @return a list of {@link SWGRCWPair}s
      */
-    static List<SWGRCWPair> rcwPairs(boolean hq, List<SWGSchematic> schems) {
+    List<SWGRCWPair> rcwPairs(boolean hq, List<SWGSchematic> schems, SWGCGalaxy gxy) {
         List<SWGRCWPair> ret = new ArrayList<SWGRCWPair>(48);
         for (SWGSchematic s : schems)
-            rcwPair(s, hq, ret);
+            rcwPair(s, hq, ret,gxy);
 
         return ret;
     }
@@ -278,8 +296,8 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param hq {@code true} for HQ pairs
      * @return a filtered list of HQ pairs
      */
-    private static List<SWGRCWPair> rcwPairs(SWGResourceClass rc, boolean hq) {
-        List<SWGRCWPair> rl = rcwPairs();
+    private List<SWGRCWPair> rcwPairs(SWGResourceClass rc, boolean hq, SWGCGalaxy gxy) {
+        List<SWGRCWPair> rl = rcwPairs(gxy);
         ArrayList<SWGRCWPair> ret = new ArrayList<SWGRCWPair>(rl.size());
         for (SWGRCWPair r : rl)
             if (hq == r.isHQ() && rc.isSub(r.rc())) ret.add(r);
@@ -294,8 +312,7 @@ final public class SWGSchemController implements UpdateSubscriber {
      * 
      * @return a list of rcw-pairs
      */
-    private static List<SWGRCWPair> rcwPairsInit() {
-    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    private List<SWGRCWPair> rcwPairsInit(SWGCGalaxy gxy) {
         List<SWGSchematic> schems = SWGSchematicsManager.getSchematics(gxy);
         List<SWGRCWPair> ret = new ArrayList<SWGRCWPair>(schems.size() / 2); // rough
         for (SWGSchematic s : schems) {
@@ -374,7 +391,7 @@ final public class SWGSchemController implements UpdateSubscriber {
      * 
      * @param rc a resource class constant
      */
-    public static void resClassSelect(SWGResourceClass rc) {
+    public void resClassSelect(SWGResourceClass rc) {
         schemTab.resClassSelect(rc);
     }
 
@@ -389,7 +406,7 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param rc a resource class constant, or {@code null}
      * @return a menu item
      */
-    public static JMenuItem resClassUse(SWGResourceClass rc) {
+    public JMenuItem resClassUse(SWGResourceClass rc) {
         return schemTab.resClassUse(rc);
     }
 
@@ -452,10 +469,10 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param creature {@code true} to include creature for Organic
      * @return a sorted list of HQ schematics
      */
-    static List<SWGSac> schematics(
-            final SWGKnownResource kr, double limit, boolean creature) {
+    List<SWGSac> schematics(
+            final SWGKnownResource kr, double limit, boolean creature, SWGCGalaxy gxy) {
 
-        List<SWGRCWPair> rl = rcwPairs(kr.rc(), true);
+        List<SWGRCWPair> rl = rcwPairs(kr.rc(), true, gxy);
         if (rl.isEmpty()) return Collections.emptyList();
 
         if (!creature && kr.rc() instanceof SWGCreatureResources)
@@ -504,7 +521,7 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param src the source of the invocation, or {@code null}
      * @return a menu item
      */
-    static JMenuItem schematicSelectMenu(SWGSchematic s, JComponent src) {
+    JMenuItem schematicSelectMenu(SWGSchematic s, JComponent src) {
         JMenuItem m = schemTab.schematicSelectMenu(s, src);
         m.setToolTipText("Select schematic at Schematics panels");
         return m;
@@ -534,8 +551,8 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param kr a resource
      * @return a sorted list of LQ schematics
      */
-    static List<SWGSac> schematicsLQNamed(final SWGKnownResource kr) {
-        List<SWGRCWPair> rl = rcwPairs(kr.rc(), false);
+    List<SWGSac> schematicsLQNamed(final SWGKnownResource kr) {
+        List<SWGRCWPair> rl = rcwPairs(kr.rc(), false, kr.galaxy());
         if (rl.isEmpty()) return Collections.emptyList();
 
         List<SWGSchematic> tmp = new ArrayList<SWGSchematic>(rl.size() * 3);

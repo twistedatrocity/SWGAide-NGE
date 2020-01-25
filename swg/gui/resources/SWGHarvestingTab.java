@@ -64,6 +64,7 @@ import swg.gui.common.SWGHelp;
 import swg.gui.common.SWGJTable;
 import swg.gui.common.SWGTableCellEditor;
 import swg.gui.schematics.SWGSchemController;
+import swg.gui.schematics.SWGSchematicTab;
 import swg.tools.SpringUtilities;
 import swg.tools.ZNumber;
 import swg.tools.ZReader;
@@ -712,7 +713,10 @@ final class SWGHarvestingTab extends JPanel {
 
         popup.add(SWGResourceTab.inventoryFilterMenu(rc, null, kr, true, true));
         popup.add(SWGResController.currentSelectMenu(kr));
-        popup.add(SWGSchemController.resClassUse(rc));
+        SWGFrame fr = SWGAide.frame();
+        SWGSchematicTab schemTab = SWGFrame.getSchematicTab(fr);
+        SWGSchemController sc = new SWGSchemController(schemTab);
+        popup.add(sc.resClassUse(rc));
 
         popup.addSeparator();
 
