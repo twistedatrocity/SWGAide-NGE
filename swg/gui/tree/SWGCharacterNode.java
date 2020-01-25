@@ -12,7 +12,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import swg.SWGAide;
 import swg.gui.SWGFrame;
 import swg.gui.schematics.SWGSchematicTab;
 import swg.model.SWGCGalaxy;

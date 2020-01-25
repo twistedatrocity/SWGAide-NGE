@@ -22,6 +22,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -58,7 +59,6 @@ import swg.crafting.resources.SWGResourceFilter;
 import swg.crafting.schematics.SWGExperimentGroup;
 import swg.crafting.schematics.SWGExperimentLine;
 import swg.crafting.schematics.SWGProfession;
-import swg.crafting.schematics.SWGProfessionLevel;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -95,6 +95,16 @@ final class SWGResourceClassUse extends JPanel {
      * session.
      */
     private boolean expandTree = true;
+    
+    /**
+     * List of filtered professions based on selected galaxy
+     */
+    private String[] filteredProfs;
+    
+    /**
+     * Galaxy from the selected character at main panel.
+     */
+    private SWGCGalaxy galaxy;
 
     /**
      * The URL for the resource class use help page. This is the page which is
@@ -117,7 +127,12 @@ final class SWGResourceClassUse extends JPanel {
     /**
      * A combo box for the professions to select from.
      */
-    private JComboBox<Object> professionBox;
+    private JComboBox<String> professionBox;
+    
+    /**
+     * Model for profession combo box
+     */
+    private DefaultComboBoxModel<String> profModel = new DefaultComboBoxModel<String>();
 
     /**
      * A list which displays resource classes which are called for by name by
@@ -479,6 +494,16 @@ final class SWGResourceClassUse extends JPanel {
      * this element is yet a stub it is populated.
      */
     void focusGained() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
+    	if(!galaxy.equals(gxy)) {
+    		setFilteredProfs();
+    		profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
+    		professionBox.setModel(profModel);
+    		galaxy = gxy;
+    	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
 
@@ -519,6 +544,33 @@ final class SWGResourceClassUse extends JPanel {
             z.app("<br/>");
         }
         return z.app("</html>").toString();
+    }
+    
+    /**
+     * Creates or resets the list of professions filtered by galaxy
+     */
+    private void setFilteredProfs() {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	List<String> pl = SWGProfession.getNames(gxy.getType());
+    	String[] plArr = new String[pl.size()];
+        pl.add("- - - - -");
+        String all = pl.get(0);
+        pl.set(0, "<select a profession>");
+        pl.add(all); // Have "All" last */
+        plArr = pl.toArray(plArr);
+    	filteredProfs = plArr;
+    }
+    
+    /**
+     * Provides a list of professions filtered by galaxy.
+     * 
+     * @return String[] containing a list of professions filtered by galaxy.
+     */
+    private String[] getFilteredProfs() {
+    	if(filteredProfs == null) {
+    		setFilteredProfs();
+    	}
+    	return filteredProfs;
     }
 
     /**
@@ -913,18 +965,19 @@ final class SWGResourceClassUse extends JPanel {
      * @return a GUI component
      */
     private Component makeWestProfessionChooser() {
-    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	/*SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
         List<String> pl = SWGProfession.getNames(gxy.getType());
         pl.add("- - - - -");
         String all = pl.get(0);
         pl.set(0, "<select a profession>");
-        pl.add(all); // Have "All" last
-
-        professionBox = new JComboBox<Object>(pl.toArray());
+        pl.add(all); // Have "All" last */
+        profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
+        professionBox = new JComboBox<String>();
+        professionBox.setModel(profModel);
         professionBox.setToolTipText(
                 "Select a profession updates the resource classes");
 
-        final JButton resetProf = new JButton(" ");
+        final JButton resetProf = new JButton("Reset");
         resetProf.setToolTipText(
                 "Reset display to the selected profession -- Alt-X");
         resetProf.setMnemonic(KeyEvent.VK_X);
@@ -965,7 +1018,7 @@ final class SWGResourceClassUse extends JPanel {
 
                 SWGProfession p = SWGProfession.getFromName(s);
                 actionProfessionSelected(p);
-                resetProf.setText(p.getName());
+                //resetProf.setText(p.getName());
 
                 if (first) {
                     resetProf.setEnabled(true);
