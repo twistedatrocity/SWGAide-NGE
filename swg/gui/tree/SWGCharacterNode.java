@@ -116,7 +116,8 @@ final class SWGCharacterNode extends SWGTreeNode {
         	galaxy = gxy;
         }
         SWGGalaxy g = character().galaxy();
-        if(!galaxy.equals(g)) {
+        SWGCGalaxy rg = character().gxy();
+        if(!galaxy.equals(rg)) {
         	SWGSchematicTab st =SWGFrame.getSchematicTab(frame);
         	st.tintTabs(false);
         }
