@@ -233,7 +233,8 @@ public class SWGMainTab extends JSplitPane {
         if (u != null) {
 	        if (u.exists()) {
 				try {
-					SWGInitialize.scanAll(u, false);
+					SWGInitialize init = new SWGInitialize(frame);
+					init.scanAll(u, false);
 				} catch (Exception e) {
 					SWGAide.printError("SWGMainTab:makeTreeModel:", e);
 				}
