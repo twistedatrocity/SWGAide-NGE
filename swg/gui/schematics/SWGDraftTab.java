@@ -2166,8 +2166,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             public void actionPerformed(ActionEvent e) {
                 selectedProfession = SWGProfession.getFromName(
                         (String) profcombo.getSelectedItem());
-                SWGFrame.getPrefsKeeper().add(
-                        "schemDraftSelectedProfession", selectedProfession);
+                SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", selectedProfession);
                 actionFilterSchematics();
             }
         });
