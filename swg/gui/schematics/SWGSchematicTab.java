@@ -526,16 +526,17 @@ public final class SWGSchematicTab extends JTabbedPane {
      */
     void tintTabs(boolean updateGui) {
         if (SWGAide.frame().getTabPane().getComponentCount() >= 3) {
+        	if (!isGuiFinished) make();
             if (todaysAlert != null) {
-                if (updateGui) todaysAlert.guiUpdate();
-                setBackgroundAt(2, SWGTodays.todaysTinted()
-                        ? SWGGuiUtils.colorAlert
-                        : null);
+            	setBackgroundAt(2, todaysAlert.todaysTinted() ? SWGGuiUtils.colorAlert : null);
+            	SWGAide.frame().getTabPane().setBackgroundAt(3,
+                		todaysAlert.todaysTinted()
+                                ? SWGGuiUtils.colorAlert
+                                : null);
+                if (updateGui) {
+                	todaysAlert.guiUpdate();
+                }
             }
-            SWGAide.frame().getTabPane().setBackgroundAt(3,
-                    SWGTodays.todaysTinted()
-                            ? SWGGuiUtils.colorAlert
-                            : null);
         }
     }
 
