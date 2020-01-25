@@ -526,7 +526,8 @@ public final class SWGSchematicTab extends JTabbedPane {
      */
     public void tintTabs(boolean updateGui) {
         if (SWGAide.frame().getTabPane().getComponentCount() >= 3) {
-        	if (!isGuiFinished) make();
+        	// XXX commenting this for now. does not seem to be thread safe way to do this
+        	//if (!isGuiFinished) make();
             if (todaysAlert != null) {
             	setBackgroundAt(2, todaysAlert.todaysTinted() ? SWGGuiUtils.colorAlert : null);
             	SWGAide.frame().getTabPane().setBackgroundAt(3,
