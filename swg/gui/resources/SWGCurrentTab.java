@@ -177,6 +177,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     private SWGFrame frame;
     
+    private SWGCGalaxy galaxy;
     /**
      * A list of resource guards for the current galaxy.
      */
@@ -325,6 +326,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     SWGCurrentTab(final SWGResourceTab resourceTab) {
         this.resourceTab = resourceTab;
         this.frame = SWGAide.frame();
+        galaxy = null;
         SWGSchematicTab st = SWGFrame.getSchematicTab(frame);
         schemController = new SWGSchemController(st);
 
@@ -399,7 +401,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         selectedResource = currentGet().get(row);
 
         String s = SWGResController.resourceDetails(
-                selectedResource, SWGResourceTab.galaxy());
+                selectedResource, galaxy);
 
         resourceDetails.setText(s);
         resourceDetails.setCaretPosition(0);
@@ -1284,6 +1286,10 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      *        false} otherwise
      */
     void focusGained(boolean focus) {
+    	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+    	if(galaxy == null) {
+    		galaxy = gxy;
+    	}
         if (isGuiFinished
                 && focus && resourceTab.getSelectedComponent() == this) {
 
@@ -1371,7 +1377,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         if (guardsList == null) {
             List<SWGGuard> galaxyGuards = new ArrayList<SWGGuard>(
-                    SWGResController.guards(SWGResourceTab.galaxy()));
+                    SWGResController.guards(galaxy));
 
             if (((Boolean) SWGFrame.getPrefsKeeper().get(
                     "resourceGuardHideGuards", Boolean.FALSE)).booleanValue()) {
@@ -1536,7 +1542,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
             SWGGuard grd =
                     new SWGGuard(name, clazz, val, limit, alert, noStats);
-            SWGResController.guardsAdd(grd, SWGResourceTab.galaxy(), false);
+            SWGResController.guardsAdd(grd, galaxy, false);
 
             if (tok.hasMoreTokens()) { // optional
                 String remainder = tok.nextToken("\n");
@@ -1641,7 +1647,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         else
             g = null;
 
-        final int len = SWGResController.guards(SWGResourceTab.galaxy()).size();
+        final int len = SWGResController.guards(galaxy).size();
         final Point pp = e.getLocationOnScreen();
 
         JPopupMenu popup = new JPopupMenu();
@@ -1882,7 +1888,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      */
     private void guardsWriteHeader(ZWriter wr) throws Exception {
         wr.writeExc("# Exported guards/filters for ");
-        wr.writeExc(SWGResourceTab.galaxy().getName());
+        wr.writeExc(galaxy.getName());
         wr.writeExc(", ");
         DateFormat df = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT, DateFormat.SHORT);
@@ -2607,7 +2613,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
         if (monitorsList == null) {
             monitorsList =
-                    SWGResController.monitors(SWGResourceTab.galaxy());
+                    SWGResController.monitors(galaxy);
             monitorsAlerted(monitorsAlerted(monitorsList));
         }
         return monitorsList;
@@ -2883,7 +2889,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         currentResourcesModel.fireTableDataChanged();
 
         // retain the selection, if possible
-        if (sr != null && sr.galaxy().equals(SWGFrame.getSelectedGalaxy())) {
+        if (sr != null && sr.galaxy().equals(galaxy)) {
             selectedResource = sr;
             SWGResourceSet cl = currentGet();
             for (int i = 0; i < cl.size(); ++i) {
@@ -3170,7 +3176,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                         Color.PINK, null, null, (Object[]) null);
 
             long amt = SWGResController.inventoryAmount(
-                    res, SWGResourceTab.galaxy());
+                    res, galaxy);
             String toolTip = toolTipText(amt, res);
 
             if (column <= 1)
