@@ -7,20 +7,87 @@ package swg.model;
  * and not throw an exception.
  */
 public enum SWGProfession {
-    /**
+	/**
      * A constant which denotes <i>all&nbsp;</i> professions.
      */
-    ALL("All", 0);
+    ALL("All", 0),
+
+    /**
+     * A constant for Trader - Domestic.
+     */
+    DOMESTIC("Trader - Domestic", 9),
+
+    /**
+     * A constant for Trader - Engineer.
+     */
+    ENGINEER("Trader - Engineering", 11),
+
+    /**
+     * A constant for Trader - Munitions.
+     */
+    MUNITIONS("Trader - Munitions", 10),
+
+    /**
+     * A constant for Trader - Structures.
+     */
+    STRUCTURES("Trader - Structures", 8),
+
+    /**
+     * A constant for Bounty Hunter.
+     */
+    BH("Bounty Hunter", 2),
+
+    /**
+     * A constant for Commando.
+     */
+    COMMANDO("Commando", 3),
+
+    /**
+     * A constant for Entertainer.
+     */
+    ENTERTAINER("Entertainer", 4),
+
+    /**
+     * A constant for Jedi.
+     */
+    JEDI("Jedi", 5),
+
+    /**
+     * A constant for Medic.
+     */
+    MEDIC("Medic", 6),
+
+    /**
+     * A constant for Officer.
+     */
+    OFFICER("Officer", 7),
+
+    /**
+     * A constant for Smuggler.
+     */
+    SMUGGLER("Smuggler", 1),
+
+    /**
+     * A constant for Spy.
+     */
+    SPY("Spy", 12),
+	
+	/**
+	* A constant for Unknown
+	**/
+	UNKNOWN("Unknown", 13);
 
     /**
      * The ID used at swgaide.com for this profession.
      */
-    private final int swgcraftID;
+    @SuppressWarnings("unused")
+	private final int swgcraftID;
 
     /**
      * The proper name for this profession.
      */
-    private final String name;
+    @SuppressWarnings("unused")
+	private final String name;
 
     /**
      * Creates a new profession constant with the specified name and ID.
