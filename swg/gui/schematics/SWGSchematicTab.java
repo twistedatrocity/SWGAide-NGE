@@ -524,7 +524,7 @@ public final class SWGSchematicTab extends JTabbedPane {
      * 
      * @param updateGui {@code true} to also trigger a GUI update
      */
-    void tintTabs(boolean updateGui) {
+    public void tintTabs(boolean updateGui) {
         if (SWGAide.frame().getTabPane().getComponentCount() >= 3) {
         	if (!isGuiFinished) make();
             if (todaysAlert != null) {

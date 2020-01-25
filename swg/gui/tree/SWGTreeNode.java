@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import swg.gui.SWGFrame;
 import swg.gui.SWGMainTab;
 import swg.gui.common.SWGGui;
+import swg.model.SWGCGalaxy;
 
 /**
  * This type models a node in the GUI tree at the "Main" panel.
@@ -29,6 +30,11 @@ public abstract class SWGTreeNode extends DefaultMutableTreeNode {
      * The frame containing the GUI where this node will be used.
      */
     protected static SWGFrame frame;
+    
+    /**
+     * Galaxy reference
+     */
+    protected SWGCGalaxy galaxy;
 
     /**
      * The panel that contains the tree and related GUI elements.

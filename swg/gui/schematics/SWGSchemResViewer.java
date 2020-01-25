@@ -53,7 +53,6 @@ import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGJDialog;
 import swg.gui.common.SWGJTable;
-import swg.gui.common.SWGListModel;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.gui.common.SWGSac;
 import swg.gui.resources.SWGInventoryWrapper;

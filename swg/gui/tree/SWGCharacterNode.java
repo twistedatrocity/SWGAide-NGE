@@ -12,7 +12,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import swg.SWGAide;
 import swg.gui.SWGFrame;
+import swg.gui.schematics.SWGSchematicTab;
+import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 
@@ -108,8 +111,16 @@ final class SWGCharacterNode extends SWGTreeNode {
         }
 
         SWGFrame.getPrefsKeeper().add("currentlySelectedCharacter", character());
-
+        
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        if(galaxy == null) {
+        	galaxy = gxy;
+        }
         SWGGalaxy g = character().galaxy();
+        if(!galaxy.equals(g)) {
+        	SWGSchematicTab st =SWGFrame.getSchematicTab(frame);
+        	st.tintTabs(false);
+        }
         String buf = String.format("%s \u2014 %s \u2014 %s%s",
                 g.station().getName(), g.getName(),
                 character().getNameComplete(), (g.exists()
