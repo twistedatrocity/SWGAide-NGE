@@ -104,6 +104,11 @@ final class SWGLaboratoryTab extends JPanel {
      * A combo box at which to select an assignee.
      */
     private JComboBox<SWGSchematicAssignee> assigneeCombo;
+    
+    /**
+     * Model for assigneeCombo
+     */
+    private SWGListModel<SWGSchematicAssignee> assModel;
 
     /**
      * A menu item used in SWGAide's frame, the Edit menu.
@@ -559,6 +564,8 @@ final class SWGLaboratoryTab extends JPanel {
     		schemModel = new SWGListModel<SWGSchematic>();
             schematicList.setModel(schemModel);
     		galaxy = gxy;
+    		assModel = new SWGListModel<SWGSchematicAssignee>();
+            assigneeCombo.setModel(assModel);
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
@@ -1024,7 +1031,9 @@ final class SWGLaboratoryTab extends JPanel {
      * @return a GUI component
      */
     private Component makeNWAssigneeChooser() {
-        assigneeCombo = new JComboBox<SWGSchematicAssignee>(new SWGListModel<SWGSchematicAssignee>());
+        assigneeCombo = new JComboBox<SWGSchematicAssignee>();
+        assModel = new SWGListModel<SWGSchematicAssignee>();
+        assigneeCombo.setModel(assModel);
         assigneeCombo.setToolTipText("Select assignee for favorite schematics. Right click for more options");
         assigneeCombo.setRenderer(new SWGListCellRenderer<SWGGui>() {
 
