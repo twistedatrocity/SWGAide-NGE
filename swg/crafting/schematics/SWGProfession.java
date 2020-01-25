@@ -44,6 +44,12 @@ public final class SWGProfession implements Serializable {
      * The unique ID for this profession, greater than zero.
      */
     private final int id;
+    
+    /**
+     * True if this class has been initialized
+     */
+    private static boolean initialized = false;
+    private static boolean initRunning = false;
 
     /**
      * The proper name for this profession.
@@ -51,15 +57,23 @@ public final class SWGProfession implements Serializable {
     private final String name;
     
     /**
+     * THIS
+     */
+    private static SWGProfession THIS;
+    /**
      * The proper type for this profession. Either precu or nge
      */
     private final String type;
     
     public SWGProfession() {
+    	if(THIS==null) THIS=this;
+    	
     	this.id=0;
     	this.name="All";
     	this.type="ALL";
-    	init();
+    	if(!initialized && !initRunning) {
+    		init();
+    	}
     }
     /**
      * Creates an instance of this type, initiated with values from the
@@ -81,6 +95,7 @@ public final class SWGProfession implements Serializable {
             ZXml.stringFromAttr(xml, "name"),
             ZXml.stringFromAttr(xml, "type"),
             ZXml.intFromAttr(xml, "id") );
+        if(THIS==null) THIS=this;
     }
     
     /**
@@ -104,7 +119,9 @@ public final class SWGProfession implements Serializable {
             throw new NullPointerException("Name is null");
         if (name.isEmpty())
             throw new IllegalArgumentException("No name");
-
+        
+        if(THIS==null) THIS=this;
+        
         this.name = name;
         this.type = type;
         this.id = id;
@@ -123,8 +140,9 @@ public final class SWGProfession implements Serializable {
         return (other == this || other.getID() == ALL || this.getID() == ALL);
     }
     
-    void init() {
-        this.add(new SWGProfession("All", "ALL", 0));
+    static void init() {
+    	initRunning = true;
+        THIS.add(new SWGProfession("All", "ALL", 0));
         Document doc = SWGCraftCache.getProfLevels();
         if (doc != null) {
         	Element main = (Element) doc.getElementsByTagName("professions").item(0);
@@ -134,7 +152,7 @@ public final class SWGProfession implements Serializable {
 	            if (n.getNodeType() == Node.ELEMENT_NODE && n.getNodeName().equals("profession")) {
 	            	Element cur = (Element) n;
 	                try {
-	                    this.add(new SWGProfession(cur));
+	                    THIS.add(new SWGProfession(cur));
 	                } catch (Exception e) {
 	                    SWGAide.printDebug("schm", 1, String.format(
 	                            "SWGSchematicsManager:parseProfs: %s : %s",
@@ -143,6 +161,8 @@ public final class SWGProfession implements Serializable {
 	                }
 	            }
 	        }
+	        initialized = true;
+	        initRunning = false;
         } else {
             SWGAide.printDebug("profs", 1,
                     "SWGProfession:init: XML doc is null");
@@ -206,7 +226,12 @@ public final class SWGProfession implements Serializable {
      * 
      * @return a list of professions, or {@link Collections#EMPTY_LIST}
      */
-    public static List<SWGProfession> getProfessions() {
+    @SuppressWarnings("unused")
+	public static List<SWGProfession> getProfessions() {
+    	if(!initialized && !initRunning) {
+    		//fake out the init
+			SWGProfession p = new SWGProfession();
+    	}
         if (professions == null)
             return Collections.emptyList();
         return professions;
@@ -307,6 +332,57 @@ public final class SWGProfession implements Serializable {
                 return p;
 
         return null;
+    }
+    
+    public static SWGProfession findOld(String tok) {
+		String srch = "All";
+    	switch (tok) {
+			case "ALL":
+				srch = "All";
+				break;
+			case "DOMESTIC":
+				srch = "Trader - Engineering";
+				break;
+			case "ENGINEER":
+				srch = "Trader - Engineering";
+				break;
+			case "MUNITIONS":
+				srch = "Trader - Munitions";
+				break;
+			case "STRUCTURES":
+				srch = "Trader - Structures";
+				break;
+			case "BH":
+				srch = "Bounty Hunter";
+				break;
+			case "COMMANDO":
+				srch = "Commando";
+				break;
+			case "ENTERTAINER":
+				srch = "Entertainer";
+				break;
+			case "JEDI":
+				srch = "Jedi";
+				break;
+			case "MEDIC":
+				srch = "Medic";
+				break;
+			case "OFFICER":
+				srch = "Officer";
+				break;
+			case "SMUGGLER":
+				srch = "Smuggler";
+				break;
+			case "SPY":
+				srch = "Spy";
+				break;
+			case "UNKNOWN":
+				srch = "Unknown";
+				break;
+			
+		}
+    	return SWGProfession.getFromName(srch);
+    	
     }
 
     /**
