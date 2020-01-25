@@ -25,7 +25,7 @@ import swg.model.SWGCharacter;
  * @author <a href="mailto:simongronlun@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGHarvesterOwner implements Serializable,
+public final class SWGHarvesterOwner implements Serializable,
     Comparable<SWGHarvesterOwner> {
 
     /**

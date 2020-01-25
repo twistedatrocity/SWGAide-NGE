@@ -102,17 +102,17 @@ public final class SWGResController implements UpdateSubscriber {
     /**
      * A map where galaxy constant map to lists of resource guards.
      */
-    private static Map<SWGCGalaxy, List<SWGGuard>> guards;
+    private static Map<Integer, List<SWGGuard>> guards;
 
     /**
      * A map where galaxy constants map to lists of harvesters.
      */
-    private static Map<SWGCGalaxy, List<SWGHarvester>> harvesters;
+    private static Map<Integer, List<SWGHarvester>> harvesters;
 
     /**
      * A map of defined harvester owners, mapped to by galaxy.
      */
-    private static Map<SWGCGalaxy, List<SWGHarvesterOwner>> harvOwners;
+    private static Map<Integer, List<SWGHarvesterOwner>> harvOwners;
 
     /**
      * A map of resource inventory maps which are mapped to by galaxy constants.
@@ -147,7 +147,7 @@ public final class SWGResController implements UpdateSubscriber {
     /**
      * A map where galaxy constants map to lists of active monitors.
      */
-    private static Map<SWGCGalaxy, List<SWGMonitor>> monitors;
+    private static Map<Integer, List<SWGMonitor>> monitors;
 
     /**
      * This field is used for coloring the Resources tab and its default value
@@ -215,15 +215,12 @@ public final class SWGResController implements UpdateSubscriber {
 
         kmComparator = kmResourceComparator();
 
-        guards = (Map<SWGCGalaxy, List<SWGGuard>>)
-                SWGFrame.getPrefsKeeper().get(
-                        "resourceGuardMap",
-                        new HashMap<SWGCGalaxy, List<SWGGuard>>());
+        guards = (Map<Integer, List<SWGGuard>>) SWGFrame.getPrefsKeeper().get("resourceGuardMap", new HashMap<Integer, List<SWGGuard>>());
 
-        harvesters = (Map<SWGCGalaxy, List<SWGHarvester>>)
+        harvesters = (Map<Integer, List<SWGHarvester>>)
                 SWGFrame.getPrefsKeeper().get(
                         "resourceActiveHarvesterMap",
-                        new HashMap<SWGCGalaxy, List<SWGHarvester>>());
+                        new HashMap<Integer, List<SWGHarvester>>());
 
         inventoryMap =
                 (Map<String, Map<String, List<SWGInventoryWrapper>>>)
@@ -233,15 +230,15 @@ public final class SWGResController implements UpdateSubscriber {
                         Map<String, List<SWGInventoryWrapper>>>());
         
 
-        monitors = (Map<SWGCGalaxy, List<SWGMonitor>>)
+        monitors = (Map<Integer, List<SWGMonitor>>)
                 SWGFrame.getPrefsKeeper().get(
                         "resourceMonitorMap",
-                        new HashMap<SWGCGalaxy, List<SWGMonitor>>());
+                        new HashMap<Integer, List<SWGMonitor>>());
 
-        harvOwners = (HashMap<SWGCGalaxy, List<SWGHarvesterOwner>>)
+        harvOwners = (HashMap<Integer, List<SWGHarvesterOwner>>)
                 SWGFrame.getPrefsKeeper().get(
                         "resourceHarvesterOwnerMap",
-                        new HashMap<SWGCGalaxy, List<SWGHarvesterOwner>>());
+                        new HashMap<Integer, List<SWGHarvesterOwner>>());
 
         URL u = SWGAide.class.getResource("gui/docs/utinni.wav");
         alert = java.applet.Applet.newAudioClip(u);
@@ -410,10 +407,10 @@ public final class SWGResController implements UpdateSubscriber {
      * removed.
      * 
      * @param <T> the type which to scan for
-     * @param gxyMap a map having {@link SWGCGalaxy} as keys
+     * @param gxyMap a map having {@link SWGCGalaxy.Integer} as keys
      */
-    private <T> void exitHelper(Map<SWGCGalaxy, List<T>> gxyMap) {
-        Iterator<SWGCGalaxy> iter;
+    private <T> void exitHelper(Map<Integer, List<T>> gxyMap) {
+        Iterator<Integer> iter;
         if (gxyMap != null)
             for (iter = gxyMap.keySet().iterator(); iter.hasNext();)
                 if (gxyMap.get(iter.next()).isEmpty())
@@ -466,9 +463,9 @@ public final class SWGResController implements UpdateSubscriber {
     private int harvestersCheck() {
         synchronized (LOCK) {
             int triggered = 0;
-            for (SWGCGalaxy g : harvesters.keySet())
-                if (g != SWGResourceTab.galaxy()) // defer current gxy somewhat
-                    triggered |= harvestersCheckHelper(g);
+            for (Integer g : harvesters.keySet())
+                if (SWGCGalaxy.fromID(g) != SWGResourceTab.galaxy()) // defer current gxy somewhat
+                    triggered |= harvestersCheckHelper(SWGCGalaxy.fromID(g));
 
             // always last to possibly update GUI for current galaxy
             triggered |= harvestersCheckHelper(SWGResourceTab.galaxy());
@@ -910,10 +907,10 @@ public final class SWGResController implements UpdateSubscriber {
             throw new NullPointerException("Galaxy is null");
 
         synchronized (guards) {
-            List<SWGGuard> grds = guards.get(gxy);
+            List<SWGGuard> grds = guards.get(gxy.id());
             if (grds == null) {
                 grds = new ArrayList<SWGGuard>();
-                guards.put(gxy, grds);
+                guards.put(gxy.id(), grds);
             }
             return grds;
         }
@@ -1185,10 +1182,10 @@ public final class SWGResController implements UpdateSubscriber {
     static List<SWGHarvesterOwner> harvesterOwners(SWGCGalaxy gxy) {
         if (gxy == null) throw new NullPointerException("Galaxy is null");
 
-        List<SWGHarvesterOwner> ol = harvOwners.get(gxy);
+        List<SWGHarvesterOwner> ol = harvOwners.get(gxy.id());
         if (ol == null) {
             ol = new ArrayList<SWGHarvesterOwner>();
-            harvOwners.put(gxy, ol);
+            harvOwners.put(gxy.id(), ol);
         }
 
         return ol;
@@ -1208,10 +1205,10 @@ public final class SWGResController implements UpdateSubscriber {
         if (gxy == null) throw new NullPointerException("Galaxy is null");
 
         synchronized (harvesters) {
-            List<SWGHarvester> harvies = harvesters.get(gxy);
+            List<SWGHarvester> harvies = harvesters.get(gxy.id());
             if (harvies == null) {
                 harvies = new ArrayList<SWGHarvester>();
-                harvesters.put(gxy, harvies);
+                harvesters.put(gxy.id(), harvies);
                 // XXX This is somewhat hackish but good enough for now
                 /**
                  * Since harvies are initiated in the res controller need to do this here.
@@ -1968,10 +1965,10 @@ public final class SWGResController implements UpdateSubscriber {
         if (gxy == null) throw new NullPointerException("Galaxy is null");
 
         synchronized (monitors) {
-            List<SWGMonitor> mons = monitors.get(gxy);
+            List<SWGMonitor> mons = monitors.get(gxy.id());
             if (mons == null) {
                 mons = new ArrayList<SWGMonitor>();
-                monitors.put(gxy, mons);
+                monitors.put(gxy.id(), mons);
             }
             monitorsPurge(mons);
             return mons;
@@ -1989,8 +1986,8 @@ public final class SWGResController implements UpdateSubscriber {
      */
     private static boolean monitorsCheck() {
         synchronized (monitors) {
-            for (SWGCGalaxy g : monitors.keySet())
-                if (monitorsCheck(g)) return true;
+            for (Integer g : monitors.keySet())
+                if (monitorsCheck(SWGCGalaxy.fromID(g))) return true;
 
             return false;
         }

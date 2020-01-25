@@ -17,7 +17,7 @@ import swg.tools.ZString;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGMonitor implements Serializable {
+public final class SWGMonitor implements Serializable {
 
     /**
      * Serialization version info. Don't meddle with this or break the
