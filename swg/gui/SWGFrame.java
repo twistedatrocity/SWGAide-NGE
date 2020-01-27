@@ -70,13 +70,17 @@ import swg.SWGConstants;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceSet;
+import swg.crafting.schematics.SWGProfession;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.common.FontOptionsPanel;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.resources.SWGGuard;
 import swg.gui.resources.SWGHarvester;
+import swg.gui.resources.SWGHarvesterOwner;
 import swg.gui.resources.SWGInventoryWrapper;
+import swg.gui.resources.SWGMonitor;
 import swg.gui.resources.SWGResourceTab;
 import swg.gui.schematics.SWGSchematicTab;
 import swg.gui.trade.SWGTradeTab;
@@ -1809,11 +1813,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updatePreLaunch() {
-    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfession");
-    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfLevel");
-    	//SWGFrame.getPrefsKeeper().remove("schemDraftSelectedSchematic");
-    	//doExit();
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
+    	//
         if (pkver.contains("MrMiagi")) {
         	String[] parts = pkver.split("-MrMiagi-");
         	String ver = parts[1];
@@ -1930,7 +1931,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 // call the doExit() so things get saved to the DAT
                 doExit("0.9.9-MrMiagi-0.1.10");
         	}
-        	// XXX End of Inventory Map conversion. ^^
+        	// End of Inventory Map conversion.
         	/*
         	 * Begin update for stat colors. This just nukes the stored pref for colors
         	 * so the new defaults will show. Color picker never worked before this update
@@ -1942,7 +1943,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("resourceColorGood");
         		SWGFrame.getPrefsKeeper().remove("resourceColorGreat");
         	}
-        	// XXX End stat color update ^^
+        	// End stat color update ^^
         	/*
         	 * Begin update for font size. This just nukes the stored pref for the old unused keys.
         	 * 
@@ -1954,7 +1955,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().remove("macrosPaneFontSize");
         		SWGFrame.getPrefsKeeper().remove("notesPaneFontSize");
         	}
-        	// XXX End font size update ^^
+        	// End font size update
         	// checks if version in dat file older than or equal to 0.1.20
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 20 ) {
         		SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch doing upgrade  Data: " + pkver);
@@ -2105,6 +2106,66 @@ public class SWGFrame extends JFrame implements ComponentListener,
                   }
                 }
         		doExit("0.9.9-MrMiagi-0.1.22");
+        	}
+        	// XXX checks if version in dat file older than or equal to 0.1.21
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
+        		// XXX This will be upgrade routine for Unity.
+            	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfLevel");
+            	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedSchematic");
+            	Object sp = SWGFrame.getPrefsKeeper().get("schemDraftSelectedProfession");
+            	if(sp instanceof SWGProfession) {
+            		SWGAide.printDebug("debug", 9, "SWGFrame : isProf " + sp );
+            	} else {
+            		String spp = sp.toString();
+            		SWGProfession np = SWGProfession.findOld(spp);
+                	SWGAide.printDebug("debug", 9, "SWGFrame : isOLD " + spp );
+                	SWGAide.printDebug("debug", 9, "SWGFrame : newProf " + np );
+                	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfession");
+                	SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", np);
+            	}
+            	// Guards
+            	Map<SWGCGalaxy, List<SWGGuard>> oldguards = (Map<SWGCGalaxy, List<SWGGuard>>)
+            			SWGFrame.getPrefsKeeper().get("resourceGuardMap",new HashMap<SWGCGalaxy, List<SWGGuard>>());
+            	HashMap<Integer, List<SWGGuard>> newguards = new HashMap<Integer, List<SWGGuard>>();
+            	oldguards.forEach( (g,v) -> {
+                	SWGCGalaxy ng = SWGCGalaxy.fromID(g.id());
+                	newguards.put(ng.id(), v);
+                });
+            	SWGFrame.getPrefsKeeper().remove("resourceGuardMap");
+            	SWGFrame.getPrefsKeeper().add("resourceGuardMap", newguards);
+            	// harv owners
+            	HashMap<SWGCGalaxy, List<SWGHarvesterOwner>> harvOwners = (HashMap<SWGCGalaxy, List<SWGHarvesterOwner>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceHarvesterOwnerMap",
+                                new HashMap<SWGCGalaxy, List<SWGHarvesterOwner>>());
+            	HashMap<Integer, List<SWGHarvesterOwner>> newOwners = new HashMap<Integer, List<SWGHarvesterOwner>>();
+            	harvOwners.forEach( (g,v) -> {
+                	SWGCGalaxy ng = SWGCGalaxy.fromID(g.id());
+                	newOwners.put(ng.id(), v);
+                });
+            	SWGFrame.getPrefsKeeper().remove("resourceHarvesterOwnerMap");
+            	SWGFrame.getPrefsKeeper().add("resourceHarvesterOwnerMap", newOwners);
+            	// harvs
+            	Map<SWGCGalaxy, List<SWGHarvester>> oldharvesters = (Map<SWGCGalaxy, List<SWGHarvester>>)
+                        SWGFrame.getPrefsKeeper().get("resourceActiveHarvesterMap", new HashMap<SWGCGalaxy, List<SWGHarvester>>());
+            	HashMap<Integer, List<SWGHarvester>> newharvs = new HashMap<Integer, List<SWGHarvester>>();
+            	oldharvesters.forEach( (g,v) -> {
+                	SWGCGalaxy ng = SWGCGalaxy.fromID(g.id());
+                	newharvs.put(ng.id(), v);
+                });
+            	SWGFrame.getPrefsKeeper().remove("resourceActiveHarvesterMap");
+            	SWGFrame.getPrefsKeeper().add("resourceActiveHarvesterMap", newharvs);
+            	Map<SWGCGalaxy, List<SWGMonitor>> monitors = (Map<SWGCGalaxy, List<SWGMonitor>>)
+                        SWGFrame.getPrefsKeeper().get(
+                                "resourceMonitorMap",
+                                new HashMap<SWGCGalaxy, List<SWGMonitor>>());
+            	HashMap<Integer, List<SWGMonitor>> newmon = new HashMap<Integer, List<SWGMonitor>>();
+            	monitors.forEach( (g,v) -> {
+                	SWGCGalaxy ng = SWGCGalaxy.fromID(g.id());
+                	newmon.put(ng.id(), v);
+                });
+            	SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
+            	SWGFrame.getPrefsKeeper().add("resourceMonitorMap", newmon);
         	}
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
