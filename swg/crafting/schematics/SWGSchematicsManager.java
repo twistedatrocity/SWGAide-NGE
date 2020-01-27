@@ -95,68 +95,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
 	private SWGProfession profession;
 	@SuppressWarnings("unused")
 	private SWGProfessionManager profman;
-
-    /**
-     * An array of integer pairs that translates a schematic ID to the minimum
-     * level to claim it from the expertise system. Remember that one expertise
-     * point is given every 2 skill points. An example, the schematics for elite
-     * harvesters and their components are unlocked when the character spend 16
-     * points in "Structure". Hence, 16 points plus the new box in itself:
-     * {@code (16 + 1) * 2 = 34} which is the minimum skill level for these
-     * expertise schematics.
-     * <p>
-     * The structure for this constant is {@code [[ID, minLevel], ...]} and if
-     * as schematic ID is not listed it is either unknown or it is not an ID for
-     * an expertise schematic.
-     */
-    // DEVELOPER_NOTE: update this array for changes to the expertise
-    private static final int[][] EXPERTISE_TO_MINIMUM_LEVEL =
-    {
-            // Reverse Engineering
-            { 691, 34 }, // Socket Retrofitting Tool
-            // Domestic
-            { 1401, 34 }, // Multisaccharide Dimate
-            { 1403, 34 }, // Hyper Yeast Additive
-            { 1404, 34 }, // Micronutrient Supplement
-            { 1406, 34 }, // Hyper Yeast Concentrate
-            { 1407, 34 }, // Multisaccharide Tetramate
-            { 1408, 34 }, // Broad-spectrum Nutrients
-            { 1433, 34 }, // Multisaccharide Pentamate
-            { 1434, 34 }, // Edible Nano Constructors
-            { 1435, 34 }, // Edible Nano Constructors
-            // Engineer
-            { 1415, 34 }, // Deed for: Battle Droid
-            { 1416, 34 }, // Chassis - Battle Droid
-            { 1417, 34 }, // Chassis - Droideka Droid
-            { 1418, 34 }, // Deed for: Droideka
-            { 1506, 34 }, // Deed for: Mining Droid MK3
-            { 1507, 34 }, // Chassis - Mining Droid MK3
-            { 1508, 34 }, // Module - Droid Data 7
-            { 1509, 34 }, // Module - Droid Item Storage 7
-            { 1766, 10 }, // Antilles BioGen 980 Series Left Arm
-            { 1767, 10 }, // Antilles BioGen 980 Series Left Forearm
-            { 1768, 10 }, // Antilles BioGen 980 Series Left Hand
-            { 1769, 10 }, // Antilles BioGen 980 Series Right Arm
-            { 1770, 10 }, // Antilles BioGen 980 Series Right Forearm
-            { 1771, 10 }, // Antilles BioGen 980 Series Right Hand
-            // Structure Trader
-            { 1632, 34 }, // Advanced Turbo Fluidic Drilling Pump Unit
-            { 1633, 34 }, // Advanced Ore Mining Unit
-            { 1634, 34 }, // Deed for: Elite Mineral Mining Installation
-            { 1635, 34 }, // Deed for: Elite Deep Crust Chemical Extractor
-            { 1636, 34 }, // Deed for: Elite Efficiency Moisture Vaporator
-            { 1637, 34 }, // Advanced Heavy Harvesting Mechanism
-            { 1638, 34 }, // Deed for: Elite Flora Farm
-            { 1639, 34 }, // Deed for: Elite Natural Gas Processor
-            { 1842, 34 }, // Huge Cargo Hold (POB only)
-            { 1843, 34 }, // Huge Cargo Hold (Starfighter)
-            { 1844, 34 }, // Mark VI Weapons Capacitor
-            { 1845, 34 }, // Mark VI Fusion Reactor
-            { 1846, 34 }, // Engine Overhaul - Mark I
-            { 1847, 34 }, // Engine Overhaul - Mark II
-            { 1848, 34 }, // Engine Stabilizer - Mark I
-            { 1849, 34 } // Engine Stabilizer - Mark II
-            };
     
     /**
      * A container that maps food and drink names to the buffs these provide.
@@ -655,28 +593,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         synchronized (subscribers) {
             subscribers.add(subscriber);
         }
-    }
-    
-    /**
-     * Helper method which returns the minimum skill for the specified
-     * schematic, or 0 if its minimum level is unknown.
-     * 
-     * @param schem a schematic
-     * @return minimum level for the schematic
-     * @throws IllegalArgumentException if the argument is not from expertise
-     */
-    private static int expertiseLevel(SWGSchematic schem) {
-        if (schem.getExpertise() == null)
-            throw new IllegalArgumentException("Not an expertise schematic");
-        int id = schem.getID();
-        for (int i = 0; i < EXPERTISE_TO_MINIMUM_LEVEL.length; ++i)
-            if (EXPERTISE_TO_MINIMUM_LEVEL[i][0] == id)
-                return EXPERTISE_TO_MINIMUM_LEVEL[i][1];
-
-        // else unknown expertise
-        if (SWGConstants.DEV_DEBUG)
-            System.err.println("unknown expertise schematic: " + id);
-        return 0;
     }
 
     /**
