@@ -259,17 +259,18 @@ public final class SWGRoot extends SWGTreeNode {
      * @param root the root node for the GUI tree
      * @param mt the main pane that displays the GUI tree
      */
-    public static void createPopulatedTree(
-            SWGUniverse u, SWGRoot root, SWGMainTab mt) {
+    public static void createPopulatedTree(List<SWGUniverse> ul, SWGRoot root, SWGMainTab mt) {
 
-        if (u == null) root.add(new DefaultMutableTreeNode("error"));
-
-        SWGUniverseNode un = new SWGUniverseNode(u);
-        root.setFocusNode(un);
-        root.add(un);
-        
-        addStationNodes(un, root, mt);
-        addAliasNodes(un, root);
+        if (ul == null || ul.isEmpty()) root.add(new DefaultMutableTreeNode("error"));
+        ul.forEach( (u) -> {
+	        SWGUniverseNode un = new SWGUniverseNode(u);
+	        
+	        root.setFocusNode(un);
+	        root.add(un);
+	        
+	        addStationNodes(un, root, mt);
+	        addAliasNodes(un, root);
+        });
 
         if (focusedNode() == null && root.userObject != null)
             SWGFrame.getPrefsKeeper().add("mainTabSelectedNode", null);

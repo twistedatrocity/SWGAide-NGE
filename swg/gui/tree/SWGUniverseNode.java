@@ -76,7 +76,7 @@ public final class SWGUniverseNode extends SWGTreeNode {
     protected void focusLost() {
         // pass
     }
-
+    
     /**
      * Returns the universe that is wrapped by this node.
      * 

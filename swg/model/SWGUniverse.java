@@ -100,11 +100,11 @@ public final class SWGUniverse implements Serializable, SWGGui {
      * local path or the user is prompted a dialog for the path.
      */
     private File clientDir;
-
+    
     /**
      * The name assigned to this universe.
      */
-    private final String name;
+    private String name;
 
     /**
      * A map of the stations for this universe. A station that is listed here
@@ -125,7 +125,7 @@ public final class SWGUniverse implements Serializable, SWGGui {
      * @throws Throwable if the path is invalid, see {@link #swgPath(File)}
      */
     public SWGUniverse(File swgDir) throws Throwable {
-        this.name = "SWG";
+    	this.name = "SWG";
         swgPath(swgDir);
 
         this.aliases = new SWGAliasesList();
@@ -178,9 +178,13 @@ public final class SWGUniverse implements Serializable, SWGGui {
     public String getDescription() {
         return swgPath().getAbsolutePath();
     }
-
+    
     public String getName() {
         return name;
+    }
+    
+    public void setName(String newname) {
+    	name = newname;
     }
 
     @Override

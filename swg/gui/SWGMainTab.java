@@ -17,6 +17,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
+import javax.swing.ToolTipManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -91,7 +93,8 @@ public class SWGMainTab extends JSplitPane {
      * 
      * @param owner the frame holding the tabbed pane for this object
      */
-    public SWGMainTab(SWGFrame owner) {
+    @SuppressWarnings("rawtypes")
+	public SWGMainTab(SWGFrame owner) {
         this.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         frame = owner;
 
@@ -125,8 +128,12 @@ public class SWGMainTab extends JSplitPane {
             TreePath p = new TreePath(SWGTreeNode.focusedNode().getPath());
             tree.setSelectionPath(p);
             tree.expandPath(p);
-        } else
-            tree.expandRow(0);
+        }
+        // the below auto expands each 1st level child, e.g. the "SWG Install #x" for aesthetic purposes
+        for (Enumeration e = ((SWGTreeNode)tree.getModel().getRoot()).children();e.hasMoreElements();) {
+            SWGTreeNode tn = (SWGTreeNode)e.nextElement();
+            tree.expandPath(new TreePath(((DefaultTreeModel)tree.getModel()).getPathToRoot(tn)));
+        }
 
         JScrollPane leftPane = new JScrollPane(tree);
         leftPane.setMinimumSize(new Dimension(200, 150));
@@ -207,6 +214,7 @@ public class SWGMainTab extends JSplitPane {
         try {
             DefaultTreeModel model = new DefaultTreeModel(makeTreeModel());
             tree = new JTree(model);
+            ToolTipManager.sharedInstance().registerComponent(tree);
         } catch (Throwable e) {
             SWGAide.printError("SWGMainTab:makeTree", e);
             JOptionPane.showMessageDialog(frame,
@@ -225,23 +233,30 @@ public class SWGMainTab extends JSplitPane {
      * @return the root node of a tree containing an SWG universe with
      *         descendants
      */
-    private SWGRoot makeTreeModel() {
+    @SuppressWarnings("unchecked")
+	private SWGRoot makeTreeModel() {
         treeRoot = new SWGRoot(frame, this);
-
-        SWGUniverse u;
-        u = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgUniverse");
-        if (u != null) {
-	        if (u.exists()) {
-				try {
-					SWGInitialize init = new SWGInitialize(frame);
-					init.scanAll(u, false);
-				} catch (Exception e) {
-					SWGAide.printError("SWGMainTab:makeTreeModel:", e);
-				}
-	        }
+        List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList", new ArrayList<SWGUniverse>());
+        if (ul != null && !ul.isEmpty()) {
+        	AtomicInteger i = new AtomicInteger();
+        	SWGInitialize init = new SWGInitialize(frame);
+        	ul.forEach( (u) -> {
+        		String name = u.getName();
+        		i.incrementAndGet();
+        		if(!name.contains("Install")) {
+        			name = name + " Install #" + i;
+        			u.setName(name);
+        		}
+		        if (u.exists()) {
+					try {
+						init.scanAll(u, false);
+					} catch (Exception e) {
+						SWGAide.printError("SWGMainTab:makeTreeModel:", e);
+					}
+		        }
+        	});
         }
-        SWGRoot.createPopulatedTree(u, treeRoot, this);
-
+        SWGRoot.createPopulatedTree(ul, treeRoot, this);
         return treeRoot;
     }
 

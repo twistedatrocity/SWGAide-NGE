@@ -16,7 +16,6 @@ import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.resources.SWGResource;
 import swg.gui.SWGFrame;
-import swg.gui.SWGInitialize;
 
 /**
  * This class models a simplified {@link Map} which allows for persistent
@@ -330,8 +329,6 @@ public final class SimplePrefsKeeper implements Serializable {
         try {
             in = new ObjectInputStream(new FileInputStream(source));
             String v = (String) in.readObject();
-
-            SWGInitialize.updateDialog(v);
 
             SimplePrefsKeeper pk = (SimplePrefsKeeper) in.readObject();
             pk.version = v;

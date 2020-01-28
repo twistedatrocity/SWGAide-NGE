@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,14 +28,12 @@ import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
 import swg.SWGAide;
-import swg.SWGConstants;
 import swg.crafting.UpdateNotification;
 import swg.crafting.UpdateSubscriber;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.model.SWGAliases;
-import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
 import swg.model.SWGGalaxy;
 import swg.model.SWGStation;
@@ -236,7 +236,8 @@ public final class SWGInitialize extends JPanel {
      *        continue, {@code false} will abort initialization
      * @throws Throwable if there is an error
      */
-    private void initiateUniverseReal(boolean isCont) throws Throwable {
+    @SuppressWarnings("unchecked")
+	private void initiateUniverseReal(boolean isCont) throws Throwable {
         frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         buttons.removeAll();
         buttons.repaint();
@@ -282,7 +283,9 @@ public final class SWGInitialize extends JPanel {
         swgDir = fc.getSelectedFile();
         final SWGUniverse universe = new SWGUniverse(swgDir);
 
-        SWGFrame.getPrefsKeeper().add("swgUniverse", universe);
+        List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList", new ArrayList<SWGUniverse>());
+        ul.add(universe);
+        SWGFrame.getPrefsKeeper().add("swgUniverseList", (Serializable) ul);
 
         final JButton okButton = new JButton("Done");
         okButton.setEnabled(false);
@@ -610,82 +613,5 @@ public final class SWGInitialize extends JPanel {
         } else
             SWGAide.printError(
                     "SWGInitialize:setHtml: no " + url, null);
-    }
-
-    /**
-     * Updates various data structures to the current version. This method
-     * invokes helper methods and if an upgrade is required the helper method
-     * carries out the task. Otherwise the helper methods do nothing.
-     * <p>
-     * Updates may depend on either the current version versus the version of
-     * the loaded DAT file, or on the state of some member of some object.
-     * <p>
-     * This method obtains any required objects by itself.
-     */
-    static void update() {
-        /* if (SWGFrame.getPrefsKeeper().getVersion().compareTo(
-                SWGConstants.version) >= 0) return;*/
-
-        SWGUniverse u, tc;
-        u = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgUniverse");
-        tc = (SWGUniverse) SWGFrame.getPrefsKeeper().get("swgTestCenter");
-
-        if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.0") < 0) {
-            updateMails(u);
-            updateMails(tc);
-        }
-		if (SWGFrame.getPrefsKeeper().getVersion().compareTo("0.9.8") < 0) {
-        	//Convert optionMainGalaxy name to ID instead as it is more robust
-	        	SWGCGalaxy glx = SWGCGalaxy.fromName((String)
-	                    SWGFrame.getPrefsKeeper().get("optionMainGalaxy",
-	                            SWGCGalaxy.defaultGalaxy().getName()));
-	            SWGFrame.getPrefsKeeper().add("optionMainGalaxy", glx.id());
-        	
-        }
-        // if...
-    }
-
-    /**
-     * This method determines if a dialog should be displayed the user or not.
-     * Depending on the specified argument it displays one text or the other,
-     * otherwise it does nothing. If several updates will take place this method
-     * only displays the oldest message, but all updates will take place.
-     * <p>
-     * The version string must resemble {@link SWGConstants#version}.
-     * 
-     * @param version a version string
-     */
-    public static void updateDialog(String version) {
-        String msg = null;
-        if (version.compareTo("0.9.0") < 0) {
-            msg = "SWGAide will update the SWGAide.DAT file.\n" +
-                    "If you have not read \"README_UPDATE.txt\"\n" +
-                    "you should exit now and read first!\n\nExit SWGAide?";
-            if (JOptionPane.NO_OPTION != JOptionPane.showConfirmDialog(
-                    SWGAide.frame(), msg, "Exit SWGAide?",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE)) System.exit(-1);
-
-            msg = "This update may take several minutes";
-        }
-
-        if (msg != null)
-            JOptionPane.showMessageDialog(SWGAide.frame(),
-                    msg, "Alert", JOptionPane.WARNING_MESSAGE);
-    }
-
-    /**
-     * Updates mails and folders of all mail-boxes to current version. If the
-     * mail-folders of this box are already up-to-date this method does nothing.
-     * 
-     * @param u a universe
-     */
-    private static void updateMails(SWGUniverse u) {
-        if (u != null) {
-            for (SWGStation stn : u.stations())
-                for (SWGGalaxy gxy : stn.galaxies())
-                    for (SWGCharacter ch : gxy.characters())
-                        ch.mailBox().update();
-        }
     }
 }

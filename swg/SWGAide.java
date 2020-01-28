@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import swg.gui.SWGFrame;
-import swg.model.SWGUniverse;
 import swg.tools.ZNumber;
 import swg.tools.ZReader;
 import swg.tools.ZString;
@@ -69,15 +68,6 @@ public final class SWGAide {
      * </ol>
      */
     private static int logLevel = 1;
-
-    /**
-     * A string which is specified in SWGAide's INI file, or {@code null}. If
-     * {@code swgBaseFolder != null} it denotes the file path for SWG's client
-     * folder. This path may equal the path in SWGAide's DAT file, but if the
-     * two differs this path is supposed to be correct, however this is not
-     * validated by this type.
-     */
-    private static String swgBaseFolder;
 
     /**
      * Helper method which determines if the current Java version is acceptable.
@@ -332,8 +322,6 @@ public final class SWGAide {
 
             if (s.equals("help"))
                 printUsage(null);
-            else if (s.startsWith("swgclientfolder"))
-                swgBaseFolder = str.substring(idx + 1).trim();
             else if (s.startsWith("loglevel"))
                 setLogLevel(ZNumber.intExc(str.substring(idx + 1).trim()));
             else if (s.startsWith("loggroup")) {
@@ -510,8 +498,6 @@ public final class SWGAide {
         System.err.println("   java -jar SWGAide.jar <argument[s]>");
         System.err.println("   arguments may be:");
         System.err.println("      loglevel=N   ...where N is an integer");
-        System.err.println("Arguments are better kept in the SWGAide.INI file");
-        System.err.println("More information is read in the file SWGAide.INI");
         System.err.println("Exiting");
         System.exit(1);
     }
@@ -582,41 +568,6 @@ public final class SWGAide {
             } else
                 logLevel = level;
         }
-    }
-
-    /**
-     * Returns the abstract file for SWG's client folder (a directory), or
-     * {@code null}. The returned file may not exist and it may be invalid.
-     * 
-     * @return a path for SWG's client directory, or {@code null}
-     */
-    public static File swgPath() {
-        return swgBaseFolder == null
-                ? null
-                : new File(swgBaseFolder).getAbsoluteFile();
-    }
-
-    /**
-     * Sets the path for SWG's client folder (directory). This method validates
-     * the path, see {@link SWGUniverse#isValidSWGPath(File)}; then it updates
-     * the local SWGAide.INI file with the specified argument. If the path
-     * equals the current path this method does nothing.
-     * <p>
-     * <b>Notice:</b> as long as SWGAide can find SWG it is OK id the specified
-     * path is relative.
-     * 
-     * @param swgPath a directory path for SWG's client
-     * @throws Exception if there is an error
-     */
-    public static void swgPath(File swgPath) throws Exception {
-        if (!SWGUniverse.isValidSWGPath(swgPath))
-            throw new IllegalArgumentException("Invalid path: " + swgPath);
-
-        String s = swgPath.getPath();
-        if (s.equals(swgBaseFolder)) return;
-
-        swgBaseFolder = s;
-        updateIniFile("SWGClientFolder", swgBaseFolder);
     }
 
     /**

@@ -22,6 +22,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -273,6 +274,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
     private JTabbedPane tabPane = null;
     
     /**
+     * List of all universes
+     */
+    public List<SWGUniverse> universeList;
+    
+    /**
      * Global variable for if user has verified credentials
      */
     public static Boolean verified = false;
@@ -493,7 +499,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         // following lines must be run lastly to allow updating prefs b4 exit
         if (getPrefsKeeper() != null
-            && getPrefsKeeper().get("swgUniverse") != null) {
+            && getPrefsKeeper().get("swgUniverseList") != null) {
             
             File dat = new File("SWGAide.DAT");
             while (!getPrefsKeeper().store(dat, ver)) {
@@ -748,7 +754,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
             initPrefsKeeper(ini);
 
             if (getPrefsKeeper() != null) {
-                initSWGClient();
                 updatePreLaunch();
                 initCheckBackupPrefsKeeperNecessary();
                 verified = (Boolean) prefsKeeper.get("optionVerified");
@@ -1034,7 +1039,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         int mType = -1;
         try {
             prefsKeeper = SimplePrefsKeeper.load(datFile);
-            SWGInitialize.update();
         } catch (Throwable e) {
             SWGAide.printDebug(
                     "frme", 1, "SWGFrame:initPrefsKeeper1:", e.getMessage());
@@ -1088,208 +1092,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
     }
 
     /**
-     * Helper method which verifies that the SWG client path is valid for the
-     * current host. This implementation must be run <i>after </i> that the
-     * SWGAide.DAT file exists and is loaded. Then it determines if the SWG path
-     * for the known universe matches the current host. If that is so this
-     * method exits.
-     * <p>
-     * If the SWG path does not match the current host this method queries
-     * {@link SWGAide#swgPath()} for the value of the SWGAide.INI file.
-     * If that file is {@code null} or wrong and if one or several previous
-     * files are known by SWGAide this method determines if at most one of them
-     * is valid; if several are valid (the user has several installations) this
-     * method displays an option dialog with the valid files. If no previous
-     * file is known or if the user cancels this dialog a common open-file
-     * dialog is used so that the user selects a path to SWG. If the user
-     * cancels this method will use an empty file for the next step.
-     * <p>
-     * Finally this method invokes {@link SWGUniverse#swgPath(File)} for SWG and
-     * possibly TC with the selected file, or with an empty file.
-     */
-    private void initSWGClient() {
-        try {
-            SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
-            File f = u.swgPath();
-            if (f == null || !SWGUniverse.isValidSWGPath(f))
-                f = null;
-
-            File fIni = null;
-            if (f == null && (fIni = SWGAide.swgPath()) != null) {
-                try {
-                    f = initSWGUniverse(fIni, u);
-                } catch (Exception e) {
-                    SWGAide.printDebug("frme", 1,
-                            "SWGFrame:initSWGClient:", e.getMessage());
-                }
-            }
-
-            @SuppressWarnings("unchecked")
-            // this is the only place we add/get the list, hence safe cast
-            ArrayList<File> fp = (ArrayList<File>) getPrefsKeeper().get(
-                    "swgClientPaths", new ArrayList<File>());
-
-            if (f == null) f = initSWGClientPaths(fp);
-            if (f == null) f = initSWGClientDialog();
-
-            if (f == null)
-                initSWGClientExitDialog(JOptionPane.WARNING_MESSAGE);
-            else {
-                initSWGUniverse(f, u);
-                initSWGClientPaths(f, fp); // save selected file
-                if (fIni != null) // only if user has edited INI
-                    SWGAide.swgPath(f);
-            }
-        } catch (Throwable e) {
-            SWGAide.printError("SWGFrame:initSWGClient", e);
-            initSWGClientExitDialog(JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    /**
-     * Helper method which displays a common open-file dialog and returns a
-     * valid SWG client path, or {@code null}. This method reopens the file
-     * chooser until a valid file is selected. If the user cancels this method
-     * returns {@code null}.
-     * 
-     * @return a valid file, or {@code null}
-     */
-    private File initSWGClientDialog() {
-        JFileChooser fc = getFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        String msg = "Find and select the \"StarWarsGalaxies\" folder";
-
-        File f = new File("C:\\");
-        fc.setCurrentDirectory(f);
-        do {
-            fc.setDialogTitle(msg);
-            int retVal = fc.showOpenDialog(this);
-            if (retVal != JFileChooser.APPROVE_OPTION) return null;
-
-            msg = "Try again, find a valid \"StarWarsGalaxies\" folder";
-            f = fc.getSelectedFile();
-            if (f.getName().equals("testcenter")) f = f.getParentFile();
-        } while (!SWGUniverse.isValidSWGPath(f));
-        return f;
-    }
-
-    /**
-     * Helper method which displays a dialog and possibly kills SWGAide. This
-     * method is invoked if no valid path to the SWG client exists or if the
-     * user cancels the open-file dialog. The dialog presents the user with the
-     * option to exit SWGAide, yes or no, and this method logs the response. If
-     * exit, this method saves nothing but invokes {@link System#exit(int)}.
-     * <p>
-     * The exact message is determined by the argument, one of
-     * {@link JOptionPane#WARNING_MESSAGE}or{@link JOptionPane#ERROR_MESSAGE}.
-     * 
-     * @param mt the dialog message type
-     */
-    private void initSWGClientExitDialog(int mt) {
-        String s = String.format("%s folder for \"StarWarsGalaxies\"\n" +
-                "If you continue some features are disabled%s\n\n" +
-                "Exit SWGAide?",
-                (mt == JOptionPane.WARNING_MESSAGE
-                        ? "Found no"
-                        : "Error locating"),
-                (mt == JOptionPane.WARNING_MESSAGE
-                        ? ""
-                        : "\nExit SWGAide, read the log files, and\n" +
-                                "report errors at swgaide.com, please"));
-
-        if (displayConfirmDialog(s, "Confirm exit", mt)) {
-
-            SWGAide.printDebug("frme", 1,
-                    "SWGFrame:initSWGClient: exits SWG");
-            SWGAide.printStop();
-            System.exit(0); // hard kill, nothing to save
-        }
-        SWGAide.printDebug("frme", 1,
-                "SWGFrame:initSWGClient: continues without SWG");
-    }
-
-    /**
-     * Helper method which appends the specified file to the list. The list
-     * contains recent SWG client paths and is stored in SWGAide's DAT file.
-     * This method adds the file argument as the leading element, if it already
-     * exists in the list it is promoted. If the file argument is {@code null}
-     * this method does nothing.
-     * <p>
-     * This method ensures that only unique elements exist in the list and that
-     * max 10 elements are retained. The latter is to shave off older files for
-     * obsolete computers. Older files are pushed backwards so if the player has
-     * no more than 10 installations with different client paths this will work.
-     * 
-     * @param f a file
-     * @param fl a list of previous files
-     * @throws NullPointerException if the list is {@code null}
-     */
-    private void initSWGClientPaths(File f, List<File> fl) {
-        if (f == null
-                || (!fl.isEmpty() && fl.get(0).equals(f))) return;
-
-        while (fl.contains(f))
-            fl.remove(f); // to promote it and ensure uniqueness
-
-        fl.add(0, f); // leading position
-
-        if (fl.size() > 10) fl.subList(10, fl.size()).clear(); // trim size
-    }
-
-    /**
-     * Helper method which iterates over the list of files and returns one of
-     * them, or {@code null}. This method determines if at most one of the files
-     * is valid returns it. Otherwise, if several files are valid (the user has
-     * several installations) this method displays an option dialog with the
-     * valid files. This method returns the selected file, or it returns {@code
-     * null} if no valid file is found or if the user cancels the dialog.
-     * 
-     * @param fp a list of files
-     * @return a valid file, or {@code null}
-     * @throws NullPointerException if the argument is {@code null}
-     */
-    private File initSWGClientPaths(List<File> fp) {
-        if (fp.isEmpty()) return null;
-
-        ArrayList<File> fl = new ArrayList<File>();
-        for (File f : fp)
-            if (f.exists() && SWGUniverse.isValidSWGPath(f)
-                    && !fl.contains(f)) fl.add(f);
-
-        if (fl.isEmpty()) return null;
-        if (fl.size() == 1) return fl.get(0);
-
-        File[] fs = fl.toArray(new File[fl.size()]);
-        int r = JOptionPane.showOptionDialog(this,
-                "Select valid SWG location", "Select folder",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, fs, fs[0]);
-        return r < 0
-                ? null
-                : fs[r];
-    }
-
-    /**
-     * Helper method which sets the specified file as the SWG client path for
-     * the specified universe. The file <b>must exist</b> at the current host
-     * and the universe <b>must be</b> the base SWG client, not TC. This method
-     * determines if TC exists and is valid and is so it updates it.
-     * 
-     * @param f a valid path to the SWG client
-     * @param swgUniv the base SWG universe, not TC
-     * @return the argument as-is
-     * @throws Exception if there is an error
-     */
-    private File initSWGUniverse(File f, SWGUniverse swgUniv) throws Exception {
-        swgUniv.swgPath(f);
-
-        SWGUniverse tc = (SWGUniverse) getPrefsKeeper().get("swgTestCenter");
-        File tf = new File(f, "testcenter");
-        if (tc != null && SWGUniverse.isValidSWGPath(tf)) tc.swgPath(tf);
-        return f;
-    }
-
-    /**
      * Initiates the tabbed pane. If <code>firstTime</code> is <code>true</code>
      * the logic will continue and will initiate the application with user
      * assistance.
@@ -1300,17 +1102,16 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @param step the value with which to continue updating the splash screen
      * @see SWGInitialize#iniateStart()
      */
-    @SuppressWarnings("static-access")
+    @SuppressWarnings({ "static-access", "unchecked" })
 	private void initTabPane(JPanel pane, boolean firstTime, double step) {
         tabPane = new JTabbedPane();
         pane.add(tabPane, BorderLayout.CENTER);
 
-        SWGUniverse universe = (SWGUniverse)
-                getPrefsKeeper().get("swgUniverse");
+        List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
 
         SWGInitialize initialize = new SWGInitialize(this);
 
-        if (firstTime || universe == null) {
+        if (firstTime || ul == null) {
             initialize.iniateStart();
             splashProgressBar.setValue((int) (3 * step));
         } else {
@@ -1813,6 +1614,31 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updatePreLaunch() {
+    	// TODO put this in upgrade routine
+    	SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
+    	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
+        if(ul == null && u != null && u instanceof SWGUniverse) {
+        	ul = new ArrayList<SWGUniverse>();
+        	ul.add(u);
+        	getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
+        	getPrefsKeeper().remove("swgUniverse");
+        }
+        getPrefsKeeper().remove("swgUniverse");
+        getPrefsKeeper().remove("swgTestCenter");
+        getPrefsKeeper().remove("swgClientPaths");
+        
+        /* for debugging. remove for release
+        File f = new File("C:\\Program Files\\StarWarsGalaxiesOrig");
+        SWGUniverse newu;
+		try {
+			newu = new SWGUniverse(f);
+			ul.add(newu);
+			getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
+		} catch (Throwable e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+        
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
     	//
         if (pkver.contains("MrMiagi")) {
@@ -2167,10 +1993,21 @@ public class SWGFrame extends JFrame implements ComponentListener,
             	SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
             	SWGFrame.getPrefsKeeper().add("resourceMonitorMap", newmon);
         	}
+        } else if (pkver.contains("Unity")) {
+        	String[] parts = pkver.split("Unity-");
+        	String ver = parts[1];
+        	String[] vparts = ver.split("\\.");
+        	int ord1 = Integer.parseInt(vparts[0]);
+        	int ord2 = Integer.parseInt(vparts[1]);
+        	int ord3 = Integer.parseInt(vparts[2]);
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
-        			+ "SWGAide-NGE is not compatible with pre-cu or other earlier versions.\nExiting",JOptionPane.PLAIN_MESSAGE);
+        			+ "SWGAide-Unity is not compatible with pre-cu or other earlier versions.\n"
+        			+ "Please put this in a clean directory all by itself for a fresh install.\n"
+        			+ "You can still import your data from a csv backup from your old version,\n"
+        			+ "such as your inventory, harvesters, guards etc.\n"
+        			+ "Exiting",JOptionPane.PLAIN_MESSAGE);
             JDialog d = pane.createDialog(null, "SWGAide.DAT Incompatible");
             d.pack();
             d.setModal(false);

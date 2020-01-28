@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.EventObject;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import swg.gui.SWGFrame;
 import swg.gui.SWGMainTab;
 import swg.gui.common.SWGGui;
@@ -109,7 +108,7 @@ public abstract class SWGTreeNode extends DefaultMutableTreeNode {
                 ? userObject.hashCode()
                 : super.hashCode();
     }
-
+    
     @Override
     public final String toString() {
     	if(userObject instanceof java.lang.String) {
