@@ -38,6 +38,8 @@ public final class SWGUniverseNode extends SWGTreeNode {
     SWGUniverseNode(SWGUniverse universe) {
         super(universe);
         this.setAllowsChildren(true);
+        String tip = "<html><b>Folder: </b>"+ universe.swgPath().toString() + "<br>RIght click for more options</html>";
+        this.toolTip = tip;
     }
 
     @Override

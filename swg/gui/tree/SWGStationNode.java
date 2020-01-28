@@ -47,6 +47,7 @@ public final class SWGStationNode extends SWGTreeNode {
         super(station);
         this.setAllowsChildren(true);
         newNotesMenu = addNotesMenuItem();
+        this.toolTip = "Your account/profile name for the underlying server";
     }
 
     /**

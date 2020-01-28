@@ -17,7 +17,7 @@ import swg.model.SWGCGalaxy;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-public abstract class SWGTreeNode extends DefaultMutableTreeNode {
+public abstract class SWGTreeNode extends DefaultMutableTreeNode implements SWGTreeTip {
 
     /**
      * The node that currently is focused. During a focus transition this member
@@ -39,6 +39,8 @@ public abstract class SWGTreeNode extends DefaultMutableTreeNode {
      * The panel that contains the tree and related GUI elements.
      */
     protected static SWGMainTab mainTab;
+    
+    protected String toolTip = null;
 
     /**
      * Serialization version info. Don't meddle with this or break the
@@ -107,6 +109,14 @@ public abstract class SWGTreeNode extends DefaultMutableTreeNode {
         return userObject != null
                 ? userObject.hashCode()
                 : super.hashCode();
+    }
+    
+    @Override
+    public String getToolTip() {
+    	if(toolTip != null) {
+    		return toolTip;
+    	}
+        return null;
     }
     
     @Override

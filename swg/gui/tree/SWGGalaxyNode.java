@@ -40,6 +40,7 @@ public class SWGGalaxyNode extends SWGTreeNode {
     SWGGalaxyNode(SWGGalaxy galaxy) {
         super(galaxy);
         this.setAllowsChildren(true);
+        this.toolTip = "Server/Galaxy Name";
     }
 
     @Override

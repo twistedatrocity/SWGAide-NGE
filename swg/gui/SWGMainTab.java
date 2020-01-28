@@ -42,6 +42,7 @@ import swg.gui.tree.SWGGalaxyNode;
 import swg.gui.tree.SWGRoot;
 import swg.gui.tree.SWGStationNode;
 import swg.gui.tree.SWGTreeNode;
+import swg.gui.tree.SWGTreeTip;
 import swg.gui.tree.SWGUniverseNode;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
@@ -111,7 +112,10 @@ public class SWGMainTab extends JSplitPane {
 
                 super.getTreeCellRendererComponent(
                         tree, val, sel, exp, leaf, row, hf);
-
+                
+                if (val instanceof SWGTreeTip && val != null)
+                    setToolTipText(((SWGTreeTip)val).getToolTip());
+                
                 setForeground(((SWGTreeNode) val).exists()
                         ? Color.BLACK
                         : noExist);
