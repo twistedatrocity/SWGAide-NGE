@@ -31,6 +31,7 @@ import swg.SWGAide;
 import swg.gui.SWGFrame;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.resources.SWGInventoryTab;
 import swg.model.SWGCGalaxy;
 import swg.tools.SimplePrefsKeeper;
 import swg.tools.ZCrypto;
@@ -244,6 +245,7 @@ public class SWGCraftOptionsPanel extends JDialog {
         if (info.isFaultless()) {
         	SWGFrame.verified = true;
         	SWGFrame.getPrefsKeeper().add("optionVerified", SWGFrame.verified);
+        	SWGInventoryTab.verified();
             JOptionPane.showMessageDialog(verifyUserInfo,
                 "User name and password are correct", "Valid",
                 JOptionPane.INFORMATION_MESSAGE);

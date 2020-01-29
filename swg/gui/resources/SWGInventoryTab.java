@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -35,6 +36,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -118,7 +120,7 @@ import swg.tools.ZWriter;
  *         Chimaera.Zimoon
  */
 @SuppressWarnings("serial")
-final class SWGInventoryTab extends JPanel {
+public final class SWGInventoryTab extends JPanel {
 
     // TODO: add plain text filtering for notes column
 
@@ -134,6 +136,11 @@ final class SWGInventoryTab extends JPanel {
      * The bottom-most panel for this GUI component.
      */
     private Box bottomPanel;
+    
+    /**
+     * The top most panel containing primary control buttons.
+     */
+    private static JMenuBar cPanel;
 
     /**
      * A resource filter which can be a plain filter or a weighted filter. If
@@ -1635,11 +1642,23 @@ final class SWGInventoryTab extends JPanel {
             if (isGalaxyChanged()) {
                 resetAssigneeCombo();
                 updateDisplay();
-            } else
+            } else {
                 this.repaint();
+            }
             resizeBottomPanel();
             SWGHelp.push(helpPage);
             updateStatBar();
+            if(SWGFrame.verified != null && SWGFrame.verified == true) {
+            	cPanel.setVisible(true);
+            } else {
+            	cPanel.setVisible(false);
+            	JOptionPane pane = new JOptionPane("<html>If you have not already, please create and verify account at swgaide.com and <br>input your account credentials in Options -> SwgAide, then click verify button.<br>Once verified, inventory functions should be unlocked.<br>This is due to some inventory functions using the website API.</html>",JOptionPane.PLAIN_MESSAGE);
+                JDialog d = pane.createDialog(null, "Account is not Verified");
+                d.setBackground(Color.WHITE);
+                d.pack();
+                d.setModalityType(ModalityType.MODELESS);
+                d.setVisible(true);
+            }
         } else {
             SWGHelp.remove(helpPage);
             wrappers = null;
@@ -1923,7 +1942,106 @@ final class SWGInventoryTab extends JPanel {
         });
         return clearButton;
     }
-
+    
+    private Component makeButtonPanel () {
+    	final SWGCharacter toon = SWGFrame.getSelectedCharacter();
+    	cPanel = new JMenuBar();
+    	JButton add = new JButton("Add");
+    	add.setToolTipText("Create a new entry for this galaxy");
+        add.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e1) {
+                dialog().showAndBegin(null);
+            }
+        });
+    	JButton nimport = new JButton("Notes Import");
+    	nimport.setToolTipText("Import / Update inventory from in-game notes file");
+        nimport.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+                actionImportNotes(toon);
+            }
+        });
+        nimport.setEnabled(toon != null);
+    	JButton nexport = new JButton("Notes Export");
+    	nexport.setToolTipText("Export current display to in-game notes file");
+        nexport.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+            	if(wrappersFiltered().size() > 0) {
+            		actionExportNotes(toon);
+            	} else {
+            		JOptionPane.showMessageDialog(frame, "It appears your inventory is empty. Nothing to export.",
+                            "Notes Export", JOptionPane.PLAIN_MESSAGE);
+            	}
+            }
+        });
+        nexport.setEnabled(toon != null && toon.galaxy().exists());
+    	JButton csvbackup = new JButton("CSV Backup");
+    	csvbackup.setToolTipText("Backup the current view to CSV file");
+        csvbackup.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+            	if(wrappersFiltered().size() > 0) {
+            		actionExportToFile();
+            	} else {
+            		JOptionPane.showMessageDialog(frame, "It appears your inventory is empty. Nothing to backup.",
+                            "CSV Backup", JOptionPane.PLAIN_MESSAGE);
+            	}
+            }
+        });
+    	JButton csvrestore = new JButton("CSV Restore");
+    	csvrestore.setToolTipText("Import inventory from CSV file");
+        csvrestore.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+                actionImportFile();
+            }
+        });
+    	JButton gcopy = new JButton("Galaxy Copy");
+    	gcopy.setToolTipText("Copy this inventory to another galaxy");
+        gcopy.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+            	if(SWGResController.inventory(SWGFrame.getSelectedGalaxy()).size() > 0) {
+            		actionCopyAll();
+            	} else {
+            		JOptionPane.showMessageDialog(frame, "It appears your inventory is empty. Nothing to copy.",
+                            "Galaxy Copy", JOptionPane.PLAIN_MESSAGE);
+            	}
+            }
+        });
+    	JButton dall = new JButton("Delete All");
+    	dall.setForeground(Color.RED);
+    	dall.setToolTipText("Delete all entries of the current view");
+        dall.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e1) {
+            	if(wrappersFiltered().size() > 0) {
+            		actionDeleteEntries();
+            	} else {
+            		JOptionPane.showMessageDialog(frame, "It appears your inventory is empty. Nothing to delete.",
+                            "Delete All", JOptionPane.PLAIN_MESSAGE);
+            	}
+            }
+        });
+    	
+    	int pad = 5;
+    	cPanel.setBorder(BorderFactory.createCompoundBorder(cPanel.getBorder(),BorderFactory.createEmptyBorder(pad, pad, pad, pad)));
+    	cPanel.add(add);
+    	cPanel.add(Box.createHorizontalStrut(pad));
+    	cPanel.add(nimport);
+    	cPanel.add(Box.createHorizontalStrut(pad));
+    	cPanel.add(nexport);
+    	cPanel.add(Box.createHorizontalStrut(pad));
+    	cPanel.add(csvbackup);
+    	cPanel.add(Box.createHorizontalStrut(pad));
+    	cPanel.add(csvrestore);
+    	cPanel.add(Box.createHorizontalStrut(pad));
+    	cPanel.add(gcopy);
+    	cPanel.add(Box.createHorizontalGlue());
+    	cPanel.add(dall);
+		return cPanel;
+    }
     /**
      * Helper method which dispatches the creation of the main table and the
      * bottom panel to their make-methods respectively. Once this method is
@@ -1933,6 +2051,7 @@ final class SWGInventoryTab extends JPanel {
         if (isGuiCreated) return;
 
         setLayout(new BorderLayout());
+        add(makeButtonPanel(), BorderLayout.NORTH);
         add(makeMainTable(), BorderLayout.CENTER);
         add(makeBottomPanel(), BorderLayout.PAGE_END);
         isGuiCreated = true;
@@ -2394,7 +2513,7 @@ final class SWGInventoryTab extends JPanel {
         z.app("# SWGAide :: Inventory for ").app(toon.getName()).app(" @ ");
         z.app(recentGalaxy.getName()).appnl(" at the notes file format:");
         z.appnl("# resourcename, amount      or      (galaxy)name, amount");
-        z.appnl("# To amount you can optionally prepend + - or = which will");
+        z.appnl("# To change the amount you can optionally prepend + - or = which will");
         z.appnl("# add, subtract, or set the amount, press F1 for details").nl();
     }
 
@@ -2612,15 +2731,6 @@ final class SWGInventoryTab extends JPanel {
 	
 	        ppp.addSeparator();
 	
-	        JMenuItem neww = new JMenuItem("Create...");
-	        neww.setToolTipText("Create a new entry for this galaxy");
-	        neww.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e1) {
-	                dialog().showAndBegin(null);
-	            }
-	        });
-	        ppp.add(neww);
-	
 	        JMenuItem edit = new JMenuItem("Edit...");
 	        edit.setToolTipText("Edit the selected entry");
 	        edit.addActionListener(new ActionListener() {
@@ -2632,6 +2742,7 @@ final class SWGInventoryTab extends JPanel {
 	        ppp.add(edit);
 	
 	        JMenu mgm = new JMenu("Manage");
+	        mgm.setEnabled(wrappersFiltered().size() > 0);
 	        ppp.add(mgm);
 	
 	        final List<SWGInventoryWrapper> dl = duplicates();
@@ -2693,80 +2804,9 @@ final class SWGInventoryTab extends JPanel {
 	        });
 	        create.setEnabled(row >= 0);
 	        ppp.add(create);
-	
+
 	        ppp.addSeparator();
-	
-	        final SWGCharacter toon = SWGFrame.getSelectedCharacter();
-	
-	        JMenuItem impn = new JMenuItem("Import / Update from notes...");
-	        impn.setToolTipText("Import / Update inventory from in-game notes file");
-	        impn.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionImportNotes(toon);
-	            }
-	        });
-	        impn.setEnabled(toon != null);
-	        ppp.add(impn);
-	
-	        JMenuItem expn = new JMenuItem("Export to notes...");
-	        expn.setToolTipText("Export current display to in-game notes file");
-	        expn.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionExportNotes(toon);
-	            }
-	        });
-	        expn.setEnabled(toon != null && toon.galaxy().exists());
-	        ppp.add(expn);
-	
-	        ppp.addSeparator();
-	        
-	        JMenuItem exp = new JMenuItem("Backup to CSV...");
-	        exp.setToolTipText("Backup the current view to CSV file");
-	        exp.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionExportToFile();
-	            }
-	        });
-	        exp.setEnabled(wrappersFiltered().size() > 0);
-	        ppp.add(exp);
-	
-	        JMenuItem impf = new JMenuItem("Restore from CSV...");
-	        impf.setToolTipText("Import inventory from CSV file");
-	        impf.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionImportFile();
-	            }
-	        });
-	        ppp.add(impf);
-	
-	        JMenuItem copy = new JMenuItem("Galaxy copy...");
-	        copy.setToolTipText("Copy this inventory to another galaxy");
-	        copy.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionCopyAll();
-	            }
-	        });
-	        copy.setEnabled(SWGResController.inventory(recentGalaxy).size() > 0);
-	        ppp.add(copy);
-	
-	        ppp.addSeparator();
-	
-	        JMenuItem delall = new JMenuItem("Delete all");
-	        delall.setToolTipText("Delete all entries of the current view");
-	        delall.addActionListener(new ActionListener() {
-	            
-	            public void actionPerformed(ActionEvent e1) {
-	                actionDeleteEntries();
-	            }
-	        });
-	        delall.setEnabled(wrappersFiltered().size() > 0);
-	        ppp.add(delall);
-	
+
 	        JMenuItem del = new JMenuItem("Delete entry");
 	        del.setToolTipText("Delete the selected entry");
 	        del.addActionListener(new ActionListener() {
@@ -3052,6 +3092,10 @@ final class SWGInventoryTab extends JPanel {
                 };
         Collections.sort(wl, comp);
         return wl;
+    }
+    
+    public static void verified () {
+    	cPanel.setVisible(true);
     }
 
     /**
