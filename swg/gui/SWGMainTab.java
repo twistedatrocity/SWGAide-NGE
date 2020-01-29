@@ -255,7 +255,7 @@ public class SWGMainTab extends JSplitPane {
      * Method to change an SWG Install folder
      * @throws Throwable 
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
 	public void changeSWG (SWGUniverse uo) throws Throwable {
     	File f = fileChooser();
     	String msg;
@@ -263,22 +263,9 @@ public class SWGMainTab extends JSplitPane {
     		SWGUniverse u = new SWGUniverse(f);
     		List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList", new ArrayList<SWGUniverse>());
     		if(!ul.contains(u)) {
-    			ul.remove(uo);
-	    		ul.add(u);
-	            SWGFrame.getPrefsKeeper().add("swgUniverseList", (Serializable) ul);
-	            DefaultTreeModel model = new DefaultTreeModel(makeTreeModel());
-	    		tree.setModel(null);
-	            tree.setModel(model);
-	    		if (SWGTreeNode.focusedNode() != null) {
-	                TreePath p = new TreePath(SWGTreeNode.focusedNode().getPath());
-	                tree.setSelectionPath(p);
-	                tree.expandPath(p);
-	            }
-	    		// the below auto expands each 1st level child, e.g. the "SWG Install #x" for aesthetic purposes
-	            for (Enumeration e = ((SWGTreeNode)tree.getModel().getRoot()).children();e.hasMoreElements();) {
-	                SWGTreeNode tn = (SWGTreeNode)e.nextElement();
-	                tree.expandPath(new TreePath(((DefaultTreeModel)tree.getModel()).getPathToRoot(tn)));
-	            }
+    			uo.swgPath(f);
+    			SWGInitialize init = new SWGInitialize(frame);
+    			init.scanAll(u, false);
 	    		
 	    		msg = "Operation is complete";
     		} else {
