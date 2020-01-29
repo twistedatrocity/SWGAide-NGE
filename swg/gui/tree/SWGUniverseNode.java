@@ -76,6 +76,9 @@ public final class SWGUniverseNode extends SWGTreeNode {
                         JOptionPane.QUESTION_MESSAGE)) {
     		List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList");
     		if(ul.contains(universe())) {
+    			universe().stationNames().forEach( (s) -> {
+    				universe().stationRemove(s);
+    			});
     			ul.remove(universe());
     		}
     		SWGFrame.getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
@@ -159,7 +162,7 @@ public final class SWGUniverseNode extends SWGTreeNode {
     }
 
     @Override
-    protected void focusLost() {
+	protected void focusLost() {
         // pass
     }
     
