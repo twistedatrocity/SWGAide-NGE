@@ -3,7 +3,6 @@ package swg.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +23,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -243,12 +241,7 @@ public class SWGMainTab extends JSplitPane {
     	} else {
     		msg = "Operation has been cancelled";
     	}
-    	JOptionPane pane = new JOptionPane(msg,JOptionPane.PLAIN_MESSAGE);
-        JDialog d = pane.createDialog(null, "Add SWG Install");
-        d.pack();
-        d.setModalityType(ModalityType.MODELESS);
-        d.setVisible(true);
-        
+    	JOptionPane.showMessageDialog(frame, msg, "Add SWG Install", JOptionPane.PLAIN_MESSAGE);
     }
     
     /**
@@ -274,11 +267,7 @@ public class SWGMainTab extends JSplitPane {
     	} else {
     		msg = "Operation has been cancelled";
     	}
-    	JOptionPane pane = new JOptionPane(msg,JOptionPane.PLAIN_MESSAGE);
-        JDialog d = pane.createDialog(null, "Change SWG Install");
-        d.pack();
-        d.setModalityType(ModalityType.MODELESS);
-        d.setVisible(true);
+    	JOptionPane.showMessageDialog(frame, msg, "Change SWG Install", JOptionPane.PLAIN_MESSAGE);
     }
     
     /**
