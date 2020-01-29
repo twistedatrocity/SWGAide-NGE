@@ -248,7 +248,7 @@ public final class SWGRoot extends SWGTreeNode {
     }
 
     /**
-     * Creates a tree rooted from the specified universe that is added to the
+     * Creates a tree rooted from the specified universe list that is added to the
      * root node. This method iterates over the content of the universe and
      * creates nodes for its children and their children; a node is added to the
      * parent it pertains to. Finally the tree that is rooted in the universe is

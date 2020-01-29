@@ -1,7 +1,9 @@
 package swg.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,9 +23,13 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
@@ -138,8 +145,30 @@ public class SWGMainTab extends JSplitPane {
             SWGTreeNode tn = (SWGTreeNode)e.nextElement();
             tree.expandPath(new TreePath(((DefaultTreeModel)tree.getModel()).getPathToRoot(tn)));
         }
-
-        JScrollPane leftPane = new JScrollPane(tree);
+        JPanel tpanel = new JPanel(new BorderLayout());
+        tpanel.add(tree, BorderLayout.CENTER);
+        JButton addInstall = new JButton("Add SWG Install");
+        addInstall.setToolTipText("<html>Add additional game installation folder.<br>Useful if you play on more than one server</html>");
+        addInstall.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                        frame,
+                        "Add an additional SWG Install folder to SWGAide?",
+                        "Confirm Add SWG Install",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE)){
+        			try {
+						addSWG();
+					} catch (Throwable e1) {
+						SWGAide.printError("SWGMainTab:addSWG:", e1);
+					}
+        		}
+            }
+        });
+        tpanel.add(addInstall, BorderLayout.SOUTH);
+        JScrollPane leftPane = new JScrollPane(tpanel);
+        
         leftPane.setMinimumSize(new Dimension(200, 150));
         this.setLeftComponent(leftPane);
         this.setRightComponent(new JLabel());
@@ -180,6 +209,92 @@ public class SWGMainTab extends JSplitPane {
     }
 
     /**
+     * Method to add an additional SWG Install folder
+     * @throws Throwable 
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void addSWG () throws Throwable {
+    	File f = fileChooser();
+    	String msg;
+    	if(f != null) {
+    		SWGUniverse u = new SWGUniverse(f);
+    		List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList", new ArrayList<SWGUniverse>());
+    		if(!ul.contains(u)) {
+	    		ul.add(u);
+	            SWGFrame.getPrefsKeeper().add("swgUniverseList", (Serializable) ul);
+	            DefaultTreeModel model = new DefaultTreeModel(makeTreeModel());
+	    		tree.setModel(null);
+	            tree.setModel(model);
+	    		if (SWGTreeNode.focusedNode() != null) {
+	                TreePath p = new TreePath(SWGTreeNode.focusedNode().getPath());
+	                tree.setSelectionPath(p);
+	                tree.expandPath(p);
+	            }
+	    		// the below auto expands each 1st level child, e.g. the "SWG Install #x" for aesthetic purposes
+	            for (Enumeration e = ((SWGTreeNode)tree.getModel().getRoot()).children();e.hasMoreElements();) {
+	                SWGTreeNode tn = (SWGTreeNode)e.nextElement();
+	                tree.expandPath(new TreePath(((DefaultTreeModel)tree.getModel()).getPathToRoot(tn)));
+	            }
+	    		
+	    		msg = "Operation is complete";
+    		} else {
+    			msg = "Duplicates not allowed";
+    		}
+    	} else {
+    		msg = "Operation has been cancelled";
+    	}
+    	JOptionPane pane = new JOptionPane(msg,JOptionPane.PLAIN_MESSAGE);
+        JDialog d = pane.createDialog(null, "Add SWG Install");
+        d.pack();
+        d.setModalityType(ModalityType.MODELESS);
+        d.setVisible(true);
+        
+    }
+    
+    /**
+     * Method to change an SWG Install folder
+     * @throws Throwable 
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void changeSWG (SWGUniverse uo) throws Throwable {
+    	File f = fileChooser();
+    	String msg;
+    	if(f != null) {
+    		SWGUniverse u = new SWGUniverse(f);
+    		List<SWGUniverse> ul = (List<SWGUniverse>) SWGFrame.getPrefsKeeper().get("swgUniverseList", new ArrayList<SWGUniverse>());
+    		if(!ul.contains(u)) {
+    			ul.remove(uo);
+	    		ul.add(u);
+	            SWGFrame.getPrefsKeeper().add("swgUniverseList", (Serializable) ul);
+	            DefaultTreeModel model = new DefaultTreeModel(makeTreeModel());
+	    		tree.setModel(null);
+	            tree.setModel(model);
+	    		if (SWGTreeNode.focusedNode() != null) {
+	                TreePath p = new TreePath(SWGTreeNode.focusedNode().getPath());
+	                tree.setSelectionPath(p);
+	                tree.expandPath(p);
+	            }
+	    		// the below auto expands each 1st level child, e.g. the "SWG Install #x" for aesthetic purposes
+	            for (Enumeration e = ((SWGTreeNode)tree.getModel().getRoot()).children();e.hasMoreElements();) {
+	                SWGTreeNode tn = (SWGTreeNode)e.nextElement();
+	                tree.expandPath(new TreePath(((DefaultTreeModel)tree.getModel()).getPathToRoot(tn)));
+	            }
+	    		
+	    		msg = "Operation is complete";
+    		} else {
+    			msg = "Duplicates not allowed";
+    		}
+    	} else {
+    		msg = "Operation has been cancelled";
+    	}
+    	JOptionPane pane = new JOptionPane(msg,JOptionPane.PLAIN_MESSAGE);
+        JDialog d = pane.createDialog(null, "Change SWG Install");
+        d.pack();
+        d.setModalityType(ModalityType.MODELESS);
+        d.setVisible(true);
+    }
+    
+    /**
      * Called whenever this tabbed pane is de/selected, i.e. focus is changed
      * 
      * @param evt the change event
@@ -194,6 +309,32 @@ public class SWGMainTab extends JSplitPane {
             frame.editMenuRemove(unhideMenuItem);
             SWGTreeNode.focusTransition(null, evt);
         }
+    }
+    
+    /**
+     * Chooser for SWG directory. It only checks if it's
+     * a valid game directory. Further checking, such as duplicates
+     * should be done outside this method.
+     * 
+     * @return File which is a valid SWG base directory
+     */
+    private File fileChooser() {
+        JFileChooser fc = SWGFrame.getFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        String msg = "Find and select the \"StarWarsGalaxies\" folder";
+
+        File f = new File(System.getProperty("user.dir"));
+        fc.setCurrentDirectory(f);
+        do {
+            fc.setDialogTitle(msg);
+            int retVal = fc.showDialog(this,"Select");
+            if (retVal != JFileChooser.APPROVE_OPTION) return null;
+
+            msg = "Try again, find a valid \"StarWarsGalaxies\" folder";
+            f = fc.getSelectedFile();
+            if (f.getName().equals("testcenter")) f = f.getParentFile();
+        } while (!SWGUniverse.isValidSWGPath(f));
+        return f;
     }
 
     /**
