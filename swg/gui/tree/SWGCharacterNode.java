@@ -46,8 +46,8 @@ final class SWGCharacterNode extends SWGTreeNode {
      * Deletes this character object from the system
      */
     private void delete() {
-        if (character() == null
-                || JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+        if (character() != null
+                && JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                         frame,
                         String.format("Delete mail folders and swgaide entry for \"%s\"", character().getName()),
                         "Confirm character deletion",
