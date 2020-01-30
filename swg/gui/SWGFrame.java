@@ -432,6 +432,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
         splashProgressBar.setValue((int) step);
 
         SWGCraftCache.updateCacheBlocking();
+        if (getPrefsKeeper() != null) {
+            updatePreLaunch();
+        }
         schematicsManager = new SWGSchematicsManager();
 
         setJMenuBar(initMenuBar());
@@ -751,7 +754,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
             initPrefsKeeper(ini);
 
             if (getPrefsKeeper() != null) {
-                updatePreLaunch();
                 initCheckBackupPrefsKeeperNecessary();
                 verified = (Boolean) prefsKeeper.get("optionVerified");
                 return false;
@@ -1976,6 +1978,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 });
             	SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
             	SWGFrame.getPrefsKeeper().add("resourceMonitorMap", newmon);
+            	SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch upgrade complete" + pkver);
         	}
         } else if (pkver.contains("Unity")) {
         	/*String[] parts = pkver.split("Unity-");
