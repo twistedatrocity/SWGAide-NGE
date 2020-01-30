@@ -195,7 +195,7 @@ public final class SWGProfessionManager  {
         Map<String, SWGProfessionLevel> plm, SWGProfessionLevel pl) {
         // XXX: remove the check once we know everything works
         if (plm.containsKey(pl.getName()))
-            SWGAide.printDebug("prlm", 1, "Prof-level exists: " + pl.getName());
+            SWGAide.printDebug("prlm", 9, "Prof-level exists: " + pl.getName());
         else
             plm.put(pl.getName(), pl);
     }
