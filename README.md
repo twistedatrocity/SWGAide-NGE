@@ -1,17 +1,17 @@
-# SWGAide-NGE
+# SWGAide-Unity
 There are some video tutorials here:  https://www.youtube.com/channel/UCpqXPk4HV44MOx8bVB3IOqA
 
 
 Installation
 ============
 
-Grab a current copy of SWGAide-NGE.exe from the releases area: https://github.com/twistedatrocity/SWGAide-NGE/releases
+Grab a current copy of SWGAide-Unity.exe from the releases area: https://github.com/twistedatrocity/SWGAide-NGE/releases
 
-Create a new folder for SWGAide-NGE, anywhere you want.
+Create a new folder for SWGAide-Unity, anywhere you want.
 
-Drag and drop the SWGAide-NGE.exe file in to the new folder.
+Drag and drop the SWGAide-Unity.exe file in to the new folder.
 
-Double click the icon for SWGAide-NGE.exe to launch it.
+Double click the icon for SWGAide-Unity.exe to launch it.
 
 SWGAide guides you through its initialization. Actually, you just have to
 choose the game folder SWG is installed in; you cannot make
