@@ -517,7 +517,7 @@ final class SWGTestBench extends SWGJDialog {
                 // default wrapper it should always be initialized with
                 // exp-groups/lines
                 wrap = SWGSchemController.wrapperDefault(s);
-                setTitle("SWGAide-NGE - Test Bench: " + s.getName());
+                setTitle("SWGAide-Unity - Test Bench: " + s.getName());
 
                 resetSlots();
                 resetExps();

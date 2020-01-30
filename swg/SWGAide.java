@@ -102,9 +102,9 @@ public final class SWGAide {
                 return filename.getName();
             }
             //Possibly running in developer mode, i.e. outside of a packaged file
-            return "SWGAide-NGE.jar";
+            return "SWGAide-Unity.jar";
         } catch (URISyntaxException e) {
-            return "SWGAide-NGE.jar";
+            return "SWGAide-Unity.jar";
         }
     }
 
@@ -119,7 +119,7 @@ public final class SWGAide {
 
         String msg = "Java or Windows error\n" +
                 "There is an error that makes Java work in a folder\n" +
-                "that is not the folder where you put down SWGAide-NGE.jar\n" +
+                "that is not the folder where you put down SWGAide-Unity.jar\n" +
                 "The solution depends on your setup, the README file\n" +
                 "suggests one solution: ensure that javaw.exe is the\n" +
                 "selected file association for \".jar\" files\n\n" +

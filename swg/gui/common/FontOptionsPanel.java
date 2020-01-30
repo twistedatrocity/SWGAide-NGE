@@ -221,7 +221,7 @@ public class FontOptionsPanel extends JDialog implements ActionListener {
 	private void showConfirm () {
     	JOptionPane pane = new JOptionPane("\nThe application must be restarted to apply changes\n"
         		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
-        JDialog d = pane.createDialog(null, "SWGAide-NGE Requires Restart");
+        JDialog d = pane.createDialog(null, "SWGAide Requires Restart");
         d.pack();
         d.setModal(true);
         d.setVisible(true);

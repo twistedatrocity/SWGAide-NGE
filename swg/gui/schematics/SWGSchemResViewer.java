@@ -190,7 +190,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
      * Creates a mode-less dialog of this type.
      */
     private SWGSchemResViewer(SWGFrame fr) {
-        super("SWGAide-NGE - Used-by-Schematic Viewer", false, null);
+        super("SWGAide-Unity - Used-by-Schematic Viewer", false, null);
         // if (THIS != null) throw new IllegalStateException("No doubles");
         this.frame = fr;
         this.schemTab = SWGFrame.getSchematicTab(fr);

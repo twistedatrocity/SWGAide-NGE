@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="SWGAide-NGE/SWGAide-NGE.jar"/>
+    <jar path="SWGAide-NGE/SWGAide-Unity.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/SWGAide-NGE/SWGAide.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>

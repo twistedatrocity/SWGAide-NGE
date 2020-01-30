@@ -1,14 +1,14 @@
-SWGAide-NGE_README.txt
+SWGAide-Unity_README.txt
 
 
 Installation
 ============
 
-Create a new folder for SWGAide-NGE, anywhere you want.
+Create a new folder for SWGAide-Unity, anywhere you want.
 
-Drag and drop the SWGAide-NGE.exe file in to the new folder.
+Drag and drop the SWGAide-Unity.exe file in to the new folder.
 
-Double click the icon for SWGAide-NGE.exe to launch it.
+Double click the icon for SWGAide-Unity.exe to launch it.
 
 SWGAide guides you through its initialization. Actually, you just have to
 verify (or possibly find) the folder for StarWarsGalaxies; you cannot make
