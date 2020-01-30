@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.jar</jar>
-  <outfile>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-NGE.exe</outfile>
+  <jar>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-Unity.jar</jar>
+  <outfile>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-Unity.exe</outfile>
   <errTitle>JRE 8 required</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -14,10 +14,6 @@
   <restartOnCrash>false</restartOnCrash>
   <manifest>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\swgaide.manifest</manifest>
   <icon>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\icon.ico</icon>
-  <singleInstance>
-    <mutexName>zibzibboogeywoogey</mutexName>
-    <windowTitle>SWGAide-NGE</windowTitle>
-  </singleInstance>
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
@@ -30,15 +26,15 @@
     <opt>-XX:+UseG1GC</opt>
   </jre>
   <versionInfo>
-    <fileVersion>1.0.1.22</fileVersion>
-    <txtFileVersion>0.9.9-MrMiagi-0.1.22</txtFileVersion>
-    <fileDescription>SWGAide-NGE</fileDescription>
-    <copyright>swgaide.com 2019</copyright>
-    <productVersion>1.0.1.22</productVersion>
-    <txtProductVersion>0.9.9-MrMiagi-0.1.22</txtProductVersion>
-    <productName>SWGAide-NGE</productName>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>Unity-1.0.0</txtFileVersion>
+    <fileDescription>SWGAide-Unity</fileDescription>
+    <copyright>swgaide.com 2020</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>Unity-1.0.0</txtProductVersion>
+    <productName>SWGAide-Unity</productName>
     <companyName>swgaide.com</companyName>
-    <internalName>SWGAide-NGE</internalName>
-    <originalFilename>SWGAide-NGE.exe</originalFilename>
+    <internalName>SWGAide-Unity</internalName>
+    <originalFilename>SWGAide-Unity.exe</originalFilename>
   </versionInfo>
 </launch4jConfig>

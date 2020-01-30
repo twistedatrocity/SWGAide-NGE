@@ -74,7 +74,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "0.9.9-MrMiagi-0.1.25";
+    public static final String version = "Unity-1.0.0";
 
     /**
      * Returns the cache directory.
@@ -91,7 +91,7 @@ public class SWGConstants {
             File tmp;
             String str = System.getProperty("java.io.tmpdir");
             tmp = str != null
-                    ? new File(str, "SWGAide-NGE-" + version)
+                    ? new File(str, "SWGAide-Unity-" + version)
                     : null;
             if (tmp == null || (!tmp.exists() && !tmp.mkdir()))
                 tmp = new File("temp");
