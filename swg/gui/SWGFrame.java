@@ -431,9 +431,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         double step = 100.0 / 6; // progress steps
         splashProgressBar.setValue((int) step);
 
-        // in this order: profession-levels MUST exist before schematics
-        // XXX profession manager really needs moved to schematics
-        //professionManager = new SWGProfessionManager();
         SWGCraftCache.updateCacheBlocking();
         schematicsManager = new SWGSchematicsManager();
 
@@ -811,7 +808,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * values, and fills the frame with some initial components
      */
     private void initFrame() {
-        setTitle("SWGAide-NGE");
+        setTitle("SWGAide-Unity");
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -889,7 +886,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         });
         helpMenu.add(lic);
 
-        JMenuItem abt = new JMenuItem("About SWGAide-NGE");
+        JMenuItem abt = new JMenuItem("About SWGAide");
         abt.setMnemonic('A');
         abt.addActionListener(new AbstractAction() {
 
@@ -901,8 +898,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         helpMenu.addSeparator();
 
-        JMenuItem goWeb = new JMenuItem("SWGAide-NGE Web Site");
-        goWeb.setToolTipText("Open the SWGAide-NGE web page in a web browser");
+        JMenuItem goWeb = new JMenuItem("SWGAide Web Site");
+        goWeb.setToolTipText("Open the SWGAide web page in a web browser");
         goWeb.setMnemonic('W');
         goWeb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1102,7 +1099,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @param step the value with which to continue updating the splash screen
      * @see SWGInitialize#iniateStart()
      */
-    @SuppressWarnings({ "static-access", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
 	private void initTabPane(JPanel pane, boolean firstTime, double step) {
         tabPane = new JTabbedPane();
         pane.add(tabPane, BorderLayout.CENTER);
@@ -1450,7 +1447,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * Shows an about dialogue pane
      */
     protected void showAbout() {
-        JOptionPane.showMessageDialog(this, "SWGAide-NGE " + SWGConstants.version +
+        JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
         		"\n\nForked and Maintained by Holmes @ SWG:Legends\n" +
         		"    (aka Mr-Miagi)\n\n" +
         		"Originally Created by Simon Gronlund\n" +
@@ -1519,7 +1516,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * to post bugs
      */
 	protected void showErrorMailOption() {
-    	JOptionPane.showMessageDialog(this, "SWGAide-NGE " + SWGConstants.version +
+    	JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
         		"\n\nAn Error has occured!\n\n" +
         		"Bug reports can be posted on github:\n" +
                 "https://github.com/twistedatrocity/SWGAide-NGE/issues\n" +
@@ -1614,31 +1611,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void updatePreLaunch() {
-    	// TODO put this in upgrade routine
-    	SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
-    	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
-        if(ul == null && u != null && u instanceof SWGUniverse) {
-        	ul = new ArrayList<SWGUniverse>();
-        	ul.add(u);
-        	getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
-        	getPrefsKeeper().remove("swgUniverse");
-        }
-        getPrefsKeeper().remove("swgUniverse");
-        getPrefsKeeper().remove("swgTestCenter");
-        getPrefsKeeper().remove("swgClientPaths");
-        
-        /* for debugging. remove for release
-        File f = new File("C:\\Program Files\\StarWarsGalaxiesOrig");
-        SWGUniverse newu;
-		try {
-			newu = new SWGUniverse(f);
-			ul.add(newu);
-			getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
-		} catch (Throwable e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-        
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
     	//
         if (pkver.contains("MrMiagi")) {
@@ -1743,7 +1715,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch DAT file upgrade complete ");
                 JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
                 		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
-                JDialog d = pane.createDialog(null, "SWGAide-NGE Upgrade Complete");
+                JDialog d = pane.createDialog(null, "SWGAide Upgrade Complete");
                 d.pack();
                 d.setModal(false);
                 d.setVisible(true);
@@ -1807,7 +1779,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		//SWGResourceManager.updateMainGalaxy();
         		JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
                 		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
-                JDialog d = pane.createDialog(null, "SWGAide-NGE Upgrade Complete");
+                JDialog d = pane.createDialog(null, "SWGAide Upgrade Complete");
                 d.pack();
                 d.setModal(false);
                 d.setVisible(true);
@@ -1920,7 +1892,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		SWGFrame.getPrefsKeeper().add("resourceGeneralMap", new HashMap<String, SWGResourceSet>());
         		JOptionPane pane = new JOptionPane("\nSWGAide.DAT file has been upgraded to the new version\n"
                 		+ "Please restart the application after clicking OK.\nThank You",JOptionPane.PLAIN_MESSAGE);
-                JDialog d = pane.createDialog(null, "SWGAide-NGE Upgrade Complete");
+                JDialog d = pane.createDialog(null, "SWGAide Upgrade Complete");
                 d.pack();
                 d.setModal(false);
                 d.setVisible(true);
@@ -1933,9 +1905,21 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 }
         		doExit("0.9.9-MrMiagi-0.1.22");
         	}
-        	// XXX checks if version in dat file older than or equal to 0.1.21
-        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
-        		// XXX This will be upgrade routine for Unity.
+        	// checks if version in dat file older than or equal to 0.1.25
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 25 ) {
+        		// TODO This will be upgrade routine for Unity.
+        		SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
+            	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
+                if(ul == null && u != null && u instanceof SWGUniverse) {
+                	ul = new ArrayList<SWGUniverse>();
+                	ul.add(u);
+                	getPrefsKeeper().add("swgUniverseList",(Serializable) ul);
+                	getPrefsKeeper().remove("swgUniverse");
+                }
+                getPrefsKeeper().remove("swgUniverse");
+                getPrefsKeeper().remove("swgTestCenter");
+                getPrefsKeeper().remove("swgClientPaths");
+                
             	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfLevel");
             	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedSchematic");
             	Object sp = SWGFrame.getPrefsKeeper().get("schemDraftSelectedProfession");
@@ -1994,12 +1978,12 @@ public class SWGFrame extends JFrame implements ComponentListener,
             	SWGFrame.getPrefsKeeper().add("resourceMonitorMap", newmon);
         	}
         } else if (pkver.contains("Unity")) {
-        	String[] parts = pkver.split("Unity-");
+        	/*String[] parts = pkver.split("Unity-");
         	String ver = parts[1];
         	String[] vparts = ver.split("\\.");
         	int ord1 = Integer.parseInt(vparts[0]);
         	int ord2 = Integer.parseInt(vparts[1]);
-        	int ord3 = Integer.parseInt(vparts[2]);
+        	int ord3 = Integer.parseInt(vparts[2]); */ 
         } else {
         	// Putting a dialogue here and exit if trying to launch with an incompatible DAT file.
         	JOptionPane pane = new JOptionPane("\nYour SWGAide.DAT file is incompatible with this version\n"
