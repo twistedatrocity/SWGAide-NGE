@@ -33,9 +33,7 @@ prefsFileBackupNumber		Integer
 prefsKeeperBackupDate		Long
 prefsKeeperBackupRepeatDays	Integer
 
-swgUniverse					SWGUniverse
-swgTestCenter				SWGUniverse
-swgClientPaths              ArrayList<File> # a list of previous client paths
+swgUniverseList				List<SWGUniverse> # this is the replacement for swgUniverse, contains list of active universes
 
 selectedTab					Integer
 
