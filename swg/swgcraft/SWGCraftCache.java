@@ -57,12 +57,12 @@ public final class SWGCraftCache {
     /**
      * The abstract file for the categories XML file.
      */
-    private static final File catXML = new File("crafting", "categories.xml");
+    private static final File catXML = new File("crafting", "categories_unity.xml");
     
     /**
      * The abstract file for the professions XML file.
      */
-    private static final File profXML = new File("crafting", "professions.xml");
+    private static final File profXML = new File("crafting", "professions_unity.xml");
 	
 	/**
      * The abstract file for the servers XML file.
@@ -72,7 +72,7 @@ public final class SWGCraftCache {
 	/**
 	 * The abstract file for the schematics XML file.
 	 */
-	public static final File schemXML = new File("crafting", "schematics.xml");
+	public static final File schemXML = new File("crafting", "schematics_unity.xml");
 
 	// XXX: implement hourly checks for updates ??
 	// support for category subscribers ??
