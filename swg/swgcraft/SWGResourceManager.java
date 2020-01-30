@@ -211,7 +211,9 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     updateMainGalaxy();
                 }
             });
-        timer.setInitialDelay(100);
+        // set this to 10 seconds to give the rest of the app plenty of time to finish loading. 100 millis was just too short and things would clash
+        // TODO need to probably just make this blocking during startup as the time delay is not a guarantee, but it does work well for now.
+        timer.setInitialDelay(10000);
         timer.start();
     }
 
