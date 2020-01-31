@@ -535,7 +535,8 @@ public final class SWGSchematicTab extends JTabbedPane {
                                 ? SWGGuiUtils.colorAlert
                                 : null);
                 if (updateGui) {
-                	todaysAlert.guiUpdate();
+                	// FIXME This is not  thread safe in a public method -- commenting out for now not sure this is even needed really.
+                	//todaysAlert.guiUpdate();
                 }
             }
         }

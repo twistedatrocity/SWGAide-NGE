@@ -122,11 +122,10 @@ final public class SWGSchemController implements UpdateSubscriber {
                     inventory = null;
                 }
                 SwingUtilities.invokeLater(new Runnable() {
-                    
-                    @Override
                     public void run() {
                         updateGalaxy();
-                        schemTab.tintTabs(true);
+                        // FIXME this causes a deadlock. commented out for now.
+                        //schemTab.tintTabs(false);
                     }
                 });
             }
