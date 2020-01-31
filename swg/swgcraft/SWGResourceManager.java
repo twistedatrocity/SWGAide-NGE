@@ -187,7 +187,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         Boolean autoUpdate =
             (Boolean) SWGFrame.getPrefsKeeper().get("optionAutoUpdate");
         if (autoUpdate != null && autoUpdate.booleanValue()) {
-            startAutoUpdate(6);
+            startAutoUpdate(3);
         }
     }
 
@@ -826,7 +826,8 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * @throws NullPointerException if the argument is {@code null}
      */
     private static boolean isGalaxyUpdated(SWGCGalaxy galaxy) {
-        return statusIsUpdated(getStatusLocalTime(galaxy));
+    	boolean ret = statusIsUpdated(getStatusLocalTime(galaxy));
+        return ret;
     }
 
     /**
@@ -1437,7 +1438,8 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (timeStamp == null || timeStamp.longValue() <= 0)
             return true;
         Long s = statusSWGCraftTime();
-        return (s.compareTo(timeStamp) > 0);
+        boolean ret = (s.compareTo(timeStamp) > 0);
+        return ret;
     }
 
     /**
