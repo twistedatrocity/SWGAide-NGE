@@ -529,13 +529,14 @@ public final class SWGSchematicTab extends JTabbedPane {
         	// XXX commenting this for now. does not seem to be thread safe way to do this
         	//if (!isGuiFinished) make();
             if (todaysAlert != null) {
+            	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGSchematicTab:tintTabs: " + updateGui);
             	setBackgroundAt(2, todaysAlert.todaysTinted() ? SWGGuiUtils.colorAlert : null);
             	SWGAide.frame().getTabPane().setBackgroundAt(3,
                 		todaysAlert.todaysTinted()
                                 ? SWGGuiUtils.colorAlert
                                 : null);
                 if (updateGui) {
-                	// FIXME This is not  thread safe in a public method -- commenting out for now not sure this is even needed really.
+                	// FIXME This is not possibly not thread safe in a public method -- commenting out for now not sure this is even needed really.
                 	//todaysAlert.guiUpdate();
                 }
             }
