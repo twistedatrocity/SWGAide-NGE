@@ -759,7 +759,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      */
     public static SWGSchematic getSchematic(int id) {
         synchronized (schematics) {
-            if (schematics.size() <= 0)
+        	Integer sz = schematics.size();
+            if (sz <= 0 && id > sz)
                 return null; // init failed or not run yet
             return schematics.get(id);
         }
