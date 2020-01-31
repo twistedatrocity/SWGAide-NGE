@@ -124,7 +124,8 @@ final public class SWGSchemController implements UpdateSubscriber {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         updateGalaxy();
-                        // FIXME this causes a deadlock. commented out for now.
+                        //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGSchemController:handleupdate: " + u.toString());
+                        // FIXME this causes a deadlock after about an hour or so. commented out for now.
                         //schemTab.tintTabs(false);
                     }
                 });

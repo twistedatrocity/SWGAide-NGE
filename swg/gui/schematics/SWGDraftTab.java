@@ -1456,7 +1456,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 : "Info: " + SWGSchematicTab.UNKNOWN;
         return String.format(
                 "<html>&nbsp;<br/>%s%s<font color=#bbbbbb><br/>&mdash; " +
-                        "SWGCraft-id:&nbsp;%s %s<br/>&nbsp;</font></html>",
+                        "SWGAide-id:&nbsp;%s %s<br/>&nbsp;</font></html>",
                 i, extra, Integer.toString(s.getID()), s.hasScreenshot()
                         ? ""
                         : "&mdash; <font color=\"red\">add screenshot</font>");
