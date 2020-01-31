@@ -187,7 +187,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         Boolean autoUpdate =
             (Boolean) SWGFrame.getPrefsKeeper().get("optionAutoUpdate");
         if (autoUpdate != null && autoUpdate.booleanValue()) {
-            startAutoUpdate(3);
+            startAutoUpdate(6);
         }
     }
 
