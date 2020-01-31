@@ -13,7 +13,6 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import swg.gui.SWGFrame;
 import swg.tools.ZNumber;
 import swg.tools.ZReader;
@@ -238,7 +237,7 @@ public final class SWGAide {
      */
     public static void main(String[] args) {
         try {
-            checkJavaWorking();
+        	checkJavaWorking();
 
             initiate();
             setLog(null);
@@ -251,7 +250,8 @@ public final class SWGAide {
             checkWinAdminMode();
 
             printStart();
-            FRAME = new SWGFrame();
+            
+        	FRAME = new SWGFrame();
             FRAME.delayedConstructor(FRAME);
         } catch (Throwable e) {
             printError("SWGAide:main", e);
