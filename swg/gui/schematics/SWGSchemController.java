@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
-
 import swg.crafting.SWGValues;
 import swg.crafting.SWGWeights;
 import swg.crafting.UpdateNotification;
@@ -110,25 +108,17 @@ final public class SWGSchemController implements UpdateSubscriber {
 
     @Override
     public void handleUpdate(UpdateNotification u) {
-        if (u instanceof CacheUpdate
+    	if (u instanceof CacheUpdate
                 && ((CacheUpdate) u).type == UpdateType.SCHEMATICS) {
             rcwPairs = null;
         } else if (u instanceof ResourceUpdate) {
-            ResourceUpdate ru = (ResourceUpdate) u;
-            if (ru.optional != null
-                    && ru.optional == SWGFrame.getSelectedGalaxy()) {
+        	ResourceUpdate ru = (ResourceUpdate) u;
+            if (ru.optional != null && ru.optional == SWGFrame.getSelectedGalaxy()) {
                 synchronized (SWGSchemController.class) {
                     spawning = null;
                     inventory = null;
                 }
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        updateGalaxy();
-                        //SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGSchemController:handleupdate: " + u.toString());
-                        // FIXME this causes a deadlock after about an hour or so. commented out for now.
-                        //schemTab.tintTabs(false);
-                    }
-                });
+                updateGalaxy();
             }
         }
     }
