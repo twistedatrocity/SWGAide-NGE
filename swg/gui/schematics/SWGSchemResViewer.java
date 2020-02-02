@@ -868,7 +868,12 @@ public final class SWGSchemResViewer extends SWGJDialog {
         @Override
         public Object getValueAt(int row, int col) {
             SWGSac sac = schematics.get(row);
-            String expname = sac.object(2).toString();
+            String expname;
+            if(sac.size() >2) {
+            	expname = sac.object(2).toString();
+            } else {
+            	expname = "LQ";
+            }
             if(col ==0) {
             	String tname = ((SWGSchematic) sac.obj).getName();
             	String sname = "<html><span style='font-weight:normal;'>" + tname + "</span> <span style='font-size:80%'>(" + expname + ")</span></html>";
