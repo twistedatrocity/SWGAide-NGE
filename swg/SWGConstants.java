@@ -74,7 +74,7 @@ public class SWGConstants {
     /**
      * The version number of the SWGAide that is available for download.
      */
-    public static final String version = "Unity-1.0.1";
+    public static final String version = "Unity-1.0.2";
 
     /**
      * Returns the cache directory.
