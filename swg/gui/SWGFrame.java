@@ -1795,7 +1795,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		doExit("0.9.9-MrMiagi-0.1.21");
         	}
         	// checks if version in dat file older than or equal to 0.1.21
-        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 21 ) {
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 21 ) {
         		Map<String, Map<String, List<SWGInventoryWrapper>>> oldMap =(Map<String, Map<String, List<SWGInventoryWrapper>>>)
                         SWGFrame.getPrefsKeeper().get(
                                 "resourceInventoryMap",
@@ -1908,7 +1908,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         		doExit("0.9.9-MrMiagi-0.1.22");
         	}
         	// checks if version in dat file older than or equal to 0.1.25
-        	if ( ord1 <= 0 && ord2 <= 1 && ord3 == 25 ) {
+        	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 25 ) {
         		// TODO This will be upgrade routine for Unity.
         		SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
             	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
