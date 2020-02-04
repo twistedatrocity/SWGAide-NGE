@@ -1942,12 +1942,14 @@ public class SWGFrame extends JFrame implements ComponentListener,
             		SWGProfession np = SWGProfession.findOld(spp);
                 	SWGAide.printDebug("debug", 9, "SWGFrame : isOLD " + spp );
                 	SWGAide.printDebug("debug", 9, "SWGFrame : newProf " + np );
+                	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting last saved profession new: " + np);
                 	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfession");
                 	SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", np);
             	} else {
             		SWGAide.printDebug("debug", 9, "SWGFrame : isProf " + sp );
             	}
             	// Guards
+            	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting guards if they exist ");
             	Map<SWGCGalaxy, List<SWGGuard>> oldguards = (Map<SWGCGalaxy, List<SWGGuard>>)
             			SWGFrame.getPrefsKeeper().get("resourceGuardMap",new HashMap<SWGCGalaxy, List<SWGGuard>>());
             	HashMap<Integer, List<SWGGuard>> newguards = new HashMap<Integer, List<SWGGuard>>();
@@ -1958,6 +1960,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             	SWGFrame.getPrefsKeeper().remove("resourceGuardMap");
             	SWGFrame.getPrefsKeeper().add("resourceGuardMap", newguards);
             	// harv owners
+            	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting harvester owners/deeds if they exist ");
             	HashMap<SWGCGalaxy, List<SWGHarvesterOwner>> harvOwners = (HashMap<SWGCGalaxy, List<SWGHarvesterOwner>>)
                         SWGFrame.getPrefsKeeper().get(
                                 "resourceHarvesterOwnerMap",
@@ -1970,6 +1973,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             	SWGFrame.getPrefsKeeper().remove("resourceHarvesterOwnerMap");
             	SWGFrame.getPrefsKeeper().add("resourceHarvesterOwnerMap", newOwners);
             	// harvs
+            	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting any active harvesters if they exist ");
             	Map<SWGCGalaxy, List<SWGHarvester>> oldharvesters = (Map<SWGCGalaxy, List<SWGHarvester>>)
                         SWGFrame.getPrefsKeeper().get("resourceActiveHarvesterMap", new HashMap<SWGCGalaxy, List<SWGHarvester>>());
             	HashMap<Integer, List<SWGHarvester>> newharvs = new HashMap<Integer, List<SWGHarvester>>();
@@ -1979,6 +1983,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 });
             	SWGFrame.getPrefsKeeper().remove("resourceActiveHarvesterMap");
             	SWGFrame.getPrefsKeeper().add("resourceActiveHarvesterMap", newharvs);
+            	// monitors
+            	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting monitors if they exist ");
             	Map<SWGCGalaxy, List<SWGMonitor>> monitors = (Map<SWGCGalaxy, List<SWGMonitor>>)
                         SWGFrame.getPrefsKeeper().get(
                                 "resourceMonitorMap",
@@ -2010,7 +2016,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
             		});
             		SWGFrame.getPrefsKeeper().remove("schemAssignees");
                 	SWGFrame.getPrefsKeeper().add("schemAssignees", (Serializable) nlass);
-            		SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch assignee data conversion compate for " + nlass);
+            		SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch assignee data conversion complete for " + nlass);
             	}
             	List<Object> oldWrappers = (List<Object>) SWGFrame.getPrefsKeeper().
                         get("schemWrappers");
