@@ -115,6 +115,12 @@ final class SWGAssigneeDialog extends SWGJDialog {
         super("Manage Assignees and Favorites", schemTab);
 
         makeInterior();
+        SWGProfession p = SWGProfession.getFromName(professionChooser.getSelectedItem().toString());
+        SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
+        List<SWGSchematic> sl = SWGSchematicsManager.getSchematics(p, gxy);
+
+        Collections.sort(sl);
+        ((SWGListModel<SWGSchematic>) schematicsList.getModel()).setElements(sl);
     }
 
     /**
