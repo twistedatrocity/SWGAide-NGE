@@ -26,7 +26,7 @@ import swg.tools.ZString;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGSchematicWrapper implements Serializable, SWGGui {
+public final class SWGSchematicWrapper implements Serializable, SWGGui {
 
     /**
      * Serialization version info. Don't meddle with this or break the

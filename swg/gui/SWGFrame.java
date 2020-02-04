@@ -23,6 +23,7 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +84,9 @@ import swg.gui.resources.SWGHarvesterOwner;
 import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGMonitor;
 import swg.gui.resources.SWGResourceTab;
+import swg.gui.schematics.SWGSchematicAssignee;
 import swg.gui.schematics.SWGSchematicTab;
+import swg.gui.schematics.SWGSchematicWrapper;
 import swg.gui.trade.SWGTradeTab;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGCharacter;
@@ -751,7 +754,11 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 ini = bak;
             }
 
-            initPrefsKeeper(ini);
+            try {
+				initPrefsKeeper(ini);
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				SWGAide.printError("SWGFrame:initEnvironment ", e);
+			}
 
             if (getPrefsKeeper() != null) {
                 initCheckBackupPrefsKeeperNecessary();
@@ -1030,10 +1037,14 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * </ul>
      * 
      * @param datFile the DAT file to load
+     * @throws SecurityException 
+     * @throws NoSuchFieldException 
+     * @throws IllegalAccessException 
+     * @throws IllegalArgumentException 
      */
-    private void initPrefsKeeper(File datFile) {
+    private void initPrefsKeeper(File datFile) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         // argument can be a BAK file
-
+    	
         String result = null;
         int mType = -1;
         try {
@@ -1611,7 +1622,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * method may display dialogs or perform other tasks which must be done
      * before continuing launch of SWGAide.
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private void updatePreLaunch() {
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
     	//
@@ -1910,6 +1921,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         	// checks if version in dat file older than or equal to 0.1.25
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 25 ) {
         		// TODO This will be upgrade routine for Unity.
+        		SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch beginning upgrade from version " + pkver);
         		SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
             	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
                 if(ul == null && u != null && u instanceof SWGUniverse) {
@@ -1925,15 +1937,15 @@ public class SWGFrame extends JFrame implements ComponentListener,
             	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfLevel");
             	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedSchematic");
             	Object sp = SWGFrame.getPrefsKeeper().get("schemDraftSelectedProfession");
-            	if(sp instanceof SWGProfession) {
-            		SWGAide.printDebug("debug", 9, "SWGFrame : isProf " + sp );
-            	} else {
+            	if(sp instanceof swg.model.SWGProfession) {
             		String spp = sp.toString();
             		SWGProfession np = SWGProfession.findOld(spp);
                 	SWGAide.printDebug("debug", 9, "SWGFrame : isOLD " + spp );
                 	SWGAide.printDebug("debug", 9, "SWGFrame : newProf " + np );
                 	SWGFrame.getPrefsKeeper().remove("schemDraftSelectedProfession");
                 	SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", np);
+            	} else {
+            		SWGAide.printDebug("debug", 9, "SWGFrame : isProf " + sp );
             	}
             	// Guards
             	Map<SWGCGalaxy, List<SWGGuard>> oldguards = (Map<SWGCGalaxy, List<SWGGuard>>)
@@ -1978,7 +1990,51 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 });
             	SWGFrame.getPrefsKeeper().remove("resourceMonitorMap");
             	SWGFrame.getPrefsKeeper().add("resourceMonitorMap", newmon);
-            	SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch upgrade complete" + pkver);
+            	
+            	int delta = 1716;
+            	List<SWGSchematicAssignee> lass = (List<SWGSchematicAssignee>) SWGFrame.getPrefsKeeper().get("schemAssignees");
+            	if(lass != null) {
+            		List<SWGSchematicAssignee> nlass = new ArrayList<SWGSchematicAssignee>();
+            		lass.forEach( (ass) -> {
+            			String name = ass.getName();
+            			SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch converting assignee data for " + name);
+            			SWGSchematicAssignee newass = new SWGSchematicAssignee(name);
+            			List<Integer> oldfavs = (List<Integer>) ass.getFavIDs();
+            			oldfavs.forEach( (ofav) -> {
+            				Integer oid = ofav;
+            				Integer nid = oid + delta;
+            				SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch assignee schematic new id " + nid);
+            				newass.addFavID(nid);
+            			});
+            			nlass.add(newass);
+            		});
+            		SWGFrame.getPrefsKeeper().remove("schemAssignees");
+                	SWGFrame.getPrefsKeeper().add("schemAssignees", (Serializable) nlass);
+            		SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch assignee data conversion compate for " + nlass);
+            	}
+            	List<Object> oldWrappers = (List<Object>) SWGFrame.getPrefsKeeper().
+                        get("schemWrappers");
+            	if(oldWrappers != null) {
+            		ArrayList<SWGSchematicWrapper> newWrappers = new ArrayList<SWGSchematicWrapper>();
+            		oldWrappers.forEach( (owr) -> {
+            			Class<?> clazz = owr.getClass();
+            			Field field;
+						try {
+							field = clazz.getDeclaredField("schemID");
+							field.setAccessible(true);
+							Integer oid = (Integer) field.get(owr);
+							Integer nid = oid + delta;
+							field.set(owr, nid);
+							newWrappers.add((SWGSchematicWrapper) owr);
+						} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+            		});
+            		SWGFrame.getPrefsKeeper().remove("schemWrappers");
+                	SWGFrame.getPrefsKeeper().add("schemWrappers", (Serializable) newWrappers);
+            	}
+            	SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch upgrade from " + pkver + " complete");
         	}
         } else if (pkver.contains("Unity")) {
         	/*String[] parts = pkver.split("Unity-");

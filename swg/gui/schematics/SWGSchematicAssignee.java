@@ -29,7 +29,7 @@ import swg.tools.ZString;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGSchematicAssignee implements SWGGui, Serializable,
+public final class SWGSchematicAssignee implements SWGGui, Serializable,
         Comparable<SWGSchematicAssignee> {
 
     /**
@@ -80,7 +80,10 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * 
      * @serial the selected profession
      */
-    private SWGProfession profession;
+    @SuppressWarnings("unused")
+	private Object profession;
+    
+    private SWGProfession prof;
 
     /**
      * The number of expertise points the user has set for this assignee. This
@@ -90,7 +93,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * @serial integer for resource refinery
      */
     private int resourceRefinery;
-
+    
     /**
      * Creates an instance of this type for the specified assignee. This
      * constructor does not verify the uniqueness.
@@ -98,10 +101,11 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * @param assignee a unique identifying text
      * @throws IllegalArgumentException if the argument is empty or {@code null}
      */
-    SWGSchematicAssignee(String assignee) {
+    public SWGSchematicAssignee(String assignee) {
         this.setAssignee(assignee);
         this.favIDs = new ArrayList<Integer>();
         this.profession = SWGProfession.getFromID(SWGProfession.ALL);
+        this.prof = SWGProfession.getFromID(SWGProfession.ALL);
     }
 
     /**
@@ -126,6 +130,20 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
             Collections.sort(favorites);
         }
     }
+    
+    /**
+     * Simple method for adding favid by you guessed it an integer
+     * This is mainly used for upgrade routines so we dont have to instantiate schematics
+     */
+    public void addFavID(Integer id) {
+    	if (this == DEFAULT) return;
+    	synchronized (favIDs) {
+    		if (favIDs.contains(id)) {
+                return; // no doubles
+    		}
+    		favIDs.add(id);
+    	}
+    }
 
     @Override
     public int compareTo(SWGSchematicAssignee o) {
@@ -140,6 +158,9 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
         return "";
     }
 
+   public List<Integer> getFavIDs() {
+	   return favIDs;
+   }
     /**
      * Returns a sorted copy of the list of favorite schematics that the user
      * has selected for this assignee, or an empty list. The list is sorted in
@@ -147,7 +168,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * 
      * @return a sorted list of favorite schematics, or an empty list
      */
-    List<SWGSchematic> getFavorites() {
+    public List<SWGSchematic> getFavorites() {
     	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
     	if(galaxy == null) {
     		galaxy = gxy;
@@ -196,7 +217,7 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * @return a profession
      */
     SWGProfession getProfession() {
-        return profession;
+        return prof;
     }
 
     /**
@@ -248,9 +269,9 @@ final class SWGSchematicAssignee implements SWGGui, Serializable,
      * 
      * @param profession a profession, or {@code null}
      */
-    void setProfession(SWGProfession profession) {
+    public void setProfession(SWGProfession profession) {
         if (this == DEFAULT) return;
-        this.profession = profession == null
+        this.prof = profession == null
                 ? SWGProfession.getFromID(SWGProfession.ALL)
                 : profession;
     }
