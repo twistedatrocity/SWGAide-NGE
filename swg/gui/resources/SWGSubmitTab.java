@@ -441,7 +441,9 @@ final class SWGSubmitTab extends JPanel {
     private void actionSubmitSingle() {
         if (singleSubmitButton.getText().equals("Submit Single")) {
         	
-        	final SWGMutableResource mr = singleResourceValidateAndCreate();
+        	final SWGCGalaxy gxy = recentGalaxy;
+        	final SWGResourceSet set = SWGResourceManager.getSet(gxy);
+        	final SWGMutableResource mr = singleResourceValidateAndCreate(set);
         	final List<Object> res = new ArrayList<Object>();
         	res.add(mr);
             if (mr == null)
@@ -451,9 +453,6 @@ final class SWGSubmitTab extends JPanel {
                     singleSubmitButton, "Submit as old / historical?", "Confirm",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE))
                 return ;
-            
-            final SWGCGalaxy gxy = recentGalaxy;
-            final SWGResourceSet set = SWGResourceManager.getSet(gxy);
 
             final ExecutorService exec = Executors.newSingleThreadExecutor();
             exec.execute(new Runnable() {
@@ -562,8 +561,9 @@ final class SWGSubmitTab extends JPanel {
      */
     private void editApply() {
         int idx = multipleGUIList.getSelectedIndex();
-
-        Object apply = singleResourceValidateAndCreate();
+        final SWGCGalaxy gxy = recentGalaxy;
+    	final SWGResourceSet set = SWGResourceManager.getSet(gxy);
+        Object apply = singleResourceValidateAndCreate(set);
         if (apply == null) {
             apply = editCompileString();
             if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(
@@ -1696,14 +1696,18 @@ final class SWGSubmitTab extends JPanel {
      * @param name the name for the resource
      * @param stats the stats for the resource
      * @param pls a list of planets for the resource
+     * @param set 
      * @return a mutable resource, or {@code null}
      */
-    private SWGMutableResource singleResourceCreate(String name,
-            SWGResourceStats stats, List<SWGPlanet> pls) {
+    private SWGMutableResource singleResourceCreate(String name, SWGResourceStats stats, List<SWGPlanet> pls, SWGResourceSet set) {
 
         // resourceClass is already validated
         try {
             SWGMutableResource mr = new SWGMutableResource(name, resourceClass);
+            SWGKnownResource match = set.getBy(name, recentGalaxy);
+            if(match != null) {
+            	mr.swgcraftID = match.id();
+            }
             mr.stats(stats, false); // already validated
             mr.depleted(false);
             mr.galaxy(recentGalaxy);
@@ -1723,10 +1727,12 @@ final class SWGSubmitTab extends JPanel {
      * Helper method which parses input fields, creates and returns a resource.
      * All input fields are parsed and validated and if there is an error a
      * message is displayed at the GUI error label and {@code null} is returned.
+     * @param set 
+     * @param set 
      * 
      * @return a resource, or {@code null}
      */
-    private SWGMutableResource singleResourceValidateAndCreate() {
+    private SWGMutableResource singleResourceValidateAndCreate(SWGResourceSet set) {
         SWGResourceStats st = statsParse();
         if (st == null)
             return null;
@@ -1739,7 +1745,7 @@ final class SWGSubmitTab extends JPanel {
         if (!singleValidateClassVsPlanet(resourceClass, pls))
             return null;
 
-        return singleResourceCreate(rn, st, pls);
+        return singleResourceCreate(rn, st, pls, set);
     }
 
     /**
@@ -2114,9 +2120,9 @@ final class SWGSubmitTab extends JPanel {
             if (o instanceof SWGMutableResource) {
                 SWGMutableResource mr = (SWGMutableResource) o;
 
-                if (sim == null)
+                if (sim == null) {
                     error.app(submitOld(mr));
-                else if (mr.id() <= 0) {
+                } else if (mr.id() <= 0) {
                     Object r = submitNew(mr);
 
                     if (r instanceof String)
@@ -2126,9 +2132,9 @@ final class SWGSubmitTab extends JPanel {
                         Wrapper w = SWGSimilarNameDialog.wrapperInstance(k, mr);
                         sim.add(w);
                     }
-                } else
+                } else {
                     error.app(submitEdit(mr, set.getByID(mr.id())));
-
+                }
                 updateMultiList();
             }
         }
