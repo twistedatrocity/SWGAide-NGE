@@ -487,6 +487,7 @@ final public class SWGSchemController implements UpdateSubscriber {
                 		for (SWGExperimentLine l : g.getExperimentalLines()) {
                 			if(l.getWeights().equals(r.filter())) {
                 				ex = l.getDescription();
+                				if(ex == null) ex = g.getDescription();
                 			}
                 		}
                 	}

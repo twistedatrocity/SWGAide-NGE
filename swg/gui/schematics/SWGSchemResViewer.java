@@ -868,9 +868,11 @@ public final class SWGSchemResViewer extends SWGJDialog {
         @Override
         public Object getValueAt(int row, int col) {
             SWGSac sac = schematics.get(row);
-            String expname;
+            String expname = " ";
             if(sac.size() >2) {
-            	expname = sac.object(2).toString();
+            	if(sac.object(2) != null) {
+            		expname = sac.object(2).toString();
+            	}
             } else {
             	expname = "LQ";
             }
