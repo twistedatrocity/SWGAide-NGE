@@ -373,7 +373,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             e.printStackTrace(System.out);
 
             JOptionPane.showMessageDialog(frame,
-                    "Problem while downloading resource data from SWGCraft"
+                    "Problem while downloading resource data from swgaide.com"
                             + "\nGalaxy: " + galaxy.getName()
                             + "\nError type: "
                             + e.getMessage()
