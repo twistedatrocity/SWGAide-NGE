@@ -151,6 +151,7 @@ final class SWGSubmitTab extends JPanel {
      * item is selected, he is asked to confirm.
      */
     private JCheckBox historical;
+    private JCheckBox historicalSingle;
 
     /**
      * A flag which is {@code false} until creation of the GUI is ready. Once
@@ -318,6 +319,8 @@ final class SWGSubmitTab extends JPanel {
             resourceClassFilter.setSelectedItem(recentSelected);
 
         multiFiltered.clear();
+        historical.setSelected(false);
+        historicalSingle.setSelected(false);
 
         resetSingleSubmitButton();
         resetSingleTextFields();
@@ -436,14 +439,14 @@ final class SWGSubmitTab extends JPanel {
      * the current state of this component.
      */
     private void actionSubmitSingle() {
-        if (singleSubmitButton.getText().equals("Submit")) {
+        if (singleSubmitButton.getText().equals("Submit Single")) {
         	
         	final SWGMutableResource mr = singleResourceValidateAndCreate();
         	final List<Object> res = new ArrayList<Object>();
         	res.add(mr);
             if (mr == null)
                 return;
-            final boolean old = historical.isSelected();
+            final boolean old = historicalSingle.isSelected();
             if (old && JOptionPane.OK_OPTION != JOptionPane.showConfirmDialog(
                     singleSubmitButton, "Submit as old / historical?", "Confirm",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE))
@@ -1217,9 +1220,10 @@ final class SWGSubmitTab extends JPanel {
      * @return a GUI component
      */
     private Component makeHistorical() {
-        historical = new JCheckBox("Historical");
-        historical.setToolTipText(
-                "Load as and submit historical resources to SWGCraft");
+    	if(historical == null) {
+	        historical = new JCheckBox("Historical");
+	        historical.setToolTipText("Load as and submit historical resources to swgaide.com");
+    	}
         return historical;
     }
 
@@ -1306,7 +1310,7 @@ final class SWGSubmitTab extends JPanel {
      * @return a button
      */
     private Component makeMultiSubmitButton(String toolTip) {
-        multiSubmitButton = new JButton("  Submit  ");
+        multiSubmitButton = new JButton("  Submit \"rem.txt\" ");
         multiSubmitButton.setToolTipText(toolTip);
 
         multiSubmitButton.addActionListener(new ActionListener() {
@@ -1404,7 +1408,13 @@ final class SWGSubmitTab extends JPanel {
         middlePanel.add(makeLabel("Name", nt));
         middlePanel.add(makeLabel("Resource class", rt));
         middlePanel.add(makeLabel("Stats", st));
-        middlePanel.add(new JLabel());
+        //middlePanel.add(new JLabel());
+        galaxyDisplay = new JLabel();
+        galaxyDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+        galaxyDisplay.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
+        galaxyDisplay.setBackground(new Color(255, 255, 153));
+        galaxyDisplay.setOpaque(true);
+        middlePanel.add(galaxyDisplay);
 
         // Middle row
         singlePlanetInput = makeTextField(pt);
@@ -1436,13 +1446,9 @@ final class SWGSubmitTab extends JPanel {
         singleResourceStatsTextField.getDocument().addDocumentListener(
                 new ResourceStatsFieldListener());
         middlePanel.add(singleResourceStatsTextField);
-
-        galaxyDisplay = new JLabel();
-        galaxyDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-        galaxyDisplay.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-        galaxyDisplay.setBackground(new Color(255, 255, 153));
-        galaxyDisplay.setOpaque(true);
-        middlePanel.add(galaxyDisplay);
+        historicalSingle = new JCheckBox("Historical");
+        historicalSingle.setToolTipText("Submit resource as historical to swgaide.com");
+        middlePanel.add(historicalSingle);
 
         // Bottom row
         singlePlanetDisplay = makeLabel("", pt);
@@ -1616,7 +1622,7 @@ final class SWGSubmitTab extends JPanel {
      * "Submit".
      */
     private void resetSingleSubmitButton() {
-        singleSubmitButton.setText("Submit");
+        singleSubmitButton.setText("Submit Single");
         singleSubmitButton
                 .setToolTipText("Submit resource data to swgaide.com");
     }
