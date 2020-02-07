@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.EventObject;
 
 import javax.swing.JMenuItem;
@@ -11,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+
+import org.apache.commons.io.FileUtils;
 
 import swg.model.SWGNotes;
 import swg.model.SWGStation;
@@ -87,11 +90,12 @@ public final class SWGStationNode extends SWGTreeNode {
 
     @Override
     protected void focusGained(EventObject evt) {
-        if (exists()) {
+        //if (exists()) {
             if (evt instanceof MouseEvent) {
                 final MouseEvent mev = (MouseEvent) evt;
                 if (mev.getButton() == MouseEvent.BUTTON3) {
                     JPopupMenu popup = new JPopupMenu();
+                    popup.add(deleteMenuItem());
 
                     popup.add(addNotesMenuItem());
                     popup.add(refreshNotesFilesMenuItem());
@@ -119,7 +123,7 @@ public final class SWGStationNode extends SWGTreeNode {
                 } // mouse-event
 
                 frame.editMenuAdd(newNotesMenu);
-            }
+            //}
         }
 
         mainTab.setMainPaneDefault();
@@ -181,6 +185,69 @@ public final class SWGStationNode extends SWGTreeNode {
             }
         });
         return refresh;
+    }
+    
+    /**
+     * Displays delete menu item
+     * @return JmenuItem
+     */
+    private JMenuItem deleteMenuItem() {
+        JMenuItem del = new JMenuItem("Delete");
+        del.setToolTipText("Delete this station profile, galaxy, all underlying characters mail folders and remove from swgaide");
+        del.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                delete(false);
+            }
+        });
+        return del;
+    }
+    
+    /**
+     * Deletes this galaxy object from the system
+     * if bypass is true, bypasses the dialogue and performs the delete.
+     * @param boolean bypass
+     */
+    public void delete(boolean bypass) {
+    	boolean doit = false;
+    	if (station() != null) {
+    		if(bypass) {
+    			doit=true;
+    		} else if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+                        frame,
+                        String.format("Delete station, profile folder, galaxy, all underlying characters, mail folders and swgaide entry for \"%s\"", station().getName()),
+                        "Confirm galaxy deletion",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) || bypass)  {
+    			doit = true;
+    		}
+	    	if(doit) {
+		    	int childCount = mainTab.tree.getModel().getChildCount(this);
+		    	if(childCount >0) {
+		    		for (int i = 0; i < childCount; i++) {
+		    			SWGGalaxyNode gxy = (SWGGalaxyNode) mainTab.tree.getModel().getChild(this, 0);
+		    			gxy.delete(true);
+		    		}
+		    	}
+		    	File lf = new File( station().swgAidePath().toString() );
+	            File sf = new File( station().swgPath().toString() );
+	            
+	            if (lf.exists() && lf.isDirectory()) {
+	            	FileUtils.deleteQuietly(new File(lf.toString()));
+	            }
+	            if (sf.exists() && sf.isDirectory()) {
+	            	FileUtils.deleteQuietly(new File(sf.toString()));
+	            }
+		    	SWGTreeNode p = (SWGTreeNode) this.getParent();
+		        mainTab.tree.setSelectionPath(new TreePath(p.getPath()));
+		        SWGTreeNode.focusTransition(p, new EventObject(this));
+		        ((DefaultTreeModel) mainTab.tree.getModel())
+		                .removeNodeFromParent(this);
+		        station().universe().stationRemove(station().getName());
+		
+		        focusLost();
+	    	}
+    	}
     }
 
     /**

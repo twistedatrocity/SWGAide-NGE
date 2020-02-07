@@ -44,45 +44,56 @@ final class SWGCharacterNode extends SWGTreeNode {
     
     /**
      * Deletes this character object from the system
+     * if bypass is true, bypasses the dialogue and performs the delete.
+     * @param boolean bypass
      */
-    private void delete() {
-        if (character() != null
-                && JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
+    public void delete(boolean bypass) {
+    	boolean doit = false;
+        if (character() != null) {
+        	if(bypass) {
+        		doit = true;
+        	} else if(JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                         frame,
                         String.format("Delete mail folders and swgaide entry for \"%s\"", character().getName()),
                         "Confirm character deletion",
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE)) {
-
-        	File lf = new File( character().mailBox().swgAidePath().toString() );
-            File sf = new File( character().mailBox().swgPath().toString() );
-            
-            if (lf.exists() && lf.isDirectory()) {
-            	character().mailBox().deleteLocalDir(lf);
-            }
-            if (sf.exists() && sf.isDirectory()) {
-            	character().mailBox().deleteLocalDir(sf);
-            }
-
-            SWGTreeNode p = (SWGTreeNode) this.getParent();
-            mainTab.tree.setSelectionPath(new TreePath(p.getPath()));
-            SWGTreeNode.focusTransition(p, new EventObject(this));
-            ((DefaultTreeModel) mainTab.tree.getModel())
-                    .removeNodeFromParent(this);
-            SWGCharacter.scanForNewCharacters(character().galaxy());
-
-            focusLost();
+        			doit = true;
+        	}
+	        if(doit) {
+	        	File lf = new File( character().mailBox().swgAidePath().toString() );
+	            File sf = new File( character().mailBox().swgPath().toString() );
+	            
+	            if (lf.exists() && lf.isDirectory()) {
+	            	character().mailBox().deleteLocalDir(lf);
+	            }
+	            if (sf.exists() && sf.isDirectory()) {
+	            	character().mailBox().deleteLocalDir(sf);
+	            }
+	
+	            SWGTreeNode p = (SWGTreeNode) this.getParent();
+	            mainTab.tree.setSelectionPath(new TreePath(p.getPath()));
+	            SWGTreeNode.focusTransition(p, new EventObject(this));
+	            ((DefaultTreeModel) mainTab.tree.getModel())
+	                    .removeNodeFromParent(this);
+	            SWGCharacter.scanForNewCharacters(character().galaxy());
+	
+	            focusLost();
+	        }
         }
     }
     
+    /**
+     * Displays delete menu item
+     * @return JmenuItem
+     */
     private JMenuItem deleteMenuItem() {
         JMenuItem del = new JMenuItem("Delete");
         del.setToolTipText("Delete this characters mail folders and remove from swgaide");
-        del.setMnemonic('D');
         del.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-                delete();
+                delete(false);
             }
         });
         return del;

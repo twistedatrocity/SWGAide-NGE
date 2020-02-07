@@ -171,7 +171,7 @@ public final class SWGUniverseNode extends SWGTreeNode {
      * 
      * @return a universe
      */
-    SWGUniverse universe() {
+    public SWGUniverse universe() {
         return (SWGUniverse) userObject;
     }
 }

@@ -363,4 +363,8 @@ public final class SWGGalaxy implements
 
         return news;
     }
+
+	public SWGUniverse universe() {
+		return station().universe();
+	}
 }

@@ -179,6 +179,7 @@ public final class SWGStation implements
                 galaxies.put(galaxy.getName(), galaxy);
         }
     }
+    
 
     /**
      * Determines if a galaxy with the specified name exists at this station.
