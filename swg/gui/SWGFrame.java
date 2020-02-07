@@ -435,6 +435,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         splashProgressBar.setValue((int) step);
 
         SWGCraftCache.updateCacheBlocking();
+        SWGProfession.init();
         if (getPrefsKeeper() != null && !firstTime) {
             updatePreLaunch();
         }

@@ -140,7 +140,7 @@ public final class SWGProfession implements Serializable {
         return (other == this || other.getID() == ALL || this.getID() == ALL);
     }
     
-    static void init() {
+    public static void init() {
     	initRunning = true;
         THIS.add(new SWGProfession("All", "ALL", 0));
         Document doc = SWGCraftCache.getProfLevels();
@@ -220,7 +220,7 @@ public final class SWGProfession implements Serializable {
 
         return false;
     }
-
+    
     /**
      * Returns a list of professions. The returned list is <b>read-only</b>.
      * 

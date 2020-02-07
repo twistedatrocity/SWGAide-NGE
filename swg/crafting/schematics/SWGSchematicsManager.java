@@ -90,9 +90,7 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      * A map of categories, mapped by the proper name of the category.
      */
     private static List<SWGCategory> categories;
-    
-	@SuppressWarnings("unused")
-	private SWGProfession profession;
+
 	@SuppressWarnings("unused")
 	private SWGProfessionManager profman;
     
@@ -222,7 +220,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         schematics = new ArrayList<SWGSchematic>(0); // dummy for now
 
         categories = new ArrayList<SWGCategory>(0); // dummy for now
-        profession = null;
         profman = null;
 
         SWGCraftCache.addSubscriber(this, UpdateType.SCHEMATICS);
@@ -276,7 +273,6 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
                 public void run() {
                     try {
                         initFoodDrinkMap();
-                        profession = new SWGProfession();
                         profman = new SWGProfessionManager();
                         List<SWGCategory> cats = initCats();
                         List<SWGSchematic> sl = initSchems();
