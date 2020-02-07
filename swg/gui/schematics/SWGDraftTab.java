@@ -2151,8 +2151,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @return a GUI component
      */
     private Component makeWestFProfessionChooser() {
-        selectedProfession = (SWGProfession) SWGFrame.getPrefsKeeper().get(
-                "schemDraftSelectedProfession", SWGProfession.getFromID(SWGProfession.ALL));
+        //selectedProfession = (SWGProfession) SWGFrame.getPrefsKeeper().get("schemDraftSelectedProfession", SWGProfession.getFromID(SWGProfession.ALL));
+        selectedProfession = SWGProfession.getFromID(SWGProfession.ALL);
     	profcombo = new JComboBox<String>();
     	profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
     	profcombo.setModel(profModel);
@@ -2166,7 +2166,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             public void actionPerformed(ActionEvent e) {
                 selectedProfession = SWGProfession.getFromName(
                         (String) profcombo.getSelectedItem());
-                SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", selectedProfession);
+                //SWGFrame.getPrefsKeeper().add("schemDraftSelectedProfession", selectedProfession);
                 actionFilterSchematics();
             }
         });
