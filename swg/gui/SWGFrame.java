@@ -435,7 +435,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
         splashProgressBar.setValue((int) step);
 
         SWGCraftCache.updateCacheBlocking();
-        SWGProfession.init();
+        // init the professions here before everything else gets kicked off
+        @SuppressWarnings("unused")
+		SWGProfession prof = new SWGProfession();
         if (getPrefsKeeper() != null && !firstTime) {
             updatePreLaunch();
         }
@@ -1921,7 +1923,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         	}
         	// checks if version in dat file older than or equal to 0.1.25
         	if ( ord1 <= 0 && ord2 <= 1 && ord3 <= 25 ) {
-        		// TODO This will be upgrade routine for Unity.
         		SWGAide.printDebug(Thread.currentThread().getName(), 1, "SWGFrame:updatePreLaunch beginning upgrade from version " + pkver);
         		SWGUniverse u = (SWGUniverse) getPrefsKeeper().get("swgUniverse");
             	List<SWGUniverse> ul = (List<SWGUniverse>) getPrefsKeeper().get("swgUniverseList");
