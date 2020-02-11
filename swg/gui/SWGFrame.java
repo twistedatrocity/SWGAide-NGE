@@ -602,7 +602,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         if (!isGuiFinished) return;
         
         logError.setIcon(new ImageIcon(SWGFrame.class
-                .getResource("images/red_signal.gif")));
+                .getResource("images/pearl_red_28x28.png")));
         logError.setToolTipText("See logs\\SWGAide-ERROR.TXT");
         if (Desktop.isDesktopSupported()) {
             logError.addMouseListener(new MouseAdapter() {
@@ -961,7 +961,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         logError = new JLabel();
         logError.setIcon(new ImageIcon(SWGFrame.class
-                .getResource("images/blank.gif")));
+                .getResource("images/pearl_grey_28x28.png")));
         logError.setToolTipText("No error to report");
 
         bottomLogbar.add(logs);
@@ -1627,6 +1627,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
      */
     @SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 	private void updatePreLaunch() {
+    	//Set<String> keySet = SWGFrame.getPrefsKeeper().keySet();
+    	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGFrame:updatePreLaunch keyset  Data: " + keySet);
+    	
     	String pkver = SWGFrame.getPrefsKeeper().getVersion();
     	//
         if (pkver.contains("MrMiagi")) {
