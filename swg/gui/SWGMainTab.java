@@ -120,10 +120,9 @@ public class SWGMainTab extends JSplitPane {
                 
                 if (val instanceof SWGTreeTip && val != null)
                     setToolTipText(((SWGTreeTip)val).getToolTip());
-                
-                setForeground(((SWGTreeNode) val).exists()
-                        ? Color.BLACK
-                        : noExist);
+                if(!((SWGTreeNode) val).exists()) {
+                	setForeground(noExist);
+                }
                 return this;
             }
         });
