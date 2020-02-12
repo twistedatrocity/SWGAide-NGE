@@ -15,9 +15,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.TreeModelListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
@@ -675,12 +678,26 @@ public final class SWGResourceTab extends JTabbedPane implements
      */
     void tintTab(int alertLevel, int tabIndex) {
         if (isGuiFinished) {
-            if (alertLevel > 0)
-                setBackgroundAt(tabIndex, Color.YELLOW);
-            else if (alertLevel < 0)
-                setBackgroundAt(tabIndex, Color.PINK);
-            else
-                setBackgroundAt(tabIndex, null);
+        	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            if (alertLevel > 0) {
+            	if(theme.getName().contains("Dark")) {
+            		setForegroundAt(tabIndex, Color.YELLOW);
+            	} else {
+            		setBackgroundAt(tabIndex, Color.YELLOW);
+            	}
+            } else if (alertLevel < 0) {
+            	if(theme.getName().contains("Dark")) {
+            		setForegroundAt(tabIndex, Color.PINK);
+            	} else {
+            		setBackgroundAt(tabIndex, Color.PINK);
+            	}
+            } else {
+                setBackgroundAt(tabIndex, this.getBackground());
+                if(theme.getName().contains("Dark")) {
+                	Color fg = UIManager.getColor("TabbedPane.foreground");
+                	setForegroundAt(tabIndex, fg);
+                }
+            }
         }
     }
 

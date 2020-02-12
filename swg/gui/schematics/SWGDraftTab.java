@@ -3,6 +3,7 @@ package swg.gui.schematics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -57,6 +58,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -1117,11 +1119,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             z.app("<td>").app("&nbsp;</td></tr>");
         }
         z.app("</table>");
-        z.app("<font color=#bbbbbb>");
+
         z.app("Optional and interchangeable components are not included in the");
         z.app("<br/>");
         z.app("shopping list, nor is losses from manufacturing sub-components.");
-        z.app("</font>").app("</html>");
+        z.app("").app("</html>");
         shoppingList.setText(z.toString());
     }
 
@@ -1167,6 +1169,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private void draftAddRCLabels(List<RCLabel> labels, int number) {
         for (int i = labels.size(); i < number; ++i) {
             RCLabel l = new RCLabel();
+            l.setBackground(null);
+            l.setOpaque(false);
             labels.add(l);
             draftRCPanel.add(l);
         }
@@ -1382,12 +1386,12 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private String draftExpGroup(SWGExperimentGroup eGrp) {
         List<SWGExperimentLine> els = eGrp.getExperimentalLines();
         ZString z = new ZString();
-        z.app("<html>");
+        z.app("<html><body style='background-color: transparent;'>");
         z.app(SWGSchematicTab.stringOrUnknown(eGrp.getDescription()));
         for (SWGExperimentLine el : els)
             draftExpLine(el, z);
 
-        return z.app("</html>").toString();
+        return z.app("</body></html>").toString();
     }
 
     /**
@@ -1530,7 +1534,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             s = ZHtml.wrapToWidth(DRAFT_WIDTH + clutter,
                         f + f, SWGGuiUtils.fontPlain(), s);
 
-        return String.format("<html>%s<br/>%s%s</html>",
+        return String.format("<html><body style='background-color: transparent;'>%s<br/>%s%s</body></html>",
                 SWGSchematicTab.stringOrUnknown(desc), f, s);
     }
 
@@ -1721,7 +1725,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         final Box innerBox = Box.createVerticalBox();
         innerBox.setBorder(
                 BorderFactory.createLineBorder(SWGGuiUtils.colorThinBorder));
-        innerBox.setBackground(Color.WHITE);
+        innerBox.setBackground(UIManager.getColor("TextArea.background"));
         innerBox.setOpaque(true);
 
         // the label for category
@@ -1734,8 +1738,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         draftCategory.setVerticalAlignment(SwingConstants.TOP);
         draftCategory.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
         draftCategory.setFont(SWGGuiUtils.fontPlain());
-        draftCategory.setBackground(Color.WHITE);
-        draftCategory.setOpaque(true);
+        draftCategory.setBackground(null);
+        draftCategory.setOpaque(false);
         innerBox.add(draftCategory);
 
         innerBox.add(Box.createVerticalStrut(5));
@@ -1746,8 +1750,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         // a basic container for resource and component labels
         draftRCPanel = new JPanel();
-        draftRCPanel.setOpaque(true);
-        draftRCPanel.setBackground(Color.WHITE);
+        draftRCPanel.setOpaque(false);
+        draftRCPanel.setBackground(null);
         draftRCPanel.setLayout(new BoxLayout(
                 draftRCPanel, BoxLayout.PAGE_AXIS));
         draftRCLabels = new ArrayList<RCLabel>(30);
@@ -1756,6 +1760,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         // a basic container for experimentation groups
         draftExpPanel = new JPanel();
+        draftExpPanel.setOpaque(false);
+        draftExpPanel.setBackground(null);
         draftExpPanel.setLayout(new BoxLayout(
                 draftExpPanel, BoxLayout.PAGE_AXIS));
         draftExpGroups = new ArrayList<JLabel>(10);
@@ -1772,8 +1778,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         };
         draftMisc.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
         draftMisc.setFont(SWGGuiUtils.fontPlain());
-        draftMisc.setBackground(Color.WHITE);
-        draftMisc.setOpaque(true);
+        draftMisc.setBackground(null);
+        draftMisc.setOpaque(false);
         innerBox.add(draftMisc);
 
         innerBox.add(Box.createVerticalGlue());
@@ -1959,6 +1965,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         StyleSheet styleSheet = kit.getStyleSheet();
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        //StyleConstants.setBackground(style, UIManager.getColor("TextArea.background"));
+        StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
 
         shoppingList.getInputMap().put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK),
@@ -2007,6 +2015,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private JPanel makeEastUsedinPanel() {
         JPanel sb = new JPanel(new BorderLayout());
+        sb.setBackground(UIManager.getColor("TextArea.background"));
         sb.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(),
@@ -2049,7 +2058,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                             : bg);
                 } else
                     label.setBackground(directUse
-                            ? Color.WHITE
+                            ? null
                             : SWGGuiUtils.colorComponent);
 
                 return label;
@@ -2110,8 +2119,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         JLabel l = new JLabel();
         l.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
         l.setFont(SWGGuiUtils.fontPlain());
-        l.setBackground(Color.WHITE);
-        l.setOpaque(true);
+        l.setBackground(null);
+        l.setOpaque(false);
         return l;
     }
 
@@ -2815,6 +2824,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         RCLabel() {
             this.setFont(SWGGuiUtils.fontPlain());
             this.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+            this.setBackground(null);
             this.addMouseListener(new MouseAdapter() {
 
                 @Override
@@ -2842,6 +2852,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 public void mouseEntered(MouseEvent e) {
                     if (slot != null) {
                         setOpaque(true);
+                        setForeground(Color.BLACK);
+                        setCursor(new Cursor(Cursor.HAND_CURSOR));
                         repaint();
                     }
                 }
@@ -2850,6 +2862,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 public void mouseExited(MouseEvent e) {
                     if (slot != null) {
                         setOpaque(false);
+                        setForeground(UIManager.getColor("TextArea.foreground"));
+                        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                         repaint();
                     }
                 }

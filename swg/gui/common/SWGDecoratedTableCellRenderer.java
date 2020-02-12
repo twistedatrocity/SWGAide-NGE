@@ -49,6 +49,10 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      */
     private final DecoratedTableModel tableModel;
 
+	private Color defaultBackground;
+
+	private Color defaultForeground;
+
     /**
      * Creates a basic instance of this type. This constructor sets the members
      * for default back- and foreground colors to values which are obtained from
@@ -76,8 +80,10 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
     public SWGDecoratedTableCellRenderer(DecoratedTableModel decoratedTableModel) {
         super();
         setOpaque(true);
-        defaultSelectionBackground = UIManager.getColor("textHighlight");
-        defaultSelectionForeground = UIManager.getColor("textHighlightText");
+        defaultBackground = UIManager.getColor("Table.background");
+        defaultForeground = UIManager.getColor("Table.foreground");
+        defaultSelectionBackground = UIManager.getColor("Table.selectionBackground");
+        defaultSelectionForeground = UIManager.getColor("Table.selectionForeground");
         defaultFont = UIManager.getFont("Table.font");
         setFont(defaultFont);
         tableModel = decoratedTableModel;
@@ -202,7 +208,7 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
         if (bg == null)
             bg = (isSelected)
                     ? defaultSelectionBackground
-                    : Color.WHITE;
+                    : defaultBackground;
         else
             bg = (isSelected)
                     ? SWGGuiUtils.colorDarker(bg, 0.9f)
@@ -317,7 +323,7 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
         if (fg == null)
             fg = (isSelected)
                     ? defaultSelectionForeground
-                    : Color.BLACK;
+                    : defaultForeground;
 
         setForeground(fg);
     }

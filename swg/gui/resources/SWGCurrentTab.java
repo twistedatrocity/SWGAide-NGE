@@ -50,6 +50,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -59,6 +60,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.AbstractDocument;
@@ -1310,9 +1313,20 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      *        otherwise
      */
     private void guardsAlerted(boolean isAlerted) {
-        northEastTabbedPane.setBackgroundAt(0, isAlerted
-                ? SWGGuiUtils.colorAlert
-                : null /* this.getBackground() */);
+    	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+    	if(isAlerted) {
+    		if(theme.getName().contains("Dark")) {
+    			northEastTabbedPane.setForegroundAt(0, SWGGuiUtils.colorAlert);
+    		} else {
+    			northEastTabbedPane.setBackgroundAt(0, SWGGuiUtils.colorAlert);
+    		}
+    	} else {
+    		northEastTabbedPane.setBackgroundAt(0, null);
+    		if(theme.getName().contains("Dark")) {
+            	Color fg = UIManager.getColor("TabbedPane.foreground");
+            	northEastTabbedPane.setForegroundAt(0, fg);
+            }
+    	}
         tintTab('g', isAlerted);
     }
     
@@ -2577,9 +2591,20 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
      *        triggers a monitor, {@code false} otherwise
      */
     private void monitorsAlerted(boolean isAlerted) {
-        northEastTabbedPane.setBackgroundAt(1, isAlerted
-                ? Color.PINK
-                : this.getBackground());
+    	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+    	if(isAlerted) {
+    		if(theme.getName().contains("Dark")) {
+    			northEastTabbedPane.setForegroundAt(1, Color.PINK);
+    		} else {
+    			northEastTabbedPane.setBackgroundAt(1, Color.PINK);
+    		}
+    	} else {
+    		northEastTabbedPane.setBackgroundAt(1, this.getBackground());
+    		if(theme.getName().contains("Dark")) {
+            	Color fg = UIManager.getColor("TabbedPane.foreground");
+            	northEastTabbedPane.setForegroundAt(1, fg);
+            }
+    	}
         tintTab('m', isAlerted);
     }
 
@@ -3016,6 +3041,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         /**
          * The table column header titles.
          */
+    	private MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
         private final String[] colNames = { "Guard", "Class", "Values", "Min" };
 
         @Override
@@ -3026,7 +3052,13 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             Color bg = guard.resourceRecentSpawnDate > 0
                     ? SWGGuiUtils.colorAlert
                     : null;
-            return new TableCellDecorations(bg, null, null, (Object[]) null);
+            TableCellDecorations ret;
+            if(theme.getName().contains("Dark")) {
+            	ret = new TableCellDecorations(null, bg, null, (Object[]) null);
+            }else {
+            	ret = new TableCellDecorations(bg, null, null, (Object[]) null);
+            }
+            return ret;
         }
 
         @Override
@@ -3083,6 +3115,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
          * The table column header titles.
          */
         private final String[] colNames = { "Resource", "Class", "Age" };
+        private MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
 
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
@@ -3100,8 +3133,14 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             String tt = monitor.notes().isEmpty()
                     ? null
                     : monitor.notes();
+            TableCellDecorations ret;
+            if(theme.getName().contains("Dark")) {
+            	ret = new TableCellDecorations(null, bg, tt, (Object[]) null);
+            } else {
+            	ret = new TableCellDecorations(bg, null, tt, (Object[]) null);
+            }
 
-            return new TableCellDecorations(bg, null, tt, (Object[]) null);
+            return ret;
         }
 
         @Override
@@ -3159,6 +3198,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         private final String[] columnNames =
                 { "Name", "Class", "ER", "CR", "CD", "DR", "FL", "HR", "MA",
                         "PE", "OQ", "SR", "UT", "Rate", "Age" };
+        private MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+        private boolean Dark = (theme.getName().contains("Dark")) ? true : false;
+        private TableCellDecorations ret;
 
         /**
          * A convenience constant array of stats in game order.
@@ -3179,10 +3221,18 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                     res, galaxy);
             String toolTip = toolTipText(amt, res);
 
-            if (column <= 1)
-                return new TableCellDecorations(
-                        stockedHarvested(amt, res), null, toolTip,
-                        (Object[]) null);
+            if (column <= 1) {
+            	if(Dark) {
+            		ret = new TableCellDecorations(
+                            null, stockedHarvested(amt, res), toolTip,
+                            (Object[]) null);
+            	} else {
+            		ret = new TableCellDecorations(
+                            stockedHarvested(amt, res), null, toolTip,
+                            (Object[]) null);
+            	}
+                return ret;
+            }
 
             // else...
 

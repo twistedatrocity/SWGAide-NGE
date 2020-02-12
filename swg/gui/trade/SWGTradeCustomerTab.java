@@ -1,7 +1,6 @@
 package swg.gui.trade;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -24,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -396,7 +396,7 @@ final class SWGTradeCustomerTab extends JPanel {
         if (addFilters) box.add(makeFilterArea());
 
         textArea.setEditable(false);
-        textArea.setBackground(Color.WHITE);
+        textArea.setBackground(UIManager.getColor("TextArea.background"));
         textArea.setBorder(BorderFactory.createLoweredBevelBorder());
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);

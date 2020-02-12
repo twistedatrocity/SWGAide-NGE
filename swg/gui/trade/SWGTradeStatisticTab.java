@@ -1,7 +1,6 @@
 package swg.gui.trade;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -26,6 +25,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.AbstractTableModel;
@@ -254,7 +254,7 @@ class SWGTradeStatisticTab extends JPanel {
         startDate = new JLabel();
         startDate.setBorder(BorderFactory.createEtchedBorder());
         startDate.setOpaque(true);
-        startDate.setBackground(Color.WHITE);
+        startDate.setBackground(UIManager.getColor("Label.background"));
         SWGGuiUtils.setDim(startDate, "XX/XX/XX", 100, 26, false);
         b.add(startDate);
 
@@ -263,7 +263,7 @@ class SWGTradeStatisticTab extends JPanel {
         period = new JLabel();
         period.setBorder(BorderFactory.createEtchedBorder());
         period.setOpaque(true);
-        period.setBackground(Color.WHITE);
+        period.setBackground(UIManager.getColor("Label.background"));
         SWGGuiUtils.setDim(period, "XXXX Days", 100, 26, false);
         b.add(period);
 
