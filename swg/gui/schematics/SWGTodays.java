@@ -45,6 +45,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.Style;
@@ -1547,25 +1549,27 @@ class SWGTodays extends JPanel {
                         SWGResourceStatRenderer.getStatForeground(i / 1000.0),
                         tt, (Object[]) null);
             }
+            MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            boolean Dark = (theme.getName().contains("Dark")) ? true : false;
             if (column == 14) { // % improvement
                 Color fg = null, bg = null;
                 if (value != null) {
                     double d = ((Double) value).doubleValue();
                     if (d > 0.15) {
-                        bg = SWGGuiUtils.statColors[4];
-                        fg = SWGGuiUtils.statColors[5];
+                        bg = (Dark) ? null : SWGGuiUtils.statColors[4];
+                        fg = (Dark) ? SWGGuiUtils.statColors[4] : SWGGuiUtils.statColors[5];
                     } else if (d > 0.1) {
-                        bg = SWGGuiUtils.statColors[2];
-                        fg = SWGGuiUtils.statColors[3];
+                        bg = (Dark) ? null : SWGGuiUtils.statColors[2];
+                        fg = (Dark) ? SWGGuiUtils.statColors[2] : SWGGuiUtils.statColors[3];
                     } else if (d > 0.05) {
-                        bg = SWGGuiUtils.statColors[0];
-                        fg = SWGGuiUtils.statColors[1];
+                        bg = (Dark) ? null : SWGGuiUtils.statColors[0];
+                        fg = (Dark) ? SWGGuiUtils.statColors[0] : SWGGuiUtils.statColors[1];
                     }
                 } else if (great.isSelected()) {
                     bg = UIManager.getColor("SWG.colorLightGray");
                     fg = Color.WHITE;
                 } else {
-                    bg = Color.CYAN;
+                    bg = UIManager.getColor("SWG.todaysCyan");
                     fg = Color.WHITE;
                 }
                 return new TableCellDecorations(bg, fg, tt, (Object[]) null);
