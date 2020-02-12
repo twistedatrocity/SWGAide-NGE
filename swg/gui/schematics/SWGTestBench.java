@@ -377,10 +377,7 @@ final class SWGTestBench extends SWGJDialog {
         slots.clear();
         if (wrap != null) {
             for (SWGResourceSlot s : wrap.schem().getResourceSlots()) {
-            	if (!s.getResourceClass().rcName().contains("Asteroid")) {
-            		//SWGAide.printDebug("tbench:addslot", 1, s.getResourceClass().rcName());
-            		slots.add(new RSlot(s.getResourceClass(), s.getUnits()));
-            	}
+            	slots.add(new RSlot(s.getResourceClass(), s.getUnits()));
             }
         }
         slotsGrid.setLayout(null);

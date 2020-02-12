@@ -41,6 +41,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -1414,8 +1415,7 @@ final class SWGLaboratoryTab extends JPanel {
             if (val.resource == null) {
                 Color bg = resourceTable.getTableHeader().getBackground();
                 if (column > 0)
-                    return new TableCellDecorations(bg,
-                            null, null, null, (Object[]) null);
+                    return new TableCellDecorations(bg, null, null, null, (Object[]) null);
 
                 return new TableCellDecorations(bg, null, null, bold);
             }
@@ -1765,23 +1765,15 @@ final class SWGLaboratoryTab extends JPanel {
             TableColumnModel cm = rTable.getColumnModel();
             int columnMargin = cm.getColumnMargin();
 
-            // to avoid partly unpainted header rows we must each call ensure we
-            // paint it all, at least once; otherwise if col > 0 it won't update
-            boolean headerNotPainted = true;
-
             int columnWidth;
             for (int row = rMin; row <= rMax; row++) {
                 Rectangle cellRect;
                 if (rModel.getElement(row).resource == null) {
                     // this is a header row
-                    if (headerNotPainted) {
                         cellRect = getCellRect(row, cMx);
                         paintCell(g, cellRect, row, 0);
-                        headerNotPainted = false;
-                    }
                     continue;
-                } // else
-                headerNotPainted = true; // reset for following rows
+                }
 
                 // else ... a resource row
                 cellRect = rTable.getCellRect(row, cMn, false);
@@ -1833,7 +1825,7 @@ final class SWGLaboratoryTab extends JPanel {
                     // override vertical grid lines
                     g.setColor(rTable.getTableHeader().getBackground());
                     g.fillRect(dmgArea.x, y, tableWidth - 1, rh - 1);
-                    g.setColor(Color.WHITE);
+                    g.setColor(UIManager.getColor("SWG.colorThinBorder"));
                     g.drawLine(dmgArea.x, y, dmgArea.x + tableWidth - 2, y);
                     g.drawLine(dmgArea.x, y, dmgArea.x, rh);
                     g.setColor(gc);
