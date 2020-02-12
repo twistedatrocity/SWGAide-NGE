@@ -29,11 +29,14 @@ import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerListModel;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.AbstractTableModel;
 
 import swg.SWGAide;
@@ -539,7 +542,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         spin.setToolTipText(tt);
 
         DefaultEditor ed = new JSpinner.DefaultEditor(spin);
-        ed.getTextField().setBackground(Color.WHITE);
+        ed.getTextField().setBackground(UIManager.getColor("TextField.background"));
         spin.setEditor(ed);
 
         spin.addChangeListener(new ChangeListener() {
@@ -609,7 +612,9 @@ public final class SWGSchemResViewer extends SWGJDialog {
 
         int w;
         w = SWGGuiUtils.fontWidth(schemTable, "1 000.000", schemTable.getFont());
-        SWGGuiUtils.tableSetColumnWidths(schemTable, 1, 999, w, 5);
+        SWGGuiUtils.tableSetColumnWidths(schemTable, 2, 2, w, 5);
+        w = SWGGuiUtils.fontWidth(schemTable, "Launcher Pistol", schemTable.getFont());
+        SWGGuiUtils.tableSetColumnWidths(schemTable, 1, 1, w, 80);
         SWGGuiUtils.setRowHeight(schemTable);
 
         schemTable.setAutoCreateRowSorter(false);
@@ -736,7 +741,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
             SWGKnownResource kr = (SWGKnownResource) sac.obj;
 
             Font f = kr == currentRes
-                    ? SWGGuiUtils.fontBold()
+                    ? SWGGuiUtils.fontBoldItalic()
                     : SWGGuiUtils.fontPlain();
 
             String n = (String) sac.object(3); // notes, or null
@@ -748,10 +753,16 @@ public final class SWGSchemResViewer extends SWGJDialog {
                         SWGResourceStatRenderer.getStatForeground(rate),
                         n, f);
             }
-            Color bg = sac.object(2) != null
-                    ? SWGGuiUtils.statColors[0] // denotes inventory
-                    : null;
-            return new TableCellDecorations(bg, null, n, f);
+            Color bg = (sac.object(2) != null) ? SWGGuiUtils.statColors[0] : null;
+            TableCellDecorations ret;
+            MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            if(theme.getName().contains("Dark")) {
+            	ret = new TableCellDecorations(null, bg, n, f);
+            } else {
+            	ret = new TableCellDecorations(bg, null, n, f);
+            }
+            
+            return ret;
         }
 
         @Override
@@ -805,14 +816,16 @@ public final class SWGSchemResViewer extends SWGJDialog {
         /**
          * The table column header titles.
          */
-        private final String[] colNames = { "Schematic", "Rate" };
+        private final String[] colNames = { "Schematic", "Exp", "Rate" };
+        MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
 
         
         @Override
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
 
-            SWGSac sac = schematics.get(row);
+        	TableCellDecorations ret;
+        	SWGSac sac = schematics.get(row);
             SWGRCWPair rcw = (SWGRCWPair) sac.object(1);
             Color bg = rcw.filter() == SWGRCWPair.LQ_FILTER
                     ? NAMED_LQ
@@ -821,29 +834,40 @@ public final class SWGSchemResViewer extends SWGJDialog {
                     ? "LQ schematic for \"named\" resource class: " +
                             rcw.rc().rcName()
                     : null;
-            if (column == 0) { // name
+            if (column <= 1) { // name
                 SWGResourceClass rc = rcw.rc();
                 if (rc != currentRes.rc()) {
                     int c = SWGResourceClassTree.distance(currentRes.rc(), rc);
                     c = 245 - (c * 16);
                     bg = new Color(c, c, 255);
                 }
-                return new TableCellDecorations(bg, null, tt);
+                if(theme.getName().contains("Dark")) {
+                	ret = new TableCellDecorations(null, bg, tt);
+                } else {
+                	ret = new TableCellDecorations(bg, null, tt);
+                }
+                return ret;
             }
-
-            // else, rate
-            if (bg != null)
-                return new TableCellDecorations(bg, null, tt);
-
+            if (bg != null) {
+            	if(theme.getName().contains("Dark")) {
+            		ret = new TableCellDecorations(null, bg, tt);
+            	} else {
+            		ret = new TableCellDecorations(bg, null, tt);
+            	}
+                return ret;
+            }
+            if (column == 2) {
             double rate = ((Double) value).doubleValue();
             return new TableCellDecorations(
                     SWGResourceStatRenderer.getStatBackGround(rate),
                     SWGResourceStatRenderer.getStatForeground(rate), tt);
+            }
+            return null;
         }
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return columnIndex == 0
+            return columnIndex <= 1
                     ? String.class
                     : Double.class;
         }
@@ -878,7 +902,15 @@ public final class SWGSchemResViewer extends SWGJDialog {
             }
             if(col ==0) {
             	String tname = ((SWGSchematic) sac.obj).getName();
-            	String sname = "<html><span style='font-weight:normal;'>" + tname + "</span> <span style='font-size:80%'>(" + expname + ")</span></html>";
+            	String ret;
+            	if(theme.getName().contains("Dark")) {
+            		ret = "█  " + tname;
+            	} else {
+            		ret = tname;
+            	}
+            	return ret;
+            } else if (col == 1) {
+            	String sname = "<html><span style='font-size:80%'>" + expname + "</span></html>";
             	return sname;
             } else {
             	return (Double) sac.object(0);

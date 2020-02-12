@@ -1,5 +1,6 @@
 package swg.gui.schematics;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -20,8 +21,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 
 import swg.SWGAide;
 import swg.crafting.resources.SWGResourceClass;
@@ -526,19 +530,26 @@ public final class SWGSchematicTab extends JTabbedPane {
      */
     public void tintTabs(boolean updateGui) {
         if (SWGAide.frame().getTabPane().getComponentCount() >= 3) {
-        	// XXX commenting this for now. does not seem to be thread safe way to do this
-        	//if (!isGuiFinished) make();
             if (todaysAlert != null) {
-            	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "SWGSchematicTab:tintTabs: " + updateGui);
-            	setBackgroundAt(2, todaysAlert.todaysTinted() ? SWGGuiUtils.colorAlert : null);
-            	SWGAide.frame().getTabPane().setBackgroundAt(3,
-                		todaysAlert.todaysTinted()
-                                ? SWGGuiUtils.colorAlert
-                                : null);
-                if (updateGui) {
-                	// FIXME This is not possibly not thread safe in a public method -- commenting out for now not sure this is even needed really.
-                	//todaysAlert.guiUpdate();
-                }
+            	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            	if(todaysAlert.todaysTinted()) {
+            		if(theme.getName().contains("Dark")) {
+            			setForegroundAt(2, SWGGuiUtils.colorAlert);
+            			SWGAide.frame().getTabPane().setForegroundAt(3, SWGGuiUtils.colorAlert);
+            		} else {
+            			setBackgroundAt(2, SWGGuiUtils.colorAlert);
+            			SWGAide.frame().getTabPane().setBackgroundAt(3, SWGGuiUtils.colorAlert);
+            		}
+            	} else {
+            		if(theme.getName().contains("Dark")) {
+                    	Color fg = UIManager.getColor("TabbedPane.foreground");
+                    	setForegroundAt(2, fg);
+                    	SWGAide.frame().getTabPane().setForegroundAt(3, fg);
+                    } else {
+                    	setBackgroundAt(2, null);
+                		SWGAide.frame().getTabPane().setBackgroundAt(3, null);
+                    }
+            	}
             }
         }
     }

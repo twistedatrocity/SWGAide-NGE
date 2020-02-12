@@ -2,6 +2,9 @@ package swg.gui.common;
 
 import java.awt.Color;
 
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
+
 import swg.tools.ZNumber;
 
 /**
@@ -14,7 +17,9 @@ import swg.tools.ZNumber;
  */
 @SuppressWarnings("serial")
 public class SWGResourceStatRenderer extends SWGDecoratedTableCellRenderer {
-
+	
+	private static MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+	private static boolean Dark = (theme.getName().contains("Dark")) ? true : false;
     /**
      * Creates an instance of this type; see class comment for details.
      * 
@@ -39,12 +44,15 @@ public class SWGResourceStatRenderer extends SWGDecoratedTableCellRenderer {
      * @return a background color
      */
     public static Color getStatBackGround(double quotient) {
+    	if(Dark) {
+    		return null;
+    	}
         double q = quotient > 1
                 ? quotient / 1000.
                 : quotient;
 
         if (q < SWGGuiUtils.statLimits[0])
-            return Color.WHITE;
+            return null;
 
         if (q < SWGGuiUtils.statLimits[1])
             return SWGGuiUtils.statColors[0];
@@ -68,7 +76,10 @@ public class SWGResourceStatRenderer extends SWGDecoratedTableCellRenderer {
      * @return a background color
      */
     public static Color getStatBackGround(int value, int cap) {
-        if (cap <= 0) return Color.WHITE;
+        if (cap <= 0) return null;
+        if(Dark) {
+    		return null;
+    	}
 
         double rel = value / (double) cap;
         rel = Math.min(1.0, rel); // pander for JTL
@@ -82,12 +93,15 @@ public class SWGResourceStatRenderer extends SWGDecoratedTableCellRenderer {
      * @return a foreground color
      */
     public static Color getStatForeground(double quotient) {
+    	if(Dark) {
+    		return getRealColor(quotient);
+    	}
         double q = quotient > 1
                 ? quotient / 1000.
                 : quotient;
 
         if (q < SWGGuiUtils.statLimits[0])
-            return Color.BLACK;
+            return null;
 
         if (q < SWGGuiUtils.statLimits[1])
             return SWGGuiUtils.statColors[1];
@@ -111,9 +125,26 @@ public class SWGResourceStatRenderer extends SWGDecoratedTableCellRenderer {
      * @return a foreground color
      */
     public static Color getStatForeground(int value, int cap) {
-        if (cap <= 0) return Color.WHITE;
+        if (cap <= 0) return null;
 
         double rel = value / (double) cap;
         return getStatForeground(rel);
+    }
+    
+    public static Color getRealColor (double quotient) {
+    	double q = quotient > 1
+                ? quotient / 1000.
+                : quotient;
+
+        if (q < SWGGuiUtils.statLimits[0])
+            return null;
+
+        if (q < SWGGuiUtils.statLimits[1])
+            return SWGGuiUtils.statColors[0];
+
+        if (q < SWGGuiUtils.statLimits[2])
+            return SWGGuiUtils.statColors[2];
+
+        return SWGGuiUtils.statColors[4];
     }
 }

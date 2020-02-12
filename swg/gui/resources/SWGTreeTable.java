@@ -17,6 +17,8 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -126,9 +128,11 @@ final class SWGTreeTable extends SWGJTable {
             int max;
             int min;
             Color render;
-            final Color statBG = SWGGuiUtils.statColors[4];
-            final Color one = new Color(255, 179, 179);
-            final Color sel = new Color(240, 240, 240);
+            MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            boolean Dark = (theme.getName().contains("Dark")) ? true : false;
+            final Color statBG = (Dark) ? new Color(0xae1b1b) : SWGGuiUtils.statColors[4] ;
+            final Color one = (Dark) ? new Color(0xae1b1b) : new Color(255, 179, 179);
+            final Color sel = UIManager.getColor("Table.selectionBackground");
             boolean select;
             int width;
             
@@ -157,7 +161,7 @@ final class SWGTreeTable extends SWGJTable {
                 else if (rc.isSpawnable()
                         && rc.isSub(SWGCreatureResources.class)
                         && !rc.isHarvested())
-                    render = SWGGuiUtils.colorNonHarvested;
+                    render = (Dark) ? new Color(0x77777d) : SWGGuiUtils.colorNonHarvested;
                 else
                     render = statBG;
 
@@ -240,7 +244,7 @@ final class SWGTreeTable extends SWGJTable {
 	        f = new Font(f.getName(), f.getStyle(), s);
 	        cr.setFont(f);
         }
-        setBackground(Color.WHITE);
+        setBackground(UIManager.getColor("Table.background"));
         return cr;
     }
 

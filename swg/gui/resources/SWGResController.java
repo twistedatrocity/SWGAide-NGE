@@ -22,6 +22,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 
 import swg.SWGAide;
 import swg.crafting.SWGValues;
@@ -1092,15 +1095,25 @@ public final class SWGResController implements UpdateSubscriber {
 				SWGAide.printError("SWGResController:guiStatus", e);
 			}
     	}
-    	
+
+    	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
     	if (status < 0) {
             statusColor = Color.PINK;
     	} else if (status > 0 && statusColor != Color.PINK) {
     		statusColor = SWGGuiUtils.colorAlert;
     	}
+    	
+    	if(statusColor == null && theme.getName().contains("Dark")) {
+    		statusColor = UIManager.getColor("TabbedPane.foreground");
+    	}
 
         if (updateGUI) {
-            SWGAide.frame().getTabPane().setBackgroundAt(2, statusColor);
+        	
+        	if(theme.getName().contains("Dark")) {
+        		SWGAide.frame().getTabPane().setForegroundAt(2, statusColor);
+        	} else {
+        		SWGAide.frame().getTabPane().setBackgroundAt(2, statusColor);
+        	}
             SWGResourceTab.currentUpdateGUI();
             statusColor = null;
         }
@@ -2042,56 +2055,50 @@ public final class SWGResController implements UpdateSubscriber {
     public static TableCellDecorations resourceAgeDecor(
             SWGKnownResource res, long age, String tooltip) {
 
-        Color bg, fg;
+    	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+    	Color bg;
         if (age == Integer.MAX_VALUE || age < 0) {
             bg = SWGGuiUtils.colorDepleted;
-            fg = Color.WHITE;
         } else if (res.rc().isJTL()) { // lifetime is 13 to 22 days
             if (age < (13 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[0];
-                fg = SWGGuiUtils.statColors[1];
             } else if (age < (15.25 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[2];
-                fg = SWGGuiUtils.statColors[3];
             } else if (age < (17.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
-                fg = SWGGuiUtils.statColors[5];
             } else {
                 bg = SWGGuiUtils.colorDepleted; // not yet but... ;)
-                fg = Color.WHITE;
             }
         } else if (SWGOrganic.class.isAssignableFrom(res.getClass())) {
             // lifetime is 6 to 22 days
             if (age < (6 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[0];
-                fg = SWGGuiUtils.statColors[1];
             } else if (age < (10.25 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[2];
-                fg = SWGGuiUtils.statColors[3];
             } else if (age < (14.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
-                fg = SWGGuiUtils.statColors[5];
             } else {
                 bg = SWGGuiUtils.colorDepleted;
-                fg = Color.WHITE;
             }
         } else { // anything else, lifetime is 6 to 11 days
             if (age < (6 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[0];
-                fg = SWGGuiUtils.statColors[1];
             } else if (age < (7.25 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[2];
-                fg = SWGGuiUtils.statColors[3];
             } else if (age < (8.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
-                fg = SWGGuiUtils.statColors[5];
             } else {
                 bg = SWGGuiUtils.colorDepleted;
-                fg = Color.WHITE;
             }
         }
+        TableCellDecorations ret;
+        if(theme.getName().contains("Dark")) {
+        	ret = new TableCellDecorations(null, bg, tooltip, (Object[]) null);
+        } else {
+        	ret = new TableCellDecorations(bg, null, tooltip, (Object[]) null);
+        }
 
-        return new TableCellDecorations(bg, fg, tooltip, (Object[]) null);
+        return ret;
     }
 
     /**
