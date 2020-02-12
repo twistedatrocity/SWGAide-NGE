@@ -32,7 +32,6 @@ import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
-import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
 import swg.gui.common.SWGJDialog;
 import swg.gui.resources.SWGResController;
@@ -534,11 +533,11 @@ public final class SWGSchematicTab extends JTabbedPane {
             	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
             	if(todaysAlert.todaysTinted()) {
             		if(theme.getName().contains("Dark")) {
-            			setForegroundAt(2, SWGGuiUtils.colorAlert);
-            			SWGAide.frame().getTabPane().setForegroundAt(3, SWGGuiUtils.colorAlert);
+            			setForegroundAt(2, UIManager.getColor("SWG.colorAlert"));
+            			SWGAide.frame().getTabPane().setForegroundAt(3, UIManager.getColor("SWG.colorAlert"));
             		} else {
-            			setBackgroundAt(2, SWGGuiUtils.colorAlert);
-            			SWGAide.frame().getTabPane().setBackgroundAt(3, SWGGuiUtils.colorAlert);
+            			setBackgroundAt(2, UIManager.getColor("SWG.colorAlert"));
+            			SWGAide.frame().getTabPane().setBackgroundAt(3, UIManager.getColor("SWG.colorAlert"));
             		}
             	} else {
             		if(theme.getName().contains("Dark")) {

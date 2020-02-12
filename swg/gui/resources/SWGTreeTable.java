@@ -161,7 +161,7 @@ final class SWGTreeTable extends SWGJTable {
                 else if (rc.isSpawnable()
                         && rc.isSub(SWGCreatureResources.class)
                         && !rc.isHarvested())
-                    render = (Dark) ? new Color(0x77777d) : SWGGuiUtils.colorNonHarvested;
+                    render = (Dark) ? new Color(0x77777d) : UIManager.getColor("SWG.colorNonHarvested");
                 else
                     render = statBG;
 

@@ -66,6 +66,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
@@ -1724,7 +1726,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         // the inner box for the small elements
         final Box innerBox = Box.createVerticalBox();
         innerBox.setBorder(
-                BorderFactory.createLineBorder(SWGGuiUtils.colorThinBorder));
+                BorderFactory.createLineBorder(UIManager.getColor("SWG.colorThinBorder")));
         innerBox.setBackground(UIManager.getColor("TextArea.background"));
         innerBox.setOpaque(true);
 
@@ -1956,7 +1958,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private JEditorPane makeEastShoppingList() {
         shoppingList = new JEditorPane();
         shoppingList.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(SWGGuiUtils.colorThinBorder),
+                BorderFactory.createLineBorder(UIManager.getColor("SWG.colorThinBorder")),
                 BorderFactory.createEmptyBorder(2, 6, 2, 6)));
         shoppingList.setContentType("text/html");
         shoppingList.setEditable(false);
@@ -2056,17 +2058,24 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     label.setBackground(directUse
                             ? SWGGuiUtils.colorDarker(bg, 0.9f)
                             : bg);
-                } else
-                    label.setBackground(directUse
-                            ? null
-                            : SWGGuiUtils.colorComponent);
-
+                } else {
+                	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+                	if(theme.getName().contains("Dark")) {
+                		label.setForeground(directUse
+                                ? null
+                                : UIManager.getColor("SWG.colorComponent"));
+                	} else {
+	                    label.setBackground(directUse
+	                            ? null
+	                            : UIManager.getColor("SWG.colorComponent"));
+                	}
+                }
                 return label;
             }
         });
 
         usedinAndFind.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(SWGGuiUtils.colorThinBorder),
+                BorderFactory.createLineBorder(UIManager.getColor("SWG.colorThinBorder")),
                 BorderFactory.createEmptyBorder(2, 6, 2, 6)));
 
         usedinAndFind.addListSelectionListener(new ListSelectionListener() {
@@ -2901,15 +2910,15 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     : null;
             setText(str);
             if (slot instanceof SWGResourceSlot)
-                this.setBackground(SWGGuiUtils.colorResource);
+                this.setBackground(UIManager.getColor("SWG.colorResource"));
             else if (slot instanceof SWGComponentSlot) {
                 SWGComponentSlot cs = (SWGComponentSlot) slot;
                 if (cs.getType().equals("item"))
-                    this.setBackground(SWGGuiUtils.colorItem);
+                    this.setBackground(UIManager.getColor("SWG.colorItem"));
                 else if (cs.getType().equals("schematic"))
-                    this.setBackground(SWGGuiUtils.colorComponent);
+                    this.setBackground(UIManager.getColor("SWG.colorComponent"));
                 else
-                    this.setBackground(SWGGuiUtils.colorCategory);
+                    this.setBackground(UIManager.getColor("SWG.colorCategory"));
             }
         }
     }

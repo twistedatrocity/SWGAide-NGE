@@ -39,6 +39,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -1561,7 +1562,7 @@ class SWGTodays extends JPanel {
                         fg = SWGGuiUtils.statColors[1];
                     }
                 } else if (great.isSelected()) {
-                    bg = SWGGuiUtils.colorLightGray;
+                    bg = UIManager.getColor("SWG.colorLightGray");
                     fg = Color.WHITE;
                 } else {
                     bg = Color.CYAN;

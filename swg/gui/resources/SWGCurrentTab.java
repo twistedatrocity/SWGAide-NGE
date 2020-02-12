@@ -1316,9 +1316,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
     	if(isAlerted) {
     		if(theme.getName().contains("Dark")) {
-    			northEastTabbedPane.setForegroundAt(0, SWGGuiUtils.colorAlert);
+    			northEastTabbedPane.setForegroundAt(0, UIManager.getColor("SWG.colorAlert"));
     		} else {
-    			northEastTabbedPane.setBackgroundAt(0, SWGGuiUtils.colorAlert);
+    			northEastTabbedPane.setBackgroundAt(0, UIManager.getColor("SWG.colorAlert"));
     		}
     	} else {
     		northEastTabbedPane.setBackgroundAt(0, null);
@@ -2845,7 +2845,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             return SWGGuiUtils.statColors[0];
         if (res.rc().isSub(SWGCreatureResources.class)
                 && !res.rc().isHarvested())
-            return SWGGuiUtils.colorNonHarvested;
+            return UIManager.getColor("SWG.colorNonHarvested");
 
         return null;
     }
@@ -3050,7 +3050,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
             SWGGuard guard = guardsGet().get(row);
             Color bg = guard.resourceRecentSpawnDate > 0
-                    ? SWGGuiUtils.colorAlert
+                    ? UIManager.getColor("SWG.colorAlert")
                     : null;
             TableCellDecorations ret;
             if(theme.getName().contains("Dark")) {

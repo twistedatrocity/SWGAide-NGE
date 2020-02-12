@@ -1100,7 +1100,7 @@ public final class SWGResController implements UpdateSubscriber {
     	if (status < 0) {
             statusColor = Color.PINK;
     	} else if (status > 0 && statusColor != Color.PINK) {
-    		statusColor = SWGGuiUtils.colorAlert;
+    		statusColor = UIManager.getColor("SWG.colorAlert");
     	}
     	
     	if(statusColor == null && theme.getName().contains("Dark")) {
@@ -2045,7 +2045,7 @@ public final class SWGResController implements UpdateSubscriber {
      * Return a color-data-triplet for the specified resource and age. This
      * method determines the back- and foreground colors by the resource class
      * and which colors the user has specified for fair, good, and great colors.
-     * The age is wrapped in a {@link Long}.
+     * The age is wrapped in a {@link Long}. UIManager.getColor("SWG.colorDepleted")
      * 
      * @param res a resource
      * @param age age in seconds
@@ -2058,7 +2058,7 @@ public final class SWGResController implements UpdateSubscriber {
     	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
     	Color bg;
         if (age == Integer.MAX_VALUE || age < 0) {
-            bg = SWGGuiUtils.colorDepleted;
+            bg = UIManager.getColor("SWG.colorDepleted");
         } else if (res.rc().isJTL()) { // lifetime is 13 to 22 days
             if (age < (13 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[0];
@@ -2067,7 +2067,7 @@ public final class SWGResController implements UpdateSubscriber {
             } else if (age < (17.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
             } else {
-                bg = SWGGuiUtils.colorDepleted; // not yet but... ;)
+                bg = UIManager.getColor("SWG.colorDepleted"); // not yet but... ;)
             }
         } else if (SWGOrganic.class.isAssignableFrom(res.getClass())) {
             // lifetime is 6 to 22 days
@@ -2078,7 +2078,7 @@ public final class SWGResController implements UpdateSubscriber {
             } else if (age < (14.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
             } else {
-                bg = SWGGuiUtils.colorDepleted;
+                bg = UIManager.getColor("SWG.colorDepleted");
             }
         } else { // anything else, lifetime is 6 to 11 days
             if (age < (6 * 24 * 3600)) {
@@ -2088,7 +2088,7 @@ public final class SWGResController implements UpdateSubscriber {
             } else if (age < (8.5 * 24 * 3600)) {
                 bg = SWGGuiUtils.statColors[4];
             } else {
-                bg = SWGGuiUtils.colorDepleted;
+                bg = UIManager.getColor("SWG.colorDepleted");
             }
         }
         TableCellDecorations ret;
