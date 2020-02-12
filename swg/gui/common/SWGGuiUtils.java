@@ -23,10 +23,15 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import sun.swing.SwingUtilities2;
+import swg.SWGAide;
 import swg.gui.SWGFrame;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGGalaxy;
@@ -43,67 +48,14 @@ import swg.model.SWGUniverse;
 public final class SWGGuiUtils {
 
     /**
-     * A convenience constant for the alert color, used to tint tabs at tabbed
-     * panes when there is an alert.
-     */
-    public static final Color colorAlert = new Color(255, 204, 102);
-
-    /**
-     * A convenience constant for the background color for mouse-hover over a
-     * listening category.
-     */
-    public final static Color colorCategory = new Color(255, 240, 255);
-
-    /**
-     * A convenience constant for the background color for mouse-hover over a
-     * listening component.
-     */
-    public final static Color colorComponent = new Color(237, 246, 255);
-
-    /**
-     * A convenience constant for the warning color, used to tint tabs at tabbed
-     * panes when there is a warning.
-     */
-    public static final Color colorDepleted = new Color(153, 0, 153);
-
-    /**
-     * A convenience constant for the background color for mouse-hover over a
-     * listening component.
-     */
-    public final static Color colorItem = new Color(255, 255, 204);
-
-    /**
-     * A convenience constant for a background color for selected white cells.
-     */
-    public static final Color colorLightGray = new Color(221, 221, 221);
-
-    /**
-     * A convenience constant for the background color for resources which are
-     * not possible to harvest in the worlds.
-     */
-    public final static Color colorNonHarvested = new Color(221, 221, 255);
-
-    /**
-     * A convenience constant for the background color for mouse-hover over a
-     * listening resource.
-     */
-    public final static Color colorResource = new Color(241, 255, 227);
-
-    /**
-     * A convenience constant for thin line borders.
-     */
-    public final static Color colorThinBorder = new Color(204, 224, 255);
-
-    /**
-     * A convenience constant for the warning color, used to tint tabs at tabbed
-     * panes when there is a warning.
-     */
-    public static final Color colorWarning = Color.PINK;
-
-    /**
      * A convenience constant for the bold font.
      */
     private static Font fontBold;
+    
+    /**
+     * A convenience constant for the bold/italic font.
+     */
+    private static Font fontBoldItalic;
 
     /**
      * A convenience constant for the italic font.
@@ -116,6 +68,11 @@ public final class SWGGuiUtils {
     private static Font fontPlain;
     
     /**
+     * A convenience constant for the smaller plain font.
+     */
+    private static Font fontSmaller;
+    
+    /**
      * A convenience constant for the font multiplier.
      */
     private static float fontMultiplier = 0f;
@@ -123,7 +80,7 @@ public final class SWGGuiUtils {
     /**
      * A convenience constant for the original font size before applying any scalars.
      */
-    private static int defFontSize;
+    private final static int defFontSize = new JLabel().getFont().getSize();
 
     /**
      * An array of colors which are used in SWGAide to tint GUI elements with
@@ -176,8 +133,7 @@ public final class SWGGuiUtils {
      * @param frame the frame for this application
      */
 	public SWGGuiUtils(SWGFrame frame) {
-		Font tf = new JLabel().getFont();
-        defFontSize = tf.getSize();
+
     }
 
     /**
@@ -188,6 +144,17 @@ public final class SWGGuiUtils {
 	public void initiate() {
         statColorLimitSet();
         fontMultiplier();
+        try {
+			iniTheme();
+		} catch (ClassNotFoundException e1) {
+			SWGAide.printError("SWGGuiUtils:initiate", e1);
+		} catch (InstantiationException e1) {
+			SWGAide.printError("SWGGuiUtils:initiate", e1);
+		} catch (IllegalAccessException e1) {
+			SWGAide.printError("SWGGuiUtils:initiate", e1);
+		} catch (UnsupportedLookAndFeelException e1) {
+			SWGAide.printError("SWGGuiUtils:initiate", e1);
+		}
         
         if (fontMultiplier != 0f) {
             UIDefaults defaults = UIManager.getDefaults();
@@ -197,7 +164,7 @@ public final class SWGGuiUtils {
                 Object value = defaults.get(key);
                 if (value instanceof Font) {
                     Font font = (Font) value;
-                    int newSize = Math.round(font.getSize() * fontMultiplier);
+                    int newSize = Math.round(defFontSize * fontMultiplier);
                     if (value instanceof FontUIResource) {
                         defaults.put(key, new FontUIResource(font.getName(), font.getStyle(), newSize));
                     } else {
@@ -208,10 +175,70 @@ public final class SWGGuiUtils {
         }
     	
         Font f = new JLabel().getFont();
+        int smaller = Math.round(f.getSize() * .8f);
+        fontSmaller = new Font(f.getName(), Font.PLAIN, smaller);
         fontBold = new Font(f.getName(), Font.BOLD, f.getSize());
+        fontBoldItalic = new Font(f.getName(), Font.BOLD + Font.ITALIC, f.getSize());
         fontItalic = new Font(f.getName(), Font.ITALIC, f.getSize());
         fontPlain = new Font(f.getName(), Font.PLAIN, f.getSize());
+        
     }
+    
+    private void iniTheme () throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+    	String tname = (String) SWGFrame.getPrefsKeeper().get("Theme");
+    	if(tname != null) {
+    		MetalTheme theme = getTheme(tname);
+    		MetalLookAndFeel.setCurrentTheme(theme);
+    	} else {
+    		MetalLookAndFeel.setCurrentTheme(SWGTheme.STD);
+    	}
+    	UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+    	
+    	UIManager.put("FileChooser.homeFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/home_22x22.png"));
+    	UIManager.put("FileChooser.newFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_new_22x22.png"));
+    	UIManager.put("FileChooser.upFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_up_22x22.png"));
+    	UIManager.put("FileChooser.listViewIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_list_22x22.png"));
+    	UIManager.put("FileChooser.detailsViewIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_detail_22x22.png"));
+    	UIManager.put("FileView.computerIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/computer_16x16.png"));
+    	UIManager.put("FileView.directoryIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
+    	UIManager.put("FileView.hardDriveIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/hard_drive_16x16.png"));
+    	UIManager.put("FileView.fileIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
+    	UIManager.put("FileView.floppyDriveIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/floppy_drive_16x16.png"));
+    	UIManager.put("Tree.closedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
+    	UIManager.put("Tree.openIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_opened_16x16.png"));
+    	UIManager.put("Tree.leafIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
+    	UIManager.put("Tree.collapsedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_collapsed_11x11.png"));
+        UIManager.put("Tree.expandedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_expanded_11x11.png"));
+    }
+    
+    private static MetalTheme getTheme (String v) {
+    	switch (v) {
+    		case "Std" :
+    			return SWGTheme.STD;
+    		case "SWGDark" :
+    			return SWGTheme.SWG;
+    		case "MidnightDark" :
+    			return SWGTheme.DARK;
+    	}
+    	return SWGTheme.STD;
+    }
+    
+    public static void setTheme (String t) {
+    	SWGFrame.getPrefsKeeper().add("Theme", t);
+    	//MetalTheme theme = getTheme(t);
+    	//updateTheme(theme);
+    }
+    
+    /*private static void updateTheme (MetalTheme theme){
+    	MetalLookAndFeel.setCurrentTheme(theme);
+    	try {
+    		UIManager.setLookAndFeel(new MetalLookAndFeel());
+    	}
+    	catch ( UnsupportedLookAndFeelException e ){
+    		SWGAide.printError("SWGGuiUtils:updateTheme", e);
+    	}
+    	SwingUtilities.updateComponentTreeUI(FRAME);
+    }*/
 
     /**
      * Returns a list of character names for the specified galaxy. The returned
@@ -319,6 +346,16 @@ public final class SWGGuiUtils {
     public static Font fontBold() {
         return fontBold;
     }
+    
+    /**
+     * Returns a constant for a bold/italic dialog font. If this instance is not
+     * initiated {@code null} is returned.
+     * 
+     * @return a bold italic font
+     */
+    public static Font fontBoldItalic() {
+        return fontBoldItalic;
+    }
 
     /**
      * Returns a constant for a italic dialog font. If this instance is not
@@ -338,6 +375,16 @@ public final class SWGGuiUtils {
      */
     public static Font fontPlain() {
         return fontPlain;
+    }
+    
+    /**
+     * Returns a constant for a smaller plain dialog font. If this instance is not
+     * initiated {@code null} is returned. Font size is 80% less than normal.
+     * 
+     * @return a smaller plain font
+     */
+    public static Font fontSmaller() {
+        return fontSmaller;
     }
 
     // /**

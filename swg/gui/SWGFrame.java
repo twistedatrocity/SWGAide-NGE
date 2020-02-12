@@ -78,6 +78,7 @@ import swg.gui.common.FontOptionsPanel;
 import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
+import swg.gui.common.ThemeChooserPanel;
 import swg.gui.resources.SWGGuard;
 import swg.gui.resources.SWGHarvester;
 import swg.gui.resources.SWGHarvesterOwner;
@@ -200,9 +201,14 @@ public class SWGFrame extends JFrame implements ComponentListener,
     private SWGCraftOptionsPanel optionsCraft = null;
     
     /**
-     * The dialog for general options
+     * The dialog for font options
      */
     private FontOptionsPanel optionsFont = null;
+    
+    /**
+     * The dialog for theme chooser
+     */
+    private ThemeChooserPanel optionsTheme = null;
 
     /**
      * The menu item for general options
@@ -280,6 +286,8 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * List of all universes
      */
     public List<SWGUniverse> universeList;
+
+	private JMenuItem optionsThemeChooser;
     
     /**
      * Global variable for if user has verified credentials
@@ -646,15 +654,27 @@ public class SWGFrame extends JFrame implements ComponentListener,
     }
     
     /**
-     * Returns the dialog for general options of this application
+     * Returns the dialog for font options of this application
      * 
-     * @return the dialog for general options of this application
+     * @return the dialog for font options of this application
      */
     public FontOptionsPanel getOptionsFont() {
         if (optionsFont == null) {
             optionsFont = new FontOptionsPanel(this);
         }
         return optionsFont;
+    }
+    
+    /**
+     * Returns the dialog for font options of this application
+     * 
+     * @return the dialog for font options of this application
+     */
+    public ThemeChooserPanel getThemeChooser() {
+        if (optionsTheme == null) {
+        	optionsTheme = new ThemeChooserPanel(this);
+        }
+        return optionsTheme;
     }
 
     /**
@@ -1018,6 +1038,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         optionsMenu.add(optionsSWGCraftMenuItem());
         optionsMenu.add(optionsFontSize());
+        optionsMenu.add(optionsThemeChooser());
 
         optionsMenu.setEnabled(true);
         bar.add(optionsMenu);
@@ -1170,11 +1191,19 @@ public class SWGFrame extends JFrame implements ComponentListener,
     }
     
     /**
-     * Called when the general options menu is selected
+     * Called when the font options menu is selected
      */
     protected void optionsFontSizeClicked() {
         getOptionsFont();
         optionsFont.setVisible(true);
+    }
+    
+    /**
+     * Called when the theme chooser menu is selected
+     */
+    protected void optionsThemeClicked() {
+        getThemeChooser();
+        optionsTheme.setVisible(true);
     }
 
     /**
@@ -1213,6 +1242,24 @@ public class SWGFrame extends JFrame implements ComponentListener,
             }
         });
         return optionsFontMenuItem;
+    }
+    
+    /**
+     * Returns a menu item for the Themes chooser menu
+     * 
+     * @return a menu item for the Themes chooser
+     */
+    private JMenuItem optionsThemeChooser() {
+        optionsThemeChooser = new JMenuItem("Theme Chooser...");
+        optionsThemeChooser
+            .setToolTipText("Choose which theme you would like to use");
+        optionsThemeChooser.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                optionsThemeClicked();
+            }
+        });
+        return optionsThemeChooser;
     }
 
     /**

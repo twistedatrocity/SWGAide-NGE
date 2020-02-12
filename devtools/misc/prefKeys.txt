@@ -150,3 +150,4 @@ schemRes4SchemNamedLQ               Boolean # display LQ schems for "named" rc
 
 schemTestBenchLocation              Point   # location of test-bench-dialog
 schemTestBenchDimension             Dimension # dimension of test-bench-dialog
+Theme								String # name of chosen theme
