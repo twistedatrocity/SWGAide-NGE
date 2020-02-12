@@ -145,6 +145,9 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xcce0ff));
 		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
 		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x00ffff));
+		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xFF0000));
+		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x014709));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -222,6 +225,9 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xcce0ff));
 		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
 		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x385252));
+		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xFF0000));
+		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x1cc530));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -304,6 +310,9 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0x16dbde));
 		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
 		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x2ebdbd));
+		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xfd2525));
+		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x23e63a));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }

@@ -49,6 +49,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicTableUI;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -1435,8 +1437,12 @@ final class SWGLaboratoryTab extends JPanel {
                     bg = SWGGuiUtils.statColors[0];
                 else if (val.invent == -1)
                     bg = SWGGuiUtils.statColors[4];
+                
+                MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+                boolean Dark = (theme.getName().contains("Dark")) ? true : false;
+                TableCellDecorations ret = (Dark) ? new TableCellDecorations(null, bg, toolTip, plain) : new TableCellDecorations(bg, null, toolTip, plain);
 
-                return new TableCellDecorations(bg, null, toolTip, plain);
+                return ret;
             }
 
             SWGWeights w = ew.weights();

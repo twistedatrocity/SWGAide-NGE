@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -101,12 +102,17 @@ final class SWGTestBench extends SWGJDialog {
     /**
      * A constant color for a BAD value relative its cap.
      */
-    private static final String BAD = "#FF0000";
+    private static final String BAD = SWGGuiUtils.toHexString(UIManager.getColor("SWG.benchBAD"));
 
     /**
      * A constant color for a FAIR value relative its cap.
      */
-    private static final String FAIR = "#FF8C00";
+    private static final String FAIR = SWGGuiUtils.toHexString(UIManager.getColor("SWG.benchFAIR"));
+    
+    /**
+     * A constant color for a FAIR value relative its cap.
+     */
+    private static final String GREAT = SWGGuiUtils.toHexString(UIManager.getColor("SWG.benchGREAT"));
 
     /**
      * Dimension of fillers for unused slots at GUI.
@@ -250,7 +256,7 @@ final class SWGTestBench extends SWGJDialog {
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 BorderFactory.createEmptyBorder(2, 3, 2, 0)));
         l.setOpaque(true);
-        l.setBackground(Color.WHITE);
+        l.setBackground(UIManager.getColor("TextArea.background"));
         return l;
     }
 
@@ -298,6 +304,7 @@ final class SWGTestBench extends SWGJDialog {
         exps.repaint(200);
     }
 
+    
     /**
      * Helper method which rebuilds ingredient list with
      * whatever is currently in the resource slots.
@@ -308,12 +315,11 @@ final class SWGTestBench extends SWGJDialog {
     	ingredients.setLayout(new BorderLayout());
         ingredients.removeAll();
         
-        
         String header = "<h4>Ingredients:</h4>";
-        
-        String colors = "<html><div align=\"center\" style=\"font-weight:bold; font-size:95%; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;<font color='#FF0000'>Red is worse than \"Good\"." +
-        		"</font>&nbsp;<font color='#FF8C00'>Orange is \"Good\"." +
-        		"</font>&nbsp;<font color='#000000'>Black is \"Great\".</font>&nbsp;&uarr;&uarr;</div>";
+        UIManager.getColor("TextArea.background");
+        String colors = "<html><div align=\"center\" style=\"font-weight:bold; font-size:95%; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;Color Codes: <font color='"+ BAD + "'>\"Bad\" " +
+        		"</font>&nbsp;<font color='"+ FAIR + "'>\"Good\" " +
+        		"</font>&nbsp;<font color='" + GREAT + "'>\"Great\"</font>&nbsp;&uarr;&uarr;</div>";
         for (Component c : slotsGrid.getComponents()) {
             if (c instanceof JLabel) {
                String jl = ((JLabel)c).getToolTipText();
@@ -339,7 +345,7 @@ final class SWGTestBench extends SWGJDialog {
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 BorderFactory.createEmptyBorder(2, 3, 2, 0)));
         iL.setOpaque(true);
-        iL.setBackground(Color.WHITE);
+        iL.setBackground(UIManager.getColor("TextArea.background"));
         iL.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -590,7 +596,7 @@ final class SWGTestBench extends SWGJDialog {
         else if (d < SWGGuiUtils.statLimits[2] * 1000)
             z.app(FAIR);
         else
-            z.app("#000000");
+            z.app(GREAT);
         z.app(">");
     }
 

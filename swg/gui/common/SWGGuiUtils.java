@@ -730,7 +730,27 @@ public final class SWGGuiUtils {
         }
     }
 	
-	/**
+    /**
+     * Returns color in web hex format
+     * 
+     * @param c
+     * @return hex
+     */
+    public static String toHexString(Color c) {
+    	StringBuilder sb = new StringBuilder("#");
+
+    	if (c.getRed() < 16) sb.append('0');
+    	sb.append(Integer.toHexString(c.getRed()));
+
+    	if (c.getGreen() < 16) sb.append('0');
+    	sb.append(Integer.toHexString(c.getGreen()));
+
+    	if (c.getBlue() < 16) sb.append('0');
+    	sb.append(Integer.toHexString(c.getBlue()));
+
+    	return sb.toString();
+    }
+    /**
      * Strips SWG-style color codes (\#FFFFFF) from the given input
      * @param input String to strip color codes from
      * @return Cleansed string
