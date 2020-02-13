@@ -28,12 +28,13 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.xml.soap.SOAPException;
 
 import swg.SWGAide;
@@ -213,7 +214,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * A label which displays a suggestion to add stats to the resources in the
      * notes file.
      */
-    private JLabel submitNotesLabel;
+    private JTextPane submitNotesLabel;
 
     /**
      * The GUI button for submitting the two lists of unreported-planets and
@@ -472,7 +473,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         notesFileWriteCheckEmpty(notes);
         notesFileWrite(notes);
         notesFileSaveButton.setEnabled(false);
-        submitNotesLabel.setForeground(Color.BLACK);
+        submitNotesLabel.setForeground(UIManager.getColor("TextArea.foreground"));
         submitNotesFileButton.setEnabled(true);
     }
 
@@ -938,8 +939,12 @@ public final class SWGMailISDroidPanel extends JPanel {
 
         bPanel.add(Box.createVerticalStrut(5));
 
-        submitNotesLabel = new JLabel("<html>Add stats to resources<br/>"
-                + "at the in-game notepad<br/>(press F1 for help)</html>");
+        submitNotesLabel = new JTextPane();
+        submitNotesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        submitNotesLabel.setText("Add stats to resources\n"
+                + "at the in-game notepad\n(press F1 for help)");
+        submitNotesLabel.setEditable(false);
+        submitNotesLabel.setOpaque(false);
         bPanel.add(submitNotesLabel);
 
         bPanel.add(Box.createVerticalStrut(5));
@@ -988,7 +993,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private void makeSubmitUnreportedAndDepletedButton() {
         submitUnreportedAndDepletedButton =
-                new JButton("<html><center>Submit<p>1 &amp; 2</center>");
+                new JButton("Submit 1 & 2");
         submitUnreportedAndDepletedButton
                 .setToolTipText("Submit all resources at lists 1 and 2 to SWGCraft");
         submitUnreportedAndDepletedButton.setEnabled(false);
@@ -2269,7 +2274,7 @@ public final class SWGMailISDroidPanel extends JPanel {
         newListModel.clear();
         submitUnreportedAndDepletedButton.setEnabled(false);
         notesFileSaveButton.setEnabled(false);
-        submitNotesLabel.setForeground(Color.LIGHT_GRAY);
+        submitNotesLabel.setForeground(UIManager.getColor("Menu.disabledForeground"));
         submitNotesFileButton.setEnabled(false);
     }
 
