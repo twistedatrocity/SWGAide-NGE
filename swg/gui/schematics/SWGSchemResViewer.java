@@ -834,6 +834,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                     ? "LQ schematic for \"named\" resource class: " +
                             rcw.rc().rcName()
                     : null;
+            Font f = SWGGuiUtils.fontPlain();;
             if (column <= 1) { // name
                 SWGResourceClass rc = rcw.rc();
                 if (rc != currentRes.rc()) {
@@ -841,18 +842,21 @@ public final class SWGSchemResViewer extends SWGJDialog {
                     c = 245 - (c * 16);
                     bg = new Color(c, c, 255);
                 }
+                if (column ==1) {
+                	f = SWGGuiUtils.fontSmaller();
+                }
                 if(theme.getName().contains("Dark")) {
-                	ret = new TableCellDecorations(null, bg, tt);
+                	ret = new TableCellDecorations(null, bg, tt, f);
                 } else {
-                	ret = new TableCellDecorations(bg, null, tt);
+                	ret = new TableCellDecorations(bg, null, tt, f);
                 }
                 return ret;
             }
             if (bg != null) {
             	if(theme.getName().contains("Dark")) {
-            		ret = new TableCellDecorations(null, bg, tt);
+            		ret = new TableCellDecorations(null, bg, tt, f);
             	} else {
-            		ret = new TableCellDecorations(bg, null, tt);
+            		ret = new TableCellDecorations(bg, null, tt, f);
             	}
                 return ret;
             }
@@ -860,7 +864,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
             double rate = ((Double) value).doubleValue();
             return new TableCellDecorations(
                     SWGResourceStatRenderer.getStatBackGround(rate),
-                    SWGResourceStatRenderer.getStatForeground(rate), tt);
+                    SWGResourceStatRenderer.getStatForeground(rate), tt, f);
             }
             return null;
         }
@@ -910,8 +914,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
             	}
             	return ret;
             } else if (col == 1) {
-            	String sname = "<html><span style='font-size:80%'>" + expname + "</span></html>";
-            	return sname;
+            	return expname;
             } else {
             	return (Double) sac.object(0);
             }
