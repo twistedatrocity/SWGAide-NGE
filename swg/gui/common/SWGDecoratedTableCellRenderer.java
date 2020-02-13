@@ -282,7 +282,6 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      * Sets a font for this renderer at the specified cell. A sub-class may
      * optionally use {@code decor} to contain a font and override this method.
      * <p>
-     * This particular method does nothing.
      * 
      * @param table the table for this renderer
      * @param value the value to assign to the cell at {@code [row, column]}
@@ -294,7 +293,10 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      */
     protected void myFont(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
-        /* pass */
+    	if(decor.value() instanceof Font) {
+    		Font f = (Font) decor.value();
+    		setFont(f);
+    	}
     }
 
     /**
