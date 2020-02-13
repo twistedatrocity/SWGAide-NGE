@@ -61,11 +61,14 @@ import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 
 import swg.SWGAide;
 import swg.SWGConstants;
@@ -1007,7 +1010,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
         initHelpMenu(bar);
         
         JButton donate = new JButton("Contribute");
-        donate.setBackground(Color.orange);
+        MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+        boolean Dark = (theme.getName().contains("Dark")) ? true : false;
+        donate.setBackground(Dark ? new Color(0xe0ad00) : Color.ORANGE);
         donate.setForeground(Color.BLACK);
         bar.add(Box.createHorizontalGlue());
         donate.setFocusPainted(false);
@@ -1543,17 +1548,20 @@ public class SWGFrame extends JFrame implements ComponentListener,
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
         StyleConstants.setFontFamily(style, SWGGuiUtils.fontPlain().getFamily());
+        StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
         iL.setText("<html>" + text + "</html>");
         iL.setEditable(false);
         iL.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
                 BorderFactory.createEmptyBorder(2, 3, 2, 0)));
         iL.setOpaque(true);
-        iL.setBackground(Color.WHITE);
+        iL.setBackground(UIManager.getColor("TextArea.background"));
         hpanel.add(iL);
         JPanel bpanel = new JPanel(new BorderLayout());
         JButton donate = new JButton("Click Here to Contribute");
-        donate.setBackground(Color.orange);
+        MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+        boolean Dark = (theme.getName().contains("Dark")) ? true : false;
+        donate.setBackground(Dark ? new Color(0xe0ad00) : Color.ORANGE);
         donate.setForeground(Color.BLACK);
         donate.setFocusPainted(false);
         
