@@ -9,6 +9,7 @@ import java.util.Stack;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
@@ -63,6 +64,8 @@ public final class SWGHelp extends SWGJDialog {
         StyleSheet styleSheet = kit.getStyleSheet();
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
+        StyleConstants.setBackground(style, UIManager.getColor("TextArea.background"));
+        StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
         style = styleSheet.getStyle("h1");
         StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
         style = styleSheet.getStyle("h2");
