@@ -265,15 +265,12 @@ public final class SWGTheme {
 		  @SuppressWarnings("rawtypes")
 		  java.util.List buttonGradient = Arrays.asList(
 				  new Object[] {new Float(.3f), new Float(0f),
-						  new ColorUIResource(0x0b404a), new ColorUIResource(0x0b404a), getSecondary2() });
+						  new ColorUIResource(0x1c383b), new ColorUIResource(0x1c383b), getSecondary2() });
 
 		  aTable.put("MenuBar.gradient",  Arrays.asList(new Object[] {
 				  new Float(1f), new Float(0f),
 				  getWhite(), getSecondary3(),
 				  getSecondary3() }));
-		  ColorUIResource selfore = new ColorUIResource(0x333333);
-		  //ColorUIResource buttonGradient = new ColorUIResource(0x0b404a);
-		  ColorUIResource ovd = new ColorUIResource(0x0ac8d8);
 		  aTable.put("MenuBar.borderColor",  fBlack);
 		  aTable.put("Button.gradient",  buttonGradient);
 		  aTable.put("CheckBox.gradient",  buttonGradient);
@@ -283,19 +280,13 @@ public final class SWGTheme {
 		  aTable.put("RadioButtonMenuItem.gradient",  buttonGradient);
 		  aTable.put("ScrollBar.gradient",  buttonGradient);
 		  aTable.put("ToggleButton.gradient",  buttonGradient);
-		  aTable.put("SplitPane.dividerFocusColor",  ovd);
-		  //aTable.put("Tree.selectionForeground",  selfore);
 		  aTable.put("TabbedPane.selected",  getPrimary3());
-		  aTable.put("TabbedPane.focus",  selfore);
 		  aTable.put("TabbedPane.contentAreaColor",  getSecondary2());
 		  aTable.put("TabbedPane.tabAreaBackground",  getSecondary3());
-		  aTable.put("TabbedPane.unselectedBackground",  new ColorUIResource(0x103f48));
-		  aTable.put("TabbedPane.unselectedForeground", new ColorUIResource(0x2ff4ff));
-		  aTable.put("TableHeader.focusCellBackground",  ovd);
+		  aTable.put("TabbedPane.unselectedBackground",  new ColorUIResource(0x1c383b));
 		  aTable.put("Table.dropLineShortColor",  fOCEAN_BLACK);
 		  aTable.put("Table.dropCellBackground",  fOCEAN_DROP);
 		  aTable.put("Table.gridColor",  getSecondary1());
-		  //aTable.put("Table.selectionForeground",  selfore);
 		  aTable.put("Tree.dropCellBackground",  fOCEAN_DROP);
 		  aTable.put("List.dropCellBackground",  fOCEAN_DROP);
 		// put SWGAide specific colors here. These used to be constants in SWGGuiUtils
@@ -307,7 +298,7 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorLightGray",  new ColorUIResource(0x999999));
 		  aTable.put("SWG.colorNonHarvested",  new ColorUIResource(0xababd6));
 		  aTable.put("SWG.colorResource",  new ColorUIResource(0xbed1aa));
-		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0x16dbde));
+		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xc1efed));
 		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
 		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x2ebdbd));
 		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xfd2525));
@@ -329,18 +320,18 @@ public final class SWGTheme {
 	  public ColorUIResource getDesktopColor() { return fSecondary1; }
 	  public ColorUIResource getWindowBackground() { return fBlack; }
 	  private final String fName = fSWG_NAME;
-	  private final ColorUIResource fPrimary1 = new ColorUIResource(0x008097);
+	  private final ColorUIResource fPrimary1 = new ColorUIResource(0x7acece);
 	  private final ColorUIResource fPrimary2 = new ColorUIResource(0x005d6d);
-	  private final ColorUIResource fPrimary3 = new ColorUIResource(0x2c848b);
-	  private final ColorUIResource fSecondary1 = new ColorUIResource(0x01b1c8);
-	  private final ColorUIResource fSecondary2 = new ColorUIResource(0x003742);
-	  private final ColorUIResource fSecondary3 = new ColorUIResource(0x003742);
-	  private final ColorUIResource fINACTIVE_CONTROL_TEXT_COLOR = new ColorUIResource(0x028ba8);
-	  private final ColorUIResource fCONTROL_TEXT_COLOR = new ColorUIResource(0x97ffff);
-	  private final ColorUIResource fMENU_DISABLED_FOREGROUND = new ColorUIResource(0x028ba8);
+	  private final ColorUIResource fPrimary3 = new ColorUIResource(0x326564);
+	  private final ColorUIResource fSecondary1 = new ColorUIResource(0x618989);
+	  private final ColorUIResource fSecondary2 = new ColorUIResource(0x162b2e);
+	  private final ColorUIResource fSecondary3 = new ColorUIResource(0x162b2e);
+	  private final ColorUIResource fINACTIVE_CONTROL_TEXT_COLOR = new ColorUIResource(0x87a09a);
+	  private final ColorUIResource fCONTROL_TEXT_COLOR = new ColorUIResource(0xeeffff);
+	  private final ColorUIResource fMENU_DISABLED_FOREGROUND = new ColorUIResource(0x87a09a);
 	  private final ColorUIResource fOCEAN_BLACK = new ColorUIResource(0x028ba8);
 	  private final ColorUIResource fOCEAN_DROP = new ColorUIResource(0x97ffff);
-	  private final ColorUIResource fBlack = new ColorUIResource(0x005261);
-	  private final ColorUIResource fWhite = new ColorUIResource(0x2ff4ff);
+	  private final ColorUIResource fBlack = new ColorUIResource(0x1d3b3b);
+	  private final ColorUIResource fWhite = new ColorUIResource(0xeeffff);
   }
 }
