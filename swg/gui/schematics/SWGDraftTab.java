@@ -75,6 +75,9 @@ import javax.swing.text.html.StyleSheet;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.jidesoft.swing.StyledLabel;
+import com.jidesoft.swing.StyledLabelBuilder;
+
 import swg.SWGAide;
 import swg.crafting.Quality;
 import swg.crafting.SWGWeights;
@@ -100,7 +103,6 @@ import swg.model.SWGCharacter;
 import swg.model.SWGNotes;
 import swg.model.SWGStation;
 import swg.tools.SpringUtilities;
-import swg.tools.ZHtml;
 import swg.tools.ZNumber;
 import swg.tools.ZStack;
 import swg.tools.ZString;
@@ -152,17 +154,17 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * A text label for the category and it parent category of a schematic.
      */
-    private JLabel draftCategory;
+    private StyledLabel draftCategory;
 
     /**
      * A label on which to display header data for a draft schematic.
      */
-    private JLabel draftData;
+    private StyledLabel draftData;
 
     /**
      * A list of labels that display experimentation groups with its data.
      */
-    private ArrayList<JLabel> draftExpGroups;
+    private ArrayList<StyledLabel> draftExpGroups;
 
     /**
      * A panel for the labels that display experimentation groups. The labels
@@ -174,7 +176,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * A label on which to display misc data for a draft schematic.
      */
-    private JLabel draftMisc;
+    private StyledLabel draftMisc;
 
     /**
      * The panel that displays the data for a draft schematic.
@@ -217,7 +219,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * A label on which to display the estimated time for a factory run.
      */
-    private JLabel factoryHours;
+    private StyledLabel factoryHours;
 
     /**
      * A dialog to add favorite schematic for a selected assignee.
@@ -342,7 +344,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * The list model for the used-in and find-result GUI component.
      */
-    private UsedInModel usedinAndFindModel;
+    private UsedInModel usedinAndFindModel;;
 
     /**
      * Creates an instance of this GUI component.
@@ -598,6 +600,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         if (fc > fact) factoryAmount.setValue(Integer.valueOf(fc));
 
         if (p != null) {
+        	schemTree.setExpandsSelectedPaths(true);
             schemTree.setSelectionPath(p);
             schemTree.scrollPathToVisible(p);
 
@@ -963,11 +966,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private void displayDraft(SWGSchematic schem) {
         draftTitle.setTitle(schem.getName());
-        draftCategory.setText(draftDataCategory(schem));
-        draftData.setText(draftData(schem));
+        StyledLabelBuilder.setStyledText(draftCategory, draftDataCategory(schem));
+        StyledLabelBuilder.setStyledText(draftData, draftData(schem));
         draftResAndComps(schem);
         draftExpGroups(schem);
-        draftMisc.setText(draftMisc(schem));
+        StyledLabelBuilder.setStyledText(draftMisc, draftMisc(schem));
         draftPanel.repaint();
     }
 
@@ -982,8 +985,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private void displayFactoryTime(SWGSchematic schem, int amount) {
         int sec = schem.getComplexity() * 8 * amount;
         if (sec <= 0) {
-            factoryHours.setText(String.format("<html>%s</html>",
-                    SWGSchematicTab.UNKNOWN));
+        	StyledLabelBuilder.setStyledText(factoryHours, SWGSchematicTab.UNKNOWN);
             return;
         }
 
@@ -1150,9 +1152,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @param labels the list to append labels to
      * @param number the amount of panels to to create and add
      */
-    private void draftAddExpLabels(List<JLabel> labels, int number) {
+    private void draftAddExpLabels(List<StyledLabel> labels, int number) {
         for (int i = labels.size(); i < number; ++i) {
-            JLabel l = makeLabel();
+        	StyledLabel l = makeLabel();
             labels.add(l);
             draftExpPanel.add(l);
         }
@@ -1180,20 +1182,22 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
     /**
      * Helper method which returns a string with data from the specified
-     * resource slot.
+     * component slot.
      * 
-     * @param slot a resource slot
-     * @return the data for the resource slot
+     * @param slot a component slot
+     * @return the data for the component slot
      */
     private String draftComp(SWGComponentSlot slot) {
         String d = slot.getDescription();
+        if(d == null) d = "Item";
+        String u = "{" + ZNumber.asText(slot.getAmount(), true, true) + ":b}";
         String i = draftCompIdentical(slot);
-        String n = draftCompName(slot);
+        String n = "{" + draftCompName(slot) + ":b}";
         String o = draftCompOptional(slot);
-        String s = String.format("<b>%s</b> %s<b>%s</b>%s",
-                ZNumber.asText(slot.getAmount(), true, true), i, n, o);
+        
+        String ret = d + "\n    " + u + " " + i + n + o;
 
-        return draftWidth(d, s);
+        return ret;
     }
 
     /**
@@ -1232,9 +1236,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             if (slot.getType().equals("item"))
                 ret = slot.getItemName();
             if (ret != null)
-                return "<b>" + ret + "</b>";
+                return ret;
         } catch (Exception e) {
-            return "<font color=\"red\"><b>Error</b></font>";
+            return "Error";
         }
         return SWGSchematicTab.stringOrUnknown(ret);
     }
@@ -1260,46 +1264,38 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @return the data of the schematic
      */
     private String draftData(SWGSchematic s) {
-        final String padd = "<td width=\"50\"></td>";
-
         String base = s.getBase();
         if( (s.isCustom() || s.getOverride()>0) && s.getServer()>0) {
         	SWGCGalaxy gxy = SWGCGalaxy.fromID(s.getServer());
         	base = s.getBase() + " - Server Specific for: " + gxy.getName();
         }
         String xp = (s.getSkillLevels().isEmpty()
-                || s.getSkillLevels().get(0).
-                        getLevel() < SWGProfessionLevel.MAX_LEVEL)
-                        ? String.format("align=\"right\">%s</td>%s",
-                                SWGSchematicTab.intOrUnknown(s.getXP()), padd)
-                        : "colspan=\"2\">n/a";
+                || s.getSkillLevels().get(0).getLevel() < SWGProfessionLevel.MAX_LEVEL)
+                        ? SWGSchematicTab.intOrUnknown(s.getXP())
+                        : "n/a";
 
         String crate = s.isManufacturable()
-                ? String.format("<tr><td>Crate size:</td>" +
-                        "<td align=\"right\">%s</td>%s</tr>",
-                        SWGSchematicTab.intOrUnknown(s.getCrateSize()), padd)
-                : "";
+                ? SWGSchematicTab.intOrUnknown(s.getCrateSize())
+                : "N/A";
 
         String quality = SWGSchematicsManager.isQuality(s)
                 || s.getExperimentGroups().size() > 0
-                ? String.format("<tr><td>Quality:</td>" +
-                        "<td align=\"right\">%s</td>%s</tr>",
-                        s.quality == Quality.UNKNOWN
-                                ? SWGSchematicTab.stringOrUnknown(null)
-                                : s.quality.getName(), padd)
-                : "";
+                ? s.quality == Quality.UNKNOWN
+                	? SWGSchematicTab.stringOrUnknown(null)
+                	: s.quality.getName()
+                : "N/A";
 
-        String str = String.format("<html><table cellpadding=\"0\">" +
-                "<tr><td>Complexity:</td>" +
-                "<td colspan=\"2\"><nobr>%s &minus; %s</nobr></td></tr>" +
-                "<tr valign=\"top\"><td>Level:</td>" +
-                "<td colspan=\"2\">%s</td></tr>" +
-                "<tr><td>Game Base:</td><td>%s</td></tr>" +
-                "<tr><td>Base XP:</td><td %s</td></tr>" +
-                "<tr><td>Type:</td><td colspan=\"2\">%s</td></tr>" +
-                "<tr><td>Manufacture: &nbsp;</td>" +
-                "<td align=\"right\">%s</td>%s</tr>"
-                + "%s %s</table><br/></html>",
+        String str = String.format("" +
+                "{Complexity\\::b} " +
+                "%s - %s\n" +
+                "{Level\\::b} " +
+                "%s\n" +
+                "{Game Base\\::b} %s\n" +
+                "{Base XP\\::b} %s\n" +
+                "{Type\\::b} %s\n" +
+                "{Manufacture\\::b} " +
+                "%s\n"
+                + "{Crate Size\\::b} %s\n{Quality\\::b} %s",
                 SWGSchematicTab.intOrUnknown(s.getComplexity()),
                 SWGSchematicTab.complexityToolStation(s.getComplexity()),
                 draftDataProLevels(s),
@@ -1308,7 +1304,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 draftDataType(s),
                 s.isManufacturable()
                         ? "yes"
-                        : "no", padd,
+                        : "no",
                 crate, quality);
         return str;
     }
@@ -1321,19 +1317,19 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @return a string for the category
      */
     private String draftDataCategory(SWGSchematic s) {
-        String err = "<html><font color=\"red\"><b>Error</b></font>, %s</html>";
+        String err = "{Error:b, f:red}";
         SWGCategory c = SWGSchematicsManager.getCategory(s.getCategory(), galaxy.getType());
         if (c == null)
-            return String.format(err, "");
+            return err;
         SWGCategory p = SWGSchematicsManager.getCategory(c.getParentID(),galaxy.getType());
         if (p == null)
-            return String.format(err, c.getName());
+            return err + " : " + c.getName();
 
         boolean fits = p.getName().length() + c.getName().length() + 2 < 38;
-        return String.format("<html>%s%s%s</html>",
+        return String.format("%s%s%s",
                 p.getName(), fits
                         ? ", "
-                        : "<br/>&mdash; ", c.getName());
+                        : "\n&mdash; ", c.getName());
     }
 
     /**
@@ -1353,15 +1349,13 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 z.app("Novice");
             else
                 z.app(p.getProfession().getName())
-                        .app("&nbsp;(").app(p.getLevel()).app(')');
-            z.app("<br/>");
+                        .app(" (").app(p.getLevel()).app(')');
         }
 
         if (s.getExpertise() != null)
             for (Object[] obj : s.getExpertise())
-                z.app(obj[1]).app("<br/>");
-
-        return z.sub(0, z.length() - 5);
+                z.app(obj[1]).app("\n");
+        return z.toString();
     }
 
     /**
@@ -1388,12 +1382,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     private String draftExpGroup(SWGExperimentGroup eGrp) {
         List<SWGExperimentLine> els = eGrp.getExperimentalLines();
         ZString z = new ZString();
-        z.app("<html><body style='background-color: transparent;'>");
         z.app(SWGSchematicTab.stringOrUnknown(eGrp.getDescription()));
         for (SWGExperimentLine el : els)
             draftExpLine(el, z);
 
-        return z.app("</body></html>").toString();
+        return z.toString();
     }
 
     /**
@@ -1411,7 +1404,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         len = 0;
         for (SWGExperimentGroup eg : egl) {
-            draftExpGroups.get(len).setText(draftExpGroup(eg));
+            StyledLabelBuilder.setStyledText(draftExpGroups.get(len), draftExpGroup(eg));
             ++len;
         }
         for (; len < draftExpGroups.size(); ++len)
@@ -1427,18 +1420,18 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private void draftExpLine(SWGExperimentLine eLine, ZString z) {
         SWGWeights w = eLine.getWeights();
-        z.app("<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+        z.app("\n     ");
         z.app(SWGSchematicTab.stringOrUnknown(eLine.getDescription()));
-        z.app("<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-        z.app("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>");
+        z.app("\n     ");
+        z.app("     ");
         boolean nf = false;
         for (Stat s : Stat.values())
             if (w.value(s) > 0) {
-                if (nf) z.app("&nbsp;&nbsp;&nbsp;&nbsp;");
+                if (nf) z.app("     ");
                 nf = true;
-                z.app(s.name()).app(' ').app(w.value(s)).app(' ').app('%');
+                z.app("{");
+                z.app(s.name()).app(' ').app(w.value(s)).app(' ').app("%:b}");
             }
-        z.app("</b>");
     }
 
     /**
@@ -1452,20 +1445,16 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private String draftMisc(SWGSchematic s) {
         String extra = SWGSchematicsManager.foodDrinkBuffs(s);
-        extra = extra != null
-                ? String.format(" &mdash; <b>Buffs</b>: %s", extra)
-                : "";
-
-        String i = s.getDescription() != null
-                ? ZHtml.wrapToWidth(DRAFT_WIDTH - 15, null,
-                        SWGGuiUtils.fontPlain(), s.getDescription())
-                : "Info: " + SWGSchematicTab.UNKNOWN;
-        return String.format(
-                "<html>&nbsp;<br/>%s%s<font color=#bbbbbb><br/>&mdash; " +
-                        "SWGAide-id:&nbsp;%s %s<br/>&nbsp;</font></html>",
-                i, extra, Integer.toString(s.getID()), s.hasScreenshot()
-                        ? ""
-                        : "&mdash; <font color=\"red\">add screenshot</font>");
+        extra = (extra != null) ? String.format("\n - {Buffs\\::b} %s", extra) : "";
+        String i = (s.getDescription() != null) ? s.getDescription() : "Info: " + SWGSchematicTab.UNKNOWN;
+        // wrap description if necessary
+        int w = ZString.fontWidth(i, SWGGuiUtils.fontPlain());
+        if (w >= DRAFT_WIDTH) {
+        	i = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), i);
+        }
+        String ret = "\n" + i + extra + "\n\n{-- SWGAide-id\\: " + Integer.toString(s.getID()) + " --:i, f:#bbbbbb}" ;
+        if (!s.hasScreenshot()) ret = ret + " {add screenshot:i, f:red}";
+        return ret;
     }
 
     /**
@@ -1477,11 +1466,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private String draftRes(SWGResourceSlot slot) {
         String d = slot.getDescription();
-        String s = String.format("<b>%s</b> units of&nbsp;<b> %s</b>",
-                ZNumber.asText(slot.getUnits(), true, true),
-                slot.getResourceClass().rcName());
-
-        return draftWidth(d, s);
+        String u = "{" + ZNumber.asText(slot.getUnits(), true, true) + ":b}";
+        String rc = "{" + slot.getResourceClass().rcName() + ":b}";
+        String ret = d + "\n    " + u + " units of " + rc;
+        
+        return ret;
     }
 
     /**
@@ -1515,29 +1504,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         }
         for (; len < draftRCLabels.size(); ++len)
             draftRCLabels.get(len).eraseContent();
-    }
 
-    /**
-     * Helper method which returns the specified strings so that the result is
-     * no wider than {@link #DRAFT_WIDTH}. This method formats the arguments for
-     * the resource and the component labels.
-     * 
-     * @param desc a description
-     * @param unitsAndContent a string with units and content
-     * @return a formatted string
-     */
-    private String draftWidth(String desc, String unitsAndContent) {
-        String s = unitsAndContent;
-        int clutter = 95; // for white spaces and HTML stuff
-        int w = ZHtml.fontWidth(s, SWGGuiUtils.fontPlain());
-        String f = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
-        if (w > DRAFT_WIDTH + clutter)
-            s = ZHtml.wrapToWidth(DRAFT_WIDTH + clutter,
-                        f + f, SWGGuiUtils.fontPlain(), s);
-
-        return String.format("<html><body style='background-color: transparent;'>%s<br/>%s%s</body></html>",
-                SWGSchematicTab.stringOrUnknown(desc), f, s);
     }
 
     /**
@@ -1731,7 +1698,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         innerBox.setOpaque(true);
 
         // the label for category
-        draftCategory = new JLabel() {
+        draftCategory = new StyledLabel() {
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(DRAFT_WIDTH, Math.round(32 * SWGGuiUtils.fontMultiplier()) );
@@ -1742,6 +1709,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         draftCategory.setFont(SWGGuiUtils.fontPlain());
         draftCategory.setBackground(null);
         draftCategory.setOpaque(false);
+        draftCategory.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerBox.add(draftCategory);
 
         innerBox.add(Box.createVerticalStrut(5));
@@ -1758,6 +1726,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                 draftRCPanel, BoxLayout.PAGE_AXIS));
         draftRCLabels = new ArrayList<RCLabel>(30);
         draftAddRCLabels(draftRCLabels, 10);
+        draftRCPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerBox.add(draftRCPanel);
 
         // a basic container for experimentation groups
@@ -1766,12 +1735,13 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         draftExpPanel.setBackground(null);
         draftExpPanel.setLayout(new BoxLayout(
                 draftExpPanel, BoxLayout.PAGE_AXIS));
-        draftExpGroups = new ArrayList<JLabel>(10);
+        draftExpGroups = new ArrayList<StyledLabel>(10);
         draftAddExpLabels(draftExpGroups, 5);
+        draftExpPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerBox.add(draftExpPanel);
 
         // a label for misc information that reads at the schematic
-        draftMisc = new JLabel() {
+        draftMisc = new StyledLabel() {
             @Override
             public Dimension getPreferredSize() {
                 return new Dimension(DRAFT_WIDTH,
@@ -1782,6 +1752,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         draftMisc.setFont(SWGGuiUtils.fontPlain());
         draftMisc.setBackground(null);
         draftMisc.setOpaque(false);
+        draftMisc.setAlignmentX(Component.LEFT_ALIGNMENT);
         innerBox.add(draftMisc);
 
         innerBox.add(Box.createVerticalGlue());
@@ -2124,8 +2095,8 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * 
      * @return a GUI component
      */
-    private JLabel makeLabel() {
-        JLabel l = new JLabel();
+    private StyledLabel makeLabel() {
+    	StyledLabel l = new StyledLabel();
         l.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
         l.setFont(SWGGuiUtils.fontPlain());
         l.setBackground(null);
@@ -2819,7 +2790,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
      *         Chimaera.Zimoon
      */
-    final class RCLabel extends JLabel {
+    final class RCLabel extends StyledLabel {
 
         /**
          * The slot that is displayed by this label, or {@code null}. This is an
@@ -2908,10 +2879,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             this.slot = !str.trim().isEmpty()
                     ? slot
                     : null;
-            setText(str);
-            if (slot instanceof SWGResourceSlot)
+            StyledLabelBuilder.setStyledText(this, str);
+            if (slot instanceof SWGResourceSlot) {
                 this.setBackground(UIManager.getColor("SWG.colorResource"));
-            else if (slot instanceof SWGComponentSlot) {
+                this.setToolTipText("Right Click for options");
+            } else if (slot instanceof SWGComponentSlot) {
                 SWGComponentSlot cs = (SWGComponentSlot) slot;
                 if (cs.getType().equals("item"))
                     this.setBackground(UIManager.getColor("SWG.colorItem"));

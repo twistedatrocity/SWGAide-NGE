@@ -1,5 +1,7 @@
 package swg.tools;
 
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.util.IllegalFormatException;
 import java.util.Locale;
 import java.util.regex.Pattern;
+
+import javax.swing.JLabel;
 
 
 /**
@@ -186,6 +190,34 @@ public final class ZString implements Serializable, Comparable<String> {
         return sb != null
                 ? sb.toString().hashCode()
                 : str.hashCode();
+    }
+    
+    /**
+     * Helper method which returns a FontMetric object.
+     * 
+     * @param font a font for the metrics, or {@code null}
+     * @return a font metric object
+     */
+    private static FontMetrics fontMetrics(Font font) {
+        JLabel l = new JLabel();
+        return l.getFontMetrics(font != null
+                ? font
+                : l.getFont());
+    }
+    
+    /**
+     * Determines the font width for the specified string and font. This method
+     * returns -1 if it fails to execute.
+     * 
+     * @param str a string
+     * @param font the font for the width
+     * @return a width, or -1
+     * @throws NullPointerException if the string is {@code null}
+     */
+    public static int fontWidth(String str, Font font) {
+        FontMetrics fm = fontMetrics(font);
+        if (fm != null) return fm.stringWidth(str);
+        return -1;
     }
 
     /**
@@ -429,5 +461,130 @@ public final class ZString implements Serializable, Comparable<String> {
         }
         return str;
     }
+    
+    /**
+     * This method returns the content of the specified text with no line
+     * logically wider than the specified width. The lines in the returned text
+     * is delimited by a newline {@literal \n}. If you need HTML line breaks
+     * then please use {@link ZHtml#wrapToWidth(int, String, Font, String...)}
+     * <p>
+     * If the specified filler is not {@code null} the filler is prepended to
+     * each new line but not to the first line. The width of the filler is not
+     * included in the specified width. The filler can for example be
+     * white space or something sensible.
+     * <p>
+     * For width it is the result from {@link FontMetrics#stringWidth(String)}
+     * for the specified font that is used. If the system does not support font
+     * metrics {@link #wrapToWidth(int, String, String...)} is invoked with the
+     * specified values, except that 15% of width is used for {@code max}, a
+     * value that corresponds to the number of characters for the specified
+     * width using a default font.
+     * <p>
+     * If font is {@code null} the default font from {@link JLabel#getFont()} is
+     * used for the font metric.
+     * <p>
+     * If several texts are suggested they are merged to
+     * one text with a white space between each element, the result is
+     * processed, and finally one string is returned.
+     * 
+     * @param width the maximum advance for a line
+     * @param filler filler that is prepended to each new line, or {@code null}
+     * @param font font for the font metric, or {@code null}
+     * @param text one or several texts to process
+     * @return the text split over the necessary number of lines
+     * @throws NullPointerException if a non-optional argument is {@code null}
+     * @throws IllegalArgumentException if the width if is <tt>width &le; 0</tt>
+     */
+    public static String wrapToWidth(
+            int width, String filler, Font font, String... text) {
+        if (width <= 0)
+            throw new IllegalArgumentException("Negative width: " + width);
 
+        FontMetrics fm = fontMetrics(font);
+
+        if (fm == null)
+            return wrapToWidth((int) (width * .15), filler, text);
+
+        StringBuilder sb = new StringBuilder(1024);
+        for (String s : text)
+            sb.append(s).append(' ');
+
+        String txt = sb.toString();
+        sb = new StringBuilder(txt.length() * 2);
+
+        int wsp = fm.charWidth(' ');
+        int len = 0;
+
+        String[] split = txt.split(" ");
+        for (String s : split) {
+            if (len + fm.stringWidth(s) > width) {
+                sb.append("\n");
+                if (filler != null)
+                    sb.append(filler);
+                len = 0;
+            } else {
+                sb.append(' ');
+                len += wsp;
+            }
+            sb.append(s);
+            len += fm.stringWidth(s);
+        }
+        return sb.toString();
+    }
+    
+    /**
+     * This method returns the content of the specified text with no more than
+     * the specified number of characters per line. The
+     * lines in the returned text is delimited by a newline {@literal \n}.
+     * <p>
+     * If the specified filler is not {@code null} the filler is prepended to
+     * each new line but not to the first line, no white space is added after
+     * the filler. The width of the filler is not included in the specified
+     * width. The filler can for example be white space
+     * or something sensible.
+     * <p>
+     * The specified width is the number of characters per line, the filler
+     * excluded. This may cause a jagged output if the current font is not fixed
+     * width and some lines have more wider characters than other lines do.
+     * <p>
+     * If the specified text contains HTML tags they are not treated specially,
+     * but as any other text. If several texts are suggested they are merged to
+     * one text with a white space between each element, the result is
+     * processed, and finally one string is returned.
+     * 
+     * @param max the maximum number of characters per line
+     * @param filler filler that is prepended to each new line, or {@code null}
+     * @param text one or several texts to process
+     * @return the text split over the necessary number of lines
+     * @throws NullPointerException if a non-optional argument is {@code null}
+     * @throws IllegalArgumentException if <tt>max &le; 0</tt>
+     */
+    public static String wrapToWidth(int max, String filler, String... text) {
+        if (max <= 0)
+            throw new IllegalArgumentException("Illegal max: " + max);
+
+        StringBuilder sb = new StringBuilder(1024);
+        for (String s : text)
+            sb.append(s).append(' ');
+
+        String txt = sb.toString();
+        sb = new StringBuilder(txt.length() * 2);
+
+        String[] split = txt.split(" ");
+        int len = 0;
+        for (String s : split) {
+            if (len + 1 + s.length() > max) {
+                sb.append("\n");
+                if (filler != null)
+                    sb.append(filler);
+                len = 0;
+            } else {
+                sb.append(' ');
+                ++len;
+            }
+            sb.append(s);
+            len += s.length();
+        }
+        return sb.toString();
+    }
 }

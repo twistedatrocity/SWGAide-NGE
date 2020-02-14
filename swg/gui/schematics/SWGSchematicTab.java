@@ -57,10 +57,10 @@ import swg.tools.ZNumber;
 public final class SWGSchematicTab extends JTabbedPane {
 
     /**
-     * A string constant with the text "UNKNOWN" in HTML code that makes it
-     * tinted red and in bold; the tags HTML themselves are not included.
+     * A string constant with the text "UNKNOWN" in StyledLabel code that makes it
+     * tinted red and in bold.
      */
-    final static String UNKNOWN = "<font color=\"red\"><b>UNKNOWN</b></font>";
+    final static String UNKNOWN = "{UNKNOWN:b, f:red}";
 
     /**
      * A dialog for managing schematics assignees. This member is {@code null}
