@@ -10,6 +10,8 @@ IDE), Subclipse (integrated subversion source control for Eclipse), connecting
 to SWGAide at SourceForge, and getting the SWGAide project started in Eclipse.
 Other equally good SVN-utilities for Eclipse exist and you can use whichever.
 
+## NOTE: you will need https://github.com/jidesoft/jide-oss/ libraries or SWGAide will not compile
+
 ## Download and Install your Java JDK: ##
 Download a recent JDK 8 from http://java.sun.com/javase/downloads/index.jsp
 and install. This will give you all the java development stuff you'll need to
