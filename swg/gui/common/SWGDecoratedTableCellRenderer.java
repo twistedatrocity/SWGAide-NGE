@@ -293,9 +293,11 @@ public class SWGDecoratedTableCellRenderer extends DefaultTableCellRenderer {
      */
     protected void myFont(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column, TableCellDecorations decor) {
-    	if(decor.value() instanceof Font) {
-    		Font f = (Font) decor.value();
-    		setFont(f);
+    	if(decor != null) {
+	    	if(decor.value() instanceof Font) {
+	    		Font f = (Font) decor.value();
+	    		setFont(f);
+	    	}
     	}
     }
 
