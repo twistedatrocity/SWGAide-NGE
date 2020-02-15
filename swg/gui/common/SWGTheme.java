@@ -134,20 +134,20 @@ public final class SWGTheme {
 		  aTable.put("Tree.dropCellBackground",  fOCEAN_DROP);
 		  aTable.put("List.dropCellBackground",  fOCEAN_DROP);
 		  // put SWGAide specific colors here. These used to be constants in SWGGuiUtils
-		  aTable.put("SWG.colorAlert",  new ColorUIResource(0xffcc66));
-		  aTable.put("SWG.colorCategory",  new ColorUIResource(0xfff0ff));
-		  aTable.put("SWG.colorComponent",  new ColorUIResource(0xedf6ff));
-		  aTable.put("SWG.colorDepleted",  new ColorUIResource(0x990099));
-		  aTable.put("SWG.colorItem",  new ColorUIResource(0xffffcc));
-		  aTable.put("SWG.colorLightGray",  new ColorUIResource(0xdddddd));
-		  aTable.put("SWG.colorNonHarvested",  new ColorUIResource(0xddddff));
-		  aTable.put("SWG.colorResource",  new ColorUIResource(0xf1ffe3));
-		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xcce0ff));
-		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
-		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x00ffff));
-		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xFF0000));
-		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
-		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x014709));
+		  aTable.put("SWG.colorAlert",  new Color(0xffcc66));
+		  aTable.put("SWG.colorCategory",  new Color(0xfff0ff));
+		  aTable.put("SWG.colorComponent",  new Color(0xedf6ff));
+		  aTable.put("SWG.colorDepleted",  new Color(0x990099));
+		  aTable.put("SWG.colorItem",  new Color(0xffffcc));
+		  aTable.put("SWG.colorLightGray",  new Color(0xdddddd));
+		  aTable.put("SWG.colorNonHarvested",  new Color(0xddddff));
+		  aTable.put("SWG.colorResource",  new Color(0xf1ffe3));
+		  aTable.put("SWG.colorThinBorder",  new Color(0xcce0ff));
+		  aTable.put("SWG.colorWarning",  new Color(0xffafaf));
+		  aTable.put("SWG.todaysCyan",  new Color(0x00ffff));
+		  aTable.put("SWG.benchBAD",  new Color(0xFF0000));
+		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new Color(0x014709));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -214,20 +214,20 @@ public final class SWGTheme {
 		  aTable.put("Tree.dropCellBackground",  fOCEAN_DROP);
 		  aTable.put("List.dropCellBackground",  fOCEAN_DROP);
 		  // put SWGAide specific colors here. These used to be constants in SWGGuiUtils
-		  aTable.put("SWG.colorAlert",  new ColorUIResource(0xffcc66));
-		  aTable.put("SWG.colorCategory",  new ColorUIResource(0xd8b5d8));
-		  aTable.put("SWG.colorComponent",  new ColorUIResource(0xb7c2ce));
-		  aTable.put("SWG.colorDepleted",  new ColorUIResource(0x990099));
-		  aTable.put("SWG.colorItem",  new ColorUIResource(0xe2e290));
-		  aTable.put("SWG.colorLightGray",  new ColorUIResource(0x555555));
-		  aTable.put("SWG.colorNonHarvested",  new ColorUIResource(0xababd6));
-		  aTable.put("SWG.colorResource",  new ColorUIResource(0xbed1aa));
-		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xcce0ff));
-		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
-		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x385252));
-		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xFF0000));
-		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
-		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x1cc530));
+		  aTable.put("SWG.colorAlert",  new Color(0xffcc66));
+		  aTable.put("SWG.colorCategory",  new Color(0xd8b5d8));
+		  aTable.put("SWG.colorComponent",  new Color(0xb7c2ce));
+		  aTable.put("SWG.colorDepleted",  new Color(0xef22ef));
+		  aTable.put("SWG.colorItem",  new Color(0xe2e290));
+		  aTable.put("SWG.colorLightGray",  new Color(0x555555));
+		  aTable.put("SWG.colorNonHarvested",  new Color(0xababd6));
+		  aTable.put("SWG.colorResource",  new Color(0xbed1aa));
+		  aTable.put("SWG.colorThinBorder",  new Color(0xcce0ff));
+		  aTable.put("SWG.colorWarning",  new Color(0xffafaf));
+		  aTable.put("SWG.todaysCyan",  new Color(0x385252));
+		  aTable.put("SWG.benchBAD",  new Color(0xFF0000));
+		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new Color(0x1cc530));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -250,7 +250,7 @@ public final class SWGTheme {
 	  private final ColorUIResource fSecondary1 = new ColorUIResource(0x555555);
 	  private final ColorUIResource fSecondary2 = new ColorUIResource(0x333333);
 	  private final ColorUIResource fSecondary3 = new ColorUIResource(0x191919);
-	  private final ColorUIResource fINACTIVE_CONTROL_TEXT_COLOR = new ColorUIResource(0xaaaaaa);
+	  private final ColorUIResource fINACTIVE_CONTROL_TEXT_COLOR = new ColorUIResource(0x666666);
 	  private final ColorUIResource fCONTROL_TEXT_COLOR = new ColorUIResource(0xcccccc);
 	  private final ColorUIResource fMENU_DISABLED_FOREGROUND = new ColorUIResource(0x666666);
 	  private final ColorUIResource fOCEAN_BLACK = new ColorUIResource(0xcccccc);
@@ -290,20 +290,20 @@ public final class SWGTheme {
 		  aTable.put("Tree.dropCellBackground",  fOCEAN_DROP);
 		  aTable.put("List.dropCellBackground",  fOCEAN_DROP);
 		// put SWGAide specific colors here. These used to be constants in SWGGuiUtils
-		  aTable.put("SWG.colorAlert",  new ColorUIResource(0xffcc66));
-		  aTable.put("SWG.colorCategory",  new ColorUIResource(0xd8b5d8));
-		  aTable.put("SWG.colorComponent",  new ColorUIResource(0xb7c2ce));
-		  aTable.put("SWG.colorDepleted",  new ColorUIResource(0x990099));
-		  aTable.put("SWG.colorItem",  new ColorUIResource(0xe2e290));
-		  aTable.put("SWG.colorLightGray",  new ColorUIResource(0x999999));
-		  aTable.put("SWG.colorNonHarvested",  new ColorUIResource(0xababd6));
-		  aTable.put("SWG.colorResource",  new ColorUIResource(0xbed1aa));
-		  aTable.put("SWG.colorThinBorder",  new ColorUIResource(0xc1efed));
-		  aTable.put("SWG.colorWarning",  new ColorUIResource(0xffafaf));
-		  aTable.put("SWG.todaysCyan",  new ColorUIResource(0x2ebdbd));
-		  aTable.put("SWG.benchBAD",  new ColorUIResource(0xfd2525));
-		  aTable.put("SWG.benchFAIR",  new ColorUIResource(0xFF8C00));
-		  aTable.put("SWG.benchGREAT",  new ColorUIResource(0x23e63a));
+		  aTable.put("SWG.colorAlert",  new Color(0xffcc66));
+		  aTable.put("SWG.colorCategory",  new Color(0xd8b5d8));
+		  aTable.put("SWG.colorComponent",  new Color(0xb7c2ce));
+		  aTable.put("SWG.colorDepleted",  new Color(0xef22ef));
+		  aTable.put("SWG.colorItem",  new Color(0xe2e290));
+		  aTable.put("SWG.colorLightGray",  new Color(0x999999));
+		  aTable.put("SWG.colorNonHarvested",  new Color(0xababd6));
+		  aTable.put("SWG.colorResource",  new Color(0xbed1aa));
+		  aTable.put("SWG.colorThinBorder",  new Color(0xc1efed));
+		  aTable.put("SWG.colorWarning",  new Color(0xffafaf));
+		  aTable.put("SWG.todaysCyan",  new Color(0x2ebdbd));
+		  aTable.put("SWG.benchBAD",  new Color(0xfd2525));
+		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
+		  aTable.put("SWG.benchGREAT",  new Color(0x23e63a));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
