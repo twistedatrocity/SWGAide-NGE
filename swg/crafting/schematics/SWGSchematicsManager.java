@@ -919,8 +919,10 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
     public static List<SWGSchematic> getSchematicsNull(SWGCGalaxy gxy) {
     	List<SWGSchematic> ret = new ArrayList<SWGSchematic>();
     	for(SWGSchematic s : schematics) {
-    		if(s.getBase().equals(gxy.getType())) {
-    			ret.add(s);
+    		if(s != null) {
+    			if(s.getBase().equals(gxy.getType())) {
+    				ret.add(s);
+    			}
     		}
     	}
     	
