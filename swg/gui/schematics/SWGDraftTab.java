@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -51,7 +50,6 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
@@ -62,12 +60,8 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
@@ -339,12 +333,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     /**
      * The GUI element for displaying used-in list and find results.
      */
-    private JList<SWGSchematic> usedinAndFind;
+    private JPanel usedinAndFind;
 
-    /**
-     * The list model for the used-in and find-result GUI component.
-     */
-    private UsedInModel usedinAndFindModel;;
+	private ArrayList<UILabel> draftUILabels;;
 
     /**
      * Creates an instance of this GUI component.
@@ -800,31 +791,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
     }
 
     /**
-     * Called when the user mouse-clicks the used-in list. This method displays
-     * a popup dialog with options for the list.
-     * 
-     * @param e the event that triggers the call
-     */
-    private void actionUsedin(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            JPopupMenu popup = new JPopupMenu();
-
-            JMenuItem copy = new JMenuItem("Copy");
-            copy.setToolTipText("Copy all to clip board");
-            copy.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ee) {
-                    copyToClipboard(usedinAndFindModel.getAsText());
-                }
-            });
-            copy.setEnabled(usedinAndFindModel.getSize() > 0);
-            popup.add(copy);
-
-            popup.show(usedinAndFind, e.getX(), e.getY());
-        }
-    }
-
-    /**
      * Helper method that sets preferred and maximum size for the component to
      * the specified dimension.
      * 
@@ -1138,8 +1104,17 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private void displayUsedIn(SWGSchematic schem) {
         List<SWGSchematic> used = usedIn(schem);
-        usedinAndFindModel.setElements(used);
-        usedinAndFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //usedinAndFindModel.setElements(used);
+        //usedinAndFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        int len = used.size() + 2;
+        draftAddUILabels(draftUILabels, len);
+        len = 0;
+        for (SWGSchematic s : used) {
+            draftUILabels.get(len).setContent(s.getName(), s);
+            ++len;
+        }
+        for (; len < draftUILabels.size(); ++len)
+            draftUILabels.get(len).eraseContent();
     }
 
     /**
@@ -1177,6 +1152,26 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             l.setOpaque(false);
             labels.add(l);
             draftRCPanel.add(l);
+        }
+    }
+    
+    /**
+     * Helper method which creates and appends labels for resources and
+     * components to the list and adds them to {@link #draftRCPanel}. The number
+     * of labels to create is {@code number - labels.size()}, if this difference
+     * is zero or less this method does nothing. The new labels are added by
+     * {@link List#add(Object)} and {@link JPanel#add(Component)}.
+     * 
+     * @param labels the list to append labels to
+     * @param number the amount of panels to to create and add
+     */
+    private void draftAddUILabels(List<UILabel> labels, int number) {
+        for (int i = labels.size(); i < number; ++i) {
+            UILabel l = new UILabel();
+            l.setBackground(null);
+            l.setOpaque(false);
+            labels.add(l);
+            usedinAndFind.add(l);
         }
     }
 
@@ -1538,7 +1533,16 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     "No Result", JOptionPane.WARNING_MESSAGE);
         else {
             Collections.sort(res);
-            usedinAndFindModel.setElements(res);
+            //usedinAndFindModel.setElements(res);
+            int len = res.size() + 2;
+            draftAddUILabels(draftUILabels, len);
+            len = 0;
+            for (SWGSchematic s : res) {
+                draftUILabels.get(len).setContent(s.getName(), s);
+                ++len;
+            }
+            for (; len < draftUILabels.size(); ++len)
+                draftUILabels.get(len).eraseContent();
         }
     }
 
@@ -1994,77 +1998,15 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                         BorderFactory.createEtchedBorder(),
                         "Used In ... / Find Result"),
                 BorderFactory.createEmptyBorder(6, 2, 2, 2)));
-
-        usedinAndFindModel = new UsedInModel();
-       usedinAndFind = new JList<SWGSchematic>(usedinAndFindModel);
-        usedinAndFind.setLayoutOrientation(JList.VERTICAL);
-
-        usedinAndFind.setCellRenderer(new ListCellRenderer<SWGSchematic>() {
-
-            JLabel label = new JLabel();
-
-            {
-                label.setFont(SWGGuiUtils.fontPlain());
-                label.setOpaque(true);
-            }
-
-            @Override
-            public Component getListCellRendererComponent(
-                    JList<? extends SWGSchematic> l, SWGSchematic val, int i, boolean sel, boolean focus) {
-
-                SWGSchematic schem = val;
-
-                label.setText(schem != null
-                        ? schem.getName()
-                        : null);
-
-                boolean directUse =
-                        schem == null || selectedSchematic == null
-                                ? false
-                                : usedInSlot(schem.getComponentSlots(),
-                                        selectedSchematic);
-
-                if (sel) {
-                    Color bg = usedinAndFind.getSelectionBackground();
-                    label.setBackground(directUse
-                            ? SWGGuiUtils.colorDarker(bg, 0.9f)
-                            : bg);
-                } else {
-                	MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
-                	if(theme.getName().contains("Dark")) {
-                		label.setForeground(directUse
-                                ? null
-                                : UIManager.getColor("SWG.colorComponent"));
-                	} else {
-	                    label.setBackground(directUse
-	                            ? null
-	                            : UIManager.getColor("SWG.colorComponent"));
-                	}
-                }
-                return label;
-            }
-        });
-
-        usedinAndFind.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIManager.getColor("SWG.colorThinBorder")),
-                BorderFactory.createEmptyBorder(2, 6, 2, 6)));
-
-        usedinAndFind.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int i = usedinAndFind.getSelectedIndex();
-                if (!e.getValueIsAdjusting() && i >= 0)
-                    actionSchematicSelected(usedinAndFindModel.getElementAt(i),
-                            traceForward, false);
-            }
-        });
-
-        usedinAndFind.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                actionUsedin(e);
-            }
-        });
+        usedinAndFind = new JPanel();
+        usedinAndFind.setOpaque(false);
+        usedinAndFind.setBackground(null);
+        usedinAndFind.setLayout(new BoxLayout(
+        		usedinAndFind, BoxLayout.PAGE_AXIS));
+        draftUILabels = new ArrayList<UILabel>(30);
+        draftAddRCLabels(draftRCLabels, 10);
+        usedinAndFind.setAlignmentX(Component.LEFT_ALIGNMENT);
+        sb.add(usedinAndFind);
         sb.add(usedinAndFind, BorderLayout.PAGE_START);
 
         return sb;
@@ -2894,6 +2836,95 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             }
         }
     }
+    
+    /**
+     * A helper type that displays data for the used in list
+     * 
+     * 
+     */
+    final class UILabel extends StyledLabel {
+
+        /**
+         * The slot that is displayed by this label, or {@code null}. This is an
+         * instance of {@link SWGResourceSlot} or {@link SWGComponentSlot}.
+         */
+        private Object slot;
+
+        /**
+         * Creates an instance of this type.
+         */
+        UILabel() {
+            this.setFont(SWGGuiUtils.fontPlain());
+            this.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+            this.setBackground(null);
+            this.addMouseListener(new MouseAdapter() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (slot instanceof SWGSchematic) {
+                    	SWGSchematic cs = (SWGSchematic) slot;
+                    	SWGSchematic s = SWGSchematicsManager.getSchematic(cs.getID());
+                    	actionSchematicSelected(s, traceForward, false);
+                    }
+                    setOpaque(false);
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    if (slot != null) {
+                        setOpaque(true);
+                        setForeground(Color.BLACK);
+                        setCursor(new Cursor(Cursor.HAND_CURSOR));
+                        repaint();
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    if (slot != null) {
+                        setOpaque(false);
+                        setForeground(UIManager.getColor("TextArea.foreground"));
+                        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                        repaint();
+                    }
+                }
+            });
+        }
+
+        /**
+         * Removes the content displayed at this label; the displayed slot and
+         * the displayed text are set to {@code null}.
+         */
+        void eraseContent() {
+            slot = null;
+            setText(null);
+        }
+
+        /**
+         * Sets the specified text at this label and updates the reference for
+         * the specified slot. The slot must be an instance of
+         * {@link SWGResourceSlot} or {@link SWGComponentSlot}.
+         * <p>
+         * <b>Special case</b>: To clear the content but let this component
+         * retain a size at the GUI the string argument must be a white space
+         * and the slot must be cleared; set both arguments to a white space.
+         * 
+         * @param str the string to set
+         * @param slot the slot to display information for
+         * @throws NullPointerException if an argument is {@code null}
+         */
+        void setContent(String str, Object slot) {
+            if (str == null || slot == null)
+                throw new NullPointerException("An argument is null");
+
+            this.slot = !str.trim().isEmpty()
+                    ? slot
+                    : null;
+            StyledLabelBuilder.setStyledText(this, str);
+            this.setBackground(UIManager.getColor("SWG.colorComponent"));
+            this.setToolTipText("Click to go to schematic");
+        }
+    }
 
     /**
      * The model for the schematic selector which is a combo-box. In particular,
@@ -3099,71 +3130,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
                 push(node); // always safe, new or same trace alike
             }
-        }
-    }
-
-    /**
-     * This type is the model for the content at the used-in and find-result GUI
-     * component.
-     * 
-     * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
-     *         Chimaera.Zimoon
-     */
-    final class UsedInModel extends AbstractListModel<SWGSchematic> {
-
-        /**
-         * The list of schematics for this model.
-         */
-        private SWGSchematic[] elements;
-
-        /**
-         * Returns the elements of this model as string, each element per line.
-         * The returned string is the names of the displayed schematics, or an
-         * empty string.
-         * 
-         * @return the content
-         */
-        ZString getAsText() {
-            if (elements == null || elements.length <= 0) return ZString.EMPTY;
-
-            ZString z = new ZString();
-            for (int i = 0; i < elements.length; ++i)
-                z.appnl(elements[i].getName());
-
-            return z;
-        }
-
-        @Override
-        public SWGSchematic getElementAt(int index) {
-            if (elements != null)
-                return elements[index];
-
-            return null;
-        }
-
-        @Override
-        public int getSize() {
-            if (elements != null)
-                return elements.length;
-
-            return 0;
-        }
-
-        /**
-         * Sets the specified list of schematics as the content for this model.
-         * It is a copy of the specified argument that is used.
-         * 
-         * @param elems a list of schematics
-         * @throws NullPointerException if the argument is {@code null}
-         */
-        void setElements(List<SWGSchematic> elems) {
-            int old = this.getSize();
-            old = old > 0
-                    ? old - 1
-                    : 0;
-            elements = elems.toArray(new SWGSchematic[elems.size()]);
-            usedinAndFind.removeSelectionInterval(0, old);
-            fireContentsChanged(this, 0, old);
         }
     }
 }
