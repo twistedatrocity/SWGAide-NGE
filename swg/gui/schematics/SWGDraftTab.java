@@ -1019,7 +1019,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      * @param count the selected amount
      */
     private void displayShoppingList(SWGSchematic schem, int count) {
-        //String f = "<font face=\"arial,sans-serif\" size=\"-1\">";
         String err = "<font color=\"red\"><b>ERROR</b></font>";
         List<ResourceAmount> ral = shoppingResourcesSorted(schem);
         ZString z = new ZString();
@@ -1104,8 +1103,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private void displayUsedIn(SWGSchematic schem) {
         List<SWGSchematic> used = usedIn(schem);
-        //usedinAndFindModel.setElements(used);
-        //usedinAndFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         int len = used.size() + 2;
         draftAddUILabels(draftUILabels, len);
         len = 0;
@@ -1533,7 +1530,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
                     "No Result", JOptionPane.WARNING_MESSAGE);
         else {
             Collections.sort(res);
-            //usedinAndFindModel.setElements(res);
             int len = res.size() + 2;
             draftAddUILabels(draftUILabels, len);
             len = 0;
@@ -1887,8 +1883,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         Dimension d = new Dimension(110, 23);
         bp.add(factoryAmount);
 
-        // vb.add(Box.createHorizontalStrut(20));
-
         JLabel hl = new JLabel("Estimated time: ");
         bp.add(hl);
         factoryHours = makeLabel();
@@ -1942,7 +1936,6 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         StyleSheet styleSheet = kit.getStyleSheet();
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
-        //StyleConstants.setBackground(style, UIManager.getColor("TextArea.background"));
         StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
 
         shoppingList.getInputMap().put(
@@ -2846,7 +2839,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
 
         /**
          * The slot that is displayed by this label, or {@code null}. This is an
-         * instance of {@link SWGResourceSlot} or {@link SWGComponentSlot}.
+         * instance of {@link SWGSchematic}.
          */
         private Object slot;
 
@@ -2903,7 +2896,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         /**
          * Sets the specified text at this label and updates the reference for
          * the specified slot. The slot must be an instance of
-         * {@link SWGResourceSlot} or {@link SWGComponentSlot}.
+         * {@link SWGSchematic}.
          * <p>
          * <b>Special case</b>: To clear the content but let this component
          * retain a size at the GUI the string argument must be a white space
