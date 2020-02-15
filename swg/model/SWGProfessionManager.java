@@ -254,9 +254,10 @@ public final class SWGProfessionManager  {
         if (level <= 0 || level > SWGProfessionLevel.MAX_LEVEL)
             throw new IllegalArgumentException("Invalid level: " + level);
 
-        for (SWGProfessionLevel sl : levels.values())
-            if (sl.getProfession() == prof && sl.getLevel() == level)
+        for (SWGProfessionLevel sl : levels.values()) {
+            if (sl.getProfession().getName().equals(prof.getName()) && sl.getLevel() == level)
                 return sl;
+        }
 
         return null;
     }

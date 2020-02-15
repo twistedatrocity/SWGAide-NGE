@@ -137,6 +137,8 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
      */
     private final String title;
 
+	private String type;
+
     /**
      * Private helper constructor which creates a profession level instance
      * "Novice" for level 0, all other members have default values.
@@ -154,6 +156,7 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
         abilities = null;
         attributes = null;
         profession = SWGProfession.getFromID(SWGProfession.ALL);
+        type = profession.getType();
         rewards = null;
         skills = null;
         title = null;
@@ -183,6 +186,7 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
     public SWGProfessionLevel(SWGProfession profession, Element xml) {
 
         this.profession = profession;
+        type = profession.getType();
         name = ZXml.stringFromAttr(xml, "name");
         level = ZXml.intFromAttr(xml, "level");
 
@@ -276,6 +280,10 @@ public final class SWGProfessionLevel implements Comparable<SWGProfessionLevel> 
      */
     public SWGProfession getProfession() {
         return profession;
+    }
+    
+    public String getType() {
+    	return type;
     }
 
     /**

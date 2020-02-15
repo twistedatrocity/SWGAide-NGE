@@ -267,6 +267,9 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
             throw new NullPointerException("Schematic name is null: "
                     + xml.toString());
 
+        if(name.contains("Xantha")) {
+        	SWGAide.printDebug(Thread.currentThread().getName(), 9, "parseschems  Data: " + xml);
+        }
         id = ZXml.intFromAttr(xml, "id");
         if (id <= 0)
             throw new IllegalArgumentException(String.format(
@@ -575,7 +578,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
     public List<SWGProfessionLevel> getSkillLevels() {
         if (skillLevels == null)
             return Collections.emptyList();
-        if (profList == null) {
+        if (profList == null || profList.isEmpty()) {
             profList = new ArrayList<SWGProfessionLevel>(skillLevels.length);
             for (int i = 0; i < skillLevels.length; ++i) {
                 SWGProfessionLevel pl = null;
@@ -698,8 +701,10 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         // <level profession="" level=""/>
         int pid = ZXml.intFromAttr(xml, "profession");
         SWGProfession p = pid < 0
-                ? null
+                ? SWGProfession.getFromName("Unknown")
                 : SWGProfession.getFromID(pid);
+        
+        if (pid <0) return new Object[] { p, 1 };
         int lvl = ZXml.intFromAttr(xml, "level");
         Integer l = Integer.valueOf(lvl);
         return new Object[] { p, l };

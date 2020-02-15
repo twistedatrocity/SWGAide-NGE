@@ -1321,7 +1321,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         return String.format("%s%s%s",
                 p.getName(), fits
                         ? ", "
-                        : "\n&mdash; ", c.getName());
+                        : "\n - ; ", c.getName());
     }
 
     /**
