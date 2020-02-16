@@ -1437,10 +1437,11 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
      */
     private String draftMisc(SWGSchematic s) {
         String extra = SWGSchematicsManager.foodDrinkBuffs(s);
-        extra = (extra != null) ? String.format("\n - {Buffs\\::b} %s", extra) : "";
+        extra = (extra != null) ? String.format("\n\n - {Buffs\\::b} %s", extra) : "";
         String i = (s.getDescription() != null) ? s.getDescription() : "Info: " + SWGSchematicTab.UNKNOWN;
         // wrap description if necessary
         int w = ZString.fontWidth(i, SWGGuiUtils.fontPlain());
+        extra = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), extra);
         if (w >= DRAFT_WIDTH) {
         	i = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), i);
         }
