@@ -1348,7 +1348,7 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
             for (Object[] obj : s.getExpertise())
                 z.app(obj[1]).app("\n");
 
-        String ret = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), z.toString());
+        String ret = ZString.wrapToWidth(DRAFT_WIDTH - 22, null, SWGGuiUtils.fontPlain(), z.toString());
 
         return ret;
     }
@@ -1444,9 +1444,9 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         String i = (s.getDescription() != null) ? s.getDescription() : "Info: " + SWGSchematicTab.UNKNOWN;
         // wrap description if necessary
         int w = ZString.fontWidth(i, SWGGuiUtils.fontPlain());
-        extra = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), extra);
+        extra = ZString.wrapToWidth(DRAFT_WIDTH - 30, null, SWGGuiUtils.fontPlain(), extra);
         if (w >= DRAFT_WIDTH) {
-        	i = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), i);
+        	i = ZString.wrapToWidth(DRAFT_WIDTH - 30, null, SWGGuiUtils.fontPlain(), i);
         }
         String ret = "\n" + i + extra + "\n\n{-- SWGAide-id\\: " + Integer.toString(s.getID()) + " --:i, f:#bbbbbb}" ;
         if (!s.hasScreenshot()) ret = ret + " {add screenshot:i, f:red}";
