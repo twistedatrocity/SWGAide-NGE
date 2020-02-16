@@ -220,7 +220,7 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorDepleted",  new Color(0xef22ef));
 		  aTable.put("SWG.colorItem",  new Color(0xe2e290));
 		  aTable.put("SWG.colorLightGray",  new Color(0x555555));
-		  aTable.put("SWG.colorNonHarvested",  new Color(0xababd6));
+		  aTable.put("SWG.colorNonHarvested",  new Color(0x7f7ffa));
 		  aTable.put("SWG.colorResource",  new Color(0xbed1aa));
 		  aTable.put("SWG.colorThinBorder",  new Color(0xcce0ff));
 		  aTable.put("SWG.colorWarning",  new Color(0xffafaf));
@@ -296,7 +296,7 @@ public final class SWGTheme {
 		  aTable.put("SWG.colorDepleted",  new Color(0xef22ef));
 		  aTable.put("SWG.colorItem",  new Color(0xe2e290));
 		  aTable.put("SWG.colorLightGray",  new Color(0x999999));
-		  aTable.put("SWG.colorNonHarvested",  new Color(0xababd6));
+		  aTable.put("SWG.colorNonHarvested",  new Color(0x7f7ffa));
 		  aTable.put("SWG.colorResource",  new Color(0xbed1aa));
 		  aTable.put("SWG.colorThinBorder",  new Color(0xc1efed));
 		  aTable.put("SWG.colorWarning",  new Color(0xffafaf));
