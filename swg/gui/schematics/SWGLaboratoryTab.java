@@ -10,14 +10,18 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -25,6 +29,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -63,6 +68,8 @@ import swg.crafting.Stat;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceSet;
+import swg.crafting.schematics.SWGExperimentGroup;
+import swg.crafting.schematics.SWGExperimentLine;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
@@ -194,6 +201,32 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private volatile SWGKnownResource selectedResource;
 
+	/**
+	 * A map containing exp groups for the filter. LinkHashedSet is used so no duplicates
+	 */
+	private Map<String, SWGExperimentGroup> expGroups;
+
+	/**
+	 * ArrayList containing filtered exp groups
+	 */
+	private ArrayList<SWGExperimentGroup> expGroupsFiltered;
+
+	/**
+	 * The primary outer panel containing the exp filter checkboxes
+	 */
+	private JPanel filterPanel;
+
+	/**
+	 * A list of checkboxes for exp group filtering.
+	 * Lives inside {@link filterBox}
+	 */
+	private ArrayList<EFilter> filterCheckboxes;
+
+	/**
+	 * The box inside {@link filterPanel} containing the check boxes
+	 */
+	private Box filterBox;
+
     /**
      * Creates an instance of this GUI element. This constructor creates just a
      * stub of this type, its content is complemented lazily on demand.
@@ -213,6 +246,25 @@ final class SWGLaboratoryTab extends JPanel {
         });
     }
 
+    /**
+     * Helper method which creates and appends checkboxes {link @EFilter} for
+     * filtering exp groups and adds them to {@link #filterBox}. The number
+     * of checkboxes to create is {@code number - labels.size()}, if this difference
+     * is zero or less this method does nothing. The new checkboxes are added by
+     * {@link List#add(Object)} and {@link Box#add(EFilter)}.
+     * 
+     * @param labels the list to append checkboxes to
+     * @param number the amount of checkboxes to to create and add
+     */
+    private void addFilterCheckboxes(List<EFilter> labels, int number) {
+        for (int i = labels.size(); i < number; ++i) {
+            EFilter l = new EFilter();
+            l.setSelected(true);
+            labels.add(l);
+            filterBox.add(l);
+        }
+    }
+    
     /**
      * Called when the user mouse clicks at the assignee chooser. This method,
      * if it is a right-click it displays a popup menu.
@@ -262,11 +314,28 @@ final class SWGLaboratoryTab extends JPanel {
         Collections.sort(sl);
         actionPopulateSchematics(sl);
     }
-
+    
     /**
-     * Called when the user selects an element at the inventory table. This
+     * Called when user clicks a filter checkbox
+     * 
+     */
+    private void actionFilter() {
+    	for (EFilter b : filterCheckboxes) {
+    		if(b.getText() != null) {
+    			if(b.isSelected() && expGroupsFiltered.size() <2) {
+    				b.setEnabled(false);
+    			} else {
+    				b.setEnabled(true);
+    			}
+    		}
+    	}
+    	actionInventorySelected();
+    	
+    }
+    /**
+     * Called when the user selects a schematic This
      * method updates the notes field with possible notes for the selected
-     * entry.
+     * entry and also updates the resource table.
      */
     private void actionInventorySelected() {
         SWGSchematicWrapper w = getSelectedWrapper();
@@ -282,8 +351,32 @@ final class SWGLaboratoryTab extends JPanel {
         if (w != null) {
             SWGResourceSet spawn = SWGSchemController.spawning();
             List<SWGInventoryWrapper> inv = SWGSchemController.inventory();
-            SWGExperimentWrapper.refresh(w.experiments(), spawn, inv);
-            resourceModel.setElements(w.experiments());
+            List<SWGExperimentWrapper> ew = w.experiments();
+            List<SWGExperimentWrapper> fw = new ArrayList<SWGExperimentWrapper>();
+            SWGExperimentWrapper.refresh(ew, spawn, inv);
+            if(expGroups.size() > 1) {
+            	for (SWGExperimentWrapper wr : ew) {
+            		for (SWGExperimentGroup g : expGroupsFiltered) {
+            			if(wr.getName().equals(g.getDescription()) && !fw.contains(wr)) {
+            				fw.add(wr);
+            			}
+            			for (SWGExperimentLine wl : wr.expLines()) {
+            				if(wl != null) {
+            					for (SWGExperimentLine l : g.getExperimentalLines() ) {
+            						if(wl.getDescription().equals(l.getDescription()) && !fw.contains(wr)) {
+            							fw.add(wr);
+            						}
+            					}
+            				}
+            			}
+            		}
+            	}
+            }
+            if(fw.isEmpty()) {
+            	resourceModel.setElements(ew);
+            } else {
+            	resourceModel.setElements(fw);
+            }
         } else
             resourceModel.setElements(null);
     }
@@ -451,6 +544,27 @@ final class SWGLaboratoryTab extends JPanel {
 
         if (s != null) {
             List<SWGSchematicWrapper> wl = SWGSchemController.wrappers(s);
+            expGroups = new LinkedHashMap<String, SWGExperimentGroup>();
+            expGroupsFiltered = new ArrayList<SWGExperimentGroup>();
+            if(s.quality.getName().contains("HQ") || s.quality.getName().contains("mixed")) {
+            	for (SWGSchematicWrapper w : wl) {
+            		w.schem().getExperimentGroups();
+            		for (SWGExperimentGroup eg : w.schem().getExperimentGroups() ) {
+            			expGroups.put(eg.getDescription(), eg);
+            		}
+            	}
+            }
+            if(!expGroups.isEmpty()) {
+            	expGroups.forEach( (g,v) -> {
+            		expGroupsFiltered.add(v);
+            	});
+            }
+            filterPanel.setVisible(false);
+            if(expGroups.size()>1) {
+            	filterPanel.setVisible(true);
+            	displayFilters();
+            	filterPanel.repaint();
+            }
             ((InventoryModel) inventory.getModel()).setElements(wl);
 
             // set default wrapper
@@ -516,6 +630,31 @@ final class SWGLaboratoryTab extends JPanel {
         popup.show(schematicList, e.getX(), e.getY());
     }
 
+    /**
+     * Helper method which updates the checkboxes in {@link #filterCheckboxes} for the
+     * specified schematic; {@link #addFilterCheckboxes(List, int)} is invoked to
+     * ensure enough checkboxes exist; unused checkboxes are emptied but not removed.
+     * 
+     */
+    private void displayFilters() {
+        int len = expGroups.size() + 2;
+        addFilterCheckboxes(filterCheckboxes, len);
+        AtomicInteger i = new AtomicInteger();
+        i.set(0);
+        expGroups.forEach( (k, g) -> {
+        	if(g.getDescription() != null) {
+        		filterCheckboxes.get(i.get()).setContent(g.getDescription(), g);
+        	} else {
+        		filterCheckboxes.get(i.get()).eraseContent();
+        	}
+            i.incrementAndGet();
+        });
+        len = i.get();
+        for (; len < filterCheckboxes.size(); ++len)
+            filterCheckboxes.get(len).eraseContent();
+
+    }
+    
     /**
      * Helper method which displays a find dialog. This is the starting point
      * for the user to find schematics with a given text string in their names.
@@ -877,10 +1016,23 @@ final class SWGLaboratoryTab extends JPanel {
     private Component makeNorthCenter() {
         Box vb = Box.createVerticalBox();
         vb.add(makeNorthCenterInv());
+        vb.add(Box.createVerticalStrut(5));
+        vb.add(makeNorthCenterFilter());
+        vb.add(Box.createVerticalStrut(5));
         vb.add(makeNorthCenterButts());
         return vb;
     }
+    
+    private Component makeNorthCenterFilter() {
+    	filterPanel = new JPanel(new BorderLayout());
+    	filterPanel.setBorder(BorderFactory.createTitledBorder("Experiment Groups Filter"));
+    	filterBox = Box.createVerticalBox();
+    	filterCheckboxes = new ArrayList<EFilter>(5);
+    	addFilterCheckboxes(filterCheckboxes, 5);
+    	filterPanel.add(filterBox);
 
+    	return filterPanel;
+    }
     /**
      * Helper method which creates and returns a GUI element for the north
      * panel. This element contains some buttons for this type.
@@ -1184,7 +1336,80 @@ final class SWGLaboratoryTab extends JPanel {
         SWGSchematic s = schematicList.getSelectedValue();
         popup.add(schemTab.schematicSelectMenu(s, this));
     }
+    
+    /**
+     * A helper type that displays data for the Experimentation Filter Panel
+     * Extends {@link JCheckBox}
+     * 
+     */
+    final class EFilter extends JCheckBox {
 
+        /**
+         * The slot that is displayed by this filter, or {@code null}. This is an
+         * instance of {@link SWGExperimentGroup}.
+         */
+        private Object slot;
+        
+
+        /**
+         * Creates an instance of this type.
+         * @return 
+         */
+        EFilter() {
+        	this.addItemListener(new ItemListener() {
+        		@Override
+        		public void itemStateChanged(ItemEvent ie) {
+        			if (slot instanceof SWGExperimentGroup) {
+                    	if(isSelected()) {
+                    		expGroupsFiltered.add((SWGExperimentGroup) slot);
+                    	} else {
+                    		expGroupsFiltered.remove((SWGExperimentGroup) slot);
+                    	}
+                    	actionFilter();
+                    }
+        		}
+        	});
+        }
+
+        /**
+         * Removes the content displayed at this filter; the displayed slot and
+         * the displayed text are set to {@code null}.
+         */
+        void eraseContent() {
+            slot = null;
+            setText(null);
+            this.setSelected(false);
+            setEnabled(false);
+            setVisible(false);
+        }
+
+        /**
+         * Sets the specified text at this filter and updates the reference for
+         * the specified slot. The slot must be an instance of
+         * {@link SWGExperimentGroup}.
+         * <p>
+         * <b>Special case</b>: To clear the content but let this component
+         * retain a size at the GUI the string argument must be a white space
+         * and the slot must be cleared; set both arguments to a white space.
+         * 
+         * @param str the string to set
+         * @param slot the group to display information for
+         * @throws NullPointerException if an argument is {@code null}
+         */
+        void setContent(String str, Object slot) {
+            if (str == null || slot == null)
+                throw new NullPointerException("An argument is null");
+
+            this.slot = !str.trim().isEmpty()
+                    ? slot
+                    : null;
+            this.setText(str);
+            this.setSelected(true);
+            this.setEnabled(true);
+            this.setVisible(true);
+        }
+    }
+    
     /**
      * A helper type that contains two references, an experiment wrapper and a
      * resource that pertains to the wrapper. See comments for the members.
