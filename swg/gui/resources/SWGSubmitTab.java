@@ -50,6 +50,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.text.AbstractDocument;
 
 import swg.SWGAide;
@@ -1412,7 +1414,12 @@ final class SWGSubmitTab extends JPanel {
         galaxyDisplay = new JLabel();
         galaxyDisplay.setHorizontalAlignment(SwingConstants.CENTER);
         galaxyDisplay.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-        galaxyDisplay.setBackground(new Color(255, 255, 153));
+        MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+        if(theme.getName().contains("Dark")) {
+        	galaxyDisplay.setForeground(new Color(255, 255, 153));
+        } else {
+        	galaxyDisplay.setBackground(new Color(255, 255, 153));
+        }
         galaxyDisplay.setOpaque(true);
         middlePanel.add(galaxyDisplay);
 
