@@ -1347,7 +1347,10 @@ class SWGDraftTab extends JSplitPane implements ClipboardOwner {
         if (s.getExpertise() != null)
             for (Object[] obj : s.getExpertise())
                 z.app(obj[1]).app("\n");
-        return z.toString();
+
+        String ret = ZString.wrapToWidth(DRAFT_WIDTH - 20, null, SWGGuiUtils.fontPlain(), z.toString());
+
+        return ret;
     }
 
     /**
