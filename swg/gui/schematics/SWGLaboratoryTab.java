@@ -798,7 +798,7 @@ final class SWGLaboratoryTab extends JPanel {
                     w.notes(notesField.getText());
                     notesFieldIsEdited = false;
                     notesField.setForeground(Color.BLACK);
-                    schemTab.frame.putToStatbar("Saved schematic notes");
+                    schemTab.frame.putToStatbar("Saved schematic notes",null);
                 }
             };
         return actionNotesSave;

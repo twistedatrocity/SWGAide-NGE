@@ -990,7 +990,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
                     statFieldsEditable(mr.rc(), false);
                 }
                 lookupButton.setEnabled(false);
-                SWGAide.frame().putToStatbar("Lookup finished");
+                SWGAide.frame().putToStatbar("Lookup finished",null);
                 amount.requestFocusInWindow();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(galaxyList,

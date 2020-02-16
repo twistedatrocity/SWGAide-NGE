@@ -1185,7 +1185,7 @@ public final class SWGInventoryTab extends JPanel {
                     e.getCause(), e.getMessage()), "File error");
             return Collections.emptyList();
         } finally {
-            frame.putToStatbar(null);
+            frame.putToStatbar(null,null);
             sr.close();
         }
     }
@@ -1238,7 +1238,7 @@ public final class SWGInventoryTab extends JPanel {
 
         try {
             ++importCounter;
-            frame.putToStatbar(null);
+            frame.putToStatbar(null,null);
 
             String[] splitted = ZCSV.parse(
                     line, jnf
@@ -1265,7 +1265,7 @@ public final class SWGInventoryTab extends JPanel {
                     frame.putToStatbar(String.format(
                             "%s(%s) - Lookup ID = %s",
                             Integer.toString(importCounter),
-                            Integer.toString(importLines), Long.toString(id)));
+                            Integer.toString(importLines), Long.toString(id)),null);
                     res = SWGResourceManager.getInstance(id);
                     if (res == null) {
                         //throw new IllegalArgumentException("Invalid ID column");
@@ -1394,7 +1394,7 @@ public final class SWGInventoryTab extends JPanel {
                                 "%s(%s) - Lookup %s @ %s",
                                 Integer.toString(importCounter),
                                 Integer.toString(importLines),
-                                name, gxy.getName()));
+                                name, gxy.getName()),null);
 
                         res = SWGResourceManager.getInstance(name, gxy);
                     } // gxy + recycled
@@ -1688,7 +1688,7 @@ public final class SWGInventoryTab extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             
             public void run() {
-                frame.putToStatbar("Done");
+                frame.putToStatbar("Done",null);
                 frame.putToLogbar_2(null);
                 frame.progressBar.setIndeterminate(false);
 

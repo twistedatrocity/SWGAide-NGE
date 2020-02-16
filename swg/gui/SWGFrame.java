@@ -67,6 +67,10 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
+
+import com.jidesoft.swing.StyledLabel;
+import com.jidesoft.swing.StyledLabelBuilder;
+
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 
@@ -278,7 +282,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
     /**
      * The status log bar
      */
-    private JLabel statLog = null;
+    private StyledLabel statLog = null;
 
     /**
      * The main tabbed main pane, used by all application logic
@@ -959,7 +963,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         logs.setLayout(lyt);
         logs.setBorder(BorderFactory.createLoweredBevelBorder());
 
-        statLog = new JLabel("   ");
+        statLog = new StyledLabel("   ");
         final Timer timer = new Timer(3000, new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
@@ -993,7 +997,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         pane.add(bottomLogbar, BorderLayout.PAGE_END);
 
         if (firstTime)
-            putToStatbar("Welcome");
+            putToStatbar("Welcome",null);
     }
 
     /**
@@ -1156,7 +1160,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         } else {
             populateTabPane(step);
             putToLogbar_2(null);
-            putToStatbar(null);
+            putToStatbar(null,null);
         }
     }
 
@@ -1418,16 +1422,26 @@ public class SWGFrame extends JFrame implements ComponentListener,
      * @param text
      *            the text to display at the status bar
      */
-    public void putToStatbar(final String text) {
+    public void putToStatbar(final String text, Color color) {
         if (statLog == null)
             return;
+        
+        if(color == null) {
+        	color = UIManager.getColor("TextArea.foreground");
+        }
+        String c = SWGGuiUtils.toHexString(color);
         SwingUtilities.invokeLater(new Runnable() {
 
             
             @Override
             public void run() {
-                if (text == null) statLog.setText("   ");
-                else statLog.setText(text);
+                if (text == null) {
+                	statLog.setText("   ");
+                	
+                } else {
+                	statLog.setText(text);
+                	StyledLabelBuilder.setStyledText(statLog, "{" + text + ":b, f:" + c + "}");
+                }
                 statLog.repaint();
                 ((Timer) statLog.getClientProperty(statLog.getName())).restart();
             }
@@ -1651,7 +1665,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         Timer timer = new Timer(10 * 60 * 1000, new AbstractAction() {
 
             public void actionPerformed(ActionEvent e) {
-                putToStatbar("Autosave");
+                putToStatbar("Autosave",null);
 
                 // only backup if auto-store was successful, otherwise we
                 // destroys the previous backup

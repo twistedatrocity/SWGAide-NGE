@@ -1942,7 +1942,7 @@ final class SWGSubmitTab extends JPanel {
                 submitDoneDialog(sim);
 
                 SWGFrame f = SWGAide.frame();
-                f.putToStatbar("Done");
+                f.putToStatbar("Done",null);
                 f.putToLogbar_2(null);
                 f.progressBar.setIndeterminate(false);
 

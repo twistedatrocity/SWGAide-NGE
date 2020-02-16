@@ -1831,7 +1831,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                     SWGSimilarNameDialog.display(SWGMailISDroidPanel.this, sl);
 
                 notesFileEraseNotes(notes, success, autoDelete);
-                frame.putToStatbar("Done");
+                frame.putToStatbar("Done",null);
                 if (wraps.size() > 0) {
                     SWGResourceManager.notifySubscribers(
                             new ResourceUpdate(UpdateType.LOCAL_SUBMISSION, wraps.get(0).report.gxy()));
@@ -2386,7 +2386,7 @@ public final class SWGMailISDroidPanel extends JPanel {
      * is from a server error at SWGCraft.
      */
     private void showSoapExceptionDialog() {
-        frame.putToStatbar("<html><font color=\"red\">ERROR</font></html>");
+        frame.putToStatbar("ERROR", Color.RED);
         JOptionPane.showMessageDialog(notesFileSaveButton,
                 "Communication error, check log files\nAbort",
                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -2479,7 +2479,7 @@ public final class SWGMailISDroidPanel extends JPanel {
                     } else {
                         if (response.getStatus() == 999) {
                             // username/password error
-                            frame.putToStatbar("Username/Password error");
+                            frame.putToStatbar("Username/Password error",Color.RED);
                             showUsernamePasswordDialog();
                             return false;
                         } // else

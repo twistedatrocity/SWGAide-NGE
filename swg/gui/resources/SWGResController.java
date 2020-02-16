@@ -324,8 +324,8 @@ public final class SWGResController implements UpdateSubscriber {
      */
     private void alertGUI(String msg, String color, AudioClip clip) {
         synchronized (alarm) { // synchronize on small scope
-            SWGAide.frame().putToStatbar(String.format(
-                    "<html><font color=#%s>%s</font></html>", color, msg));
+
+            SWGAide.frame().putToStatbar(msg, Color.decode("#" + color));
 
             if (clip == null)
                 return;

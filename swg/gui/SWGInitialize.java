@@ -89,7 +89,7 @@ public final class SWGInitialize extends JPanel {
      */
     private void abort() {
         frame.getTabPane().remove(this);
-        frame.putToStatbar("Aborted");
+        frame.putToStatbar("Aborted",null);
         SWGFrame.getPrefsKeeper().clearAll();
     }
 
@@ -99,7 +99,7 @@ public final class SWGInitialize extends JPanel {
      * DAT file is found. This method invokes {@link #initiateShowLicense()}.
      */
     void iniateStart() {
-        frame.putToStatbar("Welcome");
+        frame.putToStatbar("Welcome",null);
         lazyCreate();
 
         setHtml("docs/welcome_en.htm");
@@ -129,7 +129,7 @@ public final class SWGInitialize extends JPanel {
     private void initiateShowLicense() {
         buttons.removeAll();
 
-        frame.putToStatbar("License Agreement");
+        frame.putToStatbar("License Agreement",null);
         setHtml("docs/license_en.html");
 
         JButton initiateButton = new JButton("Accept");
@@ -180,7 +180,7 @@ public final class SWGInitialize extends JPanel {
             return;
         }
 
-        frame.putToStatbar("Initiating");
+        frame.putToStatbar("Initiating",null);
         setHtml("docs/initiate_en.htm");
 
         final JButton choose = new JButton("Select SWG Game Folder");
@@ -249,7 +249,7 @@ public final class SWGInitialize extends JPanel {
             return;
         }
 
-        frame.putToStatbar("Select folder");
+        frame.putToStatbar("Select folder",null);
         final JLabel initLabel = new JLabel(
                 "Step 1: Select main SWG game folder");
         buttons.add(initLabel);
@@ -321,7 +321,7 @@ public final class SWGInitialize extends JPanel {
 				}, UpdateType.SERVERS);
                 SWGCraftCache.updateCache();
                 
-                frame.putToStatbar("Downloading remote files...");
+                frame.putToStatbar("Downloading remote files...", null);
                 return null;
             }
 
@@ -433,7 +433,7 @@ public final class SWGInitialize extends JPanel {
      * @throws Exception if there is an error
      */
     public void scanAll(final SWGUniverse universe, boolean b) throws Exception {
-        frame.putToStatbar("Scanning SWG directories");
+        frame.putToStatbar("Scanning SWG directories",null);
         frame.putToLogbar_2(frame.progressBar);
 
         publishProgess("Scanning for aliases", 1, b);
@@ -460,7 +460,7 @@ public final class SWGInitialize extends JPanel {
         
 
         publishProgess("", 100, b);
-        frame.putToStatbar("Scanning finished");
+        frame.putToStatbar("Scanning finished",null);
     }
 
     /**

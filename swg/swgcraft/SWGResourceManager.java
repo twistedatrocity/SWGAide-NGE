@@ -1,5 +1,6 @@
 package swg.swgcraft;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -336,7 +337,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             return;
         }
 
-        frame.putToStatbar("Updating " + galaxy.getName());
+        frame.putToStatbar("Updating " + galaxy.getName(),null);
 
         try {
             Long statusTime = statusSWGCraftTime();
@@ -394,8 +395,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
      * @param gxy a galaxy constant
      */
     private static void downloadStatusAbort(SWGCGalaxy gxy) {
-        frame.putToStatbar("<html><font color=\"red\">Update aborted for "
-                + gxy.getName() + "</font></html>");
+        frame.putToStatbar("Update aborted for " + gxy.getName(), Color.RED);
     }
 
     /**
@@ -1132,7 +1132,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         SWGKnownResource resource, SWGPlanetAvailabilityInfo pai) {
 
         frame.putToStatbar(String.format("Availability: %s @ %s",
-            resource.getName(), pai.planet()));
+            resource.getName(), pai.planet()),null);
 
         SWGSoapAvailResResponse response =
             SWGSoapManager.getSOAPHandler().sendAvailable(resource,
@@ -1167,7 +1167,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
         SWGKnownResource resource, long date) {
 
         frame.putToStatbar(String.format("Depleting: %s / %s",
-            resource.getName(), resource.rc().rcName()));
+            resource.getName(), resource.rc().rcName()),null);
 
         SWGSoapStatusResponse response;
         if (resource.id() > 0)
@@ -1201,7 +1201,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
     public static SWGSoapEditResResponse sendEdit(SWGKnownResource resource) {
         
         frame.putToStatbar(String.format("Updating: %s / %s",
-            resource.getName(), resource.rc().rcName()));
+            resource.getName(), resource.rc().rcName()),null);
         
         SWGSoapEditResResponse response =
             SWGSoapManager.getSOAPHandler().sendEdit(resource, null);
@@ -1291,7 +1291,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             }
 
             frame.putToStatbar(String.format("Submit new: %s / %s",
-                    kr.getName(), kr.rc().rcName()));
+                    kr.getName(), kr.rc().rcName()),null);
 
             response = SWGSoapManager.getSOAPHandler().sendNew(
                     kr, planets.get(0));
@@ -1359,7 +1359,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
                 : getKnown((SWGMutableResource) r);
 
         frame.putToStatbar(String.format("Submit old: %s / %s",
-                    kr.getName(), kr.rc().rcName()));
+                    kr.getName(), kr.rc().rcName()),null);
 
         SWGSoapNOResResponse resp = SWGSoapManager.getSOAPHandler().sendOld(kr);
         if (!resp.isFaultless()) {
@@ -1395,7 +1395,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             SWGKnownResource resource) {
 
             frame.putToStatbar(String.format("Reviving: %s / %s",
-                resource.getName(), resource.rc().rcName()));
+                resource.getName(), resource.rc().rcName()),null);
 
             SWGSoapStatusResponse response;
             if (resource.id() > 0)
@@ -1410,7 +1410,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
             if (response.isFaultless())
                 SWGResourceMgr.updateDepleted(resource, -1);
 
-            frame.putToStatbar(null);
+            frame.putToStatbar(null,null);
             final ExecutorService exec = Executors.newSingleThreadExecutor();
             exec.execute(new Runnable() {
 
