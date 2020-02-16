@@ -44,8 +44,8 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.gui"/>
         <file path="/SWGAide-NGE/swg/mail-TEMPLATE.txt"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.basic"/>
-        <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.aqua.icons"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.windows"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.aqua.icons"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.xerto.icons"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.swing"/>
@@ -66,8 +66,8 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.tree"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.jdk"/>
         <file path="/SWGAide-NGE/swg/SWGAide_README.txt"/>
-        <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.swing.event"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.icons"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.swing.event"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.dialog.icons"/>
         <file path="/SWGAide-NGE/swg/SWGAide-history.txt"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.basic.icons"/>
@@ -76,9 +76,9 @@
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io.output"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.docs"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.grouper"/>
-        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources.types"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;org.apache.commons.io.monitor"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.dialog"/>
+        <javaElement handleIdentifier="=SWGAide-NGE/&lt;swg.crafting.resources.types"/>
         <javaElement handleIdentifier="=SWGAide-NGE/&lt;com.jidesoft.plaf.xerto"/>
     </selectedElements>
 </jardesc>
