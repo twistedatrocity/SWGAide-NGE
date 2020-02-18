@@ -251,7 +251,8 @@ public final class ZWriter {
      * @throws IllegalArgumentException if a value is illegal
      * @throws NullPointerException if an argument is {@code null}
      */
-    public static int backup(File file, String subDir, int max) {
+    @SuppressWarnings("unused")
+	public static int backup(File file, String subDir, int max) {
         if (max <= 0 || max > 999)
             throw new IllegalArgumentException("Illegal max: " + max);
 
