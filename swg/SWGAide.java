@@ -76,9 +76,10 @@ public final class SWGAide {
     private static void checkJavaVersion() {
         String ver = System.getProperty("java.version");
         if (ver.compareTo("1.8.0") >= 0) {
-        	if (ver.compareTo("1.9.0") <= 0) {
+        	return;
+        	/*if (ver.compareTo("1.9.0") <= 0) {
         		return;
-        	}
+        	}*/
         }
 
         ZString msg = ZString.fz("This application requires a Java Runtime%n" +
@@ -105,26 +106,6 @@ public final class SWGAide {
         } catch (URISyntaxException e) {
             return "SWGAide-Unity.jar";
         }
-    }
-
-    /**
-     * Helper method which determines that java is using the folder with
-     * SWGAide.jar as its working directory. Otherwise it is possible that the
-     * "jar" file type is associated with something different that javaw.exe and
-     * the working directory is elsewhere; hence SWGAide exits.
-     */
-    private static void checkJavaWorking() {
-        if (new File(getFilename()).exists()) return;
-
-        String msg = "Java or Windows error\n" +
-                "There is an error that makes Java work in a folder\n" +
-                "that is not the folder where you put down SWGAide-Unity.jar\n" +
-                "The solution depends on your setup, the README file\n" +
-                "suggests one solution: ensure that javaw.exe is the\n" +
-                "selected file association for \".jar\" files\n\n" +
-
-				"Exiting" + getFilename();
-        displayExitDialog(msg, "Error", false);
     }
     
     /**
@@ -237,7 +218,6 @@ public final class SWGAide {
      */
     public static void main(String[] args) {
         try {
-        	checkJavaWorking();
 
             initiate();
             setLog(null);
@@ -250,6 +230,7 @@ public final class SWGAide {
             checkWinAdminMode();
 
             printStart();
+            System.setProperty("javax.xml.soap.SAAJMetaFactory", "com.sun.xml.messaging.saaj.soap.SAAJMetaFactoryImpl");
             
         	FRAME = new SWGFrame();
             FRAME.delayedConstructor(FRAME);
