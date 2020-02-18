@@ -1293,6 +1293,9 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     	if(galaxy == null) {
     		galaxy = gxy;
     	}
+    	if(!galaxy.equals(gxy)) {
+    		galaxy = gxy;
+    	}
         if (isGuiFinished
                 && focus && resourceTab.getSelectedComponent() == this) {
 
