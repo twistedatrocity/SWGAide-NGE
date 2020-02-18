@@ -1658,10 +1658,12 @@ final class SWGLaboratoryTab extends JPanel {
 
             if (column <= 2) {
                 Color bg = null;
-                if (val.invent >= 0)
+                if (val.invent >= 0) {
                     bg = SWGGuiUtils.statColors[0];
-                else if (val.invent == -1)
+                } else if (val.invent == -1) {
                     bg = SWGGuiUtils.statColors[4];
+                    toolTip = toolTip + " - Better than anything in inventory";
+                }
                 
                 MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
                 boolean Dark = (theme.getName().contains("Dark")) ? true : false;
