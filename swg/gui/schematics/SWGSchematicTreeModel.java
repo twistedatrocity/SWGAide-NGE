@@ -303,7 +303,7 @@ final class SWGSchematicTreeModel implements TreeModel, UpdateSubscriber {
             return null;
 
         SWGSchematic s = SWGSchematicsManager.getSchematic(sid);
-        if (s == null || (matcher != null && !matcher.contains(s)))
+        if (s == null /*|| (matcher != null && !matcher.contains(s)) */)
             return null;
         
         SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
