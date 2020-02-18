@@ -1,6 +1,5 @@
 package swg.gui.resources;
 
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -53,6 +52,7 @@ import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
 import swg.swgcraft.SWGPets;
 import swg.swgcraft.SWGResourceManager;
+import swg.tools.AudioPlayer;
 import swg.tools.ZHtml;
 import swg.tools.ZNumber;
 import swg.tools.ZString;
@@ -168,7 +168,7 @@ public final class SWGResController implements UpdateSubscriber {
     /**
      * The sound clip for "gloomy alarms".
      */
-    private AudioClip alarm;
+    private String alarm;
 
     /**
      * The time when the sound clip {@code alarm} was played most recently. This
@@ -180,7 +180,7 @@ public final class SWGResController implements UpdateSubscriber {
     /**
      * The sound clip for "happy alerts".
      */
-    private AudioClip alert;
+    private String alert;
 
     /**
      * The time when the sound clip {@code alert} was played most recently. This
@@ -192,7 +192,7 @@ public final class SWGResController implements UpdateSubscriber {
     /**
      * The sound clip for "warnings".
      */
-    private AudioClip aWarn;
+    private String aWarn;
 
     /**
      * A helper flag which denotes if there is a scan in process. If this flag
@@ -243,14 +243,9 @@ public final class SWGResController implements UpdateSubscriber {
                         "resourceHarvesterOwnerMap",
                         new HashMap<Integer, List<SWGHarvesterOwner>>());
 
-        URL u = SWGAide.class.getResource("gui/docs/utinni.wav");
-        alert = java.applet.Applet.newAudioClip(u);
-
-        u = SWGAide.class.getResource("gui/docs/alarm.wav");
-        alarm = java.applet.Applet.newAudioClip(u);
-
-        u = SWGAide.class.getResource("gui/docs/sithdecel.wav");
-        aWarn = java.applet.Applet.newAudioClip(u);
+        alert = "gui/docs/utinni.wav";
+        alarm = "gui/docs/alarm.wav";
+        aWarn = "gui/docs/sithdecel.wav";
 
         // it is the update notifications that triggers the supervising actions
         SWGResourceManager.addSubscriber(this);
@@ -322,7 +317,7 @@ public final class SWGResController implements UpdateSubscriber {
      * @param color the color code for the message (RGB)
      * @param clip the sound clip to play, or {@code null} for no sound
      */
-    private void alertGUI(String msg, String color, AudioClip clip) {
+    private void alertGUI(String msg, String color, String clip) {
         synchronized (alarm) { // synchronize on small scope
 
             SWGAide.frame().putToStatbar(msg, Color.decode("#" + color));
@@ -341,8 +336,9 @@ public final class SWGResController implements UpdateSubscriber {
                 alertRecentmost = ctm;
             } else
                 return;
-
-            clip.play(); // once
+            AudioPlayer player = new AudioPlayer();
+            Runnable ptask = () -> { player.play(clip); };
+            new Thread(ptask).start();
         }
     }
 
