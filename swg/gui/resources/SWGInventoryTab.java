@@ -3095,7 +3095,9 @@ public final class SWGInventoryTab extends JPanel {
     }
     
     public static void verified () {
-    	cPanel.setVisible(true);
+    	if(cPanel != null) {
+    		cPanel.setVisible(true);
+    	}
     }
 
     /**
