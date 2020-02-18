@@ -498,7 +498,7 @@ final class SWGTreeTable extends SWGJTable {
             if (e instanceof MouseEvent) {
                 MouseEvent me = (MouseEvent) e;
                 MouseEvent newME = new MouseEvent(tree, me.getID(),
-                        me.getWhen(), me.getModifiers(),
+                        me.getWhen(), me.getModifiersEx(),
                         me.getX() - getCellRect(0, 0, true).x,
                         me.getY(), me.getClickCount(), me.isPopupTrigger());
                 tree.dispatchEvent(newME);

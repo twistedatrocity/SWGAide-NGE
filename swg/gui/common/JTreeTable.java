@@ -299,7 +299,7 @@ public class JTreeTable extends SWGJTable {
                     if (getColumnClass(counter) == TreeTableModel.class) {
                         MouseEvent me = (MouseEvent) e;
                         MouseEvent newME = new MouseEvent(tree, me.getID(), me
-                                .getWhen(), me.getModifiers(), me.getX()
+                                .getWhen(), me.getModifiersEx(), me.getX()
                                 - getCellRect(0, counter, true).x, me.getY(),
                                 me.getClickCount(), me.isPopupTrigger());
                         tree.dispatchEvent(newME);

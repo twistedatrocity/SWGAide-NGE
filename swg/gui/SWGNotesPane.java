@@ -238,7 +238,7 @@ public class SWGNotesPane extends JTextArea {
      * @param e the mouse event causing this action
      */
     protected void notesClicked(MouseEvent e) {
-        if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+        if (e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
             JPopupMenu popup = new JPopupMenu();
 
             JMenuItem bak = notesBackupMenuItem();
@@ -250,7 +250,7 @@ public class SWGNotesPane extends JTextArea {
 
             JMenuItem save = new JMenuItem("Save");
             save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-                    InputEvent.CTRL_MASK));
+                    InputEvent.CTRL_DOWN_MASK));
             save.addActionListener(saveListener);
             popup.add(save);
 
@@ -276,7 +276,7 @@ public class SWGNotesPane extends JTextArea {
         copy.setToolTipText("Copy selected text to cliboard");
         copy.setMnemonic('C');
         copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
-                InputEvent.CTRL_MASK));
+                InputEvent.CTRL_DOWN_MASK));
         copy.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -296,7 +296,7 @@ public class SWGNotesPane extends JTextArea {
         cut.setToolTipText("Cut selected test to clipboard");
         cut.setMnemonic('T');
         cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
-                InputEvent.CTRL_MASK));
+                InputEvent.CTRL_DOWN_MASK));
         cut.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -316,7 +316,7 @@ public class SWGNotesPane extends JTextArea {
         paste.setToolTipText("Paste text from clipboard");
         paste.setMnemonic('P');
         paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
-                InputEvent.CTRL_MASK));
+                InputEvent.CTRL_DOWN_MASK));
         paste.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -466,7 +466,7 @@ public class SWGNotesPane extends JTextArea {
         JMenuItem undo = new JMenuItem("Undo");
         undo.setToolTipText("Undo recent text editing");
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-                InputEvent.CTRL_MASK));
+                InputEvent.CTRL_DOWN_MASK));
         undo.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {

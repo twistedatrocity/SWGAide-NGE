@@ -230,7 +230,7 @@ class SWGTradeStatisticTab extends JPanel {
         customerTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                if (e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
                     customerTableClicked(e);
                 }
             }

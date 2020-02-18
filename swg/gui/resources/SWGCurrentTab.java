@@ -750,7 +750,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             return;
 
         String str = "resourceLimit" + statLimitField.getName();
-        SWGFrame.getPrefsKeeper().add(str, new Integer(limit));
+        SWGFrame.getPrefsKeeper().add(str, Integer.valueOf(limit));
         SWGGuiUtils.statColorLimitSet();
         currentResourcesModel.fireTableDataChanged();
     }

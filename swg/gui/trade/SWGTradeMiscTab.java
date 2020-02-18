@@ -276,7 +276,7 @@ class SWGTradeMiscTab extends JLabel {
 
             public void actionPerformed(ActionEvent e) {
                 SWGFrame.getPrefsKeeper().add("tradeMiscOverride",
-                        new Boolean(overRideCheckBox.isSelected()));
+                        Boolean.valueOf(overRideCheckBox.isSelected()));
             }
         });
         panel2.add(overRideCheckBox);

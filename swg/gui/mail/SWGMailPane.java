@@ -311,9 +311,9 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
             return;
 
         SWGFrame.getPrefsKeeper().add("mailClientDividerLocation",
-                new Integer(getDividerLocation()));
+                Integer.valueOf(getDividerLocation()));
         SWGFrame.getPrefsKeeper().add("mailClientUpperDividerLocationUp",
-                new Integer(upperSplitPane.getDividerLocation()));
+                Integer.valueOf(upperSplitPane.getDividerLocation()));
 
         for (int i = 0; i < mailList.getColumnCount(); ++i) {
             TableColumn col = mailList.getColumnModel().getColumn(i);
@@ -584,7 +584,7 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
         JMenuItem md = new JMenuItem("Copy text");
         md.setToolTipText("Copy selected text");
         md.setAccelerator(KeyStroke.getKeyStroke(
-                KeyEvent.VK_C, InputEvent.CTRL_MASK));
+                KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         md.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {

@@ -218,7 +218,7 @@ public class SWGCraftOptionsPanel extends JDialog {
         value = value.substring(0, value.indexOf(' '));
         value = value.replace("+", "");
         value = value.replace("½", ".5");
-        Double zon = new Double(value);
+        Double zon = Double.parseDouble(value);
         SWGFrame.getPrefsKeeper().add("optionTimeZoneValue", zon);
     }
 

@@ -63,7 +63,7 @@ public final class SWGAliasesPane extends JTextArea {
         copy.setToolTipText("Copy selected text to clipboard");
         copy.setMnemonic('C');
         copy.setAccelerator(KeyStroke.getKeyStroke(
-            KeyEvent.VK_C, InputEvent.CTRL_MASK));
+            KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         copy.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {

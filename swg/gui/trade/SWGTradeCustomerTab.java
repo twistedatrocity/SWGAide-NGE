@@ -200,7 +200,7 @@ final class SWGTradeCustomerTab extends JPanel {
         SWGFrame.getPrefsKeeper().add(keySet, set);
 
         String keyTime = "tradeLatest" + characterName;
-        Long now = new Long(System.currentTimeMillis() / 1000L);
+        Long now = Long.valueOf(System.currentTimeMillis() / 1000L);
         SWGFrame.getPrefsKeeper().add(keyTime, now);
     }
 

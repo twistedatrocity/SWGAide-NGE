@@ -1054,7 +1054,7 @@ public class SWGTradeTab extends JTabbedPane {
                 List<String> sl = sr.lines(true, true);
                 for (String line : sl) {
                     int index = line.indexOf(";");
-                    Integer key = new Integer(line.substring(0, index));
+                    Integer key = Integer.valueOf(line.substring(0, index));
                     String val = line.substring(index + 1);
                     priceToNameMapping.put(key, val);
                 }

@@ -1896,7 +1896,7 @@ public final class SWGInventoryTab extends JPanel {
             
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!isWorking && e.getModifiers() == InputEvent.BUTTON3_MASK) {
+                if (!isWorking && e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
                     assigneePopup(e);
                 }
             }

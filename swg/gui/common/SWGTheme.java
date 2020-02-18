@@ -111,7 +111,7 @@ public final class SWGTheme {
 		  super.addCustomEntriesToTable(aTable);
 		  @SuppressWarnings("rawtypes")
 		  java.util.List buttonGradient = Arrays.asList(
-	                 new Object[] {new Float(.3f), new Float(0f),
+	                 new Object[] {Float.valueOf(.3f), Float.valueOf(0f),
 	                 new ColorUIResource(0xe3e4e5), getWhite(), getSecondary2() });
 
 		  ColorUIResource ovd = new ColorUIResource(0x555555);
@@ -184,11 +184,11 @@ public final class SWGTheme {
 		  super.addCustomEntriesToTable(aTable);
 		  @SuppressWarnings("rawtypes")
 		  java.util.List buttonGradient = Arrays.asList(
-				  new Object[] {new Float(.3f), new Float(0f),
+				  new Object[] {Float.valueOf(.3f), Float.valueOf(0f),
 						  new ColorUIResource(0x1a1a1a), new ColorUIResource(0x333333), getSecondary2() });
 
 		  aTable.put("MenuBar.gradient",  Arrays.asList(new Object[] {
-				  new Float(1f), new Float(0f),
+				  Float.valueOf(1f), Float.valueOf(0f),
 				  getWhite(), getSecondary3(),
 				  getSecondary3() }));
 		  ColorUIResource ovd = new ColorUIResource(0x555555);
@@ -264,11 +264,11 @@ public final class SWGTheme {
 		  super.addCustomEntriesToTable(aTable);
 		  @SuppressWarnings("rawtypes")
 		  java.util.List buttonGradient = Arrays.asList(
-				  new Object[] {new Float(.3f), new Float(0f),
+				  new Object[] {Float.valueOf(.3f), Float.valueOf(0f),
 						  new ColorUIResource(0x1c383b), new ColorUIResource(0x1c383b), getSecondary2() });
 
 		  aTable.put("MenuBar.gradient",  Arrays.asList(new Object[] {
-				  new Float(1f), new Float(0f),
+				  Float.valueOf(1f), Float.valueOf(0f),
 				  getWhite(), getSecondary3(),
 				  getSecondary3() }));
 		  aTable.put("MenuBar.borderColor",  fBlack);

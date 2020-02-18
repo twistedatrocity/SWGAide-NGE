@@ -361,9 +361,9 @@ public class SWGFrame extends JFrame implements ComponentListener,
 
         // save the incremented backup value and today's date if store was okay
         if (getPrefsKeeper().store(backupFile)) {
-            getPrefsKeeper().add("prefsFileBackupNumber", new Integer(bn));
+            getPrefsKeeper().add("prefsFileBackupNumber", Integer.valueOf(bn));
             getPrefsKeeper().add("prefsKeeperBackupDate",
-                new Long(System.currentTimeMillis()));
+                Long.valueOf(System.currentTimeMillis()));
             return backupFile;
         }
         return null;
@@ -815,7 +815,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         saveMenuItem = new JMenuItem("Save");
         saveMenuItem.setMnemonic(KeyEvent.VK_S);
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-            InputEvent.CTRL_MASK));
+            InputEvent.CTRL_DOWN_MASK));
         saveMenuItem.setEnabled(false);
         fileMenu.add(saveMenuItem);
 

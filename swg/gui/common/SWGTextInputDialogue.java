@@ -98,7 +98,7 @@ public class SWGTextInputDialogue extends JDialog implements ActionListener,
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                optionPane.setValue(new Integer(JOptionPane.CLOSED_OPTION));
+                optionPane.setValue(Integer.valueOf(JOptionPane.CLOSED_OPTION));
             }
         });
         this.addComponentListener(new ComponentAdapter() {
