@@ -35,3 +35,4 @@ TESTOLD-20/
 SWGAide-Unity.jar
 SWGAide-Unity.exe
 *.class
+/target/
