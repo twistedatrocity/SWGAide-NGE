@@ -501,7 +501,9 @@ final class SWGResourceClassUse extends JPanel {
     	if(!galaxy.equals(gxy)) {
     		setFilteredProfs();
     		profModel = new DefaultComboBoxModel<String>( getFilteredProfs() );
-    		professionBox.setModel(profModel);
+    		if(professionBox != null) {
+    			professionBox.setModel(profModel);
+    		}
     		galaxy = gxy;
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
