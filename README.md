@@ -9,7 +9,7 @@ Grab a current copy of SWGAide-Unity.exe from the releases area: https://github.
 
 Create a new folder for SWGAide-Unity, anywhere you want.
 
-Drag and drop the SWGAide-Unity.exe file in to the new folder.
+Place the SWGAide-Unity.exe file in to the new folder.
 
 Double click the icon for SWGAide-Unity.exe to launch it.
 
@@ -19,8 +19,6 @@ a useful installation of SWGAide without SWG installed.
 
 SWGAide creates several folders and files its directory; they are all self
 explanatory.
-
-Note: The Pre-CU version of SWGAide cannot live in the same folder as this NGE one, please use separate installation folders.
 
 Upgrades
 ========
