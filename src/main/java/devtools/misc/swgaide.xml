@@ -12,13 +12,13 @@
   <supportUrl></supportUrl>
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
-  <manifest>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\swgaide.manifest</manifest>
-  <icon>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\devtools\misc\icon.ico</icon>
+  <manifest>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\src\main\java\devtools\misc\swgaide.manifest</manifest>
+  <icon>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\src\main\java\devtools\misc\icon.ico</icon>
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
     <minVersion>1.8.0</minVersion>
-    <maxVersion>1.8.0_999</maxVersion>
+    <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
     <opt>-XX:MaxHeapFreeRatio=60</opt>
