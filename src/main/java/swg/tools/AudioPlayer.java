@@ -50,7 +50,7 @@ public class AudioPlayer implements LineListener {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                	SWGAide.printError("AudioPlayer: ", ex);
                 }
             }
             audioClip.close();
