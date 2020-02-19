@@ -2,8 +2,6 @@ package swg.gui.common;
 
 import javax.swing.plaf.metal.*;
 
-import sun.swing.PrintColorUIResource;
-
 import javax.swing.plaf.*;
 import javax.swing.*;
 
@@ -171,9 +169,9 @@ public final class SWGTheme {
 	  private final ColorUIResource fSecondary2 = new ColorUIResource(0xc9c9c9);
 	  private final ColorUIResource fSecondary3 = new ColorUIResource(0xEEEEEE);
 	  private final ColorUIResource fINACTIVE_CONTROL_TEXT_COLOR = new ColorUIResource(0x999999);
-	  private final ColorUIResource fCONTROL_TEXT_COLOR = new PrintColorUIResource(0x333333, Color.BLACK);
+	  private final ColorUIResource fCONTROL_TEXT_COLOR = new ColorUIResource(0x333333);
 	  private final ColorUIResource fMENU_DISABLED_FOREGROUND = new ColorUIResource(0x999999);
-	  private final ColorUIResource fOCEAN_BLACK = new PrintColorUIResource(0x333333, Color.BLACK);
+	  private final ColorUIResource fOCEAN_BLACK = new ColorUIResource(0x333333);
 	  private final ColorUIResource fOCEAN_DROP = new ColorUIResource(0xD2E9FF);
 	  private final ColorUIResource fBlack = new ColorUIResource(0x222222);
 	  private final ColorUIResource fWhite = new ColorUIResource(0xffffff);
