@@ -257,6 +257,7 @@ final class SWGLaboratoryTab extends JPanel {
      * @param number the amount of checkboxes to to create and add
      */
     private void addFilterCheckboxes(List<EFilter> labels, int number) {
+    	filterBox.removeAll();
         for (int i = labels.size(); i < number; ++i) {
             EFilter l = new EFilter();
             l.setSelected(true);
@@ -546,6 +547,7 @@ final class SWGLaboratoryTab extends JPanel {
             List<SWGSchematicWrapper> wl = SWGSchemController.wrappers(s);
             expGroups = new LinkedHashMap<String, SWGExperimentGroup>();
             expGroupsFiltered = new ArrayList<SWGExperimentGroup>();
+            filterCheckboxes = new ArrayList<EFilter>();
             if(s.quality.getName().contains("HQ") || s.quality.getName().contains("mixed")) {
             	for (SWGSchematicWrapper w : wl) {
             		w.schem().getExperimentGroups();
@@ -637,7 +639,7 @@ final class SWGLaboratoryTab extends JPanel {
      * 
      */
     private void displayFilters() {
-        int len = expGroups.size() + 2;
+        int len = expGroups.size();
         addFilterCheckboxes(filterCheckboxes, len);
         AtomicInteger i = new AtomicInteger();
         i.set(0);
@@ -650,8 +652,10 @@ final class SWGLaboratoryTab extends JPanel {
             i.incrementAndGet();
         });
         len = i.get();
-        for (; len < filterCheckboxes.size(); ++len)
+        for (; len < filterCheckboxes.size(); ++len) {
             filterCheckboxes.get(len).eraseContent();
+        	filterCheckboxes.remove(len);
+        }
 
     }
     
@@ -1027,8 +1031,7 @@ final class SWGLaboratoryTab extends JPanel {
     	filterPanel = new JPanel(new BorderLayout());
     	filterPanel.setBorder(BorderFactory.createTitledBorder("Experiment Groups Filter"));
     	filterBox = Box.createVerticalBox();
-    	filterCheckboxes = new ArrayList<EFilter>(5);
-    	addFilterCheckboxes(filterCheckboxes, 5);
+    	filterCheckboxes = new ArrayList<EFilter>();
     	filterPanel.add(filterBox);
 
     	return filterPanel;
