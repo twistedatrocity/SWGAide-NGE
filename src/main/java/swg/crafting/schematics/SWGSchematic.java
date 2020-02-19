@@ -267,9 +267,6 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
             throw new NullPointerException("Schematic name is null: "
                     + xml.toString());
 
-        if(name.contains("Xantha")) {
-        	SWGAide.printDebug(Thread.currentThread().getName(), 9, "parseschems  Data: " + xml);
-        }
         id = ZXml.intFromAttr(xml, "id");
         if (id <= 0)
             throw new IllegalArgumentException(String.format(
@@ -545,6 +542,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
      * @return the name
      */
     public String getName() {
+    	if(name == null) return "Class Not Instantiated";
         return name;
     }
 
@@ -706,7 +704,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         
         if (pid <0) return new Object[] { p, 1 };
         int lvl = ZXml.intFromAttr(xml, "level");
-        Integer l = Integer.valueOf(lvl);
+        int l = Integer.valueOf(lvl);
         return new Object[] { p, l };
     }
 
