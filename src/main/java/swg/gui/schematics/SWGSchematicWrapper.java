@@ -135,6 +135,8 @@ public final class SWGSchematicWrapper implements Serializable, SWGGui {
      */
     @Override
     public String getName() {
+    	if(schem() == null) return "Class Not Instantiated";
+    	
         return schem().getName();
     }
 
@@ -208,6 +210,8 @@ public final class SWGSchematicWrapper implements Serializable, SWGGui {
      * @return the in-game serial number
      */
     String serial() {
+    	if(schem() == null) return "Class Not Instantiated";
+    	
         return schemSerial == null
                 ? isDefault
                         ? schem().getName()

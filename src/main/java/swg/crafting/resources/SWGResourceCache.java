@@ -342,6 +342,8 @@ final class SWGResourceCache {
         SWGCGalaxy gx = res.galaxy();
         String name = res.getName();
 
+        if(cache == null) cache = new ArrayList<SWGKnownResource>();
+        
         for (SWGKnownResource kr : cache) {
             if (kr == res)
                 return kr;
