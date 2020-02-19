@@ -1,6 +1,8 @@
 package swg.tools;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -35,7 +37,8 @@ public class AudioPlayer implements LineListener {
     public void play(String path) {
  
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(SWGAide.class.getResourceAsStream(path));
+        	InputStream buffered = new BufferedInputStream(SWGAide.class.getResourceAsStream(path));
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(buffered);
             AudioFormat format = audioStream.getFormat();
             DataLine.Info info = new DataLine.Info(Clip.class, format);
             Clip audioClip = (Clip) AudioSystem.getLine(info);
