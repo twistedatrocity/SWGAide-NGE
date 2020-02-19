@@ -704,7 +704,7 @@ public final class SWGSchematic implements Comparable<SWGSchematic> {
         
         if (pid <0) return new Object[] { p, 1 };
         int lvl = ZXml.intFromAttr(xml, "level");
-        int l = Integer.valueOf(lvl);
+        Integer l = Integer.valueOf(lvl);
         return new Object[] { p, l };
     }
 
