@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+
+import swg.SWGAide;
 import swg.crafting.SWGValues;
 import swg.crafting.SWGWeights;
 import swg.crafting.UpdateNotification;
@@ -23,7 +25,9 @@ import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
+import swg.gui.common.SWGDoTask;
 import swg.gui.common.SWGSac;
+import swg.gui.common.SWGDoTask.TaskCallback;
 import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
 import swg.model.SWGCGalaxy;
@@ -61,6 +65,12 @@ final public class SWGSchemController implements UpdateSubscriber {
      * empty list until a character is selected.
      */
     private static List<SWGInventoryWrapper> inventory;
+    
+    /**
+     * A lock object used by some methods must synchronize but which do not need
+     * an object-wide lock.
+     */
+    private static final String LOCK = "check";
 
     /**
      * A list of elements which each is a unique resource-class-and-weight pair.
@@ -104,6 +114,31 @@ final public class SWGSchemController implements UpdateSubscriber {
 
         SWGSchematicsManager.addSubscriber(this);
         SWGResourceManager.addSubscriber(this);
+        
+        SWGAide.frame().addExitCallback(new SWGDoTask(new TaskCallback() {
+
+        	public void execute() {
+        		doExit();
+        	}
+        }));
+    }
+    
+    /**
+     * This method performs some exit routines when SWGAide is closing down. In
+     * particular, this method iterates over the collections of schematic wrappers
+     * and if for a galaxy any notes or stock is empty then it
+     * is removed from its containing map as there is no need to save a vanilla schem wrapper
+     */
+    private void doExit() {
+        synchronized (LOCK) {
+        	Iterator<SWGSchematicWrapper> iter = schemWrappers.iterator();
+        	while (iter.hasNext()) {
+        		SWGSchematicWrapper wr = iter.next();
+        		if(wr.stock()<1 && wr.notes() == null) {
+                    iter.remove();
+        		}
+            }
+        }
     }
 
     @Override
