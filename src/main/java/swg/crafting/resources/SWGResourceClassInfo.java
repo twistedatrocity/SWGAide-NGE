@@ -45,7 +45,7 @@ class SWGResourceClassInfo {
 
   static {
     try {
-      int sid;
+      Integer sid;
       sid = Integer.valueOf(  1); swgTypeToInt.put("egy", sid);
                                   swgTypeToInt.put("Energy", sid);
       sid = Integer.valueOf(813); swgTypeToInt.put("regy", sid);

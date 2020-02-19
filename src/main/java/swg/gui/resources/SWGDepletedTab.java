@@ -166,7 +166,7 @@ final class SWGDepletedTab extends JPanel {
                 "Specify limit (days)", JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, null, null)) {
 
-            int v = (Integer) sp.getModel().getValue();
+            Integer v = (Integer) sp.getModel().getValue();
             SWGFrame.getPrefsKeeper().add("resourceDepletedLimitDays", v);
         }
     }

@@ -987,11 +987,11 @@ public final class SWGResController implements UpdateSubscriber {
 
         long now = System.currentTimeMillis() / 1000;
         long ageLimit = now;
-        int maxHours = (Integer) SWGFrame.getPrefsKeeper().get(
+        Integer maxHours = (Integer) SWGFrame.getPrefsKeeper().get(
                         "resourceGuardsMaxHours");
         // subtract allowed time span, or 36 h default
-        if (maxHours > 0)
-            ageLimit -= Long.valueOf(maxHours) * 3600;
+        if (maxHours != null)
+            ageLimit -= maxHours.longValue() * 3600;
         else
             ageLimit -= 900 * 3600;
 

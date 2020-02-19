@@ -186,14 +186,14 @@ public final class SWGSchematicAssignee implements SWGGui, Serializable,
                     Iterator<Integer> iter;
                     SWGSchematic s;
                     for (iter = favIDs.iterator(); iter.hasNext();) {
-                        int sid = iter.next();
-                        s = SWGSchematicsManager.getSchematic(sid);
+                        Integer sid = iter.next();
+                        s = SWGSchematicsManager.getSchematic(sid.intValue());
                         if (s != null)
                             favorites.add(s);
                         else { // schematic removed from XML
                             SWGAide.printDebug("sass", 1,
                                     "Removed schematic from assignee: ",
-                                    this.getName(), ", ", Integer.toString(sid));
+                                    this.getName(), ", ", sid.toString());
                             iter.remove(); 
                         }
                     }
