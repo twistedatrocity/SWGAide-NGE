@@ -363,11 +363,11 @@ public abstract class SWGResourceClass implements Serializable,
      * @throws IllegalArgumentException if the string is invalid
      */
     public static final SWGResourceClass rc(String s) {
-        Integer ret = SWGResourceClassInfo.swgTypeToInt.get(s);
-        if (ret == null)
+        int ret = SWGResourceClassInfo.swgTypeToInt.get(s);
+        if (ret <1)
             throw new IllegalArgumentException("Invalid string: " + s);
 
-        return SWGResourceClassInfo.swgIDtoInstance.get(ret.intValue());
+        return SWGResourceClassInfo.swgIDtoInstance.get(ret);
     }
 
     /**
@@ -378,9 +378,9 @@ public abstract class SWGResourceClass implements Serializable,
      * @return an ID, or -1
      */
     public static final int rcID(String str) {
-        Integer ret = SWGResourceClassInfo.swgTypeToInt.get(str);
-        return ret != null
-                ? ret.intValue()
+        int ret = SWGResourceClassInfo.swgTypeToInt.get(str);
+        return ret >0
+                ? ret
                 : -1;
     }
 

@@ -215,8 +215,8 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
         if (schematics != null)
             throw new IllegalStateException("Instance already exists");
 
-        highestID = ((Integer) SWGFrame.getPrefsKeeper().get(
-                "schematicsMaxID", Integer.valueOf(2000))).intValue() + 1;
+        highestID = ((int) SWGFrame.getPrefsKeeper().get(
+                "schematicsMaxID", 2001));
         schematics = new ArrayList<SWGSchematic>(0); // dummy for now
 
         categories = new ArrayList<SWGCategory>(0); // dummy for now
@@ -754,8 +754,9 @@ public final class SWGSchematicsManager implements UpdateSubscriber {
      *         for IDs
      */
     public static SWGSchematic getSchematic(int id) {
+    	if(schematics == null) schematics = new ArrayList<SWGSchematic>(0);
         synchronized (schematics) {
-        	Integer sz = schematics.size();
+        	int sz = schematics.size();
             if (sz <= 0 && id > sz)
                 return null; // init failed or not run yet
             return schematics.get(id);

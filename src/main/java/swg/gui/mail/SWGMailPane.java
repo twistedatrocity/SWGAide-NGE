@@ -1584,11 +1584,11 @@ public final class SWGMailPane extends JSplitPane implements TextValidation {
                 	w = SWGGuiUtils.fontWidth(this, "ISD", this.getFont()) + 5;
                     SWGGuiUtils.tableColumnSetWidth(col, w, w, w+10);
                 } else {
-                    Integer is = (Integer) SWGFrame.getPrefsKeeper().get(
+                    int is = (int) SWGFrame.getPrefsKeeper().get(
                                     "mailClientColumnSize" + i);
-                    int s = is == null
+                    int s = is == 0
                                 ? 115
-                                : is.intValue();
+                                : is;
                     w = SWGGuiUtils.fontWidth(this, "123456789012", this.getFont()) + 5;
                     SWGGuiUtils.tableColumnSetWidth(col, w/2, s, 530);
                 }
