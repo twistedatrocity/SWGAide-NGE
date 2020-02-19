@@ -8,7 +8,13 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -30,12 +36,12 @@ import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import sun.swing.SwingUtilities2;
 import swg.SWGAide;
 import swg.gui.SWGFrame;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGGalaxy;
 import swg.model.SWGUniverse;
+import swg.tools.ImageIconUIResource;
 
 /**
  * This class is a common place-holder for GUI helper methods and objects that
@@ -194,21 +200,21 @@ public final class SWGGuiUtils {
     	}
     	UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
     	
-    	UIManager.put("FileChooser.homeFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/home_22x22.png"));
-    	UIManager.put("FileChooser.newFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_new_22x22.png"));
-    	UIManager.put("FileChooser.upFolderIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_up_22x22.png"));
-    	UIManager.put("FileChooser.listViewIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_list_22x22.png"));
-    	UIManager.put("FileChooser.detailsViewIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_detail_22x22.png"));
-    	UIManager.put("FileView.computerIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/computer_16x16.png"));
-    	UIManager.put("FileView.directoryIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
-    	UIManager.put("FileView.hardDriveIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/hard_drive_16x16.png"));
-    	UIManager.put("FileView.fileIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
-    	UIManager.put("FileView.floppyDriveIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/floppy_drive_16x16.png"));
-    	UIManager.put("Tree.closedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
-    	UIManager.put("Tree.openIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_opened_16x16.png"));
-    	UIManager.put("Tree.leafIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
-    	UIManager.put("Tree.collapsedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_collapsed_11x11.png"));
-        UIManager.put("Tree.expandedIcon", SwingUtilities2.makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_expanded_11x11.png"));
+    	UIManager.put("FileChooser.homeFolderIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/home_22x22.png"));
+    	UIManager.put("FileChooser.newFolderIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_new_22x22.png"));
+    	UIManager.put("FileChooser.upFolderIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_up_22x22.png"));
+    	UIManager.put("FileChooser.listViewIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_list_22x22.png"));
+    	UIManager.put("FileChooser.detailsViewIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/view_detail_22x22.png"));
+    	UIManager.put("FileView.computerIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/computer_16x16.png"));
+    	UIManager.put("FileView.directoryIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
+    	UIManager.put("FileView.hardDriveIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/hard_drive_16x16.png"));
+    	UIManager.put("FileView.fileIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
+    	UIManager.put("FileView.floppyDriveIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/floppy_drive_16x16.png"));
+    	UIManager.put("Tree.closedIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_closed_16x16.png"));
+    	UIManager.put("Tree.openIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/folder_opened_16x16.png"));
+    	UIManager.put("Tree.leafIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/document_16x16.png"));
+    	UIManager.put("Tree.collapsedIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_collapsed_11x11.png"));
+        UIManager.put("Tree.expandedIcon", makeIcon(getClass(), SWGGuiUtils.class, "icons/light/tree_expanded_11x11.png"));
     }
     
     private static MetalTheme getTheme (String v) {
@@ -762,5 +768,76 @@ public final class SWGGuiUtils {
         Pattern colorRegexp = Pattern.compile("\\\\(#[a-zA-z0-9]{6})\\\\?");
         
         return colorRegexp.matcher(input).replaceAll("");
+    }
+    
+    private static Object makeIcon(final Class<?> baseClass,
+    		final Class<?> rootClass,
+    		final String imageFile) {
+    	return makeIcon(baseClass, rootClass, imageFile, true);
+    }
+    private static Object makeIcon(final Class<?> baseClass,
+    		final Class<?> rootClass,
+    		final String imageFile,
+    		final boolean enablePrivileges) {
+    	return (UIDefaults.LazyValue) (table) -> {
+    		byte[] buffer = enablePrivileges ? AccessController.doPrivileged(
+    				(PrivilegedAction<byte[]>) ()
+    				-> getIconBytes(baseClass, rootClass, imageFile))
+    				: getIconBytes(baseClass, rootClass, imageFile);
+
+    				if (buffer == null) {
+    					return null;
+    				}
+    				if (buffer.length == 0) {
+    					System.err.println("warning: " + imageFile
+    							+ " is zero-length");
+    					return null;
+    				}
+
+    				return new ImageIconUIResource(buffer);
+    	};
+    }
+    
+    private static byte[] getIconBytes(final Class<?> baseClass,
+    		final Class<?> rootClass,
+    		final String imageFile) {
+    	/* Copy resource into a byte array.  This is
+    	 * necessary because several browsers consider
+    	 * Class.getResource a security risk because it
+    	 * can be used to load additional classes.
+    	 * Class.getResourceAsStream just returns raw
+    	 * bytes, which we can convert to an image.
+    	 */
+    	Class<?> srchClass = baseClass;
+
+    	while (srchClass != null) {
+
+    		try (InputStream resource =
+    				srchClass.getResourceAsStream(imageFile)) {
+    			if (resource == null) {
+    				if (srchClass == rootClass) {
+    					break;
+    				}
+    				srchClass = srchClass.getSuperclass();
+    				continue;
+    			}
+
+    			try (BufferedInputStream in
+    					= new BufferedInputStream(resource);
+    					ByteArrayOutputStream out
+    					= new ByteArrayOutputStream(1024)) {
+    				byte[] buffer = new byte[1024];
+    				int n;
+    				while ((n = in.read(buffer)) > 0) {
+    					out.write(buffer, 0, n);
+    				}
+    				out.flush();
+    				return out.toByteArray();
+    			}
+    		} catch (IOException ioe) {
+    			System.err.println(ioe.toString());
+    		}
+    	}
+    	return null;
     }
 }
