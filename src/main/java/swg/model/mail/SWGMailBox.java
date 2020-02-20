@@ -271,6 +271,7 @@ public final class SWGMailBox implements Serializable {
      */
     public void fetch() {
         synchronized (folders) {
+        	//SWGAide.printDebug("mbox", 9, "SWGMailBox:fetch: start " + new Date().getTime());
             if (!isRefreshed) fetchSWGAide(); // populate folders, see doExit()
 
             if (!swgPath().exists()) return; // no more work
@@ -346,6 +347,7 @@ public final class SWGMailBox implements Serializable {
                 SWGAide.printError("SWGMailBox:fetch", e);
             }
         }
+        //SWGAide.printDebug("mbox", 9, "SWGMailBox:fetch: end " + new Date().getTime());
     }
 
     /**
@@ -434,9 +436,6 @@ public final class SWGMailBox implements Serializable {
                     SWGMailMessage mail = newMail(f, owner);
 
                     fn = fn.toLowerCase();
-                    if (!fn.endsWith("mail")
-                            /* XXX: remove in a while, added in 0.9.0 */
-                            && contains(mail.getName()) != null) continue;
 
                     if (mail.type() == Type.Auction)
                         folderAuction.add(mail);
