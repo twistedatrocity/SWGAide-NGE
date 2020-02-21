@@ -4,7 +4,7 @@
   <headerType>gui</headerType>
   <jar>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-Unity.jar</jar>
   <outfile>C:\SWGstuff\SWGAide_dev\SWGAide-NGE\SWGAide-Unity.exe</outfile>
-  <errTitle>JRE 8 required</errTitle>
+  <errTitle>Java 8 required (minimum)</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
   <priority>normal</priority>
