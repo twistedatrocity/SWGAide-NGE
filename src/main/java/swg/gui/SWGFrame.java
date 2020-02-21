@@ -436,36 +436,46 @@ public class SWGFrame extends JFrame implements ComponentListener,
         exitList = new ArrayList<SWGDoTask>();
 
         // do this before the preference keeper to open an empty resource cache
+        //SWGAide.printDebug("SWGFrame", 9, "init: resourceManager ");
         resourceManager = new SWGResourceManager(this);
 
         boolean firstTime = initEnvironment();
 
         // once the preference keeper is OK, initialize internal states
         resourceManager.initiate();
+        //SWGAide.printDebug("SWGFrame", 9, "init: guiUtils ");
         guiUtils.initiate();
+        //SWGAide.printDebug("SWGFrame", 9, "init: helpViewer ");
         helpViewer = new SWGHelp(this);
 
+        //SWGAide.printDebug("SWGFrame", 9, "init: Frame ");
         initFrame();
         double step = 100.0 / 6; // progress steps
         splashProgressBar.setValue((int) step);
 
+        //SWGAide.printDebug("SWGFrame", 9, "init: updateCache ");
         SWGCraftCache.updateCacheBlocking();
         // init the professions here before everything else gets kicked off
+        //SWGAide.printDebug("SWGFrame", 9, "init: Professions ");
         @SuppressWarnings("unused")
 		SWGProfession prof = new SWGProfession();
         if (getPrefsKeeper() != null && !firstTime) {
             updatePreLaunch();
         }
+        //SWGAide.printDebug("SWGFrame", 9, "init: schematicsManager ");
         schematicsManager = new SWGSchematicsManager();
 
+        //SWGAide.printDebug("SWGFrame", 9, "init: menuBar ");
         setJMenuBar(initMenuBar());
 
         // create the main pane and add tabs and logbars to it
         JPanel pane = new JPanel(new BorderLayout());
 
+        //SWGAide.printDebug("SWGFrame", 9, "init: logBars ");
         initLogBars(pane, firstTime);
         splashProgressBar.setValue((int) (2 * step));
 
+        //SWGAide.printDebug("SWGFrame", 9, "init: tabPane ");
         initTabPane(pane, firstTime, step);
 
         getContentPane().add(pane);
@@ -1439,7 +1449,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 	statLog.setText("   ");
                 	
                 } else {
-                	statLog.setText(text);
                 	StyledLabelBuilder.setStyledText(statLog, "{" + text + ":b, f:" + c + "}");
                 }
                 statLog.repaint();

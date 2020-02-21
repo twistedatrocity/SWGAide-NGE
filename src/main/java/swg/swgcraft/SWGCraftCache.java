@@ -248,9 +248,9 @@ public final class SWGCraftCache {
             ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(conn.getLastModified()), ZoneId.of("UTC") );
             conn.disconnect();
             ld = ld.truncatedTo(ChronoUnit.HOURS);
-            if(SWGConstants.DEV_DEBUG) {
+            /*if(SWGConstants.DEV_DEBUG) {
             	SWGAide.printDebug("debug", 9, "SWGCraftCache:lastModified " + url.toString() + " Remote Date: " + ld.toEpochSecond(ZoneOffset.UTC));
-            }
+            }*/
             return ld;
         } catch (Exception e) {
             SWGAide.printDebug("cach", 1,
@@ -303,9 +303,9 @@ public final class SWGCraftCache {
             ld = LocalDateTime.ofInstant(Instant.ofEpochMilli(file.lastModified()), TimeZone.getDefault().toZoneId() );
         }
         ld = ld.truncatedTo(ChronoUnit.HOURS);
-        if(SWGConstants.DEV_DEBUG) {
+        /*if(SWGConstants.DEV_DEBUG) {
         	SWGAide.printDebug("debug", 9, "SWGCraftCache:localDate " + file.toString() + " XML Date: " + ld.toEpochSecond(ZoneOffset.UTC));
-        }
+        }*/
         return ld;
     }
 
