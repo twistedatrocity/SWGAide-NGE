@@ -1131,8 +1131,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
     public static SWGSoapAvailResResponse sendAvailable(
         SWGKnownResource resource, SWGPlanetAvailabilityInfo pai) {
 
-        frame.putToStatbar(String.format("Availability: %s @ %s",
-            resource.getName(), pai.planet()),null);
+        frame.putToStatbar("Availability: " + resource.getName() + " @ " + pai.planet(),null);
 
         SWGSoapAvailResResponse response =
             SWGSoapManager.getSOAPHandler().sendAvailable(resource,
@@ -1166,8 +1165,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
     public static SWGSoapStatusResponse sendDeplete(
         SWGKnownResource resource, long date) {
 
-        frame.putToStatbar(String.format("Depleting: %s / %s",
-            resource.getName(), resource.rc().rcName()),null);
+        frame.putToStatbar("Depleting: " + resource.getName() + " / " + resource.rc().rcName(),null);
 
         SWGSoapStatusResponse response;
         if (resource.id() > 0)
@@ -1200,8 +1198,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
      */
     public static SWGSoapEditResResponse sendEdit(SWGKnownResource resource) {
         
-        frame.putToStatbar(String.format("Updating: %s / %s",
-            resource.getName(), resource.rc().rcName()),null);
+        frame.putToStatbar("Updating: " + resource.getName() + " / " + resource.rc().rcName(),null);
         
         SWGSoapEditResResponse response =
             SWGSoapManager.getSOAPHandler().sendEdit(resource, null);
@@ -1290,8 +1287,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
                     if (k != kr) updateDepleted(k, d);
             }
 
-            frame.putToStatbar(String.format("Submit new: %s / %s",
-                    kr.getName(), kr.rc().rcName()),null);
+            frame.putToStatbar("Submit new: " + kr.getName() + " / " + kr.rc().rcName(),null);
 
             response = SWGSoapManager.getSOAPHandler().sendNew(
                     kr, planets.get(0));
@@ -1358,8 +1354,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
                 ? (SWGKnownResource) r
                 : getKnown((SWGMutableResource) r);
 
-        frame.putToStatbar(String.format("Submit old: %s / %s",
-                    kr.getName(), kr.rc().rcName()),null);
+        frame.putToStatbar("Submit old: " + kr.getName() + " / " + kr.rc().rcName(),null);
 
         SWGSoapNOResResponse resp = SWGSoapManager.getSOAPHandler().sendOld(kr);
         if (!resp.isFaultless()) {
@@ -1394,8 +1389,7 @@ public final class SWGResourceManager extends SWGResourceMgr {
     public static SWGSoapStatusResponse sendRevive(
             SWGKnownResource resource) {
 
-            frame.putToStatbar(String.format("Reviving: %s / %s",
-                resource.getName(), resource.rc().rcName()),null);
+            frame.putToStatbar("Reviving: " + resource.getName() + " / " + resource.rc().rcName(),null);
 
             SWGSoapStatusResponse response;
             if (resource.id() > 0)
