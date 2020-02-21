@@ -17,6 +17,7 @@
   <jre>
     <path></path>
     <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
     <minVersion>1.8.0</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
@@ -26,15 +27,17 @@
     <opt>-XX:+UseG1GC</opt>
   </jre>
   <versionInfo>
-    <fileVersion>1.0.5.0</fileVersion>
-    <txtFileVersion>Unity-1.0.5</txtFileVersion>
+    <fileVersion>1.1.0.0</fileVersion>
+    <txtFileVersion>Unity-1.1.0</txtFileVersion>
     <fileDescription>SWGAide-Unity</fileDescription>
     <copyright>swgaide.com 2020</copyright>
-    <productVersion>1.0.5.0</productVersion>
-    <txtProductVersion>Unity-1.0.5</txtProductVersion>
+    <productVersion>1.1.0.0</productVersion>
+    <txtProductVersion>Unity-1.1.0</txtProductVersion>
     <productName>SWGAide-Unity</productName>
     <companyName>swgaide.com</companyName>
     <internalName>SWGAide-Unity</internalName>
     <originalFilename>SWGAide-Unity.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
   </versionInfo>
 </launch4jConfig>
