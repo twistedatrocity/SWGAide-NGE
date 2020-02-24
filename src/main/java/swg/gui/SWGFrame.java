@@ -1571,7 +1571,6 @@ public class SWGFrame extends JFrame implements ComponentListener,
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
         StyleConstants.setFontFamily(style, SWGGuiUtils.fontPlain().getFamily());
-        StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
         iL.setText("<html>" + text + "</html>");
         iL.setEditable(false);
         iL.setBorder(BorderFactory.createCompoundBorder(
@@ -1579,6 +1578,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
                 BorderFactory.createEmptyBorder(2, 3, 2, 0)));
         iL.setOpaque(true);
         iL.setBackground(UIManager.getColor("TextArea.background"));
+        iL.setForeground(UIManager.getColor("TextArea.foreground"));
         hpanel.add(iL);
         JPanel bpanel = new JPanel(new BorderLayout());
         JButton donate = new JButton("Click Here to Contribute");
