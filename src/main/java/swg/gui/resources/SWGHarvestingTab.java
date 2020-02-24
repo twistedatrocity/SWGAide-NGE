@@ -42,6 +42,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
@@ -1813,7 +1815,14 @@ final class SWGHarvestingTab extends JPanel {
                         ? Color.RED // ALARM
                         : Color.YELLOW; // warn
             }
-            return new TableCellDecorations(bg, fg, null, (Object[]) null);
+            TableCellDecorations ret;
+            MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
+            if(theme.getName().contains("Dark")) {
+            	ret = new TableCellDecorations(null, bg, null, (Object[]) null);
+            } else {
+            	ret = new TableCellDecorations(bg, fg, null, (Object[]) null);
+            }
+            return ret;
         }
 
         @Override
