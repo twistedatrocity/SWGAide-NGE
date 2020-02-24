@@ -91,6 +91,11 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
      * A input field for the amount of the resource.
      */
     private JTextField amount;
+    
+    /**
+     * A input field for the amount of the resource.
+     */
+    private JTextField cpu;
 
     /**
      * A component for assignees. This component is editable to allow users to
@@ -783,21 +788,38 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         JTextField amt = new JTextField();
         amt.setText("1");
         amt.setToolTipText("Number of units in stock");
-        SWGGuiUtils.setDim(amt, "10000000", 100, 21, true);
         amt.setBorder(BorderFactory.createLoweredBevelBorder());
         amt.setHorizontalAlignment(SwingConstants.RIGHT);
         ((AbstractDocument) amt.getDocument()).setDocumentFilter(
                 new SWGDocNumberFilter());
         travOrder.add(amt);
         JLabel al = makeTextFieldLabel(" Amount");
+        SWGGuiUtils.setDim(amt, "10000000", 100, 25, true);
         al.setToolTipText("Number of units in stock");
         ha.add(amt);
         ha.add(al);
         amount = amt;
+        
+        Box hp = Box.createHorizontalBox();
+        hp.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JTextField cp = new JTextField();
+        cp.setText("1");
+        cp.setToolTipText("Cost Per Unit");
+        cp.setBorder(BorderFactory.createLoweredBevelBorder());
+        cp.setHorizontalAlignment(SwingConstants.RIGHT);
+        ((AbstractDocument) cp.getDocument()).setDocumentFilter(
+                new SWGDocNumberFilter());
+        travOrder.add(cp);
+        JLabel cl = makeTextFieldLabel(" CPU");
+        SWGGuiUtils.setDim(cp, "10000000", 100, 25, true);
+        cl.setToolTipText("Cost Per Unit");
+        hp.add(cp);
+        hp.add(cl);
+        cpu = cp;
 
         JComboBox<String> cnbl = new JComboBox<String>();
         cnbl.setEditable(true);
-        SWGGuiUtils.setDim(cnbl, "A ssigne e", 124, 26, true);
+        SWGGuiUtils.setDim(cnbl, "A ssigne e", 124, 30, true);
         cnbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         cnbl.setAutoscrolls(true);
         cnbl.setToolTipText("Select or define an assignee (optional)");
@@ -830,6 +852,7 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
         Box ob = Box.createVerticalBox();
         ob.add(new JLabel("  "));
         ob.add(ha);
+        ob.add(hp);
         ob.add(cnbl);
         ob.add(Box.createVerticalGlue());
         ob.add(btb);
@@ -1143,7 +1166,8 @@ final class SWGInventoryDialog extends SWGJDialog implements ActionListener {
                 }
             }
         }
-
+        
+        wrap.setCPU(Double.parseDouble(cpu.getText()));
         wrap.setAmount(ZNumber.longVal(amount.getText()));
         wrap.setNotes(notesField.getText());
 

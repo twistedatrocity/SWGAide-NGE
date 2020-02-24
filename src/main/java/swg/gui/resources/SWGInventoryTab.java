@@ -63,6 +63,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.AbstractDocument;
 
+import com.jidesoft.swing.StyledLabel;
+import com.jidesoft.swing.StyledLabelBuilder;
+
 import swg.SWGAide;
 import swg.SWGConstants;
 import swg.crafting.SWGValues;
@@ -248,6 +251,11 @@ public final class SWGInventoryTab extends JPanel {
      * The most recently selected list of wrappers, or {@code null} if is reset.
      */
     private volatile List<SWGInventoryWrapper> wrappers;
+    
+    /**
+     * Label for the total value
+     */
+	private StyledLabel totVal;
 
     /**
      * Creates an instance of this GUI component.
@@ -704,6 +712,28 @@ public final class SWGInventoryTab extends JPanel {
                 row = table.convertRowIndexToModel(row);
             }
             tablePopup(row, e);
+        }
+    }
+    
+    /**
+     * Called when cpu data has changed and sums the value column.
+     */
+    private void actionTotalValue () {
+    	int sum = 0;
+        int pcol=5;
+
+        TableModel t = (TableModel) table.getModel();
+        for (int i = 0; i < t.getRowCount(); i++) {
+        	Object val = t.getValueAt(i, pcol);
+        	if(val != null) {
+        		sum = sum + Integer.parseInt(val.toString());
+        	}
+        }
+        if (sum >0) {
+        	totVal.setText(ZNumber.asText(sum));
+        	StyledLabelBuilder.setStyledText(totVal, "{" + ZNumber.asText(sum) + ":bi}");
+        } else {
+        	totVal.setText(null);
         }
     }
 
@@ -1648,6 +1678,7 @@ public final class SWGInventoryTab extends JPanel {
             resizeBottomPanel();
             SWGHelp.push(helpPage);
             updateStatBar();
+            actionTotalValue();
             if(SWGFrame.verified != null && SWGFrame.verified == true) {
             	cPanel.setVisible(true);
             } else {
@@ -1918,9 +1949,22 @@ public final class SWGInventoryTab extends JPanel {
         bottomPanel.add(makeClearButton());
         bottomPanel.add(makeResourceClassCombo());
         bottomPanel.add(Box.createRigidArea(new Dimension(0, 0))); // size later
+        bottomPanel.add(Box.createRigidArea(new Dimension(0, 0))); // size later
+        bottomPanel.add(makeTotalValue()); // size later
         makeStatFilterFields(bottomPanel);
 
         return bottomPanel;
+    }
+    
+    private Component makeTotalValue () {
+    	Box tbox = Box.createHorizontalBox();
+    	tbox.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    	totVal = new StyledLabel();
+    	totVal.setToolTipText("Total value of all resources in this view");
+    	totVal.setAlignmentX(SwingConstants.RIGHT);
+    	tbox.add(totVal);
+    	
+    	return tbox;
     }
 
     /**
@@ -2079,12 +2123,16 @@ public final class SWGInventoryTab extends JPanel {
         SWGGuiUtils.tableSetColumnWidths(table, 0, 0, w, 5);
         w = SWGGuiUtils.fontWidth(table, "100,000,000", table.getFont()) + 5; // amount
         SWGGuiUtils.tableColumnFixWidth(table, 3, w);
+        w = SWGGuiUtils.fontWidth(table, "CPU0", table.getFont()) + 5; // cpu
+        SWGGuiUtils.tableSetColumnWidths(table, 4, 4, w, 5);
+        w = SWGGuiUtils.fontWidth(table, "100,000,000", table.getFont()) + 5; // value
+        SWGGuiUtils.tableSetColumnWidths(table, 5, 5, w, 50);
 
         // do not set width for the notes column
         w = SWGGuiUtils.fontWidth(table, "1 000", table.getFont()) + 5;
-        SWGGuiUtils.tableSetColumnWidths(table, 4, 4 + 10, w, 5);
+        SWGGuiUtils.tableSetColumnWidths(table, 6, 6 + 10, w, 5);
         w = SWGGuiUtils.fontWidth(table, "999.99", table.getFont()) + 5;
-        SWGGuiUtils.tableColumnSetWidth(table, 15, w, w, w + 10);
+        SWGGuiUtils.tableColumnSetWidth(table, 17, w, w, w + 10);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setAutoCreateRowSorter(true);
@@ -2105,8 +2153,22 @@ public final class SWGInventoryTab extends JPanel {
                 actionTableMouse(e);
             }
         });
-
-        // just for the column-width thing
+        
+     // just for the column-width thing
+        table.getTableHeader().addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseReleased(MouseEvent e)
+            {
+                /* On mouse release, check if column width has changed */
+                if(table.getColumnWidthChanged()) {
+                    // Do whatever you need to do here
+                	resizeBottomPanel();
+                    // Reset the flag on the table.
+                    table.setColumnWidthChanged(false);
+                }
+            }
+        });
+        
         table.getColumnModel().addColumnModelListener(
                 new TableColumnModelListener() {
 
@@ -2115,7 +2177,16 @@ public final class SWGInventoryTab extends JPanel {
 
                     
                     public void columnMarginChanged(ChangeEvent e) {
-                        resizeBottomPanel();
+                    	if(!table.getColumnWidthChanged()) {
+                            /* the condition  below will NOT be true if
+                               the column width is being changed by code. */
+                            if(table.getTableHeader().getResizingColumn() != null) {
+                                // User must have dragged column and changed width
+                            	//resizeBottomPanel();
+                                table.setColumnWidthChanged(true);
+                            }
+                        }
+                        //resizeBottomPanel();
                     }
 
                     public void columnMoved(TableColumnModelEvent e) { /* pass */
@@ -2598,8 +2669,8 @@ public final class SWGInventoryTab extends JPanel {
                 for (int i = 2; i < bottomPanel.getComponentCount(); ++i)
                     resizeComponent(bottomPanel.getComponent(i), i, 0);
 
-                bottomPanel.invalidate();
-                bottomPanel.repaint(300l);
+                bottomPanel.revalidate();
+                bottomPanel.repaint(300L);
             }
 
             @Override
@@ -3114,7 +3185,7 @@ public final class SWGInventoryTab extends JPanel {
          */
         // remember isCellEditable if changes here
         private final String[] columnNames = { "Assignee", "Name", "Class",
-                "Amount", "ER", "CR", "CD", "DR", "FL", "HR", "MA", "PE", "OQ",
+                "Amount", "CPU", "Value", "ER", "CR", "CD", "DR", "FL", "HR", "MA", "PE", "OQ",
                 "SR", "UT", "Rate", "Notes" };
 
         /**
@@ -3133,13 +3204,13 @@ public final class SWGInventoryTab extends JPanel {
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
 
-            if (value == null || column <= 3 || column >= 16) return null;
+            if (value == null || column <= 5 || column >= 18) return null;
 
             SWGInventoryWrapper wrapper = wrappersFiltered().get(row);
             SWGKnownResource kr = wrapper.getResource();
 
-            if (column <= 14) { // stats capRes.max(j));
-                Stat s = gOrder[column - 4];
+            if (column <= 16) { // stats capRes.max(j));
+                Stat s = gOrder[column - 6];
                 int val = kr.stats().value(s);
                 int cap = resourceClass != null
                         ? resourceClass.max(s)
@@ -3150,7 +3221,7 @@ public final class SWGInventoryTab extends JPanel {
                         null, (Object[]) null);
             }
 
-            // column == 15
+            // column == 17
             double d = ((Double) value).doubleValue();
             return new TableCellDecorations(
                         SWGResourceStatRenderer.getStatBackGround(d),
@@ -3160,7 +3231,9 @@ public final class SWGInventoryTab extends JPanel {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            if (columnIndex >= 3 && columnIndex <= 15) return Integer.class;
+        	if (columnIndex == 3) return Integer.class;
+        	if (columnIndex == 4) return Double.class;
+            if (columnIndex >= 5 && columnIndex <= 17) return Integer.class;
             return String.class;
         }
 
@@ -3206,9 +3279,20 @@ public final class SWGInventoryTab extends JPanel {
                 return kr.rc().rcName();
             case 3:
                 return Long.valueOf(wrapper.getAmount());
-            case 4: // fall through
+            case 4:
+            	Double cp = Double.valueOf(wrapper.getCPU());
+            	if (cp>0) {
+            		return cp;
+            	} else return null;
             case 5:
-            case 6:
+            	Long amt = Long.valueOf(wrapper.getAmount());
+            	Double cpu = Double.valueOf(wrapper.getCPU());
+            	Long result;
+            	if (cpu > 0) {
+            		result = (long) (amt * cpu);
+            	} else return null;
+				return result;
+            case 6: // fall through
             case 7:
             case 8:
             case 9:
@@ -3216,12 +3300,14 @@ public final class SWGInventoryTab extends JPanel {
             case 11:
             case 12:
             case 13:
-            case 14: {
-                Stat s = gOrder[col - 4];
+            case 14:
+            case 15:
+            case 16: {
+                Stat s = gOrder[col - 6];
                 int val = kr.stats().value(s);
                 return Integer.valueOf(val);
             }
-            case 15: { // rate
+            case 17: { // rate
                 if (filter == null) return null;
 
                 SWGWeights weights;
@@ -3244,7 +3330,7 @@ public final class SWGInventoryTab extends JPanel {
                 double rating = weights.rate(kr, cap, true);
                 return Double.valueOf(rating);
             }
-            case 16:
+            case 18:
                 return wrapper.getNotes();
 			default:
 				return null;
@@ -3255,7 +3341,7 @@ public final class SWGInventoryTab extends JPanel {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             // remember to fix setValueAt if anything changes here
             // makeMainTable()
-            if (columnIndex == 3 || columnIndex == 16) return true;
+            if (columnIndex == 3 || columnIndex == 4 || columnIndex == 18) return true;
             return false;
         }
 
@@ -3264,7 +3350,7 @@ public final class SWGInventoryTab extends JPanel {
         public void setValueAt(Object value, int rowIndex, int columnIndex) {
             SWGInventoryWrapper wr = wrappersFiltered().get(rowIndex);
 
-            if (columnIndex == 3)
+            if (columnIndex == 3) {
                 try {
                     // XXX: make the cell editor handle error input, it that is
                     // how to do it
@@ -3272,7 +3358,11 @@ public final class SWGInventoryTab extends JPanel {
                 } catch (Exception e) {
                     Toolkit.getDefaultToolkit().beep();
                 }
-            else if (columnIndex == 16) wr.setNotes((String) value);
+            } else if (columnIndex == 4) {
+            	wr.setCPU((double) value);
+            	fireTableCellUpdated(rowIndex, columnIndex+1);
+            	actionTotalValue();
+            } else if (columnIndex == 18) wr.setNotes((String) value);
 
             fireTableCellUpdated(rowIndex, columnIndex);
         }

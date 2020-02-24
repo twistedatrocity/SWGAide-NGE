@@ -25,6 +25,15 @@ import swg.SWGAide;
  */
 @SuppressWarnings("serial")
 public class SWGJTable extends JTable {
+	
+	private boolean isColumnWidthChanged;
+    public boolean getColumnWidthChanged() {
+        return isColumnWidthChanged;
+    }
+
+    public void setColumnWidthChanged(boolean widthChanged) {
+        isColumnWidthChanged = widthChanged;
+    }
 
     /**
      * See {@link JTable#JTable()}
