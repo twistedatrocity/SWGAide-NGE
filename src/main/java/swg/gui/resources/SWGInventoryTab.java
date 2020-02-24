@@ -11,6 +11,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -2093,7 +2095,14 @@ public final class SWGInventoryTab extends JPanel {
      */
     private synchronized void makeGUI() {
         if (isGuiCreated) return;
-
+        
+        this.addComponentListener(new ComponentAdapter() 
+        {  
+        	public void componentResized(ComponentEvent evt) {
+        		resizeBottomPanel();
+        	}
+        });
+        
         setLayout(new BorderLayout());
         add(makeButtonPanel(), BorderLayout.NORTH);
         add(makeMainTable(), BorderLayout.CENTER);
@@ -2154,19 +2163,17 @@ public final class SWGInventoryTab extends JPanel {
             }
         });
         
-     // just for the column-width thing
+        // just for the column-width thing
         table.getTableHeader().addMouseListener(new MouseAdapter() {
         	@Override
-            public void mouseReleased(MouseEvent e)
-            {
-                /* On mouse release, check if column width has changed */
-                if(table.getColumnWidthChanged()) {
-                    // Do whatever you need to do here
-                	resizeBottomPanel();
-                    // Reset the flag on the table.
-                    table.setColumnWidthChanged(false);
-                }
-            }
+        	public void mouseReleased(MouseEvent e)
+        	{
+        		/* On mouse release, check if column width has changed */
+        		if(table.getColumnWidthChanged()) {
+        			resizeBottomPanel();
+        			table.setColumnWidthChanged(false);
+        		}
+        	}
         });
         
         table.getColumnModel().addColumnModelListener(
@@ -2182,11 +2189,9 @@ public final class SWGInventoryTab extends JPanel {
                                the column width is being changed by code. */
                             if(table.getTableHeader().getResizingColumn() != null) {
                                 // User must have dragged column and changed width
-                            	//resizeBottomPanel();
                                 table.setColumnWidthChanged(true);
                             }
                         }
-                        //resizeBottomPanel();
                     }
 
                     public void columnMoved(TableColumnModelEvent e) { /* pass */
@@ -3340,7 +3345,6 @@ public final class SWGInventoryTab extends JPanel {
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             // remember to fix setValueAt if anything changes here
-            // makeMainTable()
             if (columnIndex == 3 || columnIndex == 4 || columnIndex == 18) return true;
             return false;
         }
