@@ -1,5 +1,6 @@
 package swg.gui.common;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public final class SWGHelp extends SWGJDialog {
         StyleSheet styleSheet = kit.getStyleSheet();
         Style style = styleSheet.getStyle("body");
         StyleConstants.setFontSize(style, SWGGuiUtils.fontPlain().getSize());
-        StyleConstants.setBackground(style, UIManager.getColor("TextArea.background"));
+        StyleConstants.setBackground(style, new Color(0,0,0,0));
         StyleConstants.setForeground(style, UIManager.getColor("TextArea.foreground"));
         style = styleSheet.getStyle("h1");
         StyleConstants.setFontSize(style, Math.round(StyleConstants.getFontSize(style)*SWGGuiUtils.fontMultiplier()) );
