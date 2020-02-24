@@ -38,6 +38,13 @@ public final class SWGInventoryWrapper implements Serializable,
      * @serial a long integer
      */
     private long amount = 1;
+    
+    /**
+     * Cost Per Unit
+     * 
+     * @serial a double
+     */
+    private double cpu = 1.0;
 
     /**
      * The name of the assignee for this wrapper. This may be the name of a
@@ -142,6 +149,7 @@ public final class SWGInventoryWrapper implements Serializable,
     SWGInventoryWrapper copy(String ass) {
         SWGInventoryWrapper ret = new SWGInventoryWrapper(this.resource, ass);
         ret.amount = this.amount;
+        ret.cpu = this.cpu;
         ret.notes = this.notes;
         return ret;
     }
@@ -153,6 +161,15 @@ public final class SWGInventoryWrapper implements Serializable,
      */
     public long getAmount() {
         return amount;
+    }
+    
+    /**
+     * Returns the cost per unit for this object
+     * 
+     * @return the cpu
+     */
+    public double getCPU() {
+    	return cpu;
     }
 
     /**
@@ -196,6 +213,18 @@ public final class SWGInventoryWrapper implements Serializable,
             this.amount = 0;
         else
             this.amount = amount;
+    }
+    
+    /**
+     * Sets the cost per unit for this object.
+     * 
+     * @param the cpu to to set
+     */
+    void setCPU(double cpu) {
+    	if (cpu <0)
+    		this.cpu = 1.0;
+    	else
+    		this.cpu = cpu;
     }
 
     /**
