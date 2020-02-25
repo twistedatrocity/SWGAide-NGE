@@ -471,7 +471,7 @@ public final class SWGInventoryTab extends JPanel {
      */
     private void actionExportNotes(SWGCharacter toon) {
         SWGNotes notes = notesFile(toon);
-        notesWrite(notes, toon);
+        notesWrite(notes);
     }
 
     /**
@@ -1728,7 +1728,7 @@ public final class SWGInventoryTab extends JPanel {
                 frame.setCursor(
                         Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
                 replaceQuestionMarks = false; // ensure default
-
+                actionTotalValue();
                 updateDisplay();
             }
 
@@ -2125,18 +2125,15 @@ public final class SWGInventoryTab extends JPanel {
         SWGTableCellEditor te = new SWGTableCellEditor(SwingConstants.TRAILING);
         TableColumnModel tcm = table.getColumnModel();
         tcm.getColumn(3).setCellEditor(te);
-        tcm.getColumn(16).setCellEditor(te);
+        tcm.getColumn(4).setCellEditor(te);
+        tcm.getColumn(18).setCellEditor(te);
 
         SWGGuiUtils.setRowHeight(table);
-        int w = SWGGuiUtils.fontWidth(table, "A  ssigne  e", table.getFont()) + 5;
-        SWGGuiUtils.tableSetColumnWidths(table, 0, 0, w, 5);
+        int w;
         w = SWGGuiUtils.fontWidth(table, "100,000,000", table.getFont()) + 5; // amount
         SWGGuiUtils.tableColumnFixWidth(table, 3, w);
         w = SWGGuiUtils.fontWidth(table, "CPU0", table.getFont()) + 5; // cpu
         SWGGuiUtils.tableSetColumnWidths(table, 4, 4, w, 5);
-        w = SWGGuiUtils.fontWidth(table, "100,000,000", table.getFont()) + 5; // value
-        SWGGuiUtils.tableSetColumnWidths(table, 5, 5, w, 50);
-
         // do not set width for the notes column
         w = SWGGuiUtils.fontWidth(table, "1 000", table.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(table, 6, 6 + 10, w, 5);
@@ -2391,7 +2388,7 @@ public final class SWGInventoryTab extends JPanel {
             for (String line : nl) {
                 line = line.trim();
                 if (ZReader.isComment(line)) continue;
-                SWGInventoryWrapper w = notesReadWrapper(line, ass, gxy, err);
+                SWGInventoryWrapper w = notesReadWrapper(line, gxy, err);
                 if (w == null)
                     return Collections.emptyList(); // abort
                 if (w != SWGInventoryWrapper.DUMMY)
@@ -2426,14 +2423,14 @@ public final class SWGInventoryTab extends JPanel {
      *         {@link SWGInventoryWrapper#DUMMY} determined by if the user
      *         selects to abort or if parsing can continue respectively
      */
-    private SWGInventoryWrapper notesReadWrapper(String line, String assignee,
-            SWGCGalaxy galaxy, ZString err) {
+    private SWGInventoryWrapper notesReadWrapper(String line, SWGCGalaxy galaxy, ZString err) {
 
         // line = [(galaxyName)]resourceName,amount[,whatever]
         StringTokenizer tok = new StringTokenizer(line);
         try {
             SWGCGalaxy gxy; // resource origin
-            String name;
+            String name = null;
+            String assignee;
             String token = tok.nextToken(",;.:").trim();
             if (token.startsWith("(")) { // begins with (galaxyName)
                 int end = token.indexOf(')');
@@ -2447,16 +2444,21 @@ public final class SWGInventoryTab extends JPanel {
                 }
 
                 gxy = SWGCGalaxy.fromName(rgg);
-                name = token.substring(end + 1);
+                assignee = token.substring(end + 1);
             } else {
                 gxy = galaxy;
-                name = token;
+                assignee = token;
             }
-            name = ZString.tac(name);
+            assignee = ZString.tac(assignee);
 
             long amount = 0L;
+            double cpu = 0;
             String eas = null;
             String notesString = null;
+            if (tok.hasMoreTokens()) {
+            	name = tok.nextToken(",;.:");
+            	name = ZString.tac(name);
+            }
             if (tok.hasMoreTokens()) {
                 String amt = tok.nextToken(" ,;.:");
                 if (amt.startsWith("=")
@@ -2470,6 +2472,14 @@ public final class SWGInventoryTab extends JPanel {
                         ? amount
                         : 0;
 
+                
+                if (tok.hasMoreTokens()) {
+                	String cp = tok.nextToken(" ,;.:");
+                	cp = cp.trim();
+                	if(!cp.isBlank()) {
+                		cpu = Double.parseDouble(cp);
+                	}
+                }
                 if (tok.hasMoreTokens()) {
                     notesString = tok.nextToken("\n\r");
                     notesString = notesShaveString(notesString);
@@ -2484,6 +2494,7 @@ public final class SWGInventoryTab extends JPanel {
             if (res != null) {
                 SWGInventoryWrapper wr = new SWGInventoryWrapper(res, assignee);
                 wr.setAmount(amount);
+                wr.setCPU(cpu);
                 wr.equalAddSub = eas;
                 wr.setNotes(notesString);
                 return wr;
@@ -2539,8 +2550,10 @@ public final class SWGInventoryTab extends JPanel {
                     ? g.getName()
                     : "?").app(")");
         }
+        z.app(w.getAssignee()).app(", ");
         z.app(w.getResource().getName()).app(", ");
         z.app(Long.toString(w.getAmount())).app(", ");
+        z.app(Double.toString(w.getCPU())).app(", ");
 
         String n = w.getNotes().split("\n\r", 1)[0]; // just first line if many
         z.appnl(n);
@@ -2555,7 +2568,7 @@ public final class SWGInventoryTab extends JPanel {
      * @param notes the notes
      * @param toon the currently selected character
      */
-    private void notesWrite(SWGNotes notes, SWGCharacter toon) {
+    private void notesWrite(SWGNotes notes) {
         if (notes == null) return;
 
         List<SWGInventoryWrapper> wl = wrappersFiltered();
@@ -2568,7 +2581,7 @@ public final class SWGInventoryTab extends JPanel {
         try {
             ZString z = new ZString();
 
-            notesWriteHeader(z, toon);
+            notesWriteHeader(z);
             for (SWGInventoryWrapper w : wl)
                 notesWrite(w, z);
 
@@ -2585,11 +2598,12 @@ public final class SWGInventoryTab extends JPanel {
      * @param z a string
      * @param toon the currently selected character
      */
-    private void notesWriteHeader(ZString z, SWGCharacter toon) {
-        z.app("# SWGAide :: Inventory for ").app(toon.getName()).app(" @ ");
+    private void notesWriteHeader(ZString z) {
+    	String ass = (String) assigneeCombo.getSelectedItem();
+        z.app("# SWGAide :: Inventory for ").app(ass).app(" @ ");
         z.app(recentGalaxy.getName()).appnl(" at the notes file format:");
-        z.appnl("# resourcename, amount      or      (galaxy)name, amount");
-        z.appnl("# To change the amount you can optionally prepend + - or = which will");
+        z.appnl("# assignee, resourcename, amount, cpu, notes");
+        z.appnl("# To change the amount you can optionally prepend + - or = to the amount value which will");
         z.appnl("# add, subtract, or set the amount, press F1 for details").nl();
     }
 
@@ -3285,14 +3299,14 @@ public final class SWGInventoryTab extends JPanel {
             case 3:
                 return Long.valueOf(wrapper.getAmount());
             case 4:
-            	Double cp = Double.valueOf(wrapper.getCPU());
+            	double cp = Double.valueOf(wrapper.getCPU());
             	if (cp>0) {
             		return cp;
             	} else return null;
             case 5:
-            	Long amt = Long.valueOf(wrapper.getAmount());
-            	Double cpu = Double.valueOf(wrapper.getCPU());
-            	Long result;
+            	long amt = Long.valueOf(wrapper.getAmount());
+            	double cpu = Double.valueOf(wrapper.getCPU());
+            	long result;
             	if (cpu > 0) {
             		result = (long) (amt * cpu);
             	} else return null;
@@ -3363,9 +3377,13 @@ public final class SWGInventoryTab extends JPanel {
                     Toolkit.getDefaultToolkit().beep();
                 }
             } else if (columnIndex == 4) {
-            	wr.setCPU((double) value);
-            	fireTableCellUpdated(rowIndex, columnIndex+1);
-            	actionTotalValue();
+            	try {
+            		wr.setCPU((double) value);
+            		fireTableCellUpdated(rowIndex, columnIndex+1);
+            		actionTotalValue();
+            	} catch (Exception e) {
+            		Toolkit.getDefaultToolkit().beep();
+            	}
             } else if (columnIndex == 18) wr.setNotes((String) value);
 
             fireTableCellUpdated(rowIndex, columnIndex);
