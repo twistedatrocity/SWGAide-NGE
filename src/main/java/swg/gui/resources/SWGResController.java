@@ -1493,7 +1493,17 @@ public final class SWGResController implements UpdateSubscriber {
             List<SWGInventoryWrapper> asl = inventory(
                     iw.getAssignee(), gxy, true);
 
-            if (iw.equalAddSub == null) {
+            int size = asl.size();
+            boolean found = false;
+            for (int i = 0; i < size; i++) {
+                SWGInventoryWrapper v = asl.get(i);
+                if(v.getResource().getName().equals(iw.getResource().getName())) {
+                	found = true;
+                }
+            }
+            if(found) {
+            	inventoryAddUpdate(iw, gxy, asl);
+            } else if (iw.equalAddSub == null) {
                 inventoryAddHelper(iw, asl);
             } else {
                 inventoryAddUpdate(iw, gxy, asl);
@@ -1528,26 +1538,15 @@ public final class SWGResController implements UpdateSubscriber {
         synchronized (inventoryMap) {
             List<SWGInventoryWrapper> wl = inventory(ass, gxy, false);
             if (wl != null) {
-            	// this is old school but I did not feel like coming up with a
-            	// lambda stream predicate to search the collection.
-            	boolean hit = false;
                 for (SWGInventoryWrapper w : wl) {
-	                if (w.getResource() == kr) {
-	                	hit = true;
+	                if (w.getResource().getName().equals(kr.getName())) {
+	                	w.setAmount(w.getAmount() + amount);
+	                	return;
 	                }
                 }
-                if (hit == true) {
-	                for (SWGInventoryWrapper w : wl) {
-		                if (w.getResource() == kr) {
-		                    w.setAmount(w.getAmount() + amount);
-		                    return;
-		                }
-	                }
-                } else {
-                	SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
-    	            w.setAmount(amount);
-    	            inventoryAdd(w, gxy);
-                }
+                SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
+                w.setAmount(amount);
+                inventoryAdd(w, gxy);
             } else {
 	            // else, either no list of wrappers or no wrapper was found
 	            SWGInventoryWrapper w = new SWGInventoryWrapper(kr, ass);
@@ -1624,7 +1623,11 @@ public final class SWGResController implements UpdateSubscriber {
         if (aw != null) {
             long old = aw.getAmount();
             long eas = iw.getAmount();
-            if (iw.equalAddSub.equals("="))
+            double cpu = iw.getCPU();
+            aw.setCPU(cpu);
+            if (iw.equalAddSub == null) {
+            	aw.setAmount(eas); // replace
+            } else if (iw.equalAddSub.equals("="))
                 aw.setAmount(eas); // replace
             else if (iw.equalAddSub.equals("+"))
                 aw.setAmount(old + eas); // add
