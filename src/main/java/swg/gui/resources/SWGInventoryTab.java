@@ -17,6 +17,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -64,6 +65,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.AbstractDocument;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 import com.jidesoft.swing.StyledLabel;
 import com.jidesoft.swing.StyledLabelBuilder;
@@ -1289,7 +1293,9 @@ public final class SWGInventoryTab extends JPanel {
                 assignee = standin;
 
             SWGKnownResource res = null;
-
+            if (order[1] >= 0 && !splitted[order[1]].isEmpty()) {
+            	
+            }
             // begin with ID, if present and valid we can skip many other fields
             if (order[3] >= 0 && !splitted[order[3]].isEmpty()) {
                 long id = ZNumber.longExc(splitted[order[3]]);
@@ -1530,75 +1536,25 @@ public final class SWGInventoryTab extends JPanel {
      */
     private void fileWrite(List<SWGInventoryWrapper> wl, File file) {
         try {
-            ZWriter wr = ZWriter.newTextWriterExc(file, false);
-            fileWriteHeader(wr);
-            for (SWGInventoryWrapper w : wl) {
-                fileWrite(w, wr);
-			}
-			wr.close();
+        	CSVPrinter printer = new CSVPrinter(new FileWriter(file), CSVFormat.EXCEL);
+        	printer.printRecord("assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "CPU", "ER", "CR",
+        			"CD", "DR", "FL", "HR", "MA", "PE", "OQ", "SR", "UT", "notes");
+        	
+        	for (int i = 0; i < wl.size(); i++) {
+        		SWGInventoryWrapper w = wl.get(i);
+        		int[] stats = w.getResource().stats().values();
+        		printer.printRecord(w.getAssignee(), w.getResource().galaxy().getName(), w.getResource().getName(),
+        				w.getResource().id(), w.getResource().rc().rcName(), w.getResource().rc().rcToken(),
+        				w.getAmount(), w.getCPU(), stats[0], stats[1], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8],
+        				stats[9], stats[10], ZHtml.replaceEOL(w.getNotes()) );
+        	}
+        	printer.close();
 
         } catch (Throwable e) {
             if (SWGConstants.DEV_DEBUG) e.printStackTrace();
             SWGAide.printDebug("invy", 1, "SWGInventoryTab:fileWrite:",
                     e.getMessage());
         }
-    }
-
-    /**
-     * Helper method which writes the specified inventory wrapper to file.
-     * 
-     * @param w the wrapper to write
-     * @param wr the file writer
-     * @throws Exception if there is an error
-     */
-    private void fileWrite(SWGInventoryWrapper w, ZWriter wr)
-            throws Exception {
-        // Format: assignee,galaxy,resourceName,ID,resourceClass,
-        // classToken,amount,ER,CR,CD,DR,FL,HR,MA,PE,OQ,SR,UT,notes
-
-        wr.writeExc(w.getAssignee().replace(',', '\u00b8'));
-        wr.writeExc(",");
-        SWGCGalaxy g = w.getResource().galaxy();
-        wr.writeExc(g != null
-                ? g.getName()
-                : ""); // recycled have no galaxy
-        wr.writeExc(",");
-        wr.writeExc(w.getResource().getName());
-        wr.writeExc(",");
-        wr.writeExc(Long.toString(w.getResource().id()));
-        wr.writeExc(",");
-        wr.writeExc(w.getResource().rc().rcName());
-        wr.writeExc(",");
-        wr.writeExc(w.getResource().rc().rcToken());
-        wr.writeExc(",");
-        wr.writeExc(Long.toString(w.getAmount()));
-        wr.writeExc(",");
-        String stats = w.getResource().stats().toString(true);
-        stats = stats.replace(" ", "");
-        wr.writeExc(stats);
-        wr.writeExc(",");
-        wr.writelnExc(ZHtml.replaceEOL(w.getNotes()));
-    }
-
-    /**
-     * Helper method which writes the header of the export file.
-     * 
-     * @param fw the file writer
-     * @throws Exception if there is an error
-     */
-    private void fileWriteHeader(ZWriter fw) throws Exception {
-        String assignee = (String) assigneeCombo.getSelectedItem();
-        fw.writeExc("# SWGAide :: Inventory for ");
-        if (assignee != null) {
-            fw.writeExc(assignee);
-            fw.writeExc(" @ ");
-        }
-        fw.writeExc(recentGalaxy.getName());
-        fw.writelnExc(", file format \"CSV\" (Comma Separated Values)");
-        fw.writelnExc("# Galaxy name is always written to make transfers possible");
-        fw.writelnExc("# Comma signs are IMPORTANT. Stats and notes are optional.");
-        fw.writeExc("# assignee,galaxy,resourceName,ID,resourceClass,");
-        fw.writelnExc("classToken,amount,ER,CR,CD,DR,FL,HR,MA,PE,OQ,SR,UT,notes");
     }
 
     /**
