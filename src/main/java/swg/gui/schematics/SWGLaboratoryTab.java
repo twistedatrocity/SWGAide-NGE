@@ -550,7 +550,6 @@ final class SWGLaboratoryTab extends JPanel {
             filterCheckboxes = new ArrayList<EFilter>();
             if(s.quality.getName().contains("HQ") || s.quality.getName().contains("mixed")) {
             	for (SWGSchematicWrapper w : wl) {
-            		w.schem().getExperimentGroups();
             		for (SWGExperimentGroup eg : w.schem().getExperimentGroups() ) {
             			expGroups.put(eg.getDescription(), eg);
             		}
