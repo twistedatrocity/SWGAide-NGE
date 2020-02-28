@@ -16,9 +16,11 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -67,7 +66,9 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.text.AbstractDocument;
 
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
 import com.jidesoft.swing.StyledLabel;
 import com.jidesoft.swing.StyledLabelBuilder;
@@ -105,13 +106,11 @@ import swg.model.SWGStation;
 import swg.swgcraft.SWGResourceManager;
 import swg.swgcraft.SWGResourceTuple;
 import swg.swgcraft.SWGSoapListResResponse;
-import swg.swgcraft.SWGSoapNOResResponse;
 import swg.tools.ZCSV;
 import swg.tools.ZHtml;
 import swg.tools.ZNumber;
 import swg.tools.ZReader;
 import swg.tools.ZString;
-import swg.tools.ZWriter;
 
 /**
  * The GUI component for individual resource inventories. The main section of
@@ -193,12 +192,6 @@ public final class SWGInventoryTab extends JPanel {
     private boolean isGuiCreated = false;
 
     /**
-     * A flag that denotes that the currently imported file probably is exported
-     * from JnF.
-     */
-    private boolean isJNF;
-
-    /**
      * A flag which denotes if GUI events should be ignored until later. This
      * flag is {@code true} if there is a process importing guards, or if the
      * GUI is resetting.
@@ -211,15 +204,6 @@ public final class SWGInventoryTab extends JPanel {
      * {@link SWGResourceTab#galaxy()}.
      */
     private SWGCGalaxy recentGalaxy;
-
-    /**
-     * A flag which is used during import-from-file. If there is an entry with
-     * the galaxy descriptor reading "(?)" a GUI dialog is raised and the user
-     * is asked to replace all occurrences of "(?)" with the current galaxy. If
-     * the user accepts this flag is set to {@code true}. This flag is per
-     * import session and must be cleared when the import is ready.
-     */
-    private boolean replaceQuestionMarks = false;
 
     /**
      * The resource class which is selected by the user to filter the view from
@@ -408,6 +392,7 @@ public final class SWGInventoryTab extends JPanel {
                 SWGResController.inventoryRemove(wr, recentGalaxy);
 
             isWorking = false;
+            totVal.setText(" ");
             actionResetBottomPanel();
         }
     }
@@ -429,6 +414,7 @@ public final class SWGInventoryTab extends JPanel {
                 "Confirm deletion")) {
             SWGResController.inventoryRemove(wr, recentGalaxy);
             updateDisplay();
+            actionTotalValue();
         }
     }
 
@@ -738,9 +724,12 @@ public final class SWGInventoryTab extends JPanel {
         if (sum >0) {
         	totVal.setText(ZNumber.asText(sum));
         	StyledLabelBuilder.setStyledText(totVal, "{" + ZNumber.asText(sum) + ":bi}");
+        	totVal.setVisible(true);
         } else {
-        	totVal.setText(null);
+        	totVal.setText(" ");
         }
+        totVal.revalidate();
+        totVal.repaint(300L);
     }
 
     /**
@@ -908,7 +897,142 @@ public final class SWGInventoryTab extends JPanel {
         return dl;
     }
 
-    /**
+    private List<SWGInventoryWrapper> fileImportParse(CSVParser parser, String curAss, List<String> lAss,
+			SWGCGalaxy curGxy) throws Throwable {
+    	importCounter = 0;
+        List<SWGInventoryWrapper> ret = new ArrayList<SWGInventoryWrapper>();
+    	
+    	SWGCGalaxy gxy;
+    	for (CSVRecord record : parser) {
+    		++importCounter;
+            frame.putToStatbar(null,null);
+            
+    		SWGAide.printDebug("SWGInventoryTab", 9, "import CSV  Data: " + record);
+    		// first see if we even have a proper galaxy and if it's correct one before proceeding.
+    		String g = record.get("galaxy");
+    		if (SWGCGalaxy.isNameValid(g)) {
+    			gxy = SWGCGalaxy.fromName(g);
+    		} else if ((g = SWGCGalaxy.properName(g)) != null) {
+    			gxy = SWGCGalaxy.fromName(g);
+    		} else {
+    			showError("No Galaxy\n" +
+    					"Review documentation on file syntax, press F1\n" +
+    					"Aborting", "No Galaxy");
+    			return null;
+    		}
+    		if(!gxy.equals(curGxy)) {
+    			showError("Incorrect Galaxy\n" +
+    					"You are trying to import resources from\n" +
+    					gxy.getName() + " into " + curGxy.getName() + "\n" +
+    					"Please select a character that lives in the galaxy you are trying to import.\n" +
+    					"Aborting", "Incorrect Galaxy");
+    			return null;
+    		}
+    		// next lets check if the assignee is valid and exists
+    		String a = record.get("assignee").trim();
+    		String ass = curAss;
+    		if(!a.isEmpty() && lAss.contains(a)) {
+    			ass = a;
+    		}
+    		// get resource class
+            String cln = null; // class name
+            String clt = null; // class token
+            
+            if (record.get("resourceClass") != null && !record.get("resourceClass").trim().isEmpty())
+                cln = record.get("resourceClass").trim();
+            if (record.get("classToken") != null && !record.get("classToken").trim().isEmpty())
+                clt = record.get("classToken").trim(); // class token
+            if (cln == null && clt == null) {
+            	showError("No valid resource class\n" +
+                        "Review documentation on file syntax, press F1\n" +
+                        "Aborting", "Invalid resource class");
+            	return null;
+            }
+
+            SWGResourceClass cls = null;
+            SWGKnownResource res = null;
+            if (cln != null && SWGResourceClass.rcID(cln) >= 0)
+                cls = SWGResourceClass.rc(cln);
+            if (cls == null && clt != null && SWGResourceClass.rcID(clt) >= 0)
+                cls = SWGResourceClass.rc(clt);
+
+            if (cls == null) {
+            	showError("No valid resource class\n" +
+                        "Review documentation on file syntax, press F1\n" +
+                        "Aborting", "Invalid resource class");
+            	return null;
+            }
+            String name = null;
+            if (record.get("resourceName") != null && !record.get("resourceName").trim().isEmpty()) {
+                name = ZString.tac(record.get("resourceName"));
+                if (name.length() <3 ) {
+                	showError("Invalid name detected: " + name + "\n" +
+                            "Review documentation on file syntax, press F1\n" +
+                            "Aborting", "Invalid Name");
+                	return null;
+                }
+            }
+
+            if (cls.isSpaceOrRecycled()) {
+                res = cls.spaceOrRecycled();
+                res.galaxy(gxy);
+            } else {
+            	// lookup by name
+            	if(res==null && name != null && name.length() >= 3) {
+            		frame.putToStatbar(String.format(
+            				"%s(%s) - Lookup %s @ %s",
+            				Integer.toString(importCounter),
+            				Integer.toString(importLines),
+            				name, gxy.getName()),null);
+            		res = SWGResourceManager.getInstance(name, gxy);
+            	}
+            	//}
+            }
+            // if res is still null then we will assume it's a local resource
+            if (res == null) {
+                SWGMutableResource mr = new SWGMutableResource(name, cls);
+                mr.galaxy(gxy);
+                SWGResourceStats stats = new SWGResourceStats();
+                for (Stat s : Stat.values()) {
+                	stats.set(s, ZNumber.intVal(record.get(s.getName())));
+                }
+                mr.stats(stats, true);
+                res = SWGResourceManager.getInstance(mr);
+            }
+            
+            //for sanity. if res is still null show error and exit loop.
+            if (res == null) {
+            	showError("Invalid Resource detected\n" +
+                        "Review documentation on file syntax, press F1\n" +
+                        "Aborting", "Invalid Resource");
+            	return null;
+            }
+            // finally, we have a resource
+
+            // Create an inventory wrapper from the info
+            SWGInventoryWrapper wr = new SWGInventoryWrapper(res, ass);
+            // get and set the amount
+            long amt = Long.parseLong(record.get("amount"));
+            if (amt >= 0) wr.setAmount(amt);
+            // get and set CPU
+            if(record.isMapped("CPU")) {
+            	double cpu = Double.parseDouble(record.get("CPU"));
+            	if(cpu > 0) {
+            		wr.setCPU(cpu);
+            	}
+            }
+            // get and set notes
+            if (!record.get("notes").trim().isEmpty()) {
+            	String notes = record.get("notes");
+            	wr.setNotes(ZHtml.regainEOL(notes));
+            }
+            
+            ret.add(wr);
+    	}
+		return ret;
+	}
+
+	/**
      * Helper method which imports inventory wrappers from the specified file,
      * this is the entry point. See {@link #actionImportFile()} for details on
      * the this implementation. The execution is performed on a background
@@ -917,8 +1041,79 @@ public final class SWGInventoryTab extends JPanel {
      * @param file the file to read from
      */
     private void fileRead(final File file) {
+    	try {
+    		
+    		ZReader tr = ZReader.newTextReaderExc(file);
+    		StringBuilder cvList = new StringBuilder();
+            String line;
+            boolean header = false;
+            boolean newheader = false;
+            int cnt = 0;
+            while ((line = tr.lineExc(false)) != null) {
+                if (!line.isEmpty()) {
+                    if ((line.startsWith("#") || line.startsWith("\"#"))) {
+                        if (line.indexOf("resourceName") > 0
+                                || line.indexOf("ID") > 0
+                                || line.indexOf("resourceClass") > 0
+                                || line.indexOf("classToken") > 0) {
+                        	header = true;
+                        	if(line.indexOf("CPU") > 0) {
+                        		newheader = true;
+                        	}
+                        }
+                    } else if (isJNF(line) > 0) {
+                    	showError("No valid header line. JnF not supported.\n" +
+                                "Review documentation on file syntax, press F1\n" +
+                                "Aborting", "Invalid header");
+                    	return;
+                    } else {
+                    	cvList.append(line).append("\n");
+                    	++cnt;
+                    }
+                }
+            }
+            tr.close();
+            importLines = cnt;
+            if(!header) {
+            	showError("No valid header line\n" +
+                        "Review documentation on file syntax, press F1\n" +
+                        "Aborting", "Invalid header");
+            	return;
+            }
+            
+            BufferedReader buffer = new BufferedReader(new StringReader(cvList.toString()));
+            CSVParser parser;
+            if(newheader) {
+            	parser = CSVParser.parse(buffer, CSVFormat.EXCEL.withHeader("assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "CPU", "ER", "CR",
+            			"CD", "DR", "FL", "HR", "MA", "PE", "OQ", "SR", "UT", "notes"));
+            } else {
+            	parser = CSVParser.parse(buffer, CSVFormat.EXCEL.withHeader("assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "ER", "CR",
+            			"CD", "DR", "FL", "HR", "MA", "PE", "OQ", "SR", "UT", "notes"));
+            }
+			SWGAide.printDebug("SWGInventoryTab", 9, "import CSV  Data: " + parser);
+			final String curAss = assignee();
+			final List<String> lAss = assignees();
+	        final SWGCGalaxy curGxy = recentGalaxy;
+	        
+	        // run the parser in a thread so GUI can be freed up
+	        Runnable parse = () -> {
+	        	try {
+	        		List<SWGInventoryWrapper> wl = fileImportParse(parser, curAss, lAss, curGxy);
+	        		if(wl !=null) {
+	        			SWGResController.inventoryAdd(wl, curGxy);
+	        		}
+	        		importDone();
+	        	} catch (Throwable e) {
+	        		SWGAide.printError("SWGInventoryTab:csv import error: ", e);
+	        	}
+	        };
+	        // start the thread
+	        new Thread(parse).start();
+		} catch (Exception e) {
+			SWGAide.printError("SWGInventoryTab:csv import error: ", e);
+		}
 
-        final int[] order = fileReadHeader(file);
+    	/*final int[] order = fileReadHeader(file);
         if (order == null)
             return; // there is an error, already communicated
 
@@ -946,585 +1141,7 @@ public final class SWGInventoryTab extends JPanel {
             public String toString() {
                 return "SWGInventoryTab:fileRead";
             }
-        });
-    }
-
-    /**
-     * Helper method which returns a pair parsed from the specified string. This
-     * method supports the old style{@code (Galaxy)Resourcename }as well as the
-     * new style{@code Resourcename}. The pair is formed as follows:
-     * <p>
-     * <ol start="0">
-     * <li>the galaxy representation, one of...<br/>
-     * &mdash; the parsed galaxy name &mdash; <b>not</b> validated<br/>
-     * &mdash; a question mark, if that is parsed<br/>
-     * &mdash; {@code null} if no galaxy is parsed<br/>
-     * </li>
-     * <li>the resource name, possibly the empty string but never {@code null}</li>
-     * </ol>
-     * 
-     * @param string a string to parse
-     * @return a pair for the galaxy name and resource name
-     */
-    private String[] fileReadGalaxyAndName(String string) {
-        if (string.startsWith("(")) { // galaxy indicator
-            int g = string.indexOf(')');
-            String gn = string.substring(1, g).trim();
-            return (new String[] { gn, string.substring(g + 1).trim() });
-        }
-        return (new String[] { null, string });
-    }
-
-    /**
-     * Helper method which parses the header of the import file and returns an
-     * array with a default order of the columns. If there is an error this
-     * method raises a GUI dialog and returns {@code null}. More formally, this
-     * method returns an integer array which translates from the order of the
-     * columns in the file header to a default order. If a column is missing its
-     * value is -1. The default order is:
-     * 
-     * <pre> | 0|  assignee
-     * | 1|  galaxy
-     * | 2|  resourceName
-     * | 3|  ID
-     * | 4|  resource class
-     * | 5|  classToken
-     * | 6|  amount
-     * | 7|  CD
-     * | 8|  CR
-     * | 9|  DR
-     * |10|  ER
-     * |11|  FL
-     * |12|  HR
-     * |13|  MA
-     * |14|  OQ
-     * |15|  PE
-     * |16|  SR
-     * |17|  UT
-     * |18|  notes</pre>
-     * 
-     * <b>Notice:</b> The stats are ordered by the model and not by the order
-     * they are printed. Any order of the columns is supported, except that
-     * notes always must be the rightmost column since it can have comma signs
-     * in its text. In fact, just a valid ID would suffice for the most meager
-     * entry. This method has no notion of "optional" columns, just present or
-     * not.
-     * <p>
-     * <b>Notice:</b> For each element of the returned array the following is
-     * always true about their values: <br/>
-     * &mdash; for each element which value is zero or greater, no other element
-     * has an equal value; the positive values are unique <br/>
-     * &mdash; for each element its value is strictly less than the number of
-     * columns parsed from the header line
-     * <p>
-     * <b>Notice:</b> This implementation performs no validation whatsoever,
-     * except that "notes" must be the final column.
-     * 
-     * @param file the file to read from
-     * @return an integer array which translates from the order of the columns
-     *         in the file header to the default order, or {@code null} if there
-     *         is an error
-     */
-    private int[] fileReadHeader(File file) {
-        try {
-            ZReader tr = ZReader.newTextReaderExc(file);
-
-            String line;
-            int jnf = -1;
-            while ((line = tr.lineExc(false)) != null) {
-                if (!line.isEmpty()) {
-                    if ((line.startsWith("#") || line.startsWith("\"#"))) {
-                        if (line.indexOf("resourceName") > 0
-                                || line.indexOf("ID") > 0
-                                || line.indexOf("resourceClass") > 0
-                                || line.indexOf("classToken") > 0)
-                            break;
-                    } else if ((jnf = isJNF(line)) > 0)
-                        break;
-                }
-            }
-            tr.close();
-
-            if (jnf > 0) {
-                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
-                        this, "Is this file exported from JnF Tool?", "JnF?",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
-
-                    // cl;nm;ft;ER;CR;CD;DR;FL;HR;MB;PE;OQ;SR;UT;amt;g:CPU;[misc]
-                    // 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 . 17
-                    isJNF = true;
-                    return new int[] { -1, -1, 1, -1, 0, -1, 14, 5, 4, 6, 3,
-                            7, 8, 9, 11, 10, 12, 13, jnf >= 18
-                                    ? 17
-                                    : -1 };
-                }
-                // else: not JnF and not valid header
-                line = null;
-                isJNF = false;
-            }
-            if (line == null || line.isEmpty()) {
-                showError("No valid header line\n" +
-                        "Review documentation on file syntax, press F1\n" +
-                        "Aborting", "Invalid header");
-                return null;
-            }
-
-            int[] order = new int[19]; // possible columns
-            Arrays.fill(order, -1); // value for missing stat
-
-            String[] deflt = { "assignee", "galaxy", "resourceName", "ID",
-                            "resourceClass", "classToken", "amount",
-                            "CD", "CR", "DR", "ER", "FL", "HR",
-                            "MA", "OQ", "PE", "SR", "UT", "notes" };
-            line = line.substring(1); // remove #
-            String[] split = line.split(",");
-
-            int idx = 0;
-            int notes = Integer.MAX_VALUE;
-            for (String s : split) {
-                s = s.trim().replace("\"", "");
-                for (int i = 0; i < deflt.length; ++i) {
-                    if (s.equalsIgnoreCase(deflt[i])
-                            || (/* support (galaxyName)resourceName */
-                            i == 2 && s.indexOf("resourceName") > 0)) {
-                        if (i > notes && notes >= 0) {
-                            // notes is set but not final column
-                            showError("Notes must be final column\n"
-                                    + "Review documentation on file syntax, " +
-                                    "press F1\n" + "Aborting",
-                                    "Disordered notes column");
-                            return null;
-                        }
-                        if (order[i] >= 0) {
-                            showError(String.format(
-                                    "Doubled column: %s%nAborting", s),
-                                    "Column error");
-                            return null;
-                        }
-                        order[i] = idx;
-                        if (s.equalsIgnoreCase("notes"))
-                            notes = i; // set notes index, see above
-                    }
-                }
-                ++idx;
-                if (idx > 25) {
-                    // sanity -- notes may also have comma signs
-                    // however, the user might have inserted extra columns ^^
-                    break;
-                }
-            } // all columns are set, remaining elements are -1
-
-            return order; // no validation is done except for notes come last
-
-        } catch (Throwable e) {
-            if (SWGConstants.DEV_DEBUG) e.printStackTrace();
-            showError(String.format("Error reading file:%n%s%n%s",
-                    e.getCause(), e.getMessage()), "File error");
-            return null;
-        }
-    }
-
-    /**
-     * Helper method which determines if the resource name may be a recycled
-     * resource. This method return {@code true} if there is a white space in
-     * the resource name, which is true for recycled resources but disallowed
-     * for real resources.
-     * 
-     * @param gn the galaxy-resName pair
-     * @return true if there is a white space in the resource name
-     */
-    private boolean fileReadIsRecycled(String[] gn) {
-        return (gn[1].indexOf(' ') > 0);
-    }
-
-    /**
-     * Helper method which returns the stats parsed from the argument. In
-     * particular, the values in the returned object is parsed from the string
-     * array in the specified order. If there is nothing to parse all values are
-     * zero. No validation is performed.
-     * 
-     * @param statValues an array of values to parse
-     * @param order the order of the elements in the string array
-     * @return the parsed resource stats
-     */
-    private SWGResourceStats fileReadStats(String[] statValues, int[] order) {
-        // | 7| CD the order in order
-        // | 8| CR
-        // | 9| DR
-        // |10| ER
-        // |11| FL
-        // |12| HR
-        // |13| MA
-        // |14| OQ
-        // |15| PE
-        // |16| SR
-        // |17| UT
-        SWGResourceStats stats = new SWGResourceStats();
-        for (Stat s : Stat.values())
-            if (order[s.i + 7] >= 0)
-                stats.set(s, ZNumber.intVal(statValues[order[s.i + 7]]));
-
-        return stats;
-    }
-
-    /**
-     * Helper method which performs the actual workload for importing inventory
-     * wrappers from file and returns a list of the parsed entries. If a valid
-     * ID exists this method looks up data for each entry at swgaide.com,
-     * secondly its name/galaxy is tried, finally the parsed data is used as is.
-     * If there is an error or if the user aborts the process an empty list is
-     * returned.
-     * <p>
-     * For the default order of the columns see {@link #fileReadHeader(File)}.
-     * 
-     * @param file the file to read from
-     * @param order an integer array which translates the order of the columns
-     *        in the file header to the default order
-     * @param assignee the assignee to use if an entry has none defined
-     * @param galaxy the current galaxy to use if an entry has none defined
-     * @param jnf {@code true} if file is exported from JnF
-     * @return a list of the parsed inventory wrappers
-     */
-    private List<SWGInventoryWrapper> fileReadWorker(File file, int[] order,
-            String assignee, SWGCGalaxy galaxy, boolean jnf) {
-
-        ZReader sr = null;
-    	try {
-            sr = ZReader.newTextReaderExc(file);
-            List<String> ls = sr.lines(true, true);
-
-            importCounter = 0;
-            importLines = ls.size();
-            List<SWGInventoryWrapper> wl = new ArrayList<SWGInventoryWrapper>();
-
-            // each line appended to errorMessages must end in EOL
-            ZString err = new ZString();
-
-            for (String line : ls) {
-                // XXX: add support to determine which kind of CSV delimiter
-                SWGInventoryWrapper w = fileReadWrapper(
-                        line, order, assignee, galaxy, err, jnf);
-
-                if (w == null) return Collections.emptyList(); // abort
-
-                if (w != SWGInventoryWrapper.DUMMY)
-                    wl.add(w); // error but continue
-            }
-
-            if (!err.isEmpty()) showErrors(err);
-
-            return wl;
-
-        } catch (Throwable e) {
-            if (SWGConstants.DEV_DEBUG) e.printStackTrace();
-            showError(String.format("Error reading inventory file:%n%s%n%s",
-                    e.getCause(), e.getMessage()), "File error");
-            return Collections.emptyList();
-        } finally {
-            frame.putToStatbar(null,null);
-            sr.close();
-        }
-    }
-
-    /**
-     * Helper method which parses the specified line and returns a wrapper for
-     * the entry. If no assignee is parsed from the line the specified assignee
-     * is used. If no valid ID and no galaxy is parsed from the line and if the
-     * user selects so the current galaxy is used. If there is an error a new
-     * line is added to the specified error-string plus and if the user selects
-     * to abort {@code null} is returned. If there is an error but parsing
-     * should continue {@link SWGInventoryWrapper#DUMMY} is returned.
-     * 
-     * @param line the line to parse
-     * @param order an integer array which translates the order of the columns
-     * @param standin the assignee if none is parsed from {@code line}, either
-     *        the selection at the assignee combo, or the current character
-     * @param galaxy the current galaxy
-     * @param err a container for error messages
-     * @param jnf {@code true} if file is exported from JnF
-     * @return a wrapper for the parsed line, or {@code null} if the user
-     *         selects to abort, or {@link SWGInventoryWrapper#DUMMY} if there
-     *         is an error but parsing can continue
-     */
-    private SWGInventoryWrapper fileReadWrapper(String line, int[] order,
-            String standin, SWGCGalaxy galaxy, ZString err, boolean jnf) {
-
-        // order --> default order
-        // -1 denotes missing in file header
-        // any other index denotes the order in the splitted line
-        // | 0| assignee
-        // | 1| galaxy
-        // | 2| resourceName -- can be (galaxy)name
-        // | 3| ID
-        // | 4| resource class
-        // | 5| classToken
-        // | 6| amount
-        // | 7| CD
-        // | 8| CR
-        // | 9| DR
-        // |10| ER
-        // |11| FL
-        // |12| HR
-        // |13| MA
-        // |14| OQ
-        // |15| PE
-        // |16| SR
-        // |17| UT
-        // |18| notes
-
-        try {
-            ++importCounter;
-            frame.putToStatbar(null,null);
-
-            String[] splitted = ZCSV.parse(
-                    line, jnf
-                            ? ';'
-                            : ',', true);
-
-            if (splitted.length == 0)
-                throw new IllegalArgumentException("No delimiters"); // sanity
-
-            // assignee
-            String assignee;
-            if (order[0] >= 0 && !splitted[order[0]].isEmpty()) {
-                assignee = splitted[order[0]];
-                assignee = assignee.replace('\u00b8', ',');
-            } else
-                assignee = standin;
-
-            SWGKnownResource res = null;
-            if (order[1] >= 0 && !splitted[order[1]].isEmpty()) {
-            	
-            }
-            // begin with ID, if present and valid we can skip many other fields
-            if (order[3] >= 0 && !splitted[order[3]].isEmpty()) {
-                long id = ZNumber.longExc(splitted[order[3]]);
-                if (id > 0) {
-                    frame.putToStatbar(String.format(
-                            "%s(%s) - Lookup ID = %s",
-                            Integer.toString(importCounter),
-                            Integer.toString(importLines), Long.toString(id)),null);
-                    res = SWGResourceManager.getInstance(id);
-                    if (res == null) {
-                        //throw new IllegalArgumentException("Invalid ID column");
-                    }
-                }
-            }
-
-            String name = null;
-            SWGCGalaxy gxy = null;
-
-            if (res == null) {
-                // no ID >>> the harder way
-
-                if (order[1] >= 0 && !splitted[order[1]].isEmpty()) {
-                    // there is a galaxy column
-                    //
-                    // notice:
-                    // empty column is not OK, if present it must be valid,
-                    // with the one exception of recycled resources;
-                    //
-                    // ? is *not* supported in galaxy column, it was just
-                    // supported in old style (gxy)name handled later
-
-                    String g = splitted[order[1]];
-
-                    if (SWGCGalaxy.isNameValid(g))
-                        gxy = SWGCGalaxy.fromName(g);
-                    else if ((g = SWGCGalaxy.properName(g)) != null)
-                        gxy = SWGCGalaxy.fromName(g);
-                    else
-                        throw new IllegalArgumentException(
-                                "Invalid galaxy column");
-                }
-
-                if (order[2] >= 0 && !splitted[order[2]].isEmpty()) {
-                    // there is a resource name column and a name
-                    // this also supports the old style (galaxy)name
-
-                    String[] gn = fileReadGalaxyAndName(splitted[order[2]]);
-
-                    // resource name
-                    if (!gn[1].isEmpty())
-                        name = ZString.tac(gn[1]);
-
-                    if (gxy != null && !fileReadIsRecycled(gn)) {
-                        // recycled have no galaxy and is handled later
-
-                        if (gn[0] != null) {
-                            // there is a galaxy in gn[0], is it?
-                            String g;
-                            if (SWGCGalaxy.isNameValid(gn[0]))
-                                gxy = SWGCGalaxy.fromName(gn[0]);
-                            else if ((g = SWGCGalaxy.properName(gn[0])) != null)
-                                gxy = SWGCGalaxy.fromName(g);
-                            else if (gn[0].startsWith("?")) {
-
-                                if (replaceQuestionMarks)
-                                    gxy = galaxy;
-                                else {
-                                    String[] options = { "All question marks",
-                                            "Only this", "Skip this", "Abort" };
-                                    String m =
-                                            "Found question mark for galaxy:"
-                                                    + "%n%s%n%n"
-                                                    + "Replace with \"%s\"?";
-                                    String msg = String.format(m, line, galaxy);
-                                    int opt = JOptionPane.showOptionDialog(
-                                            frame, msg,
-                                            "Specify galaxy",
-                                            JOptionPane.YES_NO_CANCEL_OPTION,
-                                            JOptionPane.QUESTION_MESSAGE,
-                                            null, options, options[2]);
-                                    if (opt == 3
-                                            || opt == JOptionPane.CLOSED_OPTION)
-                                        return null; // abort
-                                    if (opt == 2) {
-                                        err.app("Skipped line: ").appnl(line);
-                                        return SWGInventoryWrapper.DUMMY; // skip
-                                    }
-
-                                    gxy = galaxy; // option all or only-this
-
-                                    if (opt == 0)
-                                        replaceQuestionMarks = true;
-                                }
-                            } // else -- no galaxy >>> err later
-                        }
-
-                        if (gxy == null && jnf) {
-                            if (replaceQuestionMarks)
-                                gxy = galaxy;
-                            else {
-                                String[] options = { "All resources",
-                                        "Only this", "Skip this", "Abort" };
-                                String m =
-                                        "JnF file without galaxy information,"
-                                                + "%n%s%n%nUse \"%s\"?";
-                                String msg = String.format(m, line, galaxy);
-                                int opt = JOptionPane.showOptionDialog(
-                                        frame, msg, "Galaxy?",
-                                        JOptionPane.YES_NO_CANCEL_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE,
-                                        null, options, options[2]);
-                                if (opt == 3
-                                        || opt == JOptionPane.CLOSED_OPTION)
-                                    return null; // abort
-                                if (opt == 2) {
-                                    err.app("Skipped line: ").appnl(line);
-                                    return SWGInventoryWrapper.DUMMY; // skip
-                                }
-
-                                gxy = galaxy; // option all or only-this
-
-                                if (opt == 0)
-                                    replaceQuestionMarks = true;
-                            }
-
-                        }
-
-                        if (name == null || name.length() < 3 || gxy == null)
-                            throw new IllegalArgumentException(
-                                    "Missing name and/or galaxy");
-
-                        // try swgaide.com
-                        frame.putToStatbar(String.format(
-                                "%s(%s) - Lookup %s @ %s",
-                                Integer.toString(importCounter),
-                                Integer.toString(importLines),
-                                name, gxy.getName()),null);
-
-                        res = SWGResourceManager.getInstance(name, gxy);
-                    } // gxy + recycled
-                } // resource name -- order[2]
-            } // res == null
-
-            if (res == null) {
-                // recycled...
-                // or unknown at swgaide.com under the given identifiers
-                // >>> the even harder way, create a local
-
-                // resource class
-                String cln = null; // class name
-                String clt = null; // class token
-                if (order[4] >= 0 && !splitted[order[4]].isEmpty())
-                    cln = splitted[order[4]];
-                if (order[5] >= 0 && !splitted[order[5]].isEmpty())
-                    clt = splitted[order[5]]; // class token
-                if (cln == null && clt == null)
-                    throw new IllegalArgumentException("No resource class");
-
-                SWGResourceClass cls = null;
-                if (cln != null && SWGResourceClass.rcID(cln) >= 0)
-                    cls = SWGResourceClass.rc(cln);
-                if (cls == null
-                        && clt != null && SWGResourceClass.rcID(clt) >= 0)
-                    cls = SWGResourceClass.rc(clt);
-
-                if (cls == null)
-                    throw new IllegalArgumentException("Invalid resource class");
-
-                if (cls.isSpaceOrRecycled())
-                    res = cls.spaceOrRecycled();
-                else {
-                    if (name == null || name.length() < 3 || gxy == null)
-                        throw new IllegalArgumentException(
-                                "Missing name and/or galaxy");
-
-                    // so far we have a resource class, name and galaxy >>>
-                    // create mutable
-                    SWGMutableResource mr = new SWGMutableResource(name, cls);
-                    mr.galaxy(gxy);
-                    mr.stats(fileReadStats(splitted, order), true);
-                    
-                	if (order[3] >= 0 && !splitted[order[3]].isEmpty()) {
-                        long id = ZNumber.longExc(splitted[order[3]]);
-                        if(id > 0) {
-                        	/** this is if it failed the former id/name checks above
-                        	 * it's likely a valid resource but came from an swgcraft database
-                        	 * and the id's obviously wont match swgaide.com
-                        	 * so lets just go ahead and report as historical then use THAT id
-                        	 */
-                        	SWGSoapNOResResponse sr = SWGResourceManager.sendOld(mr);
-                        	if(sr.isFaultless()) {
-                        		res = SWGResourceManager.getInstance(sr.getSWGCraftID());
-                        	}
-                        } else {
-                        	res = SWGResourceManager.getInstance(mr);
-                        }
-                	}
-
-                    
-                    if (res == null) { // sanity
-                        SWGAide.printError("SWGInventoryTab:fileReadWrapper",
-                                new IllegalArgumentException(
-                                        "Failed creating local resource object"
-                                                + line));
-                        return null;
-                    }
-                }
-            }
-            // finally, we have a resource
-
-            // Create an inventory wrapper from the info
-            SWGInventoryWrapper wr = new SWGInventoryWrapper(res, assignee);
-
-            if (order[6] >= 0)
-                wr.setAmount(ZNumber.longExc(splitted[order[6]]));
-
-            if (order[18] >= 0 && splitted.length > order[18])
-                wr.setNotes(ZHtml.regainEOL(splitted[order[18]]));
-
-            return wr;
-
-        } catch (Exception e) {
-            if (SWGConstants.DEV_DEBUG)
-                SWGAide.printError("SWGInventoryTab:fileReadWrapper", e);
-            SWGAide.printDebug("invy", 1, "SWGInventoryTab:fileReadWrapper: "
-                    + e.getMessage() + "\n\t" + line);
-            err.app("Error for line: ").appnl(line).appnl(e.getMessage());
-            return SWGInventoryWrapper.DUMMY;
-        }
+        });*/
     }
 
     /**
@@ -1536,8 +1153,11 @@ public final class SWGInventoryTab extends JPanel {
      */
     private void fileWrite(List<SWGInventoryWrapper> wl, File file) {
         try {
-        	CSVPrinter printer = new CSVPrinter(new FileWriter(file), CSVFormat.EXCEL);
-        	printer.printRecord("assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "CPU", "ER", "CR",
+        	CSVPrinter printer = new CSVPrinter(new FileWriter(file), CSVFormat.EXCEL.withQuote(null));
+        	printer.printRecord("# SWGAide :: Inventory for All @ " + SWGResourceTab.galaxy().getName() + ", file format \"CSV\" (Comma Separated Values)");
+        	printer.printRecord("# Galaxy/server name is always written to make transfers possible");
+        	printer.printRecord("# Commas are IMPORTANT. Stats and notes are optional.");
+        	printer.printRecord("# assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "CPU", "ER", "CR",
         			"CD", "DR", "FL", "HR", "MA", "PE", "OQ", "SR", "UT", "notes");
         	
         	for (int i = 0; i < wl.size(); i++) {
@@ -1545,7 +1165,7 @@ public final class SWGInventoryTab extends JPanel {
         		int[] stats = w.getResource().stats().values();
         		printer.printRecord(w.getAssignee(), w.getResource().galaxy().getName(), w.getResource().getName(),
         				w.getResource().id(), w.getResource().rc().rcName(), w.getResource().rc().rcToken(),
-        				w.getAmount(), w.getCPU(), stats[0], stats[1], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8],
+        				w.getAmount(), w.getCPU(), stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8],
         				stats[9], stats[10], ZHtml.replaceEOL(w.getNotes()) );
         	}
         	printer.close();
@@ -1660,7 +1280,6 @@ public final class SWGInventoryTab extends JPanel {
      * {@link #isWorking} to {@code true}.
      */
     private void importBegin() {
-        replaceQuestionMarks = false; // ensure default
         frame.setCursor(Cursor
                 .getPredefinedCursor(Cursor.WAIT_CURSOR));
         frame.progressBar.setIndeterminate(true);
@@ -1683,7 +1302,6 @@ public final class SWGInventoryTab extends JPanel {
 
                 frame.setCursor(
                         Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                replaceQuestionMarks = false; // ensure default
                 actionTotalValue();
                 updateDisplay();
             }
@@ -1917,7 +1535,7 @@ public final class SWGInventoryTab extends JPanel {
     private Component makeTotalValue () {
     	Box tbox = Box.createHorizontalBox();
     	tbox.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    	totVal = new StyledLabel();
+    	totVal = new StyledLabel(" ");
     	totVal.setToolTipText("Total value of all resources in this view");
     	totVal.setAlignmentX(SwingConstants.RIGHT);
     	tbox.add(totVal);
@@ -1939,6 +1557,7 @@ public final class SWGInventoryTab extends JPanel {
         clearButton.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
+            	actionTotalValue();
                 actionResetBottomPanel();
             }
         });
@@ -2305,22 +1924,21 @@ public final class SWGInventoryTab extends JPanel {
         // snapshot of fields in case the user flips galaxy while parsing
         final SWGCGalaxy g = recentGalaxy;
 
-        SwingUtilities.invokeLater(new Runnable() {
-            
-            public void run() {
-                List<SWGInventoryWrapper> lst = notesReadWorker(notes, a, g);
+        // run the parser in a thread so GUI can be freed up
+        Runnable parse = () -> {
+        	try {
+        		List<SWGInventoryWrapper> lst = notesReadWorker(notes, a, g);
                 SWGResController.inventoryAdd(lst, g);
                 for (SWGInventoryWrapper w : lst)
                     w.equalAddSub = null; // nullify wrapper for future use
 
                 importDone();
-            }
-
-            @Override
-            public String toString() {
-                return "SWGInventoryTab:notesRead";
-            }
-        });
+        	} catch (Throwable e) {
+        		SWGAide.printError("SWGInventoryTab:csv import error: ", e);
+        	}
+        };
+        // start the thread
+        new Thread(parse).start();
     }
 
     /**
@@ -2340,10 +1958,21 @@ public final class SWGInventoryTab extends JPanel {
 
         try {
             List<SWGInventoryWrapper> wl = new ArrayList<SWGInventoryWrapper>();
-            List<String> nl = notes.lines();
+            List<String> tl = notes.lines();
+            List<String> nl = new ArrayList<String>();
+            for (int i = 0; i < tl.size(); i++) {
+            	String l = tl.get(i);
+            	if (ZReader.isComment(l)) {
+            		continue;
+            	} else {
+            		nl.add(l);
+            	}
+            }
+            importLines = nl.size();
+            frame.putToStatbar(null,null);
             for (String line : nl) {
+            	++importCounter;
                 line = line.trim();
-                if (ZReader.isComment(line)) continue;
                 SWGInventoryWrapper w = notesReadWrapper(line, gxy, err);
                 if (w == null)
                     return Collections.emptyList(); // abort
@@ -2387,7 +2016,7 @@ public final class SWGInventoryTab extends JPanel {
             SWGCGalaxy gxy; // resource origin
             String name = null;
             String assignee;
-            String token = tok.nextToken(",;.:").trim();
+            String token = tok.nextToken(",;:").trim();
             if (token.startsWith("(")) { // begins with (galaxyName)
                 int end = token.indexOf(')');
                 String rg = token.substring(1, end).trim();
@@ -2412,11 +2041,11 @@ public final class SWGInventoryTab extends JPanel {
             String eas = null;
             String notesString = null;
             if (tok.hasMoreTokens()) {
-            	name = tok.nextToken(",;.:");
+            	name = tok.nextToken(",;:");
             	name = ZString.tac(name);
             }
             if (tok.hasMoreTokens()) {
-                String amt = tok.nextToken(" ,;.:");
+                String amt = tok.nextToken(" ,;:");
                 if (amt.startsWith("=")
                         || amt.startsWith("+") || amt.startsWith("-")) {
                     eas = amt.substring(0, 1);
@@ -2430,9 +2059,9 @@ public final class SWGInventoryTab extends JPanel {
 
                 
                 if (tok.hasMoreTokens()) {
-                	String cp = tok.nextToken(" ,;.:");
+                	String cp = tok.nextToken(" ,;:");
                 	cp = cp.trim();
-                	if(!cp.isBlank()) {
+                	if(!cp.isEmpty()) {
                 		cpu = Double.parseDouble(cp);
                 	}
                 }
@@ -2441,13 +2070,26 @@ public final class SWGInventoryTab extends JPanel {
                     notesString = notesShaveString(notesString);
                 }
             }
-
-            SWGKnownResource res = SWGResourceManager.getInstance(name, gxy);
+            
+            SWGKnownResource res = null;
+            // check for whitespace in name
+            if (name.indexOf(' ') > 0) {
+            	SWGResourceClass cls = null;
+            	cls = SWGResourceClass.rc(name);
+            	res = cls.spaceOrRecycled();
+                res.galaxy(gxy);
+            } else {
+            	res = SWGResourceManager.getInstance(name, gxy);
+            }
             if (res == null)
                 res = lookupInteractively(name, name, gxy,
                         lookupResources(name, gxy));
 
             if (res != null) {
+            	frame.putToStatbar(String.format(
+                        "%s(%s) - Importing %s",
+                        Integer.toString(importCounter),
+                        Integer.toString(importLines), name),null);
                 SWGInventoryWrapper wr = new SWGInventoryWrapper(res, assignee);
                 wr.setAmount(amount);
                 wr.setCPU(cpu);
@@ -2558,9 +2200,9 @@ public final class SWGInventoryTab extends JPanel {
     	String ass = (String) assigneeCombo.getSelectedItem();
         z.app("# SWGAide :: Inventory for ").app(ass).app(" @ ");
         z.app(recentGalaxy.getName()).appnl(" at the notes file format:");
-        z.appnl("# assignee, resourcename, amount, cpu, notes");
         z.appnl("# To change the amount you can optionally prepend + - or = to the amount value which will");
         z.appnl("# add, subtract, or set the amount, press F1 for details").nl();
+        z.appnl("# assignee, resourcename, amount, cpu, notes").nl();
     }
 
     /**
@@ -3333,13 +2975,13 @@ public final class SWGInventoryTab extends JPanel {
                     Toolkit.getDefaultToolkit().beep();
                 }
             } else if (columnIndex == 4) {
-            	try {
-            		wr.setCPU((double) value);
-            		fireTableCellUpdated(rowIndex, columnIndex+1);
-            		actionTotalValue();
-            	} catch (Exception e) {
-            		Toolkit.getDefaultToolkit().beep();
+            	double cpu = 0.0;
+            	if(!value.toString().trim().isEmpty()) {
+            		cpu = Double.parseDouble(value.toString());
             	}
+            	wr.setCPU(cpu);
+            	fireTableCellUpdated(rowIndex, columnIndex+1);
+            	actionTotalValue();
             } else if (columnIndex == 18) wr.setNotes((String) value);
 
             fireTableCellUpdated(rowIndex, columnIndex);
