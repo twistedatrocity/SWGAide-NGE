@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -94,8 +93,6 @@ import swg.gui.common.SWGHelp;
 import swg.gui.common.SWGJTable;
 import swg.gui.common.SWGResourceStatRenderer;
 import swg.gui.common.SWGTableCellEditor;
-import swg.gui.common.SWGTextInputDialogue;
-import swg.gui.common.SWGTextInputDialogue.TextValidation;
 import swg.gui.schematics.SWGSchemController;
 import swg.gui.schematics.SWGSchemResViewer;
 import swg.gui.schematics.SWGSchematicTab;
@@ -267,85 +264,6 @@ public final class SWGInventoryTab extends JPanel {
                 focusGained(true);
             }
         });
-    }
-
-    /**
-     * Called when the user wants to delete an assignee. This method raises a
-     * GUI option dialog with the assignees who are possible to delete from this
-     * component. Characters at some galaxy cannot be deleted from the view and
-     * if only characters exist this method displays an explaining GUI message
-     * dialog. Otherwise possible inventory entries for the selected assignee
-     * are reassigned to "All" and the assignee is deleted from the current
-     * galaxy.
-     * 
-     * @param e the event which triggered the call
-     */
-    private void actionAssigneDelete(ActionEvent e) {
-        if (isWorking)
-            return;
-
-        // disabled action listener if there is nothing to do >> ags != null
-        List<String> ags = assignees();
-
-        // not allowed to remove existing in-game characters from GUI list
-        ags.removeAll(SWGGuiUtils.characterNames(recentGalaxy));
-        ags.remove("All");
-        if (ags.size() <= 0) {
-            JOptionPane.showMessageDialog(assigneeCombo,
-                    "There is no assignee allowed for deletion",
-                    "Disallowed action", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String[] agsArray = ags.toArray(new String[0]);
-        String assignee = (String) JOptionPane.showInputDialog(
-                        assigneeCombo, "Select an assignee to delete\n"
-                                + "If the assignee 'owns' inventory entries "
-                                + "these are transferred to 'All'",
-                        "Delete assignee", JOptionPane.QUESTION_MESSAGE,
-                        null, agsArray, agsArray[0]);
-        if (assignee != null) {
-            isWorking = true;
-
-            SWGResController.inventoryMove(
-                    assignee, "All", recentGalaxy);
-            SWGResController.inventoryAssigneeRemove(
-                    assignee, recentGalaxy);
-
-            isWorking = false;
-            resetAssigneeCombo();
-        }
-    }
-
-    /**
-     * Called when the user is adding an assignee to the current galaxy. This
-     * method raises a GUI dialog for the action.
-     * 
-     * @param e the event which triggered the call
-     */
-    private void actionAssigneeAdd(MouseEvent e) {
-        if (isWorking)
-            return;
-        Point pp = e.getLocationOnScreen();
-        pp.translate(-50, -100);
-
-        final List<String> ags = assigneesAndCharacters();
-        SWGTextInputDialogue diag = new SWGTextInputDialogue(
-                frame, new TextValidation() {
-                    public boolean validateText(String text) {
-                        return ags.contains(text)
-                                ? false
-                                : text.indexOf(' ') < 0; // only single word
-                    }
-                }, pp, "Define assignee",
-                "Define an assignee, unique for this galaxy", "");
-        diag.setVisible(true);
-        String as = diag.getTypedText();
-
-        if (as != null) {
-            SWGResController.inventory(as, recentGalaxy, true);
-            resetAssigneeCombo();
-        }
     }
 
     /**
@@ -761,41 +679,6 @@ public final class SWGInventoryTab extends JPanel {
             return assignee;
 
         return SWGFrame.getSelectedCharacter().getName();
-    }
-
-    /**
-     * Helper method which displays a popup dialog for the assignee box,
-     * 
-     * @param e the user action that triggered the call
-     */
-    private void assigneePopup(final MouseEvent e) {
-        JPopupMenu popup = new JPopupMenu();
-
-        JMenuItem add = new JMenuItem("Add...");
-        add.setToolTipText("Define and add an assignee");
-        add.addActionListener(new ActionListener() {
-
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionAssigneeAdd(e);
-            }
-        });
-        popup.add(add);
-
-        popup.addSeparator();
-
-        JMenuItem del = new JMenuItem("Delete...");
-        del.setToolTipText("Delete an assignee, in-game characters excluded");
-        del.addActionListener(new ActionListener() {
-
-            
-            public void actionPerformed(ActionEvent e1) {
-                actionAssigneDelete(e1);
-            }
-        });
-        popup.add(del);
-
-        popup.show(assigneeCombo, e.getX(), e.getY());
     }
 
     /**
@@ -1494,16 +1377,6 @@ public final class SWGInventoryTab extends JPanel {
 
             public void actionPerformed(ActionEvent e) {
                 updateDisplay();
-            }
-        });
-        assigneeCombo.addMouseListener(new MouseAdapter() {
-
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!isWorking && e.getModifiersEx() == InputEvent.BUTTON3_DOWN_MASK) {
-                    assigneePopup(e);
-                }
             }
         });
         return assigneeCombo;
