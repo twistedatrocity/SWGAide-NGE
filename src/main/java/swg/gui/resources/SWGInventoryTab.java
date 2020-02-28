@@ -907,7 +907,6 @@ public final class SWGInventoryTab extends JPanel {
     		++importCounter;
             frame.putToStatbar(null,null);
             
-    		SWGAide.printDebug("SWGInventoryTab", 9, "import CSV  Data: " + record);
     		// first see if we even have a proper galaxy and if it's correct one before proceeding.
     		String g = record.get("galaxy");
     		if (SWGCGalaxy.isNameValid(g)) {
@@ -1090,7 +1089,6 @@ public final class SWGInventoryTab extends JPanel {
             	parser = CSVParser.parse(buffer, CSVFormat.EXCEL.withHeader("assignee", "galaxy", "resourceName", "ID", "resourceClass", "classToken", "amount", "ER", "CR",
             			"CD", "DR", "FL", "HR", "MA", "PE", "OQ", "SR", "UT", "notes"));
             }
-			SWGAide.printDebug("SWGInventoryTab", 9, "import CSV  Data: " + parser);
 			final String curAss = assignee();
 			final List<String> lAss = assignees();
 	        final SWGCGalaxy curGxy = recentGalaxy;
