@@ -193,7 +193,7 @@ final class SWGTestBench extends SWGJDialog {
         getContentPane().add(jsp, BorderLayout.CENTER);
         
         ingredients = new JPanel(new BorderLayout());
-        h = Math.round(170 * m);
+        h = Math.round(190 * m);
         ingredients.setPreferredSize(new Dimension(w, h));
         getContentPane().add(ingredients, BorderLayout.SOUTH);
         Border current = ingredients.getBorder();
@@ -314,7 +314,8 @@ final class SWGTestBench extends SWGJDialog {
     	String rez = "";
     	ingredients.setLayout(new BorderLayout());
         ingredients.removeAll();
-        
+        int lines = slots.size() + 6;
+        SWGGuiUtils.setDim(ingredients, lines, ingredients.getWidth(), 170, false);
         String header = "<h4>Ingredients:</h4>";
         UIManager.getColor("TextArea.background");
         String colors = "<html><div align=\"center\" style=\"font-weight:bold; font-size:95%; text-align:center;margin-left:auto;margin-right:auto;\">&uarr;&uarr;&nbsp;Color Codes: <font color='"+ BAD + "'>\"Bad\" " +
@@ -330,7 +331,21 @@ final class SWGTestBench extends SWGJDialog {
             	   }
             }
         }
-        String text = colors + header + "<div style=\"font-size:97%;\">" + rez + "</div>";
+        int tu = 0;
+        int tc = 0;
+        for (int i = 0; i < slots.size(); i++) {
+        	RSlot sl = slots.get(i);
+        	tu += sl.getUnits();
+        	if(sl.getCPU()>0) tc += tu * sl.getCPU();
+        }
+        String pc;
+        if(tc>0) {
+        	pc = ZNumber.asText(tc);
+        } else {
+        	pc = "N/A";
+        }
+        String totals = "<br>Total units: <strong>" + ZNumber.asText(tu) + "</strong> :: Potential Cost: <strong>" + pc + "</strong>";
+        String text = colors + header + "<div style=\"font-size:97%;\">" + rez + totals + "</div>";
         
         JEditorPane iL = new JEditorPane();
         HTMLEditorKit kit = new HTMLEditorKit();
@@ -365,6 +380,8 @@ final class SWGTestBench extends SWGJDialog {
         });
         
         ingredients.add(iL);
+        ingredients.revalidate();
+        ingredients.repaint(300L);
         
     }
     /**
@@ -484,7 +501,7 @@ final class SWGTestBench extends SWGJDialog {
      * 
      * @param kr a resource, or {@code null}
      */
-    private void setResource(SWGKnownResource kr) {
+    private void setResource(SWGKnownResource kr, double cpu) {
         if (kr == null) return;
 
         RSlot slot = null;
@@ -503,7 +520,7 @@ final class SWGTestBench extends SWGJDialog {
             fill = true;
 
         if (slot != null && fill)
-            slot.fill(kr);
+            slot.fill(kr, cpu);
     }
 
     /**
@@ -512,7 +529,7 @@ final class SWGTestBench extends SWGJDialog {
      * @param s a schematic, or {@code null}
      * @param kr a resource, or {@code null}
      */
-    private void updat(SWGSchematic s, SWGKnownResource kr) {
+    private void updat(SWGSchematic s, SWGKnownResource kr, double cpu) {
         if (s != null) {
             if (wrap == null || !s.equals(wrap.schem())) {
                 // use schemexp-wrapper and unified exp-group/lines
@@ -527,7 +544,7 @@ final class SWGTestBench extends SWGJDialog {
                 resetIngredients();
             }
 
-            setResource(kr);
+            setResource(kr, cpu);
         } else {
             setTitle("Test Bench");
             wrap = null;
@@ -764,10 +781,10 @@ final class SWGTestBench extends SWGJDialog {
      * @param s a schematic, or {@code null}
      * @param kr a resource, or {@code null}
      */
-    static void update(SWGSchematic s, SWGKnownResource kr) {
+    static void update(SWGSchematic s, SWGKnownResource kr, Double cpu) {
         try {
             if (THIS == null) THIS = new SWGTestBench();
-            THIS.updat(s, kr);
+            THIS.updat(s, kr, cpu);
         } catch (Throwable e) {
             SWGAide.printError("SWGTestBench:update", e);
         }
@@ -822,6 +839,8 @@ final class SWGTestBench extends SWGJDialog {
          * A resource that fills this slot, or {@code null} if it is empty.
          */
         private SWGKnownResource res;
+        
+        private double cpu;
 
         /**
          * {@code true} if this slot is selected. Only one border at a time can
@@ -874,7 +893,7 @@ final class SWGTestBench extends SWGJDialog {
 	            SWGResourceClassTree.icon(rc).setImage(newimg);  // transform it back
             }
 
-            fill(null);
+            fill(null, 0);
             select(false);
 
             addMouseListener(new MouseAdapter() {
@@ -884,7 +903,7 @@ final class SWGTestBench extends SWGJDialog {
                         selected = !selected; // toggle before call
                         actionSlotSelected(RSlot.this);
                     } else if (e.getButton() == MouseEvent.BUTTON3) {
-                        fill(null);
+                        fill(null,0);
                         updateEWAR();
                         resetIngredients();
                     }
@@ -913,8 +932,9 @@ final class SWGTestBench extends SWGJDialog {
          * 
          * @param kr a resource, or {@code null} to empty this slot
          */
-        void fill(SWGKnownResource kr) {
+        void fill(SWGKnownResource kr, double cost) {
             res = kr;
+            cpu = cost;
             border();
             ZString z = ZString.fz("%s units of %s",
                     ZNumber.asText(units, true, true), rc.rcName());
@@ -929,6 +949,14 @@ final class SWGTestBench extends SWGJDialog {
          */
         boolean filled() {
             return kr() != null;
+        }
+        
+        int getUnits() {
+        	return units;
+        }
+        
+        double getCPU() {
+        	return cpu;
         }
 
         /**

@@ -507,6 +507,27 @@ public final class SWGGuiUtils {
     }
     
     /**
+     * Computes dimension based on font and supplied text
+     * 
+     * @param comp
+     * @param text
+     * @param minwidth
+     */
+    public static void setDim (Component comp, int lines, int minwidth, int minheight, boolean max) {
+   		int h = fontHeight(comp, comp.getFont()) * lines;
+    	//int h = fontHeightPadding( fontHeight(comp, comp.getFont()) );
+    	int fw = fontWidth(comp, "Test", comp.getFont());
+    	int w = Math.max(fw+h+18, minwidth);
+    	h = Math.max(h, minheight);
+    	Dimension dm = new Dimension(w, h);
+    	comp.setMinimumSize(dm);
+    	if(max) {
+    		comp.setMaximumSize(dm);
+    	}
+        comp.setPreferredSize(dm);
+    }
+    
+    /**
      * Gets fontSizeParam from prefs or sets default to 100 if null.
      * 
      * @return fontSizeParam

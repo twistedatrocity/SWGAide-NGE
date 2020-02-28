@@ -504,7 +504,7 @@ final class SWGLaboratoryTab extends JPanel {
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 2) {
             Object o = schematicList.getSelectedValue();
             ERPair erp = resourceModel.getElement(cow);
-            SWGTestBench.update((SWGSchematic) o, erp.resource);
+            SWGTestBench.update((SWGSchematic) o, erp.resource, erp.cpu);
 
             return;
         }
@@ -608,7 +608,7 @@ final class SWGLaboratoryTab extends JPanel {
     private void actionSchematicsMouse(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 2) {
             Object o = schematicList.getSelectedValue();
-            SWGTestBench.update((SWGSchematic) o, null);
+            SWGTestBench.update((SWGSchematic) o, null, 0.0);
             return;
         }
 
@@ -1119,7 +1119,7 @@ final class SWGLaboratoryTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object o = schematicList.getSelectedValue();
-                SWGTestBench.update((SWGSchematic) o, null);
+                SWGTestBench.update((SWGSchematic) o, null, 0.0);
             }
         });
         hb.add(tb);

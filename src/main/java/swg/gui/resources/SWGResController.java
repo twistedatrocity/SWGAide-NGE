@@ -1708,7 +1708,7 @@ public final class SWGResController implements UpdateSubscriber {
             return 0;
 
         double cpu = 0;
-        int divisor = 1;
+        int divisor = 0;
         for (SWGInventoryWrapper w : ws) {
         	double cp = w.getCPU();
         	if(cp>0) {
@@ -1716,6 +1716,8 @@ public final class SWGResController implements UpdateSubscriber {
         		cpu += w.getCPU();
         	}
         }
+        // safety
+        if(divisor < 1) divisor = 1;
         return cpu / divisor;
     }
     
