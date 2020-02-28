@@ -1662,6 +1662,92 @@ public final class SWGResController implements UpdateSubscriber {
             amt += w.getAmount();
         return amt;
     }
+    
+    /**
+     * Returns the amount in inventory of the specified resource and assignee, 0 if it
+     * exists but no amount is specified, or -1 if the resource is not in stock.
+     * If zero or greater the amount is for <i>all&nbsp;</i> assignees at the
+     * specified galaxy who owns stacks of the specified resource.
+     * 
+     * @param res the resource
+     * @param gxy a galaxy constant
+     * @param ass the inventory assignee
+     * @return the total amount owned of the resource for the specified assignee
+     * @throws NullPointerException if an argument is {@code null}
+     */
+    public static long inventoryAmount(SWGKnownResource res, SWGCGalaxy gxy, String ass) {
+        List<SWGInventoryWrapper> ws = inventoryBy(res, gxy);
+
+        if (ws.size() <= 0)
+            return -1;
+
+        long amt = 0;
+        for (SWGInventoryWrapper w : ws) {
+        	if(w.getAssignee().equals(ass)) {
+        		amt += w.getAmount();
+        	}
+        }
+        return amt;
+    }
+    
+    /**
+     * Returns the average CPU in inventory of the specified resource, 0 if it
+     * exists but no amount is specified.
+     * If zero or greater the amount is for <i>all&nbsp;</i> assignees at the
+     * specified galaxy who owns stacks of the specified resource then averaged.
+     * 
+     * @param res the resource
+     * @param gxy a galaxy constant
+     * @return the average cpu of the resource at the specified galaxy
+     * @throws NullPointerException if an argument is {@code null}
+     */
+    public static double inventoryCPU(SWGKnownResource res, SWGCGalaxy gxy) {
+        List<SWGInventoryWrapper> ws = inventoryBy(res, gxy);
+
+        if (ws.size() <= 0)
+            return 0;
+
+        double cpu = 0;
+        int divisor = 1;
+        for (SWGInventoryWrapper w : ws) {
+        	double cp = w.getCPU();
+        	if(cp>0) {
+        		divisor++;
+        		cpu += w.getCPU();
+        	}
+        }
+        return cpu / divisor;
+    }
+    
+    /**
+     * Returns the CPU in inventory of the specified resource and assignee, 0 if it
+     * exists but no amount is specified.
+     * If zero or greater the amount is for <i>all&nbsp;</i> assignees at the
+     * specified galaxy who owns stacks of the specified resource then averaged.
+     * 
+     * @param res the resource
+     * @param gxy a galaxy constant
+     * @param ass the inventory assignee
+     * @return the cpu of the resource at the specified galaxy and assignee
+     * @throws NullPointerException if an argument is {@code null}
+     */
+    public static double inventoryCPU(SWGKnownResource res, SWGCGalaxy gxy, String ass) {
+        List<SWGInventoryWrapper> ws = inventoryBy(res, gxy);
+
+        if (ws.size() <= 0)
+            return 0;
+
+        double cpu = 0;
+        for (SWGInventoryWrapper w : ws) {
+        	if(w.getAssignee().equals(ass)) {
+        		double cp = w.getCPU();
+        		if(cp>0) {
+            		cpu = w.getCPU();
+            	}
+        	}
+        }
+        return cpu;
+    }
 
     /**
      * Removes the specified assignee from the specified galaxy. If the assignee
@@ -1696,7 +1782,7 @@ public final class SWGResController implements UpdateSubscriber {
      * @return a map of assignees-and-resource-inventories, or {@code null}
      * @throws NullPointerException if an argument is {@code null}
      */
-    static Map<String, List<SWGInventoryWrapper>> inventoryAssignees(
+    public static Map<String, List<SWGInventoryWrapper>> inventoryAssignees(
             SWGCGalaxy gxy, boolean create) {
         if (gxy == null) throw new NullPointerException("Galaxy is null");
 

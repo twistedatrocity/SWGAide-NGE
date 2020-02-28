@@ -177,7 +177,7 @@ public final class SWGInventoryWrapper implements Serializable,
      * 
      * @return the assignee
      */
-    String getAssignee() {
+    public String getAssignee() {
         return assignee;
     }
 

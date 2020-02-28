@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,9 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import com.jidesoft.swing.StyledLabel;
+import com.jidesoft.swing.StyledLabelBuilder;
 
 import swg.SWGAide;
 import swg.crafting.SWGWeights;
@@ -201,6 +205,8 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private volatile SWGKnownResource selectedResource;
     
+    private SWGSchematic selectedSchem;
+    
     /**
 	 * A map containing exp groups for the filter. LinkHashedSet is used so no duplicates
 	 */
@@ -226,6 +232,8 @@ final class SWGLaboratoryTab extends JPanel {
 	 * The box inside {@link filterPanel} containing the check boxes
 	 */
 	private Box filterBox;
+
+	private JComboBox<String> iFilterCombo;
 
     /**
      * Creates an instance of this GUI element. This constructor creates just a
@@ -351,7 +359,20 @@ final class SWGLaboratoryTab extends JPanel {
 
         if (w != null) {
             SWGResourceSet spawn = SWGSchemController.spawning();
-            List<SWGInventoryWrapper> inv = SWGSchemController.inventory();
+            List<SWGInventoryWrapper> tinv = SWGSchemController.inventory();
+            List<SWGInventoryWrapper> inv = new ArrayList<SWGInventoryWrapper>();
+            String ass = (String) iFilterCombo.getSelectedItem();
+            if (!ass.equals("All")) {
+            	for (int i = 0; i < tinv.size(); i++) {
+                	SWGInventoryWrapper iv = tinv.get(i);
+                	if(iv.getAssignee().equals(ass)) {
+                		inv.add(iv);
+                	}
+                }
+            } else {
+            	inv = tinv;
+            }
+            
             List<SWGExperimentWrapper> ew = w.experiments();
             List<SWGExperimentWrapper> fw = new ArrayList<SWGExperimentWrapper>();
             SWGExperimentWrapper.refresh(ew, spawn, inv);
@@ -541,6 +562,7 @@ final class SWGLaboratoryTab extends JPanel {
      */
     private void actionSchematicSelected(SWGSchematic s) {
         selectedResource = null;
+        selectedSchem = s;
         ((SWGListModel<SWGSchematic>) schematicList.getModel()).setSelectedItem(s);
 
         if (s != null) {
@@ -632,6 +654,49 @@ final class SWGLaboratoryTab extends JPanel {
     }
 
     /**
+     * Helper method which return a list of assignees for the current galaxy. If
+     * no assignee exists at the current galaxy {@code null} is returned. The
+     * returned list can freely be modified.
+     * 
+     * @return a list of assignees, or {@code null}
+     */
+    private List<String> assignees() {
+        Map<String, List<SWGInventoryWrapper>> assignees =
+                SWGResController.inventoryAssignees(
+                        galaxy, false);
+
+        return assignees != null
+                ? new ArrayList<String>(assignees.keySet())
+                : null;
+    }
+    /**
+	 * Helper method which returns a list of character names and assignees for
+	 * the current galaxy. The elements are the first names of all characters
+	 * and all assignees which have inventories at the current galaxy. The list
+	 * is alphabetically sorted.
+	 * 
+	 * @return a list of character names and assignees
+	 */
+	List<String> assigneesAndCharacters() {
+	    List<String> assignees =
+	            SWGGuiUtils.characterNames(galaxy);
+	
+	    List<String> ags = assignees();
+	    if (ags != null)
+	        for (String s : ags)
+	        if (!assignees.contains(s))
+	            assignees.add(s);
+	
+	    Comparator<String> comp = new Comparator<String>() {
+	        public int compare(String o1, String o2) {
+	            return o1.compareToIgnoreCase(o2);
+	        }
+	    };
+	    Collections.sort(assignees, comp);
+	    return assignees;
+	}
+
+	/**
      * Helper method which updates the checkboxes in {@link #filterCheckboxes} for the
      * specified schematic; {@link #addFilterCheckboxes(List, int)} is invoked to
      * ensure enough checkboxes exist; unused checkboxes are emptied but not removed.
@@ -711,6 +776,7 @@ final class SWGLaboratoryTab extends JPanel {
     		galaxy = gxy;
     		assModel = new SWGListModel<SWGSchematicAssignee>();
             assigneeCombo.setModel(assModel);
+            resetiFilterCombo();
     	}
         if (schemTab.frame.getTabPane().getSelectedComponent() == schemTab
                 && schemTab.getSelectedComponent() == this) {
@@ -773,6 +839,7 @@ final class SWGLaboratoryTab extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(makeNorth(), BorderLayout.PAGE_START);
         this.add(makeCenter(), BorderLayout.CENTER);
+        this.add(makeiFilterChooser(), BorderLayout.SOUTH);
 
         actionAssigneeSelected(null); // populate assignee combo
         isGuiFinished = true;
@@ -872,9 +939,9 @@ final class SWGLaboratoryTab extends JPanel {
         SWGGuiUtils.tableSetColumnWidths(resourceTable, 0, 0, w, 100);
         w = SWGGuiUtils.fontWidth(this, "1 000", SWGGuiUtils.fontBold()) + 5;
         SWGGuiUtils.tableColumnSetWidth(resourceTable, 2, w * 2, w * 2, w * 3);
-        SWGGuiUtils.tableSetColumnWidths(resourceTable, 3, 3 + 10, w, 5);
+        SWGGuiUtils.tableSetColumnWidths(resourceTable, 3, 3 + 11, w, 5);
         w = SWGGuiUtils.fontWidth(this, "999.99", SWGGuiUtils.fontBold()) + 5;
-        SWGGuiUtils.tableSetColumnWidths(resourceTable, 14, 14, w, 10);
+        SWGGuiUtils.tableSetColumnWidths(resourceTable, 15, 15, w, 10);
         SWGGuiUtils.setRowHeight(resourceTable);
 
         resourceTable.getSelectionModel().addListSelectionListener(
@@ -1253,7 +1320,7 @@ final class SWGLaboratoryTab extends JPanel {
         Box hb = Box.createHorizontalBox();
         hb.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
-                " Assignees "));
+                " Favorite Schematic Assignees "));
         hb.add(vb);
         hb.add(Box.createHorizontalStrut(3));
         hb.add(mb);
@@ -1265,6 +1332,53 @@ final class SWGLaboratoryTab extends JPanel {
     }
 
     /**
+	 * Helper method which creates and returns a GUI element for the NW element.
+	 * This element is the combo box to select an assignee.
+	 * 
+	 * @return a GUI component
+	 */
+	private Component makeiFilterChooser() {
+		iFilterCombo = new JComboBox<String>();
+		iFilterCombo.setToolTipText("Select an assignee to filter the inventory view");
+		SWGGuiUtils.setDim(iFilterCombo, "12345678901234567", 50, 25, true);
+        resetiFilterCombo();
+
+        iFilterCombo.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                actionSchematicSelected(selectedSchem);
+            }
+        });
+        StyledLabel label = StyledLabelBuilder.createStyledLabel("{Inventory Filter:b} ");
+        
+        Box hb = Box.createHorizontalBox();
+        hb.setBorder(BorderFactory.createEtchedBorder());
+        hb.add(label);
+        hb.add(Box.createHorizontalStrut(5));
+        hb.add(iFilterCombo);
+        hb.add(Box.createHorizontalGlue());
+        hb.add(Box.createHorizontalGlue());
+        
+        return hb;
+	}
+
+	/**
+     * Helper method which resets the GUI component for assignees and removes
+     * any selection.
+     */
+	private void resetiFilterCombo() {
+		iFilterCombo.removeAllItems();
+		iFilterCombo.addItem("All");
+
+        List<String> as = assigneesAndCharacters();
+        for (String a : as)
+        	iFilterCombo.addItem(a);
+
+        iFilterCombo.setSelectedIndex(0);
+		
+	}
+
+	/**
      * Helper method which creates and returns a GUI element for the NW element.
      * This element is the list to select a schematics from a list of favorites.
      * 
@@ -1441,6 +1555,8 @@ final class SWGLaboratoryTab extends JPanel {
          * are not highlighted.
          */
         final long invent;
+        
+        final double cpu;
 
         /**
          * A resource that pertains to the wrapper, or {@code null}. If this
@@ -1466,10 +1582,11 @@ final class SWGLaboratoryTab extends JPanel {
          * @param invent the amount of this resource in stock, or -1 or less,
          *        see {@link #invent}
          */
-        ERPair(SWGExperimentWrapper ew, SWGKnownResource kr, long invent) {
+        ERPair(SWGExperimentWrapper ew, SWGKnownResource kr, long invent, double cpu) {
             this.resource = kr;
             this.wrapper = ew;
             this.invent = invent;
+            this.cpu = cpu;
         }
     }
 
@@ -1584,7 +1701,7 @@ final class SWGLaboratoryTab extends JPanel {
          * Column titles.
          */
         private final String[] cols =
-                { "Name", "Class", "Stock", "ER", "CR", "CD", "DR", "FL", "HR",
+                { "Name", "Class", "Stock", "CPU", "ER", "CR", "CD", "DR", "FL", "HR",
                         "MA", "PE", "OQ", "SR", "UT", "Rate" };
 
         /**
@@ -1653,12 +1770,13 @@ final class SWGLaboratoryTab extends JPanel {
                 n = SWGResController.inventoryNotes(
                         kr, SWGFrame.getSelectedGalaxy());
                 if (!n.isEmpty()) n = "    Notes: " + n;
+                if (val.cpu>0 ) n = n + "    CPU: " + ZNumber.asText(val.cpu);
                 toolTip = String.format("Units owned: %s%s",
                         ZNumber.asText(val.invent, true, true), n);
             } else
                 toolTip = SWGResController.dateString(kr.age()) + " old";
 
-            if (column <= 2) {
+            if (column <= 3) {
                 Color bg = null;
                 if (val.invent >= 0) {
                     bg = SWGGuiUtils.statColors[0];
@@ -1676,8 +1794,8 @@ final class SWGLaboratoryTab extends JPanel {
 
             SWGWeights w = ew.weights();
             boolean hq = w != SWGWeights.LQ_WEIGHTS;
-            if (column < 14) {
-                Stat s = gOrder[column - 3];
+            if (column > 3 && column < 14) {
+                Stat s = gOrder[column - 4];
                 Font font = hq && w.value(s) > 0
                         ? bold
                         : plain;
@@ -1699,11 +1817,14 @@ final class SWGLaboratoryTab extends JPanel {
                     : "LQ -- rate by the resource's own class";
 
             // else rate
-            double rate = ((Double) value).doubleValue();
-            return new TableCellDecorations(
-                    SWGResourceStatRenderer.getStatBackGround(rate),
-                    SWGResourceStatRenderer.getStatForeground(rate),
-                    tt, plain);
+            if(column == 15) {
+            	double rate = ((Double) value).doubleValue();
+            	return new TableCellDecorations(
+            			SWGResourceStatRenderer.getStatBackGround(rate),
+            			SWGResourceStatRenderer.getStatForeground(rate),
+            			tt, plain);
+            }
+            return null;
         }
 
         @Override
@@ -1766,12 +1887,14 @@ final class SWGLaboratoryTab extends JPanel {
                 return kr.getName();
             if (columnIndex == 1)
                 return kr.rc().rcName();
-            if (columnIndex == 2)
-                return val.invent > 0
-                        ? Long.valueOf(val.invent)
-                        : null;
-            if (columnIndex < 14) {
-                Stat s = gOrder[columnIndex - 3];
+            if (columnIndex == 2) {
+                return val.invent > 0 ? Long.valueOf(val.invent) : null;
+            }
+            if (columnIndex == 3) {
+            	return val.cpu > 0 ? Double.valueOf(val.cpu) : null;
+            }
+            if (columnIndex < 15) {
+                Stat s = gOrder[columnIndex - 4];
                 return Integer.valueOf(kr.stats().value(s));
             }
 
@@ -1838,7 +1961,7 @@ final class SWGLaboratoryTab extends JPanel {
                         new ArrayList<ERPair>(wraps.size() * (resLimit + 1));
 
                 for (SWGExperimentWrapper ew : wraps) {
-                    ERPair erp = new ERPair(ew, null, -2); // wrap itself
+                    ERPair erp = new ERPair(ew, null, -2, 0); // wrap itself
                     tmp.add(erp);
 
                     SWGResourceSet rSet = ew.resources();
@@ -1851,13 +1974,25 @@ final class SWGLaboratoryTab extends JPanel {
 
                     for (int i = 0; i < resLimit && i < rSet.size(); ++i) {
                         SWGKnownResource kr = rSet.get(i);
-                        long invent = SWGResController.inventoryAmount(
-                                        kr, SWGFrame.getSelectedGalaxy());
+                        String ass = (String) iFilterCombo.getSelectedItem();
+                        long invent;
+                        double cpu;
+                        if (ass.equals("All")) {
+                        	invent = SWGResController.inventoryAmount(
+                        			kr, SWGFrame.getSelectedGalaxy());
+                        	cpu = SWGResController.inventoryCPU(
+                        			kr, SWGFrame.getSelectedGalaxy());
+                        } else {
+                        	invent = SWGResController.inventoryAmount(
+                        			kr, SWGFrame.getSelectedGalaxy(), ass);
+                        	cpu = SWGResController.inventoryCPU(
+                        			kr, SWGFrame.getSelectedGalaxy(), ass);
+                        }
                         erp = new ERPair(ew, kr, invent >= 0
                                 ? invent
                                 : invFound
                                         ? -2 // not in inventory but not first
-                                        : -1); // not in inventory and superior
+                                        : -1 , cpu); // not in inventory and superior
                         invFound |= invent >= 0;
                         tmp.add(erp);
                     }
