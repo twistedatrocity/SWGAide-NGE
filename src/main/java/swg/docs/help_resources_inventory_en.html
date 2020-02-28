@@ -209,26 +209,13 @@ SWGAide but only at swgaide.com, then "edit" the resource in SWGAide and click
     <li> In SWGAide, delete the inventory, all of it </li>
     <li> Import the edited file </li>
   </OL>
-  </p>
-  <p> When SWGAide <b>imports from file</b> several things can happen:
-  <UL>
-    <li> If a galaxy name or abbreviation is found SWGAide tries the specified galaxy
-      as the origin for the resource. </li>
-    <li> If galaxy reads <b>(?)</b> SWGAide prompts you to select between some options
-      to correct the situation. <br/>
-      NOTE: at this point you cannot specify a galaxy other than the current galaxy,
-      or skip that line. </li>
-    <li> Finally, if no galaxy is specified SWGAide <U>does <b>not</b> assume 
-      anything</U> but will set the origin of the resource to "unknown galaxy",
-      that is (?) </li>
-  </UL>
-  </p>
   <p> However, when SWGAide <b>imports from notes file</b> and <b>no galaxy</b> is
     specified there is an important difference from the above, then SWGAide <U>assumes the current galaxy</U> as the origin. Thus, when you write the
     in-game notes file, type the resource name exactly as it reads at the in-game
     examine screen, galaxy name included just if there is any. </p>
-  <br/>
-  <br/>
+  <h2>CSV Restore</h2>
+  <p>SWGAide can restore your inventory from a CSV backup. The file is a comma delimited text file (CSV), the header is prepended by a hash # ... The header and columns are very important if you have modified this file on your own it needs to be what SWGAide expects in a normal CSV backup. All columns must be present even if they are empty values. The ID classToken, and CPUvalues are not needed if you are adding your own resources, empty values can be used for these.</p>
+  <pre># assignee,galaxy,resourceName,ID,resourceClass,classToken,amount,CPU,ER,CR,CD,DR,FL,HR,MA,PE,OQ,SR,UT,notes</pre>
 </BLOCKQUOTE>
 </BODY>
 </HTML>
