@@ -195,13 +195,13 @@ final class SWGLaboratoryTab extends JPanel {
     private boolean schemListDone = false;
     
     private SWGListModel<SWGSchematic> schemModel;
-
+    
     /**
      * The most recently selected resource, or {@code null}.
      */
     private volatile SWGKnownResource selectedResource;
-
-	/**
+    
+    /**
 	 * A map containing exp groups for the filter. LinkHashedSet is used so no duplicates
 	 */
 	private Map<String, SWGExperimentGroup> expGroups;
@@ -548,7 +548,7 @@ final class SWGLaboratoryTab extends JPanel {
             expGroups = new LinkedHashMap<String, SWGExperimentGroup>();
             expGroupsFiltered = new ArrayList<SWGExperimentGroup>();
             filterCheckboxes = new ArrayList<EFilter>();
-            if(s.quality.getName().contains("HQ") || s.quality.getName().contains("mixed")) {
+            if(SWGSchematicsManager.isQuality(s)) {
             	for (SWGSchematicWrapper w : wl) {
             		for (SWGExperimentGroup eg : w.schem().getExperimentGroups() ) {
             			expGroups.put(eg.getDescription(), eg);
