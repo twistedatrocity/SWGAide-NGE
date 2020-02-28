@@ -44,7 +44,7 @@ public final class SWGInventoryWrapper implements Serializable,
      * 
      * @serial a double
      */
-    private double cpu = 1.0;
+    private double cpu = 0.0;
 
     /**
      * The name of the assignee for this wrapper. This may be the name of a
@@ -222,7 +222,7 @@ public final class SWGInventoryWrapper implements Serializable,
      */
     void setCPU(double cpu) {
     	if (cpu <0)
-    		this.cpu = 1.0;
+    		this.cpu = 0.0;
     	else
     		this.cpu = cpu;
     }
