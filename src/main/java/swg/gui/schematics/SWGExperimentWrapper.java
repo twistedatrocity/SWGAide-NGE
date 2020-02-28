@@ -53,7 +53,7 @@ import swg.tools.ZString;
  * @author <a href="mailto:simongronlund@gmail.com">Simon Gronlund</a> aka
  *         Chimaera.Zimoon
  */
-final class SWGExperimentWrapper implements SWGGui {
+public final class SWGExperimentWrapper implements SWGGui {
 
     /**
      * A short description of the resource class and weights for this instance.
@@ -191,7 +191,7 @@ final class SWGExperimentWrapper implements SWGGui {
      * 
      * @return the weights
      */
-    SWGWeights weights() {
+    public SWGWeights weights() {
         return weights;
     }
 

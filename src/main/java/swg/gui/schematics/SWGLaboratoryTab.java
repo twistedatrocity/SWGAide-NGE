@@ -73,7 +73,6 @@ import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceSet;
 import swg.crafting.schematics.SWGExperimentGroup;
-import swg.crafting.schematics.SWGExperimentLine;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
 import swg.gui.SWGFrame;
@@ -210,12 +209,12 @@ final class SWGLaboratoryTab extends JPanel {
     /**
 	 * A map containing exp groups for the filter. LinkHashedSet is used so no duplicates
 	 */
-	private Map<String, SWGExperimentGroup> expGroups;
+	private Map<String, SWGExperimentWrapper> expGroups;
 
 	/**
 	 * ArrayList containing filtered exp groups
 	 */
-	private ArrayList<SWGExperimentGroup> expGroupsFiltered;
+	private ArrayList<SWGExperimentWrapper> expGroupsFiltered;
 
 	/**
 	 * The primary outer panel containing the exp filter checkboxes
@@ -378,18 +377,9 @@ final class SWGLaboratoryTab extends JPanel {
             SWGExperimentWrapper.refresh(ew, spawn, inv);
             if(expGroups.size() > 1) {
             	for (SWGExperimentWrapper wr : ew) {
-            		for (SWGExperimentGroup g : expGroupsFiltered) {
-            			if(wr.getName().equals(g.getDescription()) && !fw.contains(wr)) {
+            		for (SWGExperimentWrapper g : expGroupsFiltered) {
+            			if(g.getName().equals(wr.getName())) {
             				fw.add(wr);
-            			}
-            			for (SWGExperimentLine wl : wr.expLines()) {
-            				if(wl != null) {
-            					for (SWGExperimentLine l : g.getExperimentalLines() ) {
-            						if(wl.getDescription().equals(l.getDescription()) && !fw.contains(wr)) {
-            							fw.add(wr);
-            						}
-            					}
-            				}
             			}
             		}
             	}
@@ -566,17 +556,19 @@ final class SWGLaboratoryTab extends JPanel {
         ((SWGListModel<SWGSchematic>) schematicList.getModel()).setSelectedItem(s);
 
         if (s != null) {
-            List<SWGSchematicWrapper> wl = SWGSchemController.wrappers(s);
-            expGroups = new LinkedHashMap<String, SWGExperimentGroup>();
-            expGroupsFiltered = new ArrayList<SWGExperimentGroup>();
+            List<SWGSchematicWrapper> wl = SWGSchemController.wrappers(s);            
+            expGroups = new LinkedHashMap<String, SWGExperimentWrapper>();
+            expGroupsFiltered = new ArrayList<SWGExperimentWrapper>();
             filterCheckboxes = new ArrayList<EFilter>();
             if(SWGSchematicsManager.isQuality(s)) {
             	for (SWGSchematicWrapper w : wl) {
-            		for (SWGExperimentGroup eg : w.schem().getExperimentGroups() ) {
-            			expGroups.put(eg.getDescription(), eg);
-            		}
+            		for (SWGExperimentWrapper ew : w.experiments()) {
+            			String ename = ew.getName();
+            			expGroups.put(ename, ew);
+                    }
             	}
             }
+            
             if(!expGroups.isEmpty()) {
             	expGroups.forEach( (g,v) -> {
             		expGroupsFiltered.add(v);
@@ -709,7 +701,7 @@ final class SWGLaboratoryTab extends JPanel {
         i.set(0);
         expGroups.forEach( (k, g) -> {
         	if(g.getDescription() != null) {
-        		filterCheckboxes.get(i.get()).setContent(g.getDescription(), g);
+        		filterCheckboxes.get(i.get()).setContent(g.getName(), g);
         	} else {
         		filterCheckboxes.get(i.get()).eraseContent();
         	}
@@ -1475,11 +1467,11 @@ final class SWGLaboratoryTab extends JPanel {
         	this.addItemListener(new ItemListener() {
         		@Override
         		public void itemStateChanged(ItemEvent ie) {
-        			if (slot instanceof SWGExperimentGroup) {
+        			if (slot instanceof SWGExperimentWrapper) {
                     	if(isSelected()) {
-                    		expGroupsFiltered.add((SWGExperimentGroup) slot);
+                    		expGroupsFiltered.add((SWGExperimentWrapper) slot);
                     	} else {
-                    		expGroupsFiltered.remove((SWGExperimentGroup) slot);
+                    		expGroupsFiltered.remove((SWGExperimentWrapper) slot);
                     	}
                     	actionFilter();
                     }
