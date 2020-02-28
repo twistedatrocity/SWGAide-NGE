@@ -1134,7 +1134,7 @@ class SWGTodays extends JPanel {
         ZString z = new ZString("<html>");
         z.app("<table border=0 cellspacing=0 cellpadding=0><tr><td>");
         z.app("<b>Filter: </b></td><td>");
-        z.app(tri.rcwPair.rc()).app(" ¤ ");
+        z.app(tri.rcwPair.rc()).app(" :: ");
         tri.rcwPair.filter().toString(z, false);
         z.app("</td></tr>");
 
