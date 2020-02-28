@@ -331,12 +331,12 @@ final class SWGTestBench extends SWGJDialog {
             	   }
             }
         }
-        int tu = 0;
         int tc = 0;
+        int tot = 0;
         for (int i = 0; i < slots.size(); i++) {
         	RSlot sl = slots.get(i);
-        	tu += sl.getUnits();
-        	if(sl.getCPU()>0) tc += tu * sl.getCPU();
+        	tot += sl.getUnits();
+        	if(sl.getCPU()>0 && sl.filled()) tc += sl.getUnits() * sl.getCPU();
         }
         String pc;
         if(tc>0) {
@@ -344,7 +344,7 @@ final class SWGTestBench extends SWGJDialog {
         } else {
         	pc = "N/A";
         }
-        String totals = "<br>Total units: <strong>" + ZNumber.asText(tu) + "</strong> :: Potential Cost: <strong>" + pc + "</strong>";
+        String totals = "<br>Total units: <strong>" + ZNumber.asText(tot) + "</strong> :: Potential Cost: <strong>" + pc + "</strong>";
         String text = colors + header + "<div style=\"font-size:97%;\">" + rez + totals + "</div>";
         
         JEditorPane iL = new JEditorPane();
