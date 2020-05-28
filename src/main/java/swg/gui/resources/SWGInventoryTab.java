@@ -876,7 +876,7 @@ public final class SWGInventoryTab extends JPanel {
                 mr.galaxy(gxy);
                 SWGResourceStats stats = new SWGResourceStats();
                 for (Stat s : Stat.values()) {
-                	stats.set(s, ZNumber.intVal(record.get(s.getName())));
+                	stats.set(s, ZNumber.intVal(record.get(s.getName().toUpperCase())));
                 }
                 mr.stats(stats, true);
                 res = SWGResourceManager.getInstance(mr);
