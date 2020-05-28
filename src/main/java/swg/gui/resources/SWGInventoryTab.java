@@ -813,9 +813,12 @@ public final class SWGInventoryTab extends JPanel {
     		// next lets check if the assignee is valid and exists
     		String a = record.get("assignee").trim();
     		String ass = curAss;
-    		if(!a.isEmpty() && lAss.contains(a)) {
-    			ass = a;
+    		if(lAss != null) {
+    			if(!a.isEmpty() && lAss.contains(a)) {
+        			ass = a;
+        		}
     		}
+    		
     		// get resource class
             String cln = null; // class name
             String clt = null; // class token
