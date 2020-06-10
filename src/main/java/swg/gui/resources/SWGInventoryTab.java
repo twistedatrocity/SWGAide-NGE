@@ -814,9 +814,12 @@ public final class SWGInventoryTab extends JPanel {
     		String a = record.get("assignee").trim();
     		String ass = curAss;
     		if(lAss != null) {
-    			if(!a.isEmpty() && lAss.contains(a)) {
-        			ass = a;
-        		}
+    			for (int i = 0; i < lAss.size(); i++) {
+    				String aa = lAss.get(i);
+    				if(!a.isEmpty() && a.equalsIgnoreCase(aa) ) {
+    					ass = a;
+    				}
+    			}
     		}
     		
     		// get resource class
@@ -1808,7 +1811,7 @@ public final class SWGInventoryTab extends JPanel {
 
                 importDone();
         	} catch (Throwable e) {
-        		SWGAide.printError("SWGInventoryTab:csv import error: ", e);
+        		SWGAide.printError("SWGInventoryTab:notes import error: ", e);
         	}
         };
         // start the thread
@@ -1883,6 +1886,9 @@ public final class SWGInventoryTab extends JPanel {
      *         selects to abort or if parsing can continue respectively
      */
     private SWGInventoryWrapper notesReadWrapper(String line, SWGCGalaxy galaxy, ZString err) {
+    	
+    	final String curAss = assignee();
+		final List<String> lAss = assignees();
 
         // line = [(galaxyName)]resourceName,amount[,whatever]
         StringTokenizer tok = new StringTokenizer(line);
@@ -1964,7 +1970,17 @@ public final class SWGInventoryTab extends JPanel {
                         "%s(%s) - Importing %s",
                         Integer.toString(importCounter),
                         Integer.toString(importLines), name),null);
-                SWGInventoryWrapper wr = new SWGInventoryWrapper(res, assignee);
+            	// get the assignee
+            	String ass = curAss;
+        		if(lAss != null) {
+        			for (int i = 0; i < lAss.size(); i++) {
+        				String aa = lAss.get(i);
+        				if(!assignee.isEmpty() && assignee.equalsIgnoreCase(aa) ) {
+        					ass = assignee;
+        				}
+        			}
+        		}
+                SWGInventoryWrapper wr = new SWGInventoryWrapper(res, ass);
                 wr.setAmount(amount);
                 wr.setCPU(cpu);
                 wr.equalAddSub = eas;
