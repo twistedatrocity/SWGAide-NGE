@@ -1130,6 +1130,17 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         updateViewer = true; // by chance, it is reset if...
 
         ppp.addSeparator();
+        
+        JMenuItem goWeb = new JMenuItem("View Resource on Web Site");
+        goWeb.setToolTipText("View this resource on the SWGAide website");
+        goWeb.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ZHtml.browser("https://swgaide.com/resources/view.php?rid=" + res.id() );
+            }
+        });
+        
+        ppp.add(goWeb);
+        ppp.addSeparator();
 
         ppp.add(inventoryAddMenu(res));
         ppp.add(SWGResController.monitorAddMenu(res, s));
