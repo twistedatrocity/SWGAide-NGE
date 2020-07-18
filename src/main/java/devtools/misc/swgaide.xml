@@ -27,12 +27,12 @@
     <opt>-XX:+UseG1GC</opt>
   </jre>
   <versionInfo>
-    <fileVersion>1.1.2.0</fileVersion>
-    <txtFileVersion>Unity-1.1.2</txtFileVersion>
+    <fileVersion>1.1.3.0</fileVersion>
+    <txtFileVersion>Unity-1.1.3</txtFileVersion>
     <fileDescription>SWGAide-Unity</fileDescription>
     <copyright>swgaide.com 2020</copyright>
-    <productVersion>1.1.2.0</productVersion>
-    <txtProductVersion>Unity-1.1.2</txtProductVersion>
+    <productVersion>1.1.3.0</productVersion>
+    <txtProductVersion>Unity-1.1.3</txtProductVersion>
     <productName>SWGAide-Unity</productName>
     <companyName>swgaide.com</companyName>
     <internalName>SWGAide-Unity</internalName>
