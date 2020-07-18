@@ -37,6 +37,7 @@ import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -721,8 +722,8 @@ final class SWGResourceClassUse extends JPanel {
                 if (!SWGResController.inventoryExists(
                         rc, SWGFrame.getSelectedGalaxy(), false)) {
                     label.setBackground(isSelected
-                            ? SWGGuiUtils.colorDarker(Color.PINK, 0.9f)
-                            : Color.PINK);
+                            ? SWGGuiUtils.colorDarker(UIManager.getColor("SWG.PINK"), 0.9f)
+                            : UIManager.getColor("SWG.PINK"));
                 } else
                     super.colorBackground(
                             list, value, index, isSelected, cellHasFocus);
@@ -801,7 +802,7 @@ final class SWGResourceClassUse extends JPanel {
                         sel, expanded, leaf, row, hasFocuz);
 
                 if (resClassTreeModel.elementListed((SWGResourceClass) value))
-                    setForeground(Color.BLUE);
+                    setForeground(UIManager.getColor("SWG.blueFG"));
 
                 return this;
             }

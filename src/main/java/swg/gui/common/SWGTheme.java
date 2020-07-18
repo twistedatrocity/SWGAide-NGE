@@ -146,6 +146,8 @@ public final class SWGTheme {
 		  aTable.put("SWG.benchBAD",  new Color(0xFF0000));
 		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
 		  aTable.put("SWG.benchGREAT",  new Color(0x014709));
+		  aTable.put("SWG.blueFG",  new Color(0x0000FF));
+		  aTable.put("SWG.PINK",  new Color(0xffafaf));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -226,6 +228,8 @@ public final class SWGTheme {
 		  aTable.put("SWG.benchBAD",  new Color(0xFF0000));
 		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
 		  aTable.put("SWG.benchGREAT",  new Color(0x1cc530));
+		  aTable.put("SWG.blueFG",  new Color(0x4671f9));
+		  aTable.put("SWG.PINK",  new Color(0x855b5b));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
@@ -302,6 +306,8 @@ public final class SWGTheme {
 		  aTable.put("SWG.benchBAD",  new Color(0xfd2525));
 		  aTable.put("SWG.benchFAIR",  new Color(0xFF8C00));
 		  aTable.put("SWG.benchGREAT",  new Color(0x23e63a));
+		  aTable.put("SWG.blueFG",  new Color(0x4671f9));
+		  aTable.put("SWG.PINK",  new Color(0x855b5b));
 	  }
 	  public String getName(){ return fName; }
 	  protected ColorUIResource getPrimary1() { return fPrimary1; }
