@@ -19,7 +19,7 @@
     <bundledJre64Bit>false</bundledJre64Bit>
     <bundledJreAsFallback>false</bundledJreAsFallback>
     <minVersion>1.8.0</minVersion>
-    <maxVersion></maxVersion>
+    <maxVersion>1.8.0_999</maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
     <opt>-XX:MaxHeapFreeRatio=60</opt>
