@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +112,8 @@ public final class SWGMailMessage
      * session. XXX: make this transient in a while, added in 0.9.0.
      */
     private File file;
+    
+    private String fileName;
 
     /**
      * The unique ID number that is read from header and the file name.
@@ -175,7 +176,16 @@ public final class SWGMailMessage
         try {
             reader = ZReader.newTextReaderExc(file());
 
-            id = Long.parseLong(reader.lineExc(false));
+            String tmpid = reader.lineExc(false);
+            if(tmpid.contains("_")) {
+            	String[] chunk = tmpid.split("_");
+            	if(chunk[0].length() <10) {
+            		tmpid = chunk[0];
+            	}else if(chunk[1].length() <10){
+            		tmpid = chunk[1];
+            	}
+            }
+            tmpid = tmpid.replaceAll( "[^\\d]", "" );
             messageFrom = reader.lineExc(false);
             messageSubject = reader.lineExc(false);
 
@@ -189,6 +199,9 @@ public final class SWGMailMessage
                     ? Long.parseLong(tmpStr.substring("TIMESTAMP: ".length()))
                     : 0L;
 
+            tmpid = new StringBuilder().append(messageDate).append(tmpid).toString();
+            id = Long.parseLong(tmpid);
+            fileName = file.getName();
             type = getType();
             auctionData(); // grab data
 
@@ -401,18 +414,20 @@ public final class SWGMailMessage
      * {@inheritDoc} This is the file name of this mail, its ID and file suffix.
      */
     public String getName() {
-        return new ZString().app(id).app('.').app("mail").toString();
+    	if(fileName == null) {
+        	return SWGMailBox.DUMMY_FILE.getName();
+        }
+    	return fileName;
     }
     
     /**
      * Get the REAL filename
      */
     public String getRealName() {
-    	DecimalFormat df = new DecimalFormat("00000000");
-        String newid = df.format(id);
-        String result = new ZString().app(newid).app('.').app("mail").toString();
-        
-        return result;
+    	if(fileName == null) {
+    	return SWGMailBox.DUMMY_FILE.getName();
+    	}
+    	return fileName;
     }
 
     /**
