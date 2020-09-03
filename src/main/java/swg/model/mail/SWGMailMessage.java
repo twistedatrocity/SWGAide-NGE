@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.naming.InvalidNameException;
 
+import org.apache.commons.lang3.StringUtils;
+
 import swg.SWGAide;
 import swg.crafting.resources.SWGResourceSet;
 import swg.gui.common.SWGGui;
@@ -199,7 +201,8 @@ public final class SWGMailMessage
                     ? Long.parseLong(tmpStr.substring("TIMESTAMP: ".length()))
                     : 0L;
 
-            tmpid = new StringBuilder().append(messageDate).append(tmpid).toString();
+            String tmppid = new StringBuilder().append(messageDate).append(tmpid).toString();
+            tmpid = StringUtils.left(tmppid, 19);
             id = Long.parseLong(tmpid);
             fileName = file.getName();
             type = getType();
