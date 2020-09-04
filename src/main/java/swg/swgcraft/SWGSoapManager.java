@@ -123,6 +123,19 @@ final class SWGSoapManager extends SOAPManager {
             }
         }
     }
+    
+    private void addStats(SWGResource res, SOAPElement se, SOAPBodyElement sbe, boolean allValues) throws SOAPException {
+        SOAPElement st = newElement("Stats", sbe);
+        se.addChildElement(st);
+
+        SWGResourceStats rs = res.stats();
+        for (Stat s : Stat.values()) {
+            int v = rs.value(s);
+            if (allValues || v > 0) {
+                addChildElement(s.getName(), validateInt(v), sbe, st);
+            }
+        }
+    }
 
     /**
      * Helper method that returns the integer userID. The value is the user ID
@@ -899,8 +912,49 @@ final class SWGSoapManager extends SOAPManager {
      * @return the response from the server
      * @throws NullPointerException if the argument is {@code null}
      */
-    synchronized SWGSoapNOResResponse sendOld(SWGKnownResource kr) {
-        return sendNewOld(kr, SWGPlanet.DUMMY, true);
+    synchronized SWGSoapNOResResponse sendOld(SWGResource kr) {
+    	SWGSoapNOResResponse response = new SWGSoapNOResResponse(kr, SWGPlanet.DUMMY);
+    	try {
+            setServerURL();
+
+            SOAPMessage msg = newSoapMessage();
+            SOAPBodyElement sbe = newBodyElement("SoapAddResource", msg);
+
+            // populate the body element
+            SOAPElement ari = newElement("AddResourceInput", sbe);
+
+            addChildElement("Name", kr.getName(), sbe, ari);
+            addChildElement("Server", itos(kr.galaxy().id()), sbe, ari);
+            addChildElement("Planet", "0", sbe, ari);
+            addChildElement("Class", kr.rc().rcName(), sbe, ari);
+            addChildElement("Current", "false", sbe, ari);
+
+            // add stats, also zero values
+            addStats(kr, ari, sbe, true);
+
+            ari.addChildElement(newLoginChild(sbe));
+            ari.addChildElement(newProgramInfoChild(sbe));
+
+            // simpleTransform(msg, System.out);
+            SOAPMessage respMsg = sendMessage(msg);
+
+            // simpleTransform(respMsg, System.out);
+            if (hasFault(respMsg, response))
+                return response;
+
+            Node n = getFirstChild(respMsg.getSOAPBody(), 2);
+
+            response.parseNode(n);
+            if (response.status == 999) {
+                resetUserData();
+            }
+        } catch (Exception e) {
+            String msg = "SWGSoapManager:sendOld: " + e;
+            SWGAide.printDebug("soap", 1, msg);
+            response.faultMessage = msg;
+        }
+        return response;
+    	
     }
 
     /**

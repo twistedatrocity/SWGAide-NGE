@@ -1350,20 +1350,23 @@ public final class SWGResourceManager extends SWGResourceMgr {
         if (vs != null) throw new IllegalArgumentException(ZString.fs(
                     "Invalid stats: %s %s", r, vs));
 
-        SWGKnownResource kr = r instanceof SWGKnownResource
+       /* SWGKnownResource kr = r instanceof SWGKnownResource
                 ? (SWGKnownResource) r
-                : getKnown((SWGMutableResource) r);
+                : getKnown((SWGMutableResource) r); */
 
-        frame.putToStatbar("Submit old: " + kr.getName() + " / " + kr.rc().rcName(),null);
+        frame.putToStatbar("Submit old: " + r.getName() + " / " + r.rc().rcName(),null);
 
-        SWGSoapNOResResponse resp = SWGSoapManager.getSOAPHandler().sendOld(kr);
-        if (!resp.isFaultless()) {
+        SWGSoapNOResResponse resp = SWGSoapManager.getSOAPHandler().sendOld(r);
+        /*if (!resp.isFaultless()) {
             // do not remove known, it is cached locally for some reason
             if (r != kr && resp.status != 1 && resp.status != 3) {
                 resp.resource = null;
                 remove(kr);
             }
-        }
+        } else {
+        	resp.resource = null;
+        	remove(kr);
+        }*/
         return resp;
     }
 

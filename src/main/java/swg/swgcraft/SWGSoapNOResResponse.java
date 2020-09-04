@@ -4,6 +4,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import swg.crafting.resources.SWGKnownResource;
+import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceSet;
 import swg.model.SWGPlanet;
 import swg.tools.ZString;
@@ -60,6 +61,10 @@ public final class SWGSoapNOResResponse extends SWGSoapResResponse {
      * @param planet the planet which this response is about
      */
     SWGSoapNOResResponse(SWGKnownResource res, SWGPlanet planet) {
+        super(res, planet);
+    }
+    
+    SWGSoapNOResResponse(SWGResource res, SWGPlanet planet) {
         super(res, planet);
     }
 
@@ -135,12 +140,10 @@ public final class SWGSoapNOResResponse extends SWGSoapResResponse {
         }
 
         swgcraftID = SWGSoapManager.parseInt(lst, "ResourceID");
-        if (resource.id() <= 0) {
-            SWGResourceManager.supplyID(resource, swgcraftID);
-        } else {
-            // TODO: how to handle ID > 0 but have used sendNew(res) ???
-            // should rather the resource manager handle this once it gets back
-            // the response?
+        if (resource != null) {
+	        if (resource.id() <= 0) {
+	            SWGResourceManager.supplyID(resource, swgcraftID);
+	        }
         }
     }
 

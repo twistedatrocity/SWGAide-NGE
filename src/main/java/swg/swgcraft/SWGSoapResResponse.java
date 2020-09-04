@@ -1,6 +1,7 @@
 package swg.swgcraft;
 
 import swg.crafting.resources.SWGKnownResource;
+import swg.crafting.resources.SWGResource;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
 
@@ -27,6 +28,7 @@ abstract class SWGSoapResResponse extends SWGSoapStatusResponse {
      * The resource which this response is about.
      */
     protected SWGKnownResource resource;
+    protected SWGResource gresource;
 
     /**
      * Creates an instance of this type using the identified arguments. If this
@@ -42,6 +44,13 @@ abstract class SWGSoapResResponse extends SWGSoapStatusResponse {
     protected SWGSoapResResponse(SWGKnownResource res, SWGPlanet planet) {
         super(res.id());
         this.resource = res;
+        this.planet = planet;
+        setGalaxy(res.galaxy());
+    }
+    
+    protected SWGSoapResResponse(SWGResource res, SWGPlanet planet) {
+        super(res.id());
+        this.gresource = res;
         this.planet = planet;
         setGalaxy(res.galaxy());
     }
