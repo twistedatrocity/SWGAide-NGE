@@ -2133,17 +2133,11 @@ public final class SWGMailISDroidPanel extends JPanel {
      */
     private void notesFileWriteResource(ZString z, SWGResource r, String s) {
     	SWGResourceStats stats = r.stats();
-    	String svalues = "";
+    	String tval = "";
     	if(!stats.equals(SWGResourceStats.BLANK)) {
-    		int[] vals = stats.values();
-	    	for ( int i : vals) {
-	    		if(i>0) {
-	    			svalues = svalues.concat(String.valueOf(i)).concat(" ");
-	    		}
-	    	}
-	    	svalues = svalues.trim();
+    		tval = stats.toString().replaceAll("[^0-9\\s]", "").trim();
     	}
-        z.app(r.getName()).app(", ").app(r.rc().rcName()).app(", ").app(svalues);
+		z.app(r.getName()).app(", ").app(r.rc().rcName()).app(", ").app(tval);
         if (s != null) z.app(s);
         z.nl();
     }
