@@ -2132,7 +2132,18 @@ public final class SWGMailISDroidPanel extends JPanel {
      * @param s an optional string to append, or {@code null}
      */
     private void notesFileWriteResource(ZString z, SWGResource r, String s) {
-        z.app(r.getName()).app(", ").app(r.rc().rcName()).app(", ");
+    	SWGResourceStats stats = r.stats();
+    	String svalues = "";
+    	if(!stats.equals(SWGResourceStats.BLANK)) {
+    		int[] vals = stats.values();
+	    	for ( int i : vals) {
+	    		if(i>0) {
+	    			svalues = svalues.concat(String.valueOf(i)).concat(" ");
+	    		}
+	    	}
+	    	svalues = svalues.trim();
+    	}
+        z.app(r.getName()).app(", ").app(r.rc().rcName()).app(", ").app(svalues);
         if (s != null) z.app(s);
         z.nl();
     }
