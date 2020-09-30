@@ -362,6 +362,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
                 report.planet(), mail.date(), user);
 
         // mail FORMAT is read at the bottom of this method
+        SWGResourceClass rc = null;
 
         for (int rci = 0, ni = 1; ni < body.length; ++ni) {
             String name = body[ni];
@@ -370,7 +371,9 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
             if (name.startsWith("\\#pcontrast1")) {
                 // first resource name found
 
-                SWGResourceClass rc = SWGResourceClass.rc(body[rci]);
+                if(!body[rci].contains("=")) {
+                	rc = SWGResourceClass.rc(body[rci]);
+                }
 
                 int start = name.indexOf(' ') + 1;
                 int end = name.lastIndexOf('\\');
