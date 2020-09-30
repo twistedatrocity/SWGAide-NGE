@@ -164,6 +164,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Tatooinian Domesticated Milk", sid);
       sid = Integer.valueOf(388); swgTypeToInt.put("yadmk", sid);
                                   swgTypeToInt.put("Yavinian Domesticated Milk", sid);
+                                  swgTypeToInt.put("Yavin IV Domesticated Milk", sid); // for beyond not using proper format
       sid = Integer.valueOf(724); swgTypeToInt.put("kadmk", sid);
                                   swgTypeToInt.put("Kashyyykian Domesticated Milk", sid);
       sid = Integer.valueOf(613); swgTypeToInt.put("mudmk", sid);
@@ -190,6 +191,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Tatooinian Wild Milk", sid);
       sid = Integer.valueOf(398); swgTypeToInt.put("yawmk", sid);
                                   swgTypeToInt.put("Yavinian Wild Milk", sid);
+                                  swgTypeToInt.put("Yavin IV Wild Milk", sid); // for beyond not using proper format
       sid = Integer.valueOf(745); swgTypeToInt.put("kawmk", sid);
                                   swgTypeToInt.put("Kashyyykian Wild Milk", sid);
       sid = Integer.valueOf(631); swgTypeToInt.put("muwmk", sid);
@@ -440,6 +442,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Crustacean", sid);
       sid = Integer.valueOf(651); swgTypeToInt.put("cotmt", sid);
                                   swgTypeToInt.put("Corellian Crustacean Meat", sid);
+                                  swgTypeToInt.put("Corellia Crustacean Meat", sid); // for beyond not using proper format
       sid = Integer.valueOf(652); swgTypeToInt.put("dntmt", sid);
                                   swgTypeToInt.put("Dantooine Crustacean Meat", sid);
       sid = Integer.valueOf(653); swgTypeToInt.put("datmt", sid);
@@ -466,6 +469,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Mollusk", sid);
       sid = Integer.valueOf(686); swgTypeToInt.put("commt", sid);
                                   swgTypeToInt.put("Corellian Mollusk Meat", sid);
+                                  swgTypeToInt.put("Corellia Mollusk Meat", sid); // for beyond not using proper format
       sid = Integer.valueOf(687); swgTypeToInt.put("dnmmt", sid);
                                   swgTypeToInt.put("Dantooine Mollusk Meat", sid);
       sid = Integer.valueOf(688); swgTypeToInt.put("dammt", sid);
@@ -554,6 +558,7 @@ class SWGResourceClassInfo {
                                   swgTypeToInt.put("Dantooine Horn", sid);
       sid = Integer.valueOf(677); swgTypeToInt.put("dahrn", sid);
                                   swgTypeToInt.put("Dathomirian Horn", sid);
+                                  swgTypeToInt.put("Dothomirian Horn", sid); // for beyond not using proper format
       sid = Integer.valueOf(678); swgTypeToInt.put("enhrn", sid);
                                   swgTypeToInt.put("Endorian Horn", sid);
       sid = Integer.valueOf(680); swgTypeToInt.put("lohrn", sid);
