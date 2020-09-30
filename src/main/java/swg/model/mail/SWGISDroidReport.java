@@ -10,6 +10,7 @@ import swg.crafting.resources.SWGMutableResource;
 import swg.crafting.resources.SWGPlanetAvailabilityInfo;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceSet;
+import swg.crafting.resources.SWGResourceStats;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
 import swg.model.mail.SWGMailMessage.Type;
@@ -364,6 +365,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
 
         for (int rci = 0, ni = 1; ni < body.length; ++ni) {
             String name = body[ni];
+            SWGResourceStats stats = null;
 
             if (name.startsWith("\\#pcontrast1")) {
                 // first resource name found
@@ -378,10 +380,33 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
                     throw new InvalidNameException(String.format(
                             "Resource name \"%s\" in %s", name, mail));
 
+                // lets see if there are stats
+                int schk = rci + 2;
+                int cmax = schk + 11;
+                if(body[schk].contains("=")) {
+                	// we have stats so lets try and import them
+                	String slist = "";
+                	for(int i=schk; i<cmax; i++){
+                		String stat = body[i];
+                		if(stat.contains("=")) {
+                			int s_start = stat.indexOf('=') + 2;
+                			slist = slist.concat(" " + ZString.ton(stat.substring(s_start)));
+                		} else {
+                			break;
+                		}
+                	}
+                	slist = slist.trim();
+                	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "slist: " + slist);
+                	stats = SWGResourceStats.newInstance(slist, rc);
+                	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "Stats: " + stats);
+                }
                 SWGKnownResource r = known.getBy(name, report.gxy());
                 SWGMutableResource m;
                 if (r == null) {
                     m = new SWGMutableResource(name, rc);
+                    if(stats != null) {
+                    	m.stats(stats,true);
+                    }
                     m.depleted(false);
                     m.galaxy(report.gxy());
                 } else
