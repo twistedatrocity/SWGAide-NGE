@@ -448,7 +448,7 @@ public final class SWGMailMessage
      * @return a type
      */
     Type getType() {
-        if (fromLine().endsWith("interplanetary survey droid") ||
+        if (fromLine().endsWith("interplanetary survey droid") || fromLine().endsWith("survey droid") ||
 			fromLine().endsWith("Interplanetary Survey Droid")) {
             long now = System.currentTimeMillis() / 1000;
             now -= (60 * 60 * 20); // max 20 hours old

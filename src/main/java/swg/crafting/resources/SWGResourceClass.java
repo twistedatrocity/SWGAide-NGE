@@ -363,6 +363,8 @@ public abstract class SWGResourceClass implements Serializable,
      * @throws IllegalArgumentException if the string is invalid
      */
     public static final SWGResourceClass rc(String s) {
+    	s = s.replace("  ", " ");
+    	s = s.replace("Reptillian", "Reptilian");
         Integer ret = SWGResourceClassInfo.swgTypeToInt.get(s);
         if (ret == null)
             throw new IllegalArgumentException("Invalid string: " + s);
