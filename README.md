@@ -23,7 +23,7 @@ explanatory.
 Upgrades
 ========
 
-For updates all you need to do is download a new copy of the exe replacing the old one. If you are upgrading from the -NGE version to -Unity then you would simply just use the Unit exe going forward and delete the NGE exe.
+For updates all you need to do is download a new copy of the exe replacing the old one. If you are upgrading from the -NGE version to -Unity then you would simply just use the Unity exe going forward and delete the NGE exe.
 
 
 Usage
