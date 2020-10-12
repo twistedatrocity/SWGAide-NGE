@@ -1,0 +1,57 @@
+Below is an example ISD report mail file contents that contain stats.
+It's very important that each stat is on it's own line. The short form of the stat name is standard, but the long form can also be used as Aide will pick up on either naming convention. e.g.: DR or Decay Resistance.
+
+
+
+
+03832905_1601430452
+SWG.Omega.interplanetary survey droid
+Survey Results: Corellia - Chemical
+TIMESTAMP: 1601430452
+Incoming planetary survey report...
+
+\#pcontrast3 Planet: \#pcontrast1 Corellia
+\#pcontrast3 Resource Class: \#pcontrast1 Chemical
+
+\#pcontrast3 Resources located...\#.
+
+    Liquid Petrochem Fuel
+        Known Liquid Petrochem Fuel
+            Class 3 Liquid Petro Fuel
+                    \#pcontrast1 Tifiahattium\#. 
+                    DR = 111
+                    PE = 638
+                    OQ = 227
+    Inert Petrochemical
+        Lubricating Oil
+                \#pcontrast1 Etarq\#. 
+                    DR = 367
+                    OQ = 649
+		Lubricating Oil
+                \#pcontrast1 Dilosle\#. 
+                    DR = 774
+                    OQ = 704
+        Polymer
+                \#pcontrast1 Elvormian\#. 
+                    DR = 411
+                    MA = 569
+                    OQ = 410
+                    SR = 606
+                    UT = 696
+		Polymer
+                \#pcontrast1 Avimiam\#. 
+                    DR = 300
+                    MA = 1
+                    OQ = 70
+                    SR = 467
+                    UT = 984
+    Fiberplast
+        Corellia Fiberplast
+                \#pcontrast1 Osquopa\#. 
+                    DR = 712
+                    MA = 100
+                    OQ = 240
+                    SR = 262
+                    UT = 115
+
+
