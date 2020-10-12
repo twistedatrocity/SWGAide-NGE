@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.naming.InvalidNameException;
 
+import swg.crafting.Stat;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGMutableResource;
 import swg.crafting.resources.SWGPlanetAvailabilityInfo;
@@ -366,7 +367,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
 
         for (int rci = 0, ni = 1; ni < body.length; ++ni) {
             String name = body[ni];
-            SWGResourceStats stats = null;
+            SWGResourceStats fstats = null;
 
             if (name.startsWith("\\#pcontrast1")) {
                 // first resource name found
@@ -388,27 +389,34 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
                 int cmax = schk + 11;
                 if(body[schk].contains("=")) {
                 	// we have stats so lets try and import them
-                	String slist = "";
+                	fstats = new SWGResourceStats();
                 	for(int i=schk; i<cmax; i++){
                 		String stat = body[i];
                 		if(stat.contains("=")) {
-                			int s_start = stat.indexOf('=') + 2;
-                			slist = slist.concat(" " + ZString.ton(stat.substring(s_start)));
+                			int s_stat = stat.indexOf('=') + 1;
+                			int s_name = stat.indexOf("=") - 1;
+                			String name_stat = stat.substring(0, s_name).trim().toLowerCase();
+                			String val_stat = stat.substring(s_stat).trim().toLowerCase();
+                			Stat[] gOrder = Stat.gameOrder();
+							for (int gid = 0; gid < gOrder.length; ++gid) {
+								Stat s = gOrder[gid];
+								String gname = gOrder[gid].name().toLowerCase();
+								String gdesc = gOrder[gid].getDescription().toLowerCase();
+                				if ( gname.equals(name_stat) || gdesc.equals(name_stat) ) {
+                					fstats.set(s, Integer.parseInt(val_stat));
+                				}
+                			}
                 		} else {
                 			break;
                 		}
                 	}
-                	slist = slist.trim();
-                	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "slist: " + slist);
-                	stats = SWGResourceStats.newInstance(slist, rc);
-                	//SWGAide.printDebug(Thread.currentThread().getName(), 9, "Stats: " + stats);
                 }
                 SWGKnownResource r = known.getBy(name, report.gxy());
                 SWGMutableResource m;
                 if (r == null) {
                     m = new SWGMutableResource(name, rc);
-                    if(stats != null) {
-                    	m.stats(stats,true);
+                    if(fstats != null) {
+                    	m.stats(fstats,true);
                     }
                     m.depleted(false);
                     m.galaxy(report.gxy());
