@@ -82,6 +82,7 @@ import swg.gui.resources.SWGResController;
 import swg.model.SWGCGalaxy;
 import swg.model.SWGPlanet;
 import swg.tools.SpringUtilities;
+import swg.tools.ZHtml;
 import swg.tools.ZNumber;
 import swg.tools.ZString;
 
@@ -359,6 +360,7 @@ class SWGTodays extends JPanel {
 
             } else {
                 SWGKnownResource tr = tri.current;
+                long rid = tr.id();
                 SWGResourceClass rc = tri.rcwPair.rc();
                 SWGWeights wg = tri.rcwPair.filter() instanceof SWGWeights
                         ? (SWGWeights) tri.rcwPair.filter()
@@ -367,6 +369,16 @@ class SWGTodays extends JPanel {
                         ? tri.inventory.getResource()
                         : tr;
                 if (src == todaysTable) {
+                	JMenuItem goWeb = new JMenuItem("View Resource on Web Site");
+                    goWeb.setToolTipText("View this resource on the SWGAide website");
+                    goWeb.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            ZHtml.browser("https://swgaide.com/resources/view.php?rid=" + rid );
+                        }
+                    });
+                    
+                    ppp.add(goWeb);
+                    ppp.addSeparator();
                     ppp.add(SWGResController.resourceDetailsMenu(tr, src));
                     ppp.add(SWGResController.currentSelectMenu(tr));
                     ppp.addSeparator();

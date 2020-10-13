@@ -2308,6 +2308,18 @@ public final class SWGInventoryTab extends JPanel {
 	        ppp.add(sc.resClassUse(rc));
 	
 	        ppp.addSeparator();
+	        if(kr != null && kr.id()>0) {
+		        JMenuItem goWeb = new JMenuItem("View Resource on Web Site");
+		        goWeb.setToolTipText("View this resource on the SWGAide website");
+		        goWeb.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent e) {
+		                ZHtml.browser("https://swgaide.com/resources/view.php?rid=" + kr.id() );
+		            }
+		        });
+		        
+		        ppp.add(goWeb);
+		        ppp.addSeparator();
+	        }
 	
 	        JMenuItem edit = new JMenuItem("Edit...");
 	        edit.setToolTipText("Edit the selected entry");

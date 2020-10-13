@@ -91,6 +91,7 @@ import swg.gui.resources.SWGInventoryWrapper;
 import swg.gui.resources.SWGResController;
 import swg.model.SWGCGalaxy;
 import swg.tools.SpringUtilities;
+import swg.tools.ZHtml;
 import swg.tools.ZNumber;
 
 /**
@@ -514,6 +515,19 @@ final class SWGLaboratoryTab extends JPanel {
         String nts = schematicList.getSelectedValue().getName();
 
         JPopupMenu popup = new JPopupMenu();
+        
+        if(kr != null && kr.id()>0) {
+	        JMenuItem goWeb = new JMenuItem("View Resource on Web Site");
+	        goWeb.setToolTipText("View this resource on the SWGAide website");
+	        goWeb.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                ZHtml.browser("https://swgaide.com/resources/view.php?rid=" + kr.id() );
+	            }
+	        });
+	        
+	        popup.add(goWeb);
+	        popup.addSeparator();
+        }
 
         popup.add(SWGResController.resourceDetailsMenu(kr, resourceTable));
         popup.add(SWGResController.currentSelectMenu(kr));
