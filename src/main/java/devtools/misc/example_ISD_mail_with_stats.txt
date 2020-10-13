@@ -1,6 +1,6 @@
 Below is an example ISD report mail file contents that contain stats.
 It's very important that each stat is on it's own line.
-he short form of the stat name is standard, but the long form can also be used as Aide
+The short form of the stat name is standard, but the long form can also be used as Aide
 will pick up on either naming convention. e.g.: DR or Decay Resistance.
 
 
