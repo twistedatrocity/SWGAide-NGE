@@ -2658,6 +2658,8 @@ final class SWGSubmitTab extends JPanel {
          * The background color for stat-less resource objects.
          */
         private final Color statlessColor;
+        
+        private MetalTheme theme = MetalLookAndFeel.getCurrentTheme();
 
         /**
          * Create a cell renderer for the main table of multiple resources.
@@ -2678,30 +2680,45 @@ final class SWGSubmitTab extends JPanel {
         public Component getListCellRendererComponent(JList<?> list, Object val,
                 int index, boolean isSelected, boolean cellHasFocus) {
 
-            if (isSelected)
+            if (isSelected) {
                 setBorder(selectedBorder);
-            else
+            } else {
                 setBorder(null);
+            }
 
-            if (val == null)
+            if (val == null) {
                 this.setText("  ");
-            else if (SWGMutableResource.class.isAssignableFrom(val.getClass())) {
+            } else if (SWGMutableResource.class.isAssignableFrom(val.getClass())) {
                 SWGMutableResource mr = (SWGMutableResource) val;
 
-                if (mr.whatever != null)
-                    setBackground(((String) mr.whatever).startsWith("OK")
-                            ? Color.LIGHT_GRAY
-                            : errorColor /* false from the similar-dialog */);
-                else if (mr.stats().sum() > 0)
-                    setBackground(Color.WHITE);
-                else
-                    setBackground(statlessColor);
+                if (mr.whatever != null) {
+                	if(theme.getName().contains("Dark")) {
+                		setForeground(((String) mr.whatever).startsWith("OK")
+                                ? Color.LIGHT_GRAY
+                                : errorColor /* false from the similar-dialog */);
+                    } else {
+                    	setBackground(((String) mr.whatever).startsWith("OK")
+                                ? Color.LIGHT_GRAY
+                                : errorColor /* false from the similar-dialog */);
+                    }
+                } else if (mr.stats().sum() > 0) {
+                	if(theme.getName().contains("Dark")) {
+                		setForeground(Color.WHITE);
+                	} else {
+                		setBackground(Color.WHITE);
+                	}
+                } else {
+                	if(theme.getName().contains("Dark")) {
+                		setForeground(statlessColor);
+                	} else {
+                		setBackground(statlessColor);
+                	}
+                }
 
                 ZString z = new ZString();
-                if (mr.isDepleted() && mr.whatever != null
-                        && !((String) mr.whatever).endsWith("old"))
+                if (mr.isDepleted() && mr.whatever != null && !((String) mr.whatever).endsWith("old")) {
                     z.app("depleted, ").app(mr.getName());
-                else {
+                } else {
                     z.app(planetsToString(mr.availability(), false));
                     z.app(", ").app(mr.getName()).app(", ");
                     z.app(mr.rc().rcName()).app(", ");
@@ -2712,16 +2729,34 @@ final class SWGSubmitTab extends JPanel {
                 String str = (String) val;
                 if (str.toLowerCase(Locale.ENGLISH).startsWith("depl")) {
                     String[] spl = str.split("[ ,]+");
-                    if (spl.length < 2)
-                        setBackground(errorColor);
-                    else if (str.startsWith("DEPLETED")) {
+                    if (spl.length < 2) {
+                    	if(theme.getName().contains("Dark")) {
+                    		setForeground(errorColor);
+                    	} else {
+                    		setBackground(errorColor);
+                    	}
+                    } else if (str.startsWith("DEPLETED")) {
                         // ugly hack, see submitDepleted(kr, list, i)
-                        setBackground(Color.LIGHT_GRAY);
+                    	if(theme.getName().contains("Dark")) {
+                    		setForeground(Color.LIGHT_GRAY);
+                    	} else {
+                    		setBackground(Color.LIGHT_GRAY);
+                    	}
                         str = "depleted, " + spl[1];
-                    } else
-                        setBackground(depleteColor);
-                } else
-                    setBackground(errorColor);
+                    } else {
+                    	if(theme.getName().contains("Dark")) {
+                    		setForeground(depleteColor);
+                    	} else {
+                    		setBackground(depleteColor);
+                    	}
+                    }
+                } else {
+                	if(theme.getName().contains("Dark")) {
+                		setForeground(errorColor);
+                	} else {
+                		setBackground(errorColor);
+                	}
+                }
 
                 setText(str);
             }
