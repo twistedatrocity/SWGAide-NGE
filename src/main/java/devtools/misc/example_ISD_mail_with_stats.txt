@@ -1,11 +1,13 @@
 Below is an example ISD report mail file contents that contain stats.
-It's very important that each stat is on it's own line. The short form of the stat name is standard, but the long form can also be used as Aide will pick up on either naming convention. e.g.: DR or Decay Resistance.
+It's very important that each stat is on it's own line.
+he short form of the stat name is standard, but the long form can also be used as Aide
+will pick up on either naming convention. e.g.: DR or Decay Resistance.
 
 
 
 
 03832905_1601430452
-SWG.Omega.interplanetary survey droid
+SWG.TestServer.interplanetary survey droid
 Survey Results: Corellia - Chemical
 TIMESTAMP: 1601430452
 Incoming planetary survey report...
@@ -27,7 +29,7 @@ Incoming planetary survey report...
                 \#pcontrast1 Etarq\#. 
                     DR = 367
                     OQ = 649
-		Lubricating Oil
+	Lubricating Oil
                 \#pcontrast1 Dilosle\#. 
                     DR = 774
                     OQ = 704
@@ -38,7 +40,7 @@ Incoming planetary survey report...
                     OQ = 410
                     SR = 606
                     UT = 696
-		Polymer
+	Polymer
                 \#pcontrast1 Avimiam\#. 
                     DR = 300
                     MA = 1
