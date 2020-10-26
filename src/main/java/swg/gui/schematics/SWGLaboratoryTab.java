@@ -1807,7 +1807,7 @@ final class SWGLaboratoryTab extends JPanel {
                         : plain;
                 int v = kr.stats().value(s);
                 int c = hq
-                        ? ew.rc().max(s)
+                        ? Math.max(ew.rc().max(s), kr.rc().max(s))
                         : kr.rc().isSpaceOrRecycled()
                                 ? ew.rc().max(s)
                                 : kr.rc().max(s);
