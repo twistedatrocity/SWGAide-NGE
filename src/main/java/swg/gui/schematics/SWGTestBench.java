@@ -706,7 +706,7 @@ final class SWGTestBench extends SWGJDialog {
                 SWGKnownResource kr = rs.kr();
                 double v = kr.stats().value(s);
                 if (v > 0) {
-                    double adj4cap = Math.min(v / rs.rc.max(s) * 1000, 1000);
+                    double adj4cap = Math.min(v / Math.max(rs.rc.max(s), kr.rc().max(s)) * 1000, 1000);
                     dividend += rs.units * adj4cap;
                     divisor += rs.units;
                 }
@@ -721,7 +721,7 @@ final class SWGTestBench extends SWGJDialog {
                 SWGKnownResource kr = rs.kr();
                 double v = kr.stats().value(s);
                 if (v > 0) {
-                    double adj4cap = Math.min(v / rs.rc.max(s) * 1000, 1000);
+                    double adj4cap = Math.min(v / Math.max(rs.rc.max(s), kr.rc().max(s)) * 1000, 1000);
                     double wg = rs.units / divisor;
                     upStatText(adj4cap * wd * wg, adj4cap, z, frac);
                 }
