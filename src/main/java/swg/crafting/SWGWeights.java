@@ -1,6 +1,7 @@
 package swg.crafting;
 
 import java.util.Arrays;
+
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceClass;
 
@@ -298,14 +299,10 @@ public final class SWGWeights extends SWGValues {
 
                 // the complete formula to compute a weighed value with is
                 // sum += value * (1000 / cap) * weight / 100
-                
-                // if resource has higher caps than it's parent class used by schematic then adjust for this.
-                int mcap = Math.max(res.rc().max(s), caps.max(s));
-                
 
                 // if possible: 1000/cap which is >= 1.00
                 double multiplier = caps != null
-                        ? adjCap(mcap)
+                        ? adjCap(caps.max(s))
                         : 1.0;
 
                 resWeight += Math.min(1000.0, value * multiplier)
