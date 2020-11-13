@@ -364,8 +364,9 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
 
         // mail FORMAT is read at the bottom of this method
         SWGResourceClass rc = null;
+        int blen = body.length;
 
-        for (int rci = 0, ni = 1; ni < body.length; ++ni) {
+        for (int rci = 0, ni = 1; ni < blen; ++ni) {
             String name = body[ni];
             SWGResourceStats fstats = null;
 
@@ -387,7 +388,7 @@ public final class SWGISDroidReport implements Comparable<SWGISDroidReport> {
                 // lets see if there are stats
                 int schk = rci + 2;
                 int cmax = schk + 11;
-                if(body[schk].contains("=")) {
+                if(schk < blen && body[schk].contains("=")) {
                 	// we have stats so lets try and import them
                 	fstats = new SWGResourceStats();
                 	for(int i=schk; i<cmax; i++){
