@@ -188,7 +188,6 @@ public final class SWGMailMessage
             	}
             }
             tmpid = tmpid.replaceAll( "[^\\d]", "" );
-            tmpid = tmpid.replaceAll( "-", "" );
             messageFrom = reader.lineExc(false);
             messageSubject = reader.lineExc(false);
 
