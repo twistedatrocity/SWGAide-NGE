@@ -100,15 +100,16 @@ public class SWGNotesNode extends SWGTreeNode {
 
     @Override
     protected void focusGained(EventObject evt) {
-        if (evt instanceof MouseEvent
-                && ((MouseEvent) evt).getButton() == MouseEvent.BUTTON3) {
+    	if (evt instanceof MouseEvent) {
+    		int but = ((MouseEvent) evt).getButton();
+    		if (but == MouseEvent.BUTTON3) {
             JPopupMenu popup = new JPopupMenu();
 
-            popup.add(((SWGStationNode) this.getParent()).addNotesMenuItem());
             popup.add(deleteMenuItem());
 
             MouseEvent e = (MouseEvent) evt;
             popup.show(e.getComponent(), e.getX(), e.getY());
+    		}
         }
         if (exists()) {
             notesPane();

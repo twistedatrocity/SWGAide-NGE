@@ -33,7 +33,6 @@ import swg.crafting.resources.SWGResourceClassTree;
 import swg.crafting.resources.types.SWGCreatureResources;
 import swg.gui.common.AbstractCellEditor;
 import swg.gui.common.AbstractTreeTableModel;
-import swg.gui.common.JTreeTable;
 import swg.gui.common.SWGDecoratedTableCellRenderer;
 import swg.gui.common.SWGDecoratedTableCellRenderer.DecoratedTableModel;
 import swg.gui.common.SWGDecoratedTableCellRenderer.TableCellDecorations;
@@ -271,8 +270,7 @@ final class SWGTreeTable extends SWGJTable {
      * in the ListSelectionModel happens, the paths are updated in the
      * DefaultTreeSelectionModel.
      */
-    private final class ListToTreeSelectionModelWrapper extends
-            DefaultTreeSelectionModel {
+    private final class ListToTreeSelectionModelWrapper extends DefaultTreeSelectionModel {
 
         /** Set to true when we are updating the ListSelectionModel. */
         private boolean updatingListSelectionModel;
