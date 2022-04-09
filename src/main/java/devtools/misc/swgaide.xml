@@ -25,14 +25,15 @@
     <opt>-XX:MaxHeapFreeRatio=60</opt>
     <opt>-XX:MinHeapFreeRatio=40</opt>
     <opt>-XX:+UseG1GC</opt>
+    <opt>-Dsun.java2d.opengl=true</opt>
   </jre>
   <versionInfo>
-    <fileVersion>1.1.8.0</fileVersion>
-    <txtFileVersion>Unity-1.1.8</txtFileVersion>
+    <fileVersion>1.1.9.0</fileVersion>
+    <txtFileVersion>Unity-1.1.9</txtFileVersion>
     <fileDescription>SWGAide-Unity</fileDescription>
     <copyright>swgaide.com 2020</copyright>
-    <productVersion>1.1.8.0</productVersion>
-    <txtProductVersion>Unity-1.1.8</txtProductVersion>
+    <productVersion>1.1.9.0</productVersion>
+    <txtProductVersion>Unity-1.1.9</txtProductVersion>
     <productName>SWGAide-Unity</productName>
     <companyName>swgaide.com</companyName>
     <internalName>SWGAide-Unity</internalName>
