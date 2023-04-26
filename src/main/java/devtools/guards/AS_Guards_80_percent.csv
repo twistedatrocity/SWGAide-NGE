@@ -1,0 +1,62 @@
+#Exported guards/filters for Ahazi by SWGAide: http://simongronlund.googlepages.com/SWGAide,,,,,,,,,,,,,,,,
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+AS - Alantium Carbonate Ore,Alantium Carbonate Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Energy Layer
+AS - Aluminum,Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Battle segment Standard battle core Standard recon core Imperial recon core
+AS - Amorphous Gemstone,Amorphous Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Kinetic Layer Standard Assault core Adv Assault core  Adv Battle core Power conditioner
+AS - Ardanium Siliclastic Ore,Ardanium Siliclastic Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Electrical Layer
+AS - Avian Bone,Avian Bone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Tantel Suit
+AS - Bal'ta'ran Amorphous Gemstone,Bal'ta'ran Crystal Amorphous Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Electric Layer
+AS - Beyrllius Copper,Beyrllius Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Adv Battle core
+AS - Bone,Bone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Bone & Chitin Suits
+AS - Bristley Hide,Bristley Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard Battle core Marauder suit Rebel Battle suit
+AS - Carbonite Steel,Carbonite Steel,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Adv Recon core
+AS - Chanion Intrusive Ore,Chanlon Intrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - RIS Segment
+AS - Chromite Carbonate Ore,Chromite Carbonate Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Kinetic layer
+AS - Chromium Aluminium,Chromium Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - RIS Suits
+AS - Chronamite Extrusive Ore,Chronamite Extrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Secundas layer
+AS - Conductive Borcarbitic Copper,Conductive Borcarbitic Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Tertius layer
+AS - Copper,Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Recon segment Standard assault/battle core Rebel recon suit Power conditioner DSG plate DSG particle DSG ray DSG emmitter
+AS - Correlia Fiberplast,Corellia Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard / Advanced Battle core
+AS - Crystalline Gemstone,Crystalline Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Acid layer Standard / Advanced recon core DSG particle DSG emmitter PSG 1&2
+AS - Dantooine Wooly Hide,Dantooine Wooly Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Adv assault core
+AS - Dathomirian Fiberplast,Dathomirian Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard / Advanced Assault core
+AS - Dylinium Intrusive Ore,Dylinium Intrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Tertius layer
+AS - Extrusive Ore,Extrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard / Advanced Battle core
+AS - Ferrous Metal,Ferrous Metal,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Energy / Heat / Kinetic layer
+AS - Fiberplast,Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Basic cores Recon segment
+AS - Frasium Carbonate Ore,Frasium Carbonate Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Heat layer
+AS - Gemstone,Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Basic cores
+AS - Gravatonic Fiberplast,Gravitonic Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Primus / Secundas / Tertius layers
+AS - Hide,Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Basic cores Mabari Suit
+AS - Inert Gas,Inert Gas,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Power Conditioner Energy distributor
+AS - Intrusive Ore,Intrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard / Advanced assault core
+AS - Iron,Iron,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Assault segment Standard assault core Rebel Battle Suit PSG's
+AS - Kammris Iron,Kammris Iron,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Adv assault core
+AS - Kerol Fire-Gem,Kerol Fire-Gem Crystalline Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Heat layer
+AS - Laboi Crystalline Gemstone,Laboi Mineral Crystal Crystalline Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Cold layer Feather appearance
+AS - Leathery Hide,Leathery Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Recon segment Standard recon suit Ubese suit
+AS - Link Steel Aluminium,Link-Steel Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Advanced recon core
+AS - Lokian Leathery Hide,Lokian Leathery Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Advanced recon core
+AS - Low Grade Oe,Low-Grade Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Marauder suit Power conditioner Energy distributor DSG plate DSG particle DSG ray DSG emitter PSG3
+AS - Malab Siliclastic Ore,Malab Siliclastic Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS -  Acid / Cold layers
+AS - Metal,Metal,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Basic cores Bone/Chitin/Padded Suits Power conditioner Energy distributor DSG ray
+AS - Mythra Copper,Mythra Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Advanced assault core
+AS - Naboo Bristley Hide,Nabooian Bristley Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Advanced Battle Core
+AS - Naboo Fiberplast,Nabooian Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Standard recon core Advanced recon core
+AS - Neutronium Steel,Neutronium Steel,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Primus layer
+AS - Non-Ferrous Metal,Non-Ferrous Metal,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Acid/Cold/Electric layers DSG plate DSG particle DSG emmitter
+AS - Oridium Intrusive Ore,Oridium Intrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Feather Appearance
+AS - Perovskitic Aluminium,Perovskitic Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Primus/Secundas/Tertius layer
+AS - Phrik Aluminum,Phrik Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Advanced Battle core
+AS - Plexite Amorphous Gemstone,Plexite Amorphous Gemstone,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Energy Layer
+AS - Polymer,Polymer,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - All layer Standard recon core Advanced recon core Iperial Suits Assault/Battle segments Power conditioner Energy distributor
+AS - Polysteel Copper,Polysteel Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Feather Appearance
+AS - Rori Fiberplast,Rori Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - RIS segment
+AS - Scaly Hide,Scaley Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Assault segments Padded suits Rebel Assault suit
+AS - Solid Petro Fuel,Solid Petrochem Fuel,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Composite suit
+AS - Steel,Steel,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Assault/Battle/Recon Segments Standard recon core Rebel Assault suit Imperial Battle/Assault suit Energy distributor PSG's
+AS - Talusian Fiberplast,Talusian Fiberplast,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - RIS Suits
+AS - Thallium Copper,Thallium Copper,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Secundas layer
+AS - Titanium Aluminum,Titanium Aluminum,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - RIS segments
+AS - Vintrium Extrusive Ore,Vintrium Extrusive Ore,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Primus layer
+AS - Wooly Hide,Wooly Hide,0,0,0,0,0,0,0,50,50,0,0,800,1,1,AS - Battle segments Standard assault core Composite suit Rebel recon suit

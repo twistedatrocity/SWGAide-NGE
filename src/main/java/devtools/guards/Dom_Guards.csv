@@ -1,0 +1,192 @@
+#Exported guards/filters for Ahazi by SWGAide: http://simongronlund.googlepages.com/SWGAide,,,,,,,,,,,,,,,,
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+Domestic-Beans,Beans,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Trimpian (F)
+Domestic-Beans,Beans,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"T'illa-T'ill (Q), Trimpian (Q)"
+Domestic-Beans,Beans,0,0,0,25,0,0,0,0,75,0,0,960,1,1,Ormachek (Q)
+Domestic-Beans,Beans,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"T'illa-T'ill (F), Ormachek (F)"
+Domestic-Beans,Beans,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"T'illa-T'ill (N), Trimpian (N), Ormachek (N)"
+Domestic-Berries,Berries,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Veronian Berry Wine (F)
+Domestic-Berries,Berries,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Veronian Berry Wine (Q), Dweezel (Q), Gorrnar (Q), Kiwik Clusjo Swirl (Q), Vagnerian Canape (Q), Fruit Substitutes"
+Domestic-Berries,Berries,0,0,0,0,20,0,0,50,0,0,30,960,1,1,Multisaccharide Pentamate
+Domestic-Berries,Berries,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Veronian Berry Wine (N), Dweezel (N), Gorrnar (N), Kiwik Clusjo Swirl (N), Vagnerian Canape (N)"
+Domestic-Berries,Berries,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Dweezel (F), Gorrnar (F), Kiwik Clusjo Swirl (F), Vagnerian Canape (F)"
+Domestic-Bone,Bone,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Cho-Nor-Hoola (F), Caramelized Pkneb (F), Deneelian Fizz Pudding (F)"
+Domestic-Bone,Bone,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Cho-Nor-Hoola (N), Caramelized Pkneb (N), Deneelian Fizz Pudding (N)"
+Domestic-Bone,Bone,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Cho-Nor-Hoola (Q), Caramelized Pkneb (Q)"
+Domestic-Bone,Bone,0,0,0,25,0,0,0,0,75,0,0,960,1,1,Deneelian Fizz Pudding (Q)
+Domestic-Bristley Hide,Bristley Hide,0,0,0,25,0,0,0,0,75,0,0,960,1,1,Ormachek (Q)
+Domestic-Bristley Hide,Bristley Hide,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Ormachek (F)
+Domestic-Bristley Hide,Bristley Hide,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Ormachek (N)
+Domestic-Carnivore Meat,Carnivore Meat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Bivoli Tempari (Q)
+Domestic-Carnivore Meat,Carnivore Meat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Bivoli Tempari (F)
+Domestic-Carnivore Meat,Carnivore Meat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Bivoli Tempari (N)
+Domestic-Cereal,Cereal,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Caf (F)
+Domestic-Cereal,Cereal,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Caf (Q), Jawa Beer (Q), Starshine Surprise (Q), Crispic (Q), Almond-Kwevvu Crisp (Q), Veghash (Q), Bofa Treat (Q)"
+Domestic-Cereal,Cereal,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Synthsteak (Q), Travel Biscuit (Q)"
+Domestic-Cereal,Cereal,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Hyper Yeast Concentrate, Hyper Yeast Additive, Edible Nano Constrictors"
+Domestic-Cereal,Cereal,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Caf (N), Jawa Beer (N), Starshine Surprise (N), Synthsteak (N), Crispic (N), Almond-Kwevvu Crisp (N), Veghash (N), Bofa Treat (N), Travel Biscuit (N)"
+Domestic-Cereal,Cereal,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Jawa Beer (F), Starshine Surprise (F), Synthsteak (F), Crispic (F), Almond-Kwevvu Crisp (F), Veghash (F), Bofa Treat (F), Travel Biscuit (F)"
+Domestic-Copper,Copper,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"Adv Chemical Reactive Unit, Chemical Reactive Unit"
+Domestic-Copper,Copper,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Reverse Engineering Tool
+Domestic-Corel Berry,Corellia Berry Fruit,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Corellian Brandy (Q)
+Domestic-Corel Berry,Corellia Berry Fruit,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Corellian Brandy (F)
+Domestic-Corel Berry,Corellia Berry Fruit,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Corellian Brandy (N)
+Domestic-Corel Dom Wheat,Corellian Domesticated Wheat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Corellian Ale (Q)
+Domestic-Corel Dom Wheat,Corellian Domesticated Wheat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Corellian Ale (F)
+Domestic-Corel Dom Wheat,Corellian Domesticated Wheat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Corellian Ale (N)
+Domestic-Corel Fruit,Corellian Fruit,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Corellian Brandy (Q)
+Domestic-Corel Fruit,Corellian Fruit,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Corellian Brandy (F)
+Domestic-Corel Fruit,Corellian Fruit,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Corellian Brandy (N)
+Domestic-Corn,Corn,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processor Filter
+Domestic-Creature Food,Creature Food,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Broad-Spectrum Nutrients, Intelligent Nanonutrients, Micronutrient Supplement"
+Domestic-Creature Structural,Creature Structural,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Vayerbok (Q)
+Domestic-Creature Structural,Creature Structural,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Vayerbok (F)
+Domestic-Creature Structural,Creature Structural,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Vayerbok (N)
+Domestic-Dath Leather,Dathomirian Leathery Hide,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Rancor Aid (Q)
+Domestic-Dath Leather,Dathomirian Leathery Hide,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Rancor Aid (F)
+Domestic-Dath Leather,Dathomirian Leathery Hide,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Rancor Aid (N)
+Domestic-Evergreen,Evergreen Soft Wood,0,0,0,33,0,0,0,0,0,0,66,960,1,1,Rakririan Burnout Sauce (F)
+Domestic-Evergreen,Evergreen Soft Wood,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Rakririan Burnout Sauce (N)
+Domestic-Evergreen,Evergreen Soft Wood,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Rakririan Burnout Sauce (Q)
+Domestic-Fiberplast,Fiberplast,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Centrifuge Seperation Filter
+Domestic-Fiberplast,Fiberplast,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Armor Padding (Integrity)
+Domestic-Fiberplast,Fiberplast,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Armor Padding (Effectiveness)
+Domestic-Flora Food,Flora Food,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Broad-Spectrum Nutrients, Multisaccharide Tetramate, Intelligent Nanonutrients, Micronutrient Supplement, Multisaccharide Dimate, Multisaccharide Pentamate"
+Domestic-Flowers,Flowers,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Garrmorl (Q), Durindfire (Q), Parwan Nutricake (Q), Gruuvan Shaal (Q), Ahrisa (Q)"
+Domestic-Flowers,Flowers,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Garrmorl (F), Durindfire (F), Parwan Nutricake (F), Gruuvan Shaal (F), Ahrisa (F)"
+Domestic-Flowers,Flowers,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Garrmorl (N), Durindfire (N), Parwan Nutricake (N), Gruuvan Shaal (N), Ahrisa (N)"
+Domestic-Fruit,Fruits,0,0,0,66,0,0,0,33,0,0,0,960,1,1,Pica Thundercloud (N)
+Domestic-Fruit,Fruits,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Ruby Bliel (F), Kiwik Clusjo Swirl (F), Pikatta Pie (F), Won-Won (F), Cavaellin Creams (F), Chandad (F)"
+Domestic-Fruit,Fruits,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Vasarian Brandy (Q), Jaar (Q), Rancor Aid (Q), Gralinyn Juice (Q), Ruby Bliel (Q), Starshine Surprise (Q), Parwan Nutricake (Q), Blob Candy (Q), Almond-Kwevvu Crisp (Q), Citros Snow Cake (Q), Dweezel (Q), Kiwik Clusjo Swirl (Q), Pikatta Pie (Q), Won-Won (Q), Smuggler's Delight (Q), Pyollian Cake (Q), Cavaellin Creams (Q), Vagnerian Canape (Q), Air Cake (Q), Chandad (Q)"
+Domestic-Fruit,Fruits,0,0,0,25,0,0,0,75,0,0,0,960,1,1,Pica Thundercloud (Q)
+Domestic-Fruit,Fruits,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"K-18 Rations (Q), Kanali Wafers (Q)"
+Domestic-Fruit,Fruits,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Vasarian Brandy (F), Jaar (F), Rancor Aid (F), Gralinyn Juice (F), Pica Thundercloud (F), Starshine Surprise (F), Parwan Nutricake (F), Blob Candy (F), Almond-Kwevvu Crisp (F), K-18 Rations (F), Citros Snow Cake (F), Dweezel (F), Smuggler's Delight (F), Pyollian Cake (F), Kanali Wafers (F), Vagnerian Canape (F), Air Cake (F)"
+Domestic-Fruit,Fruits,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Vasarian Brandy (N), Jaar (N), Rancor Aid (N), Gralinyn Juice (N), Ruby Bliel (N), Starshine Surprise (N), Parwan Nutricake (N), Blob Candy (N), Almond-Kwevvu Crisp (N), K-18 Rations (N), Citros Snow Cake (N), Dweezel (N), Kiwik Clusjo Swirl (N), Pikatta Pie (N), Won-Won (N), Smuggler's Delight (N), Pyollian Cake (N), Kanali Wafers (N), Cavaellin Creams (N), Vagnerian Canape (N), Air Cake (N), Chandad (N)"
+Domestic-Fungus,Fungi,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Thakitillo (F)
+Domestic-Fungus,Fungi,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Vayerbok (Q), Durindfire (Q), Accarragm (Q), Thakitillo (Q)"
+Domestic-Fungus,Fungi,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Vayerbok (F), Durindfire (F), Accarragm (F)"
+Domestic-Fungus,Fungi,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Vayerbok (N), Durindfire (N), Accarragm (N), Thakitillo (N)"
+Domestic-Gemstone,Gemstone,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processor Filter
+Domestic-Greens,Greens,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Thakitillo (F)
+Domestic-Greens,Greens,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Vayerbok (Q), Thakitillo (Q), Ahrisa (Q)"
+Domestic-Greens,Greens,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Vayerbok (F), Ahrisa (F)"
+Domestic-Greens,Greens,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Vayerbok (N), Thakitillo (N), Ahrisa (N)"
+Domestic-Herbivore,Herbivore Meat,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Scrimpi (F)
+Domestic-Herbivore,Herbivore Meat,0,0,0,25,0,0,0,0,75,0,0,960,1,1,Terratta (Q)
+Domestic-Herbivore,Herbivore Meat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Scrimpi (Q), Dustcrepe (Q)"
+Domestic-Herbivore,Herbivore Meat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Dustcrepe (F), Terratta (F)"
+Domestic-Herbivore,Herbivore Meat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Scrimpi (N), Dustcrepe (N), Terratta (N)"
+Domestic-Hide,Hide,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Fish Substitutes
+Domestic-Hide,Hide,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Exo-Protein Wafer (Q), K-18 Rations (Q), Meat Jerky (Q), Teltier Noodles (Q), Kanali Wafers (Q), Travel Biscuit (Q)"
+Domestic-Hide,Hide,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Armor Padding (Integrity)
+Domestic-Hide,Hide,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Armor Padding (Effectiveness)
+Domestic-Hide,Hide,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Exo-Protein Wafer (F), K-18 Rations (F), Meat Jery (F), Teltier Noodles (F), Kanali Wafers (F), Travel Biscuit (F)"
+Domestic-Hide,Hide,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Exo-Protein Wafer (N), K-18 Rations (N), Meat Jerky (N), Teltier Noodles (N), Kanali Wafers (N), Travel Biscuit (N)"
+Domestic-Inorganic,Inorganic,0,0,0,0,0,0,0,66,0,0,33,960,1,1,Bacta Kits (Effectiveness)
+Domestic-Inorganic,Inorganic,0,0,0,0,0,0,0,66,0,33,0,960,1,1,"Bacta Kit Charge Loader, Bacta Kits (Charges)"
+Domestic-Insect,Insect Meat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Vercupti (Q)
+Domestic-Insect,Insect Meat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Vercupti (F)
+Domestic-Insect,Insect Meat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Vercupti (N)
+Domestic-Iron,Iron,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister
+Domestic-Leather,Leathery Hide,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Terratta (F), Deneelian Fizz Pudding (F)"
+Domestic-Leather,Leathery Hide,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Terratta (N), Deneelian Fizz Pudding (N)"
+Domestic-Leather,Leathery Hide,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Terratta (Q), Deneelian Fizz Pudding (Q)"
+Domestic-Liquid Petro,Liquid Petrochem Fuel,0,0,0,33,0,0,0,0,0,0,66,960,1,1,Rakririan Burnout Sauce (F)
+Domestic-Liquid Petro,Liquid Petrochem Fuel,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Rakririan Burnout Sauce (N)
+Domestic-Liquid Petro,Liquid Petrochem Fuel,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Rakririan Burnout Sauce (Q)
+Domestic-Liquid Petro,Known Liquid Petrochem Fuel,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Centrifuge Seperation Mixture
+Domestic-Ore,Low-Grade Ore,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister
+Domestic-Lube Oil,Lubricating Oil,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Vercupti (Q)
+Domestic-Lube Oil,Lubricating Oil,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Vercupti (F)
+Domestic-Lube Oil,Lubricating Oil,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Vercupti (N)
+Domestic-Meat,Meat,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Aitha (F), Trimpian (F), Won-Won (F), Blood Chowder (F)"
+Domestic-Meat,Meat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Blue Milk (Q), Aitha (Q), Crispic (Q), Almond-Kwevvu Crisp (Q), Trimpian (Q), Won-Won (Q), Blood Chowder (Q), Caramelized Pkneb (Q), Fish Substitutes"
+Domestic-Meat,Meat,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Exo-Protein Wafer (Q), K-18 Rations (Q), Meat Jerky (Q), Ormachek (Q)"
+Domestic-Meat,Meat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Blue Milk (F), Crispic (F), Exo-Protein Wafer (F), Almond-Kwevvu Crisp (F), K-18 Rations (F), Meat Jerky (F), Ormachek (F), Caramelized Pkneb (F)"
+Domestic-Meat,Meat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Blue Milk (N), Aitha (N), Crispic (N), Exo-Protein Wafer (N), Almond-Kwevvu Crisp (N), K-18 Rations (N), Meat Jerky (N), Trimpian (N), Ormachek (N), Won-Won (N), Blood Chowder (N), Caramelized Pkneb (N)"
+Domestic-Metal,Metal,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"Reverse Engineering Tool, Survey Tools, Crafting Tools"
+Domestic-Milk,Milk,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Terratta (Q), Deneelian Fizz Pudding (Q)"
+Domestic-Milk,Milk,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Blue Milk (Q), Jaar (Q), Cho-Nor-Hoola (Q)"
+Domestic-Milk,Milk,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Multisaccharide Tetramate, Multisaccharide Dimate, Multisaccharide Pentamate"
+Domestic-Milk,Milk,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Blue Milk (F), Jaar (F), Cho-Nor-Hoola (F), Terratta (F), Deneelian Fizz Pudding (F)"
+Domestic-Milk,Milk,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Blue Milk (N), Jaar (N), Cho-Nor-Hoola (N), Terratta (N), Deneelian Fizz Pudding (N)"
+Domestic-Mineral,Mineral,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"Reverse Engineering Tool, Survey Tools, Crafting Tools"
+Domestic-Neutronium,Neutronium Steel,0,0,0,66,0,0,0,33,0,0,0,960,1,1,Pica Thundercloud (N)
+Domestic-Neutronium,Neutronium Steel,0,0,0,25,0,0,0,75,0,0,0,960,1,1,Pica Thundercloud (Q)
+Domestic-Neutronium,Neutronium Steel,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Pica Thundercloud (F)
+Domestic-Oats,Oats,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Breath of Heaven (Q), Gorrnar (Q), Pyollian Cake (Q), Havla (Q), Fruit Substitutes"
+Domestic-Oats,Oats,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Breath of Heaven (F), Gorrnar (F), Pyollian Cake (F), Havla (F)"
+Domestic-Oats,Oats,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Breath of Heaven (N), Gorrnar (N), Pyollian Cake (N), Havla (N)"
+Domestic-Organic,Organic,0,0,0,33,66,0,0,0,0,0,0,960,1,1,Spiced Tea (F)
+Domestic-Organic,Organic,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Spiced Tea (Q), T'ssolok (Q), Veghash (Q), Bofa Treat (Q), Karkan Ribenes (Q), Meat Substitutes"
+Domestic-Organic,Organic,0,0,0,0,0,0,0,66,0,33,0,960,1,1,"Bacta Kit Charge Loader, Bacta Kits (Charges), "
+Domestic-Organic,Organic,0,0,0,0,0,0,0,66,0,0,33,960,1,1,Bacta Kits (Effectiveness)
+Domestic-Organic,Organic,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Broad-Spectrum Nutrients, Hyper Yeast Concentrate, Intelligent Nanonutrients, Hyper Yeast Additive, Micronutrient Supplement, Multisaccharide Dimate"
+Domestic-Organic,Organic,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Spiced Tea (N), T'ssolok (N), Veghash (N), Bofa Treat (N), Karkan Ribenes (N)"
+Domestic-Organic,Organic,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"T'ssolok (F), Veghash (F), Bofa Treat (F), Karkan Ribenes (F)"
+Domestic-Polymer,Polymer,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"Adv Chemical Reactive Unit, Chemical Reactive Unit"
+Domestic-Reptile,Reptilian Meat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Gruuvan Shaal (F)
+Domestic-Reptile,Reptilian Meat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Gruuvan Shaal (N)
+Domestic-Reptile,Reptilian Meat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Gruuvan Shaal (Q)
+Domestic-Radioactive,Radioactive,0,0,0,66,0,0,0,33,0,0,0,960,1,1,Pica Thundercloud (N)
+Domestic-Radioactive,Radioactive,0,0,0,25,0,0,0,75,0,0,0,960,1,1,Pica Thundercloud (Q)
+Domestic-Radioactive,Radioactive,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processor Filter
+Domestic-Radioactive,Radioactive,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Pica Thundercloud (F)
+Domestic-Reactive Gas,Reactive Gas,0,0,0,25,66,0,0,0,0,0,0,960,1,1,"Flameout (F), Deuterium-pyro (F)"
+Domestic-Reactive Gas,Reactive Gas,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Flameout (Q), Deuterium-pyro (Q)"
+Domestic-Reactive Gas,Reactive Gas,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Flameout (N), Deuterium-pyro (N)"
+Domestic-Rice,Rice,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Deutrium-pyro (F), Chandad (F)"
+Domestic-Rice,Rice,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Breath of Heaven (Q), Deuterium-pyro (Q), Chandad (Q)"
+Domestic-Rice,Rice,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Breath of Heaven (F)
+Domestic-Rice,Rice,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Breath of Heaven (N), Deuterium-pyro (N), Chandad (N)"
+Domestic-Seeds,Seeds,0,0,0,0,20,0,0,50,0,0,30,960,1,1,Multisaccharide Tetramate
+Domestic-Soft Wood,Soft Wood,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Scrimpi (F), Thakitillo (F)"
+Domestic-Soft Wood,Soft Wood,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Scrimpi (Q), Thakitillo (Q)"
+Domestic-Soft Wood,Soft Wood,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Scrimpi (N), Thakitillo (N)"
+Domestic-Steel,Steel,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister
+Domestic-Steel,Steel,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"Adv Chemical Reactive Unit, Chemical Reactive Unit"
+Domestic-Tat Berry,Tatooinian Berry Fruit,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Bespin Port (Q)
+Domestic-Tat Berry,Tatooinian Berry Fruit,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Bespin Port (F)
+Domestic-Tat Berry,Tatooinian Berry Fruit,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Bespin Port (N)
+Domestic-Tat Fruit,Tatooinian Fruit,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Bespin Port (Q)
+Domestic-Tat Fruit,Tatooinian Fruit,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Bespin Port (F)
+Domestic-Tat Fruit,Tatooinian Fruit,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Bespin Port (N)
+Domestic-Tat Tuber,Tatooinian Vegetable Tubers,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Bespin Port (Q)
+Domestic-Tat Tuber,Tatooinian Vegetable Tubers,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Bespin Port (F)
+Domestic-Tat Tuber,Tatooinian Vegetable Tubers,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Bespin Port (N)
+Domestic-Tubers,Tubers,0,0,0,25,66,0,0,0,0,0,0,960,1,1,Flameout (F)
+Domestic-Tubers,Tubers,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Flameout (Q), T'illa-T'ill (Q), Vercupti (Q), Dweezel (Q), Smuggler's Delight (Q), Havla (Q), Vegeparsine (Q)"
+Domestic-Tubers,Tubers,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Flameout (N), T'illa-T'ill (N), Vercupti (N), Dweezel (N), Smuggler's Delight (N), Havla (N), Vegeparsine (N)"
+Domestic-Tubers,Tubers,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"T'illa-T'ill (F), Vercupti (F), Dweezel (F), Smuggler's Delight (F), Havla (F), Vegeparsine (F)"
+Domestic-Vegetable,Vegetables,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Gralinyn Juice (Q), Veghash (Q), Bivoli Tempari (Q), Gruuvan Shaal (Q)"
+Domestic-Vegetable,Vegetables,0,0,0,25,0,0,0,0,75,0,0,960,1,1,"Synthsteak (Q), Teltier Noodles (Q)"
+Domestic Vegetable,Vegetables,0,0,0,0,20,0,0,50,0,0,30,960,1,1,Edible Nano Constrictors
+Domestic-Vegetable,Vegetables,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Gralinyn Juice (F), Synth Steak (F), Veghash (F), Teltier Noodles (F), Bivoli Tempari (F), Gruuvan Shaal (F)"
+Domestic-Vegetable,Vegetables,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Gralinyn Juice (N), Synth Steak (N), Veghash (N), Teltier Noodles (N), Bivoli Tempari (N), Gruuvan Shaal (N)"
+Domestic-Water,Water,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Ithorian Mist (F), Veronian Berry Wine (F), Aitha (F), Spiced Tea (F), Caf (F), Ruby Bliel (F), Scrimpi (F), Trimpian (F), Kiwik Clusjo Swirl (F), Pikatta Pie (F), Won-Won (F), Thakitillo (F), Blood Chowder (F), Cavaellin Creams (F), Chandad (F)"
+Domestic-Water,Water,0,0,0,33,0,0,0,0,0,0,66,960,1,1,Rakririan Burnout Sauce (F)
+Domestic-Water,Water,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Ithorian Mist (Q), Veronian Berry Wine (Q), Aitha (Q), Spiced Tea (Q), Caf (Q), Ruby Bliel (Q), Scrimpi (Q), Trimpian (Q), Kiwik Clusjo Swirl (Q), Pikatta Pie (Q), Won-Won (Q), Thakitillo (Q), Blood Chowder (Q), Rakririan Burnout Sauce (Q), Cavaellin Creams (Q), Chandad (Q), Meat Substitutes, Fish Substitutes"
+Domestic-Water,Water,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Ithorian Mist (N), Veronian Berry Wine (N), Aitha (N), Spiced Tea (N), Caf (N), Ruby Bliel (N), Scrimpi (N), Trimpian (N), Kiwik Clusjo Swirl (N), Pikatta Pie (N), Won-Won (N), Thakitillo (N), Blood Chowder (N), Rakririan Burnout Sauce (N), Cavaellin Creams (N), Chandad (N)"
+Domestic-Wheat,Wheat,0,0,0,33,66,0,0,0,0,0,0,960,1,1,"Ithorian Mist (F), Pikatta Pie (F), Won-Won (F), Chandad (F)"
+Domestic-Wheat,Wheat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Ithorian Mist (Q), Parwan Nutricake (Q), Dustcrepe (Q), Pikatta Pie (Q), Won-Won (Q), Chandad (Q)"
+Domestic-Wheat,Wheat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Ithorian Mist (N), Parwan Nutricake (N), Dustcrepe (N), Pikatta Pie (N), Won-Won (N), Chandad (N)"
+Domestic-Wheat,Wheat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Parwan Nutricake (F), Dustcrepe (F)"
+Domestic-Wild Corn,Wild Corn,0,0,0,25,0,0,0,0,0,0,75,960,1,1,T'illa-T'ill (Q)
+Domestic-Wild Corn,Wild Corn,0,0,0,0,66,0,0,33,0,0,0,960,1,1,T'illa-T'ill (F)
+Domestic-Wild Corn,Wild Corn,0,0,0,0,0,0,0,33,0,0,66,960,1,1,T'illa-T'ill (N)
+Domestic-Wild Meat,Wild Meat,0,0,0,0,20,0,0,50,0,0,30,960,1,1,"Hyper Yeast Concentrate, Hyper Yeast Additive, Edible Nano Constrictors"
+Domestic-Wild Rice,Wild Rice,0,0,0,25,0,0,0,0,0,0,75,960,1,1,"Garrmorl (Q), Parwan Nutricake (Q)"
+Domestic-Wild Rice,Wild Rice,0,0,0,0,66,0,0,33,0,0,0,960,1,1,"Garrmorl (F), Parwan Nutricake (F)"
+Domestic-Wild Rice,Wild Rice,0,0,0,0,0,0,0,33,0,0,66,960,1,1,"Garrmorl (N), Parwan Nutricake (N)"
+Domestic-Wild Wheat,Wild Wheat,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Citros Snow Cake (Q)
+Domestic-Wild Wheat,Wild Wheat,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Citros Snow Cake (F)
+Domestic-Wild Wheat,Wild Wheat,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Citros Snow Cake (N)
+Domestic-Wood,Wood,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processor Filter
+Domestic-Wood,Wood,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Karkan Ribenes (F)
+Domestic-Wood,Wood,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Karkan Ribenes (N)
+Domestic-Wood,Wood,0,0,0,25,0,0,0,0,0,0,75,960,1,1,Karkan Ribenes (Q)
+Domestic-Wooly,Wooly Hide,0,0,0,25,0,0,0,0,75,0,0,960,1,1,Jawa Beer (Q)
+Domestic-Wooly,Wooly Hide,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Armor Padding (Integrity)
+Domestic-Wooly,Wooly Hide,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Armor Padding (Effectiveness)
+Domestic-Wooly,Wooly Hide,0,0,0,0,66,0,0,33,0,0,0,960,1,1,Jawa Beer (F)
+Domestic-Wooly,Wooly Hide,0,0,0,0,0,0,0,33,0,0,66,960,1,1,Jawa Beer (N)

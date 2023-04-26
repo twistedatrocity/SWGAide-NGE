@@ -1,0 +1,201 @@
+#Exported guards/filters for Chilastra by SWGAide: http://simongronlund.googlepages.com/SWGAide,,,,,,,,,,,,,,,,
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+Component,Steel-Purity,0,0,0,0,0,0,0,50,0,50,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control"
+Component,Steel-Mutation,0,0,0,0,0,0,0,50,50,0,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control"
+Component-Purity,Copper,0,0,0,0,0,0,0,50,0,50,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control, Element Processing System Fuse"
+Component-Mutation,Copper,0,0,0,0,0,0,0,50,50,0,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control, Element Processing System Fuse"
+Component-Purity,Low-Grade Ore,0,0,0,0,0,0,0,50,0,50,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control, Element Processing System Fuse"
+Component-Mutation,Low-Grade Ore,0,0,0,0,0,0,0,50,50,0,0,960,1,1,"Enzyme Centrifuge Motor, Enzyme Extraction Control, Element Processing System Fuse"
+Component-Purity,Inert Gas,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Enzyme Centrifuge Motor
+Component-Mutation,Inert Gas,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Enzyme Centrifuge Motor
+Component-Purity,Chemical,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Enzyme Extraction Control
+Component-Mutation,Chemical,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Enzyme Extraction Control
+Component-Purity,Chemical,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Element Processing System Fuse
+Component-Mutation,Chemical,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Element Processing System Fuse
+Droid-Combat,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Combat Capable / Module Socket Cluster, General Droid Mod. Socket Cluster"
+Droid-Combat,Chemical,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Combat Capable / Module Socket Cluster, General Droid Mod. Socket Cluster"
+Droid-Combat,Low-Grade Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Combat Capable / Module Socket Cluster, General Droid Mod. Socket Cluster"
+Droid Chassis-Deed,Duralloy Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Binary Load Lifter
+Droid Chassis-Deed,Duranium Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Binary Load Lifter
+Droid Chassis-Deed,Ditanium Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Protocol Droid
+Droid Component,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Personality Chip
+Droid Component,Siliclastic Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Personality Chip
+Droid Component,Polymer,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Playback Module
+Droid Component,Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Playback Module
+Droid Kit A - Charges,Metal,0,0,0,0,0,0,0,66,0,33,0,960,1,1,"Droid Reconstruction Kit - A Charges, Droid Repair Kit - A Charges"
+Droid Kit A - Power,Metal,0,0,40,0,0,0,20,40,0,0,0,960,1,1,"Droid Reconstruction Kit - A Power, Droid Repair Kit - A Energy"
+Droid Kit B Charges,Non-Ferrous Metal,0,0,0,0,0,0,0,66,0,33,0,960,1,1,"Droid Reconstruction Kit - B Charges, Droid Repair Kit - B Charges"
+Droid Kit B Energy,Non-Ferrous Metal,0,0,40,0,0,0,20,40,0,0,0,960,1,1,"Droid Reconstruction Kit - B Power, Droid Repair Kit - B Energy"
+Droid Kit D Charges,Plexite Amorphous Gemstone,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - D Charges
+Droid Kit D Charges,Titanium Aluminum,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - D Charges
+Droid Kit D Charges,Vendusii Crystal Amorphous Gemstone,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - D Charges
+Droid Kit D Energy,Plexite Amorphous Gemstone,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - D Power
+Droid Kit D Energy,Titanium Aluminum,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - D Energy
+Droid Kit D Energy,Vendusii Crystal Amorphous Gemstone,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - D Energy
+Droid Module,Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Auto-Repair Module
+Droid Module,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Auto-Repair Module, Creature Harv Mod"
+Droid Module,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Auto-Repair Module
+Droid Module,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Creature Harv Mod, Detonation Mod"
+Droid Module,Tolium Reactive Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Detonation Mod
+Droid Module,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Combat Module
+Droid Module,Non-Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Combat Module
+Droid Module,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Combat Module, Harvest mod, Detonation mod."
+Droid Recon A Charges,Low-Grade Ore,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - A Charges
+Droid Recon A Power,Low-Grade Ore,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - A Power
+Droid Recon B Charges,Extrusive Ore,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - B Charges
+Droid Recon B Power,Extrusive Ore,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - B Power
+Droid Recon C Charges,Copper,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - C Charges
+Droid Recon C Charges,Keschel Extrusive Ore,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - C Charges
+Droid Recon C Energy,Copper,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - C Power
+Droid Recon C Power,Keschel Extrusive Ore,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - C Power
+Droid Recon Comp,Neutronium Steel,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Advanced Repair Unit Casing
+Droid Recon Comp,Rori Fiberplast,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Advanced Repair Unit Casing
+Droid Recon Comp,Low-Grade Ore,0,0,50,0,0,0,25,25,0,0,0,960,1,1,Diagnostic Circuit
+Droid Recon Comp,Metal,0,0,50,0,0,0,25,25,0,0,0,960,1,1,Diagnostic Circuit
+Droid Recon Comp,Gas,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Redundant Power Supply
+Droid Recon Comp,Liquid Petrochem Fuel,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Redundant Power Supply
+Droid Recon Comp,Metal,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Redundant Power Supply
+Droid Recon Comp,Fiberplast,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Repair Unit Casing
+Droid Recon Comp,Metal,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Repair Unit Casing
+Droid Recon D Charges,Beyrllius Copper,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Reconstruction Kit - D Charges
+Droid Recon D Energy,Beyrllius Copper,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Reconstruction Kit - D Power
+Droid Repair A Charges,Chemical,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - A Charges
+Droid Repair A Energy,Chemical,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - A Energy
+Droid Repair B Charges,Fiberplast,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - B Charges
+Droid Repair B Energy,Fiberplast,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - B Energy
+Droid Repair C Charges,Aluminum,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - C Charges
+Droid Repair C Charges,Dantooine Fiberplast,0,0,0,0,0,0,0,66,0,33,0,960,1,1,Droid Repair Kit - C Charges
+Droid Repair C Energy,Aluminum,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - C Energy
+Droid Repair C Energy,Dantooine Fiberplast,0,0,40,0,0,0,20,40,0,0,0,960,1,1,Droid Repair Kit - C Energy
+Droid Repair Comp,Agrinium Aluminum ,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Advanced Capacitor Discharge Unit
+Droid Repair Comp,Known Solid Petrochem Fuel,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Advanced Capacitor Discharge Unit
+Droid Repair Comp,Pholokite Extrusive Ore,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Advanced Capacitor Discharge Unit
+Droid Repair Comp,Baradium Amorphous Gemstone,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Advanced Unit Delivery Cartridge
+Droid Repair Comp,Ionite Intrusive Ore,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Advanced Unit Delivery Cartridge
+Droid Repair Comp,Low-Grade Ore,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Capacitor Discharge Unit
+Droid Repair Comp,Metal,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Capacitor Discharge Unit
+Droid Repair Comp,Solid Petrochem Fuel,0,0,25,0,0,0,0,25,0,0,50,960,1,1,Capacitor Discharge Unit
+Droid Repair Comp,Gemstone,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Unit Delivery Cartridge
+Droid Repair Comp,Low-Grade Ore,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Unit Delivery Cartridge
+Droid Storage Compartments,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Storage Compartments, Droid Item Storage Module /LvL 1,2, 5"
+Droid Storage Compartments,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Storage Compartments, Droid Item Storage Module / LvL 1,2,3, 4"
+Droid Storage Compartments,Low-Grade Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Storage Compartments, LvL 1,2,3, Droid Item Storage Module"
+Droid Storage Compartments,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Storage Compartments, Droid Item Storage Module / LvL 1,2,3,5"
+Droid Storage Compartments,Extrusive Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Level 4 Droid Item Storage Module
+Droid Storage Compartments,Non-Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Level 4 Droid Item Storage Module
+Droid Storage Compartments,Neutronium Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Item Storage Module Level 5
+Droid-Storage,Lidium Extrusive Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Item Storage Module Level 5
+Droid-Armor Module,Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Armor Level 1, 2, 4, 5"
+Droid-Armor Module,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Armor Level 3
+Droid-Armor Module,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Armor Module Leve 2
+Droid-Armor Module,Non-Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Armor Module Level 3,4"
+Droid-Armor Module,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Armor Level 1
+Droid-Armor Module,Duralloy Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Armor Level 4, 5"
+Droid-Armor Module,Fiberplast,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Armor Level 4
+Droid-Armor Module,Link-Steel Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Armor Level 5
+Droid-Chance Cube,Inorganic,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Chance Cube
+Droid-Chemical,Chemical,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"General Crafting Tool, Chance Cube, Six Sided Dice, Ten Sided Dice, Food & Chemical Crafting Tool, Clothing & Armor Crafting Tool, Structure & Furniture Crafting Tool, Weapon / Droid / General Crafting Tool, Starship Crafting Tool, "
+Droid-Component,Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Crafting Station Modules
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Crafting Station Modules
+Droid-Component,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Crafting Station Modules
+Droid-Component,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Creature Harvest Module
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Creature Harvest Module
+Droid-Component,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Creature Harvest Module
+Droid-Component,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Brain
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Brain, Adv Droid Brain"
+Droid-Component,Siliclastic Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Brain, Adv Droid Brain"
+Droid-Component,Chemical,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Brain, Adv Droid Brain"
+Droid-Component,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Brain, Adv Droid Brain"
+Droid-Component,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Effects Modules
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Effects Modules
+Droid-Component,Crystalline Gemstone,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Effects Modules
+Droid-Component,Non-Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Level 1 Droid Structure Maint. Module
+Droid-Component,Crystalline Gemstone,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 1, 2 Droid Structure Maint. Module"
+Droid-Component,Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Level 2 Droid Structure Maint. Module
+Droid-Component,Low-Grade Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Manipulator Arm, Droid Motive System, "
+Droid-Component,Chemical,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Manipulator Arm, Manipulator Arm Package Set, Droid Motive System, Droid Storage Compartment, "
+Droid-Component,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Manipulator Arm, Manipulator Arm Package Set, Droid Motive System, Droid Storage Compartment, "
+Droid-Component,Extrusive Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Manipulator Arm, Manipulator Arm Package Set, Droid Motive System, Droid Storage Compartment, "
+Droid-Component,Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Manipulator Arm, Manipulator Arm Package Set, Droid Motive System, Droid Storage Compartment, "
+Droid-Component,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Merchant Barker Module
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Merchant Barker Module
+Droid-Component,Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Merchant Barker Module
+Droid-Component,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Component,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Component,Low-Grade Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Component,Chemical,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Component,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Component,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Sensor Package
+Droid-Copper,Copper,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Reverse Engineering Tool
+Droid-Crafting Tools,Mineral,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"General Crafting Tool, Food & Chemical Crafting Tool, Clothing & Armor Crafting Tool, Structure & Furniture Crafting Tool, Weapon / Droid / General Crafting Tool, Starship Crafting Tool, "
+Droid-Crafting Tools,Metal,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"General Crafting Tool, Food & Chemical Crafting Tool, Droid Battery, Clothing & Armor Crafting Tool, Structure & Furniture Crafting Tool, Weapon / Droid / General Crafting Tool, Starship Crafting Tool, "
+Droid-Customization Kits,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Customization Kit, Vehicle Customization Kit"
+Droid-Customization Kits,Mineral,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Droid Customization Kit, Vehicle Customization Kit"
+Droid-Data Module,Low-Grade Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 1, 2, 5"
+Droid-Data Module,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 1, 2, 3, 4, 5"
+Droid-Data Module,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 1, 2, 3, 4, 5"
+Droid-Data Module,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 1, 2, 3"
+Droid-Data Module,Extrusive Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 3,4"
+Droid-Data Module,Fiberplast,0,0,50,0,0,0,0,50,0,0,0,960,1,1,"Level 4, 5"
+Droid-Deed-Effectivness,Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"MSE Droid, TreadWell Droid, Power Droid"
+Droid-Deed-Quality,Steel,0,0,0,0,0,0,0,0,50,50,0,960,1,1,"MSE Droid, TreadWell Droid, Power Droid"
+Droid-Deed-Effectivness,Metal,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"MSE(Basic/Advanced), TreadWell, DZ70, Power Droid"
+Droid-Deed-Quality,Metal,0,0,0,0,0,0,0,0,50,50,0,960,1,1,"MSE(Basic/Advanced), TreadWell, DZ70, Power Droid"
+Droid-Deed-Effectivness,Chemical,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"MSE(Basic/Advanced), TreadWell, DZ70,"
+Droid-Deed-Quality,Chemical,0,0,0,0,0,0,0,0,50,50,0,960,1,1,"MSE(Basic/Advanced), TreadWell, DZ70,"
+Droid-Deed,Ferrous Metal,0,0,0,0,0,0,0,33,33,33,0,960,1,1,R5
+Droid-Deed,Metal,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"R5, Protocol/ Protocol Adv."
+Droid-Deed,Steel,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Arakyd Probe 
+Droid-Deed,Ferrous Metal,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Seeker
+Droid-Deed,Extrusive Ore,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Arakyd Probe 
+Droid-Deed,Chemical,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"Seeker, Arakyd Probe"
+Droid-Deed,Non-Ferrous Metal,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"LE Repair, Surgical"
+Droid-Deed,Steel,0,0,0,0,0,0,0,0,33,33,0,960,1,1,"Surgical, Probot, R4 "
+Droid-Deed,Fiberplast,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Surgical
+Droid-Deed,Chemical,0,0,0,0,0,0,0,33,33,33,0,960,1,1,"R2 / R2 Adv, Probot, R5, Adv Repair, Surgical Adv., R3 / R3 Adv"
+Droid-Deed,Extrusive Ore,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Probot
+Droid-Deed,Low-Grade Ore,0,0,0,0,0,0,0,0,50,50,0,960,1,1, Power
+Droid-Deed,Ditanium Steel,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Protocol
+Droid-FireWorks,Chemical,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Type 1, 2, 3, 4, 5, 10, 11, 18 Firework, Fireworks Show Package, "
+Droid-FireWorks,Gas,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Type 1, 2, 3, 4, 5, 10, 11, 18 Firework, Fireworks Show Package, "
+Droid-FireWorks,Mineral,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Type 1, 2, 3, 4, 5, 10, 11, 18 Firework, Fireworks Show Package, "
+Droid-Fishing Pole,Inorganic,0,0,0,0,0,0,0,0,0,100,0,960,1,1,Fishing Pole
+Droid-Fishing Pole,Metal,0,0,0,0,0,0,0,0,0,100,0,960,1,1,Fishing Pole
+Droid-Fishing Pole,Chemical,0,0,0,0,0,0,0,0,0,100,0,960,1,1,"Fishing Pole,"
+Droid-Harvester Deeds-BER,Aluminum,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvester Deeds-Hopper,Aluminum,0,0,0,0,0,0,33,0,0,66,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-BER,Low-Grade Ore,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-Hopper,Low-Grade Ore,0,0,0,0,0,0,33,0,0,66,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-BER,Metal,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-Hopper,Metal,0,0,0,0,0,0,33,0,0,66,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-BER,Non-Ferrous Metal,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-Hopper,Non-Ferrous Metal,0,0,0,0,0,0,33,0,0,66,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-BER,Steel,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Harvestor Deeds-Hopper,Steel,0,0,0,0,0,0,33,0,0,66,0,960,1,1,"DEED: Wind Power Generator, Personal Mineral Extractor, Micro Flora Farm, Personal Natural Gas Processor, Personal Chemical Extractor,  Personal Moisture Vaporator,  "
+Droid-Low-Grade Ore,Low-Grade Ore,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Droid Battery
+Droid-RE Tool,Metal,0,0,100,0,0,0,0,0,0,0,0,960,1,1,RE Tool
+Droid-RE Tool,Mineral,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Reverse Engineering Tool
+Droid-Repair Module,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Repair Module
+Droid-Repair Module,Inert Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Repair Module
+Droid-Repair Module,Non-Ferrous Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Droid Repair Module
+Droid-Survey Tools,Metal,0,0,100,0,0,0,0,0,0,0,0,960,1,1," Chance Cube, Six Sided Dice, Ten Sided Dice"
+Droid-Survey Tools,Mineral,0,0,100,0,0,0,0,0,0,0,0,960,1,1,"Gas Pocket Survey Device, Chemical Survey Device, Mineral Survey Device, Water Survey Device, Flora Survey Tool"
+Electronic Components,Copper,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Control Unit, Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Inert Gas,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Control Unit, Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Low-Grade Ore,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Control Unit, Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Metal,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Control Unit, Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Polymer,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Control Unit, Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Elect. GP Mod, Elect. Mem. Mod"
+Electronic Components,Steel,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Energy Distributor
+Electronic Components,Inert Gas,0,0,33,0,0,0,0,66,0,0,0,960,1,1,Micro Sensor Suite
+Electronic Components,Low-Grade Ore,0,0,33,0,0,0,0,66,0,0,0,960,1,1,Micro Sensor Suite
+Electronic Components,Metal,0,0,33,0,0,0,0,66,0,0,0,960,1,1,Micro Sensor Suite
+Electronic Components,Steel,0,0,33,0,0,0,0,66,0,0,0,960,1,1,Micro Sensor Suite
+Electronic Components,Amorphous Gemstone,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Power Conditioner
+Electronic Components,Copper,0,0,0,0,0,0,0,100,0,0,0,960,1,1,Power Conditioner
+Electronic Components,Inert Gas,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Power Conditioner, Energy Distributor"
+Electronic Components,Low-Grade Ore,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Power Conditioner, Energy Distributor"
+Electronic Components,Metal,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Power Conditioner, Energy Distributor"
+Electronic Components,Polymer,0,0,0,0,0,0,0,100,0,0,0,960,1,1,"Power Conditioner, Energy Distributor"
+Vehicle Deed,Ferrous Metal,0,0,0,0,0,0,0,0,100,0,0,960,1,1,"(X-34-V-35-XP-38-AB-1)Landspeeder, Swoop, Sppederbike, "
+Vehicle Deed,Non-Ferrous Metal,0,0,0,0,0,0,0,0,100,0,0,960,1,1,"(X-34-V-35-XP-38-AB-1)Landspeeder, Swoop, Sppederbike, "

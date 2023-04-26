@@ -1,0 +1,93 @@
+#Exported guards/filters for Europe-Chimaera by SWGAide: http://simongronlund.googlepages.com/SWGAide,,,,,,,,,,,,,,,,
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+Mun - Weapons,Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Gaderiffi Baton; Ryyk Blade; Two-Handed Axe; DL 44 Metal Pistol; FWG5 Pistol; Beam Rifle; Heavy Acid Rifle; Light Lightning Rifle; Tusken Rifle; Acid Stream Launcher; Lightning & Heavy Particle Beam Cannon; Launcher Pistol;  Plasma Flame Thrower; Rocket Launcher
+Mun - Weapons,Ferrous Metal,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Gaderiffi Baton; Stun Baton; Survival Knife; Vibro Blade; CDEF Carb; DH17 Carb; DH17 Short Carb; Blaster Fist; Massassi & Vibro Knuckler; DH17 Pistol; DL44 Pistol; DL44 XT; FWG5 Pistol; Power5 Pistol; Scout Blaster; Lance; Reinforced Combat Staff; CDEF Rifle; E11 Rifle
+Mun - Weapons,Non-Ferrous Metal,0,0,0,0,0,0,0,66,33,0,0,960,1,1,CARBINES: DH17 &  DH17 Short; E11 &  Enhanced E11; Laser; Lithitanium PISTOLS: Alliance Disruptor; D18; High Capacity Scatter; Mod & Rep Blaster; Striker; Tangle; Launcher;  Ad Laser Rifle; SG82 Rifle; Trandoshan Hunter's Rifle Mark 1-B; Tusken Rifle
+Mun - Weapons,Chemical,0,0,0,0,0,0,0,66,33,0,0,960,1,1,CDEF Carb; Alliance Disruptor; CDEF Pistol; D18 Pistol; Death-Hammer Pistol; Republic Blaster; Striker Pistol; Cryo Lance; Long Vibro Axe; CDEF Rifle; E11 Rifle; Tusken Rifle; Flame Thrower; Launcher Pistol
+Mun - Weapons,Inert Petrochemical,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Sword; D10 Pistol; DH 17 Pistol; DL 44 Metal Pistol; DL44 Pistol; DL44 XT; DX 2 Pistol; FWG5 Pistol; Power5 Pistol; SR Combat Pistol; Scout Blaster; Lance; Light Lightning Rifle; Plasma Flame Thrower; Melee Weapon Reinforcement
+Mun - Weapons,Wood,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Heavy Axe; Two-Handed Axe; Wood Staff
+Mun - Weapons,Metal,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Gaderiffi Baton; Survival Knife; Sword; Vibro Blade; Heavy Axe; Power Hammer; 2 Handed Cleaver; CDEF Carb; Vibro Knuckler; CDEF Pistol; D18 & D17 Pistol; DL44 Pistol; DL44 XT; Scout Blaster; Cyro & Vibro Lance; Lance; Metal & Reinforced Combat Staff; CDEF Rifle; Melee Weapon Reinforcement
+Mun - Weapons,Aluminum,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Sfor Republic Carb; Death-Hammer Pistol; Intimidator Pistol
+Mun - Weapons,Siliclastic Ore,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Light Lightning Rifle
+Mun - Weapons,Byrothsis Crystalline Gemstone,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Stun Baton
+Mun - Weapons,Kammris Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Power Hammer; Alliance Needler Carb; E5 Carb; EE3 Carb; Nym's Slug-Thrower Carb; Red Hydra Z-5
+Mun - Weapons,Platinite Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Czerka Dart Carb; DXR6 Heavy Carb; DX 2 Pistol; Jawa Ion Pistol; P-8 Lamprey Pistol; Tenloss DXR-6 Disruptor Rifle
+Mun - Weapons,Plumbum Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,E11 Carb; Enhanced E11 Carb; Lithitanium Carb; Alliance Disruptor; D10 Pistol; Modified Republic Blaster; Power5 Pistol; Renegade Pistol; Republic Blaster; SR Combat Pistol; E11 Rifle
+Mun - Weapons,Polonium Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Elite Carb; T21 Rifle
+Mun - Weapons,Quadranium Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,D10 Pistol
+Mun - Weapons,Doonium Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,High Capacity Scatter Pistol; Jawa Ion Rifle
+Mun - Weapons,Codoan Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Tangle Pistol; SG82 Rifle
+Mun - Weapons,Gallinorian Rainbow Gem Crystalline Gemstone,0,0,0,0,0,0,0,66,33,0,0,960,1,1,T21 Rifle
+Mun - Weapons,Titanium Aluminum,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Czerka Dart Carb; DXR6 Heavy Carb; DX 2 Pistol; Jawa Ion Pistol; Tenloss DXR-6 Disruptor Rifle
+Mun - Weapons,Alantium Carbonate Ore,0,0,0,0,0,0,0,66,33,0,0,960,1,1,T21 Rifle
+Mun - Weapons,Crystalline Gemstone,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Acid Stream Launcher; Lightning Beam Cannon; Heavy Particle Beam Cannon
+Mun - Weapons,Carbonate Ore,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Acid Stream Launcher; Lightning Beam Cannon; Heavy Particle Beam Cannon
+Mun - Weapons,Liquid Petrochem Fuel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Flame Thrower; Plasma Flame Thrower
+Mun - Weapons,Axidite Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Featherweight FWG5 Pistol; Crusader MXX Heavy Rifle
+Mun - Weapons,Neutronium Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Renegade Pistol; SR Combat Pistol; Rocket Launcher; Crusader MXX Heavy Rifle
+Mun - Weapons,Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Vibro Blade; Power Hammer; Vibro Axe; Blaster Fist; Massassi & Vibro Knuckler; Red Hydra Z-5; Light Lightning Rifle; Long Vibro Axe; Flame Thrower; Blackhand Annihilator
+Mun - Weapons,Colat Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Two-Handed Cleaver; Blackhand Annihilator
+Mun - Weapons,Mineral,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Survival Knife; Cryo Lance; Metal Staff; Reinforced Combat Staff; Blackbane Nail
+Mun - Weapons,Link-Steel Aluminum,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Laser carb; Featherweight FWG5 Pistol; Ad Laser Rifle; Trandoshan Hunter's Rifle Mark 1-B; Blackbane Nail
+Mun - Weapons,Carbonite Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Black Sun Executioner's Hack; Acidic Paragon Vibro Axe; Master Crafted EE3 Carbine
+Mun - Weapons,Duralloy Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Long Vibro Axe; Blackbane Nail
+Mun - Weapons,Thoranium Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Blackbane Nail
+Mun - Weapons,Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Blade Nyenthi'Oris; Urnsor'is SoulLeecher; Curved/RSF & Two-Handed Curved Sword; Stun Baton; Vibro Blade; Heavy & Two-Handed Axe;  CARBINES: Alliance Needler; E5; EE3; Nym's Slug-Thrower ; Blaster Fist; Massassi & Vibro Knuckler; PISTOLS: DL 44 Metal; Death-Hammer; Intimidator; Striker; Beam Rifle; Heavy Acid Rifle; Light Lightning Rifle; Acid Stream Launcher; Lightning  & Heavy Particle Beam Cannon; Flame Thrower; Plasma Flame Thrower; Rocket Launcher
+Mun - Weapons,Polysteel Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Stun Baton; Vibro Lance; Spraystick; Acidic Paragon Vibro Axe; Trandoshan Hunter's Lance; Master Crafted EE3 Carbine
+Mun - Weapons,Polymer,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Blade Nyenthi'Oris; Urnsor'is SoulLeecher; Curved/ RSF & Two-Handed Curved Sword; Ryyk Blade; CARBINES: Alliance Needler; Czerka Dart; DXR6 Heavy; DH17;  DH17 Short ; E11; Enhanced E11; E5; EE3; Elite; Laser; Lithitanium; Nym's Slug-Thrower; Sfor Rep; Master Crafted EE3 PISTOLS: High Capacity Scatter; Intimidator; Jawa Ion; Mod Rep Blaster; P-8 Lamprey; Red Hydra Z-5; Renegade; Tangle; Black Falcon; Electric Polearm; Trandoshan Hunter's Lance; RIFLES: Ad Laser;  Beam; Heavy Acid; Jawa Ion; Light Lightning; SG82; Spraystick; T21; Tenloss DXR-6 Disruptor; Trandoshan Hunter's Mark 1-B; Acid Stream Launcher; Lightning & Heavy Particle Beam Cannon; Rocket Launcher; ; Crusader MXX; Blackhand Annihilator ; Acidic Paragon Vibro Axe
+Mun - Weapons,Mythra Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Jawa Ion Rifle; Black Falcon
+Mun - Weapons,Ditanium Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Vibro Axe; Elite Carb; Sfor Republic Carb; Featherweight FWG5 Pistol; P-8 Lamprey Pistol; Electric Polearm; Long Vibro Axe; Vibro Lance; Trandoshan Hunter's Lance; T21 Rifle
+Mun - Weapons,Chromium Aluminum,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Spraystick; Black Falcon
+Mun - Weapons,Cubirian Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Geonosian Sonic Blaster
+Mun - Weapons,Beyrllius Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Nak'tra Crystal Rifle
+Mun - Wpn Comps,Inert Petrochemical,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Orveth Gas cartridge
+Mun - Wpn Comps,Polymer,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Advanced Heavy/Ranged Weapon Core; Tibanna Gas Cartridge
+Mun - Wpn Comps,Polymer,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Scope; Advanced Melee Weapon Core
+Mun - Wpn Comps,Polymer,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Advanced Melee Weapon Reinforcement
+Mun - Wpn Comps,Polymer,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Corrosive Chamber; Elemental Cryo Chamber; Elemental Electrical Chamber; Elemental Plasma Chamber; Heavy Elemental Chamber
+Mun - Wpn Comps,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Orveth Gas cartridge
+Mun - Wpn Comps,Metal,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Blaster Rifle/Pistol Barrel; Blaster Rifle/Pistol Barrel; Projectile Rifle/Pistol Barrel
+Mun - Wpn Comps,Rhodium Steel,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Blaster Rifle/Pistol Barrel
+Mun - Wpn Comps,Duranium Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Advanced Blaster Rifle Barrel
+Mun - Wpn Comps,Quadranium Steel,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Projectile Rifle Barrel
+Mun - Wpn Comps,Carbonite Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Advanced Heavy/Ranged Weapon Core
+Mun - Wpn Comps,Duralloy Steel,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Stock; Advanced Melee Weapon Core; Advanced Blaster Rifle/Pistol Barrel
+Mun - Wpn Comps,Plumbum Iron,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Projectile Rifle/Pistol Barrel
+Mun - Wpn Comps,Axidite Iron,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Projectile Rifle/Pistol Barrel
+Mun - Wpn Comps,Bronzium Iron,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Melee Weapon Core
+Mun - Wpn Comps,Titanium Aluminum,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Plasma Chamber
+Mun - Wpn Comps,Chromium Aluminum,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Cryo Chamber
+Mun - Wpn Comps,Chromium Aluminum,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Stock
+Mun - Wpn Comps,Duralumin Aluminum,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Electrical Chamber
+Mun - Wpn Comps,Link-Steel Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Advanced Heavy Weapon Core
+Mun - Wpn Comps,Link-Steel Aluminum,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Heavy Elemental Chamber
+Mun - Wpn Comps,Link-Steel Aluminum,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Stock/Scope
+Mun - Wpn Comps,Phrik Aluminum,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Corrosive Chamber
+Mun - Wpn Comps,Phrik Aluminum,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Advanced Melee Weapon Reinforcement; Black Sun Executioner's Hack
+Mun - Wpn Comps,Phrik Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Tibanna Gas Cartridge
+Mun - Wpn Comps,Desh Copper,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Vibro Blade Unit; Advanced Melee Weapon Core
+Mun - Wpn Comps,Diatium Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Advanced Melee Weapon Reinforcement; D10 Pistol; Republic Blaster
+Mun - Wpn Comps,Diatium Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Tibanna Gas Cartridge
+Mun - Wpn Comps,Platinite Copper,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Vibro Blade Unit
+Mun - Wpn Comps,Polysteel Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Advanced Ranged Weapon Core
+Mun - Wpn Comps,Polysteel Copper,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Scope
+Mun - Wpn Comps,Carbonate Ore,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Heavy Elemental Chamber
+Mun - Wpn Comps,Alantium Carbonate Ore,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Plasma Chamber
+Mun - Wpn Comps,Chromite Carbonate Ore,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Electrical Chamber
+Mun - Wpn Comps,Ostrine Carbonate Ore,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Cryo Chamber
+Mun - Wpn Comps,Ostrine Carbonate Ore,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Tibanna Gas Cartridge
+Mun - Wpn Comps,Ostrine Carbonate Ore,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Advanced Melee Weapon Reinforcement
+Mun - Wpn Comps,Varium Carbonate Ore,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Corrosive Chamber
+Mun - Wpn Comps,Gemstone,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Blaster Pistol Barrel
+Mun - Wpn Comps,Crystalline Gemstone,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Blaster Rifle Barrel
+Mun - Wpn Comps,Ryll Amorphous Gemstone,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Blaster Rifle/Pistol Barrel
+Mun - Wpn Comps,Crystalline Gemstone,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Advanced Heavy/Ranged Weapon Core
+Mun - Wpn Comps,Green Diamond Crystalline Gemstone,0,0,0,0,0,0,0,33,66,0,0,960,1,1,Advanced Weapon Scope
+Mun - Wpn Comps,Reactive Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Orveth Gas cartridge
+Mun - Wpn Comps,Reactive Gas,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Melee Weapon Reinforcement
+Mun - Wpn Comps,Reactive Gas,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Heavy Elemental Chamber
+Mun - Wpn Comps,Eleton Reactive Gas,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Cryo Chamber
+Mun - Wpn Comps,Methane Reactive Gas,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Electrical Chamber
+Mun - Wpn Comps,Tolium Reactive Gas,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Corrosive Chamber
+Mun - Wpn Comps,Irolunn Reactive Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Tibanna Gas Cartridge
+Mun - Wpn Comps,Skevon Reactive Gas,0,0,66,0,0,0,0,33,0,0,0,960,1,1,Elemental Plasma Chamber

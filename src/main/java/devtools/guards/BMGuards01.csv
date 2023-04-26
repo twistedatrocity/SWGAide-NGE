@@ -1,0 +1,42 @@
+#Exported guards/filters for Europe-Chimaera by SWGAide: http://simongronlund.googlepages.com/SWGAide,,,,,,,,,,,,,,,,
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+BM - Both,Gemstone,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Element Processing Filter (Dom)
+BM - Both,Radioactive,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Element Processing Filter (Dom)
+BM - Both,Fiberplast,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Centrifuge Separation Filter (Dom)
+BM - Both,Steel,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister (Dom)
+BM - Both,Iron,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister (Dom)
+BM - Both,Low-Grade Ore,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Extraction Canister (Dom)
+BM - Both,Wood,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processing Filter (Dom)
+BM - Both,Corn,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Re-Processing Filter (Dom)
+BM - Both,Copper,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Element Processing Control Unit (Mun)
+BM - Both,Aluminum,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Element Processing Control Unit; Element Processing Plasma Array (Mun)
+BM - Both,Iron,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Enzyme Centrifuge Burst Piston (Mun)
+BM - Both,Steel,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Element Processing Control Unit & Plasma Array; Enzyme Centrifuge Burst Piston &  Re-Processor Coolant (Mun)
+BM - Both,Gas,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Element Processing Plasma Array; Enzyme Centrifuge Burst Piston & Re-Processor Coolant (Mun)
+BM - Both,Steel,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Enzyme Centrifuge  Separation Tray [C] (Str)
+BM - Both ,Known Liquid Petrochem Fuel,0,0,0,20,0,0,0,80,0,0,0,960,1,1,Enzyme Centrifuge Separation Mixture (Dom),
+BM - Dom,Steel,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Advanced & Chemical Reactive Unit,
+BM - Dom,Polymer,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Advanced & Chemical Reactive Unit,
+BM - Dom,Copper,0,0,0,0,0,0,0,33,33,33,0,960,1,1,Advanced & Chemical Reactive Unit,
+BM - Mutagen,Low-Grade Ore,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Element Processing Canister; Enzyme Re-processor Capsule; Element Processor; Enzyme Centifuge (Str),
+BM - Mutagen,Steel,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Element Processing Canister; Enzyme Centrifuge Separation Tray; Element Processor; Enzyme Centifuge, Re-processor (Str)
+BM - Mutagen,Iron,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Element Processor; Enzyme Re-processor (Str),
+BM - Mutagen,Copper,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Enzyme Re-processor Capsule; Enzyme Re-processor (Str),
+BM - Mutagen,Gemstone,0,0,0,0,0,0,0,66,33,0,0,960,1,1,Enzyme Centifuge (Str),
+BM - Mutagen,Gemstone,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Element Processing System Fuse (Eng),
+BM - Mutagen,Copper,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Element Processing System Fuse; Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Mutagen,Low-Grade Ore,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Element Processing System Fuse; Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Mutagen,Steel,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Mutagen,Inert Gas,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Enzyme Centrifuge Motor (Eng),
+BM - Mutagen,Chemical,0,0,0,0,0,0,0,50,50,0,0,960,1,1,Enzyme Extraction Control (Eng),
+BM - Purity,Gemstone,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Enzyme Centifuge (Str),
+BM - Purity,Low-Grade Ore,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Element Processing Canister; Enzyme Re-processor Capsule; Element Processor; Enzyme Centifuge (Str),
+BM - Purity,Steel,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Element Processing Canister; Enzyme Centrifuge Separation Tray; Element Processor; Enzyme Centifuge, Re-processor (Str)
+BM - Purity,Iron,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Element Processor; Enzyme Re-processor (Str),
+BM - Purity,Copper,0,0,0,0,0,0,0,33,0,66,0,960,1,1,Enzyme Re-processor Capsule; Enzyme Re-processor (Str),
+BM - Purity,Gemstone,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Element Processing System Fuse (Eng),
+BM - Purity,Copper,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Element Processing System Fuse; Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Purity,Low-Grade Ore,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Element Processing System Fuse; Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Purity,Steel,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Enzyme Centrifuge Motor & Extraction Control (Eng),
+BM - Purity,Inert Gas,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Enzyme Centrifuge Motor (Eng),
+BM - Purity,Chemical,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Enzyme Extraction Control (Eng),

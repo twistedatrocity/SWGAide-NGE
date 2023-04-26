@@ -1,0 +1,38 @@
+#guardName,resource class,ER,CR,CD,DR,FL,HR,MA,OQ,SR,UT,PE,limit,alert[,allowZeros[,notes]]
+Beast Encoder,Steel,0,0,0,50,0,0,0,50,0,0,0,960,0,1,Beast Encoder
+Camps,Aluminum,0,0,0,0,0,0,0,100,0,0,0,960,0,1,"Advanced Camp, Elite Camp"
+Camps,Copper,0,0,0,0,0,0,0,100,0,0,0,960,0,1,Camp Battery
+Camps,Hide,0,0,0,0,0,0,0,100,0,0,0,960,0,1,"Advanced, basic, elite Camp"
+Camps,Leathery Hide,0,0,0,0,0,0,0,100,0,0,0,960,0,1,Advanced Camp
+Camps,Metal,0,0,0,0,0,0,0,100,0,0,0,960,0,1,Elite Camp
+Camps,Non-Ferrous Metal,0,0,0,0,0,0,0,100,0,0,0,960,0,1,"Basic, Elite Camp"
+Camps,Steel,0,0,0,0,0,0,0,100,0,0,0,960,0,1,Camp Battery
+Crafting Stations,Metal,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Crafting Station
+Crafting Stations,Mineral,0,0,100,0,0,0,0,0,0,0,0,960,1,1,Crafting Station
+Customization Kits,Fungi,0,0,0,50,0,0,0,50,0,0,0,960,0,1,Structure Customization Kit
+Customization Kits,Gemstone,0,0,0,50,0,0,0,50,0,0,0,960,0,1,Structure Customization Kit
+Customization Kits,Metal,0,0,0,50,0,0,0,50,0,0,0,960,0,1,Structure Customization Kit
+Furniture,Corellian Deciduous Wood,0,0,0,0,0,0,0,100,0,0,0,1,0,1,
+Furniture,Corellian Evergreen Wood,0,0,0,0,0,0,0,100,0,0,0,1,0,1,
+Furniture,Dathomirian Leathery Hide,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Loveseat
+Furniture,Duranium Steel,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Chest
+Furniture,Endorian Wooly Hide,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Couch
+Furniture,Igneous Ore,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Park Bench
+Furniture,Ionite Intrusive Ore,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant End Table
+Furniture,Kelsh Copper,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Armoire
+Furniture,Pholokite Extrusive Ore,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Caf‚ Table
+Furniture,Thallium Copper,0,0,0,0,0,0,0,100,0,0,0,1,0,1,
+Furniture,Titanium Aluminum,0,0,0,0,0,0,0,100,0,0,0,1,0,1,Elegant Bookcase
+Harvester - BER,Low-Grade Ore,0,0,0,0,0,25,0,0,25,50,0,960,1,1,Harvester - BER
+Harvester - Hopper,Low-Grade Ore,0,0,0,0,0,0,33,0,0,66,0,960,1,1,Harvester - Hopper
+Harvesters - BER,Chemical,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"Harvester - BER, Subcomps - BER"
+Harvesters - BER,Inert Gas,0,0,0,0,0,25,0,0,25,50,0,960,1,1,Advanced Ore Mining Unit
+Harvesters - BER,Metal,0,0,0,0,0,25,0,0,25,50,0,960,1,1,"Harvesters, harvester comps"
+Harvesters - BER,Steel,0,0,0,0,0,25,0,0,25,50,0,960,1,1,Harvester - BER
+Harvesters - Hopper,Chemical,0,0,0,0,0,0,33,0,0,66,0,960,1,1,Harvester - Hopper
+Harvesters - Hopper,Metal,0,0,0,0,0,0,33,0,0,66,0,960,1,1,Harvester - Hopper
+Harvesters - Hopper,Steel,0,0,0,0,0,0,33,0,0,66,0,960,1,1,Harvester - Hopper
+Incubator - Mutation,Metal,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Mutation Incubator
+Incubator - Mutation,Mineral,0,0,0,0,0,0,0,50,0,50,0,960,1,1,Mutation Incubator
+Incubator - Quick,Metal,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Quick Incubators
+Incubator - Quick,Mineral,0,0,50,0,0,0,0,50,0,0,0,960,1,1,Quick Incubators
