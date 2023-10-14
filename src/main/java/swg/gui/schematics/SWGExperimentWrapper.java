@@ -156,11 +156,11 @@ public final class SWGExperimentWrapper implements SWGGui {
      * 
      * @param spawn a set of spawning resources
      * @param inv a list of inventory resources
+     * @param useJTLcap a flag to adjust for JTL resource capping rules
      */
     private synchronized void refresh(
-            SWGResourceSet spawn, List<SWGInventoryWrapper> inv) {
-
-        resources = SWGResController.resources(resClass, weights, spawn, inv);
+            SWGResourceSet spawn, List<SWGInventoryWrapper> inv, boolean useJTLcap) {
+        resources = SWGResController.resources(resClass, weights, spawn, inv, useJTLcap);
     }
 
     /**
@@ -444,13 +444,14 @@ public final class SWGExperimentWrapper implements SWGGui {
      * @param expWrappers instances of this type
      * @param spawn a set of resource currently in spawn
      * @param inv a set of resources inventory resources
+     * @param useJTLcap a flag to adjust for JTL resource capping rules
      * @throws NullPointerException if an argument is {@code null}
      */
     static void refresh(List<SWGExperimentWrapper> expWrappers,
-            SWGResourceSet spawn, List<SWGInventoryWrapper> inv) {
+            SWGResourceSet spawn, List<SWGInventoryWrapper> inv, boolean useJTLcap) {
 
         for (SWGExperimentWrapper ew : expWrappers)
-            ew.refresh(spawn, inv);
+            ew.refresh(spawn, inv, useJTLcap);
     }
 
     /**

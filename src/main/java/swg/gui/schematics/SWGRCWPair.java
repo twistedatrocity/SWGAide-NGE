@@ -187,16 +187,17 @@ final class SWGRCWPair implements Comparable<SWGRCWPair> {
      * returns the response from {@link SWGRCWPair#compareTo(SWGRCWPair)}.
      * 
      * @param kr a known resource, not {@code null}
+     * @param useJTLcap a flag to adjust for JTL resource capping rules
      * @return a comparator
      */
-    public static Comparator<SWGRCWPair> comparator(final SWGKnownResource kr) {
+    public static Comparator<SWGRCWPair> comparator(final SWGKnownResource kr, boolean useJTLcap) {
         return new Comparator<SWGRCWPair>() {
             @Override
             public int compare(SWGRCWPair r1, SWGRCWPair r2) {
                 SWGWeights wg1 = (SWGWeights) r1.filter();
                 SWGWeights wg2 = (SWGWeights) r2.filter();
-                double w1 = wg1.rate(kr, r1.rc(), true);
-                double w2 = wg2.rate(kr, r2.rc(), true);
+                double w1 = wg1.rate(kr, r1.rc(), true, useJTLcap);
+                double w2 = wg2.rate(kr, r2.rc(), true, useJTLcap);
                 int c = Double.compare(w2, w1); // reversed order, best first
                 return c != 0
                         ? c
