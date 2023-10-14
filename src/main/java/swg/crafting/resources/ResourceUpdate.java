@@ -84,6 +84,15 @@ public final class ResourceUpdate implements UpdateNotification {
          * the specified notification type {@link #optional} must be galaxy
          * constant of type {@link SWGCGalaxy}.
          */
-        NEW_DOWNLOAD;
+        NEW_DOWNLOAD,
+        
+        /**
+         * This reflects a change in how the user wants resource caps to be treated.
+         * When it's true, this app is to use JTL resources as the upper limits for
+         * the impacted resource types. When it's false, it should use the pre-existing
+         * rules for determining resource caps. When this is the specified notification 
+         * type {@link #optional} must be {@link boolean} that shows the new state.
+         */
+        JTL_RESOURCE_CAP;
     }
 }
