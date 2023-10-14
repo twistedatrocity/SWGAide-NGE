@@ -43,6 +43,7 @@ import swg.crafting.Stat;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceClassTree;
+import swg.crafting.resources.types.SWGMetal;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -166,6 +167,12 @@ final class SWGTestBench extends SWGJDialog {
     private List<SWGExperimentWrapper> wraps;
 
     /**
+     * A flag to use throughout this dialog to account for JTL resource
+     * capping adjustments
+     */
+    private static boolean useJTLcap;
+
+    /**
      * Creates an instance of this dialog. Further interaction via {@code
      * setSchem(SWGSchematic)}.
      */
@@ -226,6 +233,21 @@ final class SWGTestBench extends SWGJDialog {
             rs.select(slot.equals(rs) && rs.selected());
     }
 
+    /**
+     * A helper method to adjust for JTL resource capping rules
+     *
+     * @param value value of the stat being calculated
+     * @param rc the resource class of the object being evaluated
+     * @param s the stat of the resource being evaluated
+     * @return the adjusted value
+     */
+    private double adjustForResourceCap(double value, SWGResourceClass rc, Stat s) {
+    	if (useJTLcap && rc.isAffectedByJTLcap())
+    		rc = SWGMetal.getInstance();
+    	
+    	return Math.min(value / rc.max(s) * 1000, 1000);
+    }
+    
     @Override
     protected void close() {
         SimplePrefsKeeper pk = SWGFrame.getPrefsKeeper();
@@ -706,7 +728,7 @@ final class SWGTestBench extends SWGJDialog {
                 SWGKnownResource kr = rs.kr();
                 double v = kr.stats().value(s);
                 if (v > 0) {
-                    double adj4cap = Math.min(v / rs.rc.max(s) * 1000, 1000);
+                    double adj4cap = adjustForResourceCap(v, rs.rc, s);
                     dividend += rs.units * adj4cap;
                     divisor += rs.units;
                 }
@@ -721,7 +743,7 @@ final class SWGTestBench extends SWGJDialog {
                 SWGKnownResource kr = rs.kr();
                 double v = kr.stats().value(s);
                 if (v > 0) {
-                    double adj4cap = Math.min(v / rs.rc.max(s) * 1000, 1000);
+                    double adj4cap = adjustForResourceCap(v, rs.rc, s);
                     double wg = rs.units / divisor;
                     upStatText(adj4cap * wd * wg, adj4cap, z, frac);
                 }
@@ -780,10 +802,13 @@ final class SWGTestBench extends SWGJDialog {
      * 
      * @param s a schematic, or {@code null}
      * @param kr a resource, or {@code null}
+     * @param useJTL a flag to help determine if the experimentation values should
+     *              adjust for JTL resource rules
      */
-    static void update(SWGSchematic s, SWGKnownResource kr, Double cpu) {
+    static void update(SWGSchematic s, SWGKnownResource kr, Double cpu, boolean useJTL) {
         try {
             if (THIS == null) THIS = new SWGTestBench();
+            useJTLcap = useJTL;
             THIS.updat(s, kr, cpu);
         } catch (Throwable e) {
             SWGAide.printError("SWGTestBench:update", e);
