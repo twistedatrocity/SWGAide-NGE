@@ -527,6 +527,9 @@ public final class SWGResourceSet implements Set<SWGKnownResource>,
      * @param zeroIsMax
      *            {@code true} if a zero-value should be treated as its capped
      *            value, otherwise {@code false}
+     * @param useJTLcap
+     *            {@code true} if the resourceSet should adjust weights based on
+     *            JTL resource rules
      * @param threshold
      *            the minimum weight for elements in the returned set, in the
      *            range [0.0 1000.0]
@@ -537,7 +540,7 @@ public final class SWGResourceSet implements Set<SWGKnownResource>,
      *             if any of the object arguments is {@code null}
      */
     public SWGResourceSet subsetBy(SWGWeights weights,
-        SWGResourceClass capsFrom, boolean zeroIsMax, double threshold) {
+        SWGResourceClass capsFrom, boolean zeroIsMax, boolean useJTLcap, double threshold) {
 
         if (threshold > 1000) {
         	threshold = 1000;
@@ -554,7 +557,7 @@ public final class SWGResourceSet implements Set<SWGKnownResource>,
 
         for (SWGKnownResource kr : storage) {
             if (typeCls.isAssignableFrom(kr.rc().getClass())) {
-                double w = weights.rate(kr, capsFrom, zeroIsMax);
+                double w = weights.rate(kr, capsFrom, zeroIsMax, useJTLcap);
                 if (w >= threshold)
                     result.storage.add(kr); // surpass our checkpoints
             }

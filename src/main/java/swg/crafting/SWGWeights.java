@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceClass;
+import swg.crafting.resources.types.SWGMetal;
 
 /**
  * This type models experimental weights used for crafting in SWG. It also
@@ -246,12 +247,13 @@ public final class SWGWeights extends SWGValues {
      * @param res a resource to rate by this instance
      * @param caps the resource class for upper caps, or {@code null}
      * @param zeroIsMax {@code true} if zero-values are considered
+     * @param useJTLcaps {@code true} if this method should adjust for server-side JTL resource rules
      * @return the resource rate in the range [0.0 1000.0]
      * @throws IllegalArgumentException if the resource class does not match the
      *         specified resource
      * @throws NullPointerException if the resource is {@code null}
      */
-    public double rate(SWGResource res, SWGResourceClass caps, boolean zeroIsMax) {
+    public double rate(SWGResource res, SWGResourceClass caps, boolean zeroIsMax, boolean useJTLcaps) {
         if (caps != null && !res.rc().isSub(caps.getClass()))
             throw new IllegalArgumentException(String.format(
                     "%s is not subclass of %s",
@@ -260,6 +262,9 @@ public final class SWGWeights extends SWGValues {
         if (!hasMinimumOneStat(res))
             return 0.0;
 
+        if (useJTLcaps && caps.isAffectedByJTLcap())
+        	caps = SWGMetal.getInstance();
+        
         // allocating a local copy of these weights in case we have to remove
         // one or more to redistribute without destroying this instance
         double[] weights = new double[Stat.COUNT];

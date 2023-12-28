@@ -442,11 +442,19 @@ public final class SWGResController implements UpdateSubscriber {
      * and active monitors. The other entry point is {@code check(boolean)}.
      */
     public void handleUpdate(UpdateNotification u) {
-        ResourceUpdate uu = (ResourceUpdate) u;
-
-        // This method dispatches to its helper method on every call, see the
-        // class JDocu comments
-        check((SWGCGalaxy) uu.optional);
+    	if (u instanceof ResourceUpdate) {
+            // This method dispatches to its helper method on every call, see the
+            // class JDocu comments
+            ResourceUpdate ru = (ResourceUpdate) u;
+            switch (ru.type) {
+			case LOCAL_SUBMISSION:
+			case NEW_DOWNLOAD:
+	            check((SWGCGalaxy) ru.optional);
+	            break;
+			default:
+				break;
+            }
+    	}
     }
 
     /**
@@ -2332,11 +2340,12 @@ public final class SWGResController implements UpdateSubscriber {
      * @param w a weights object
      * @param spawn a set of spawning resources
      * @param inv a list of inventory resources
+     * @param useJTLcap a flag to adjust for JTL resource capping rules
      * @return a sorted set of resources
      */
     public static SWGResourceSet resources(
             final SWGResourceClass rc, final SWGWeights w,
-            SWGResourceSet spawn, List<SWGInventoryWrapper> inv) {
+            SWGResourceSet spawn, List<SWGInventoryWrapper> inv, boolean useJTLcap) {
 
         SWGResourceSet res = new SWGResourceSet(128);
         Class<? extends SWGResourceClass> crc = rc.getClass();
@@ -2365,10 +2374,10 @@ public final class SWGResController implements UpdateSubscriber {
 
                 double w1 = o1.rc().isSpaceOrRecycled()
                         ? o1.stats().value(Stat.OQ)
-                        : w.rate(o1, rc1, hq);
+                        : w.rate(o1, rc1, hq, useJTLcap);
                 double w2 = o2.rc().isSpaceOrRecycled()
                         ? o2.stats().value(Stat.OQ)
-                        : w.rate(o2, rc2, hq);
+                        : w.rate(o2, rc2, hq, useJTLcap);
 
                 int ret = Double.compare(w1, w2);
                 return w == SWGWeights.LQ_WEIGHTS

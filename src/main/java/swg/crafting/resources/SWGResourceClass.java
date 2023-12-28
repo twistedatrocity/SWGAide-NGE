@@ -10,6 +10,11 @@ import java.util.regex.Pattern;
 
 import devtools.SWGResourceClassGenerator;
 import swg.crafting.Stat;
+import swg.crafting.resources.types.SWGSteel;
+import swg.crafting.resources.types.SWGAluminum;
+import swg.crafting.resources.types.SWGCopper;
+import swg.crafting.resources.types.SWGFerrousMetal;
+import swg.crafting.resources.types.SWGNonFerrousMetal;
 import swg.model.SWGPlanet;
 import swg.tools.ZString;
 
@@ -152,6 +157,19 @@ public abstract class SWGResourceClass implements Serializable,
      */
     public boolean isJTL() {
         return false;
+    }
+
+    /**
+     *
+     * @return {@code true} if this resource class is impacted by the JTL resource
+     * capping rules
+     */
+    public boolean isAffectedByJTLcap() {
+    	return getClass() == SWGSteel.class || 
+    			getClass() == SWGCopper.class || 
+    			getClass() == SWGAluminum.class ||
+    			getClass() == SWGFerrousMetal.class ||
+    			getClass() == SWGNonFerrousMetal.class;
     }
 
     /**
