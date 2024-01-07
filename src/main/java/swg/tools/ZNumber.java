@@ -96,6 +96,30 @@ public final class ZNumber {
             }
         return null;
     }
+    
+    /**
+     * Returns the specified argument as text, or {@code null}. The "format"
+     * argument determines if the returned string should be formatted per the
+     * current locale. The "zero" argument determines if {@code value == 0}
+     * returns "0", otherwise {@code null}.
+     * 
+     * @param value an double value
+     * @param format {@code true} to format the text
+     * @param zero {@code true} for zero as string
+     * @return {@code value} as text, or {@code null}
+     */
+    public static String asText(double value, boolean format, boolean zero) {
+        // dt.s
+        if (value > 0 || (zero && value == 0))
+            try {
+                return format
+                        ? nfd.format(value)
+                        : Double.toString(value);
+            } catch (Throwable e) {
+                SWGAide.printError("ZNumber:asText: " + value, e);
+            }
+        return null;
+    }
 
     /**
      * Returns the specified argument as text. If the argument is an instance of

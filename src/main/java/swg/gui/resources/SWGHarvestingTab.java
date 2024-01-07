@@ -1169,12 +1169,17 @@ final class SWGHarvestingTab extends JPanel {
                                 hu, hc, c >= 1000
                                         ? "k"
                                         : "", dv);
-                    } else
-                        zs = ZString.fz("<center>%1.1f %%<br/>%s</center>",
-                                value, dv);
+                    } else {
+                    	double c = harv.getHopperCapacity();
+                        double u = harv.getHopperUnits();
+                        double vl = u / c * 100;
+                    	String pv = ZNumber.asText(vl, true, true);
+                        zs = ZString.fz("<center>%s %%<br/>%s</center>", pv, dv);
+                    }
 
-                } else if (column == 11)
+                } else if (column == 11) {
                         return value;
+                }
 
                 return zs.pre("<html>", false).appnl("</html>").toString();
             }
