@@ -15,6 +15,7 @@ import swg.crafting.resources.types.SWGAluminum;
 import swg.crafting.resources.types.SWGCopper;
 import swg.crafting.resources.types.SWGFerrousMetal;
 import swg.crafting.resources.types.SWGNonFerrousMetal;
+import swg.crafting.resources.types.SWGSiliclasticOre;
 import swg.model.SWGPlanet;
 import swg.tools.ZString;
 
@@ -169,7 +170,8 @@ public abstract class SWGResourceClass implements Serializable,
     			getClass() == SWGCopper.class || 
     			getClass() == SWGAluminum.class ||
     			getClass() == SWGFerrousMetal.class ||
-    			getClass() == SWGNonFerrousMetal.class;
+    			getClass() == SWGNonFerrousMetal.class ||
+    			getClass() == SWGSiliclasticOre.class;
     }
 
     /**

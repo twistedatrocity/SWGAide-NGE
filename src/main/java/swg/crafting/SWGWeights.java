@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceClass;
-import swg.crafting.resources.types.SWGMetal;
+import swg.crafting.resources.types.SWGMineral;
 
 /**
  * This type models experimental weights used for crafting in SWG. It also
@@ -263,7 +263,7 @@ public final class SWGWeights extends SWGValues {
             return 0.0;
 
         if (useJTLcaps && caps.isAffectedByJTLcap())
-        	caps = SWGMetal.getInstance();
+        	caps = SWGMineral.getInstance();
         
         // allocating a local copy of these weights in case we have to remove
         // one or more to redistribute without destroying this instance

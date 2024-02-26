@@ -43,7 +43,7 @@ import swg.crafting.Stat;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceClassTree;
-import swg.crafting.resources.types.SWGMetal;
+import swg.crafting.resources.types.SWGMineral;
 import swg.crafting.schematics.SWGResourceSlot;
 import swg.crafting.schematics.SWGSchematic;
 import swg.crafting.schematics.SWGSchematicsManager;
@@ -243,7 +243,7 @@ final class SWGTestBench extends SWGJDialog {
      */
     private double adjustForResourceCap(double value, SWGResourceClass rc, Stat s) {
     	if (useJTLcap && rc.isAffectedByJTLcap())
-    		rc = SWGMetal.getInstance();
+    		rc = SWGMineral.getInstance();
     	
     	return Math.min(value / rc.max(s) * 1000, 1000);
     }
