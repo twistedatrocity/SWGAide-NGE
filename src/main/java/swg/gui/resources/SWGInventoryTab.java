@@ -245,6 +245,12 @@ public final class SWGInventoryTab extends JPanel {
 	private StyledLabel totVal;
 
     /**
+     * A flag to use throughout this panel to account for JTL resource
+     * capping adjustments
+     */
+	private boolean useJTLcap;
+
+    /**
      * Creates an instance of this GUI component.
      * 
      * @param resourceTab the GUI component which contains this instance
@@ -253,6 +259,8 @@ public final class SWGInventoryTab extends JPanel {
         this.resourceTab = resourceTab;
         this.frame = SWGAide.frame();
 
+        useJTLcap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
         helpPage = SWGAide.class.getResource(
                 "docs/help_resources_inventory_en.html");
 
@@ -2470,6 +2478,16 @@ public final class SWGInventoryTab extends JPanel {
     }
 
     /**
+     * A help method to set the internal flag and redraw the UI
+     *
+     * @param useJTLcap
+     */
+    void updateJTLcap(boolean useJTLcap) {
+    	this.useJTLcap = useJTLcap;
+    	updateDisplay();
+    }
+    
+    /**
      * Helper method which updates SWGAide's status bar. This method executes on
      * a worker thread.
      */
@@ -2626,7 +2644,7 @@ public final class SWGInventoryTab extends JPanel {
             comp = new Comparator<SWGInventoryWrapper>() {
                 
                 final SWGWeightComparator cmp = new SWGWeightComparator(
-                        (SWGWeights) filter, resourceClass, true);
+                        (SWGWeights) filter, resourceClass, true, useJTLcap);
 
                 @Override
                 public int compare(
@@ -2675,8 +2693,8 @@ public final class SWGInventoryTab extends JPanel {
 
                     public int compare(SWGInventoryWrapper w1,
                             SWGInventoryWrapper w2) {
-                        double d1 = wgt.rate(w1.getResource(), cls, true);
-                        double d2 = wgt.rate(w2.getResource(), cls, true);
+                        double d1 = wgt.rate(w1.getResource(), cls, true, useJTLcap);
+                        double d2 = wgt.rate(w2.getResource(), cls, true, useJTLcap);
                         return Double.compare(d1, d2);
                     }
                 };
@@ -2846,7 +2864,7 @@ public final class SWGInventoryTab extends JPanel {
                         ? resourceClass
                         : kr.rc();
 
-                double rating = weights.rate(kr, cap, true);
+                double rating = weights.rate(kr, cap, true, useJTLcap);
                 return Double.valueOf(rating);
             }
             case 18:

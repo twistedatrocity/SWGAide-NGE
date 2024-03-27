@@ -369,6 +369,8 @@ public final class SWGSchematicTab extends JTabbedPane {
         assigneeMenuItem = assigneeMenu();
 
         SWGResourceManager.addSubscriber(controller);
+        SWGResourceManager.addSubscriber(laboratory);
+        SWGResourceManager.addSubscriber(todaysAlert);
 
         isGuiFinished = true;
     }

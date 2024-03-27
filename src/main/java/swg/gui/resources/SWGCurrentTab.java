@@ -321,6 +321,12 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     private boolean updateViewer;
 
     /**
+     * A flag to use throughout this panel to account for JTL resource
+     * capping adjustments
+     */
+    private boolean useJTLcap;
+
+    /**
      * Creates an instance of this type which is the main table of spawning
      * resources for the selected galaxy, and more.
      * 
@@ -333,6 +339,8 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
         SWGSchematicTab st = SWGFrame.getSchematicTab(frame);
         schemController = new SWGSchemController(st);
 
+        useJTLcap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
         helpPage = SWGAide.class.getResource("docs/help_resources__en.html");
 
         setLayout(new BorderLayout());
@@ -925,7 +933,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
             rs2.sort(new SWGWeightComparator(
                     (SWGWeights) guard.logic(),
                     guard.rc(),
-                    guard.acceptNoStats));
+                    guard.acceptNoStats, useJTLcap));
 
         return rs2;
     }
@@ -1033,7 +1041,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 set = currentFilterOnZeroes(set, filter);
                 set.sort(new SWGWeightComparator(
                         new SWGWeights(filter), selectedResourceClass,
-                        filterConsiderNoStat.isSelected()));
+                        filterConsiderNoStat.isSelected(), useJTLcap));
             }
 
             currentList = set;
@@ -2993,6 +3001,16 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
     }
 
     /**
+     * A help method to set the internal flag and redraw the UI
+     *
+     * @param useJTLcap
+     */
+    void updateJTLcap(boolean useJTLcap) {
+    	this.useJTLcap = useJTLcap;
+    	updateDisplay();
+    }
+
+    /**
      * Helper method for the model for the main GUI table, used for the "rate"
      * column. This method returns a weighed object with evenly distributed
      * weights based on the caps of the SWGResource passed in, or, in the case
@@ -3334,14 +3352,20 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
                 SWGWeights weights = null;
                 SWGGuard guard = selectedGuard;
 
+                // only apply JTL resource caps on this table if a guard
+                // or a temporary weight is used
+                boolean jtlCap = false;
+                
                 // if a guard is currently selected and it is a weight
                 // let it determine the rating
-                if (guard != null && guard.isWeighted())
+                if (guard != null && guard.isWeighted()) {
                     weights = (SWGWeights) guard.logic();
-                
-                else if (temporaryWeight != null)
+                    jtlCap = useJTLcap;
+                }
+                else if (temporaryWeight != null) {
                     weights = temporaryWeight;
-
+                    jtlCap = useJTLcap;
+                }
                 else {
                     // otherwise base the values off the caps of the
                     // currently selected resource class, if any, or
@@ -3351,7 +3375,7 @@ public final class SWGCurrentTab extends JPanel implements ActionListener {
 
                 // using the weights system to take advantage of caps being
                 // something other than 1000
-                int stat = (int) weights.rate(res, capRes, true);
+                int stat = (int) weights.rate(res, capRes, true, jtlCap);
                 return Integer.valueOf(stat);
             }
             case 14: { // age

@@ -456,20 +456,34 @@ public final class SWGResourceTab extends JTabbedPane implements
     }
 
     public void handleUpdate(UpdateNotification u) {
-        final SWGCGalaxy gxy = (SWGCGalaxy) ((ResourceUpdate) u).optional;
-        if (isGuiFinished && gxy == galaxy()) {
+    	if (u instanceof ResourceUpdate) {
+            ResourceUpdate ru = (ResourceUpdate) u;
+            switch (ru.type) {
+			case LOCAL_SUBMISSION:
+			case NEW_DOWNLOAD:
+	    		final SWGCGalaxy gxy = (SWGCGalaxy) ru.optional;
+	            if (isGuiFinished && gxy == galaxy()) {
 
-            SwingUtilities.invokeLater(new Runnable() {
+	                SwingUtilities.invokeLater(new Runnable() {
 
-                
-                public void run() {
-                    galaxyUpdated(gxy);
-                    currentUpdateGUI();
-                    currentSend();
-                }
-            });
-        }
-        SWGDepletedTab.writeAuto(gxy); // always
+	                    
+	                    public void run() {
+	                        galaxyUpdated(gxy);
+	                        currentUpdateGUI();
+	                        currentSend();
+	                    }
+	                });
+	            }
+	            SWGDepletedTab.writeAuto(gxy); // always
+				break;
+			case JTL_RESOURCE_CAP:
+				if (isGuiFinished) {
+					inventoryTab.updateJTLcap((boolean)ru.optional);
+					currentResourcesTab.updateJTLcap((boolean)ru.optional);
+				}
+				break;
+    		}
+    	}
     }
 
     /**

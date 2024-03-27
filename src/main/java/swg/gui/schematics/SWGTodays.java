@@ -57,6 +57,9 @@ import javax.swing.text.html.StyleSheet;
 import swg.SWGAide;
 import swg.crafting.SWGWeights;
 import swg.crafting.Stat;
+import swg.crafting.UpdateNotification;
+import swg.crafting.UpdateSubscriber;
+import swg.crafting.resources.ResourceUpdate;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceSet;
@@ -118,7 +121,7 @@ import swg.tools.ZString;
  *         Chimaera.Zimoon
  */
 @SuppressWarnings("serial")
-class SWGTodays extends JPanel {
+class SWGTodays extends JPanel implements UpdateSubscriber {
 
     /**
      * A check-box for displaying "great" while ignoring inventory.
@@ -245,6 +248,12 @@ class SWGTodays extends JPanel {
     private boolean updateViewer;
 
     /**
+     * A flag to use throughout this panel to account for JTL resource
+     * capping adjustments
+     */
+    private static boolean useJTLcap;
+
+    /**
      * Creates an instance of this type.
      * 
      * @param parent the parent container
@@ -252,6 +261,8 @@ class SWGTodays extends JPanel {
     SWGTodays(SWGSchematicTab parent) {
         this.schemTab = parent;
         this.frame = SWGAide.frame();
+        useJTLcap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
 
         helpPage = SWGAide.class.getResource(
                 "docs/help_schematics_todays_en.html");
@@ -550,6 +561,21 @@ class SWGTodays extends JPanel {
         schematics.setSelectedValue(sch, true);
     }
 
+	@Override
+	public void handleUpdate(UpdateNotification u) {
+		if (u instanceof ResourceUpdate) {
+			ResourceUpdate ru = (ResourceUpdate)u;
+			switch (ru.type) {
+			case JTL_RESOURCE_CAP:
+				useJTLcap = (boolean)ru.optional;
+				guiUpdate();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
     /**
      * Helper method which creates the interior of this GUI element when the
      * user selects this element for the first time. This method must only be
@@ -1348,7 +1374,7 @@ class SWGTodays extends JPanel {
             SWGResourceClass rc = rcw.rc();
 
             double w = Math.max(minimum, iw != null
-                    ? wg.rate(iw.getResource(), rc, true)
+                    ? wg.rate(iw.getResource(), rc, true, useJTLcap)
                     : 0);
 
             rc = notCR && rc == SWGOrganic.getInstance()
@@ -1360,8 +1386,8 @@ class SWGTodays extends JPanel {
                                  SWGPlanet.KASHYYYK)
                          || SWGResourceClass.canSpawnAt(rc.rcName(),
                                  SWGPlanet.MUSTAFAR))
-                    ? noKMinorganic.subsetBy(wg, rc, true, w)
-                    : current.subsetBy(wg, rc, true, w);
+                    ? noKMinorganic.subsetBy(wg, rc, true, useJTLcap, w)
+                    : current.subsetBy(wg, rc, true, useJTLcap, w);
             for (SWGKnownResource kr : curr)
                 if (iw == null || kr != iw.getResource()) {
                     // do not include "self" ... probably harvested
@@ -1402,7 +1428,7 @@ class SWGTodays extends JPanel {
             SWGKnownResource kr = iw.getResource();
             if (kr.rc().isSub(zuper)) {
                 if (in || !kr.rc().isSub(SWGCreatureResources.class)) {
-                    double w = wg.rate(iw.getResource(), zuper, true);
+                    double w = wg.rate(iw.getResource(), zuper, true, useJTLcap);
                     if (w > best) {
                         best = w;
                         wrapper = iw;
@@ -1742,11 +1768,11 @@ class SWGTodays extends JPanel {
 
             rateCurr = (rcwp.filter() instanceof SWGWeights)
                     ? ((SWGWeights) rcwPair.filter()).rate(
-                            current, rcwPair.rc(), true)
+                            current, rcwPair.rc(), true, useJTLcap)
                     : 0.0;
             rateInv = (inv != null && rcwp.filter() instanceof SWGWeights)
                     ? ((SWGWeights) rcwPair.filter()).rate(
-                            inv.getResource(), rcwPair.rc(), true)
+                            inv.getResource(), rcwPair.rc(), true, useJTLcap)
                     : 0.0;
         }
 

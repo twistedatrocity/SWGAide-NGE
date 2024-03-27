@@ -190,6 +190,12 @@ public final class SWGSchemResViewer extends SWGJDialog {
     private SWGJTable schemTable;
 
     /**
+     * A flag to use throughout this panel to account for JTL resource
+     * capping adjustments
+     */
+    private boolean useJTLcap = false;
+
+    /**
      * Creates a mode-less dialog of this type.
      */
     private SWGSchemResViewer(SWGFrame fr) {
@@ -335,7 +341,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
 
                 SWGSchematicWrapper w = SWGSchemController.wrapperDefault(s);
                 SWGExperimentWrapper.refresh(w.experiments(),
-                        SWGSchemController.spawning(), il);
+                        SWGSchemController.spawning(), il, useJTLcap);
 
                 SWGResourceSet rs = new SWGResourceSet();
                 for (SWGExperimentWrapper ew : w.experiments())
@@ -350,7 +356,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
                         continue;
 
                     double r = ((SWGWeights)
-                            rcw.filter()).rate(kr, rcw.rc(), true);
+                            rcw.filter()).rate(kr, rcw.rc(), true, useJTLcap);
                     if (r >= rateLimit) {
                         long inv = SWGResController.inventoryAmount(kr, gxy);
                         Long l = inv > 0
@@ -412,6 +418,9 @@ public final class SWGSchemResViewer extends SWGJDialog {
     private void display(SWGKnownResource kr, SWGFrame fr) {
     	this.frame = fr;
     	this.schemTab = SWGFrame.getSchematicTab(fr);
+        this.useJTLcap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
+
     	SWGCGalaxy gxy = SWGFrame.getSelectedGalaxy();
     	if(galaxy == null) {
     		galaxy = gxy;
@@ -425,7 +434,7 @@ public final class SWGSchemResViewer extends SWGJDialog {
         currentRes = kr;
         
         SWGSchemController sc = new SWGSchemController(schemTab);
-        schematics = sc.schematics(kr, rateLimit, true, gxy);
+        schematics = sc.schematics(kr, rateLimit, true, useJTLcap, gxy);
 
         if (namedLQ.isSelected())
             schematics.addAll(0, sc.schematicsLQNamed(kr));

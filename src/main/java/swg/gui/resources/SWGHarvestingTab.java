@@ -1092,10 +1092,10 @@ final class SWGHarvestingTab extends JPanel {
                     TableCellDecorations decor) {
 
                 if (value == null) return;
-                setHorizontalAlignment(column < 11
+                setHorizontalAlignment(column < 12
                         ? SwingConstants.CENTER
                         : SwingConstants.LEADING);
-                setVerticalAlignment(column < 10 && column != 6
+                setVerticalAlignment(column < 11 && column != 6
                         ? SwingConstants.CENTER
                         : SwingConstants.TOP);
             }
@@ -1147,13 +1147,16 @@ final class SWGHarvestingTab extends JPanel {
                     zs = ZString.fz("<center>%s<br/>%s</center>",
                             kr.getName(), kr.rc().rcName());
 
-                } else if (column == 7) { // concentration
+                } else if (column == 7) { // age
+                    long age = ((Long) value).longValue();
+                    return SWGResController.dateString(age);
+                } else if (column == 8) { // concentration
                     return value;
-                } else if (column == 8) { // adjusted BER
+                } else if (column == 9) { // adjusted BER
                     return ZNumber.asText(((Double) value).doubleValue(), 1, 1);
-                } else if (column == 9) { // AER
+                } else if (column == 10) { // AER
                     return ZNumber.asText(((Double) value).doubleValue(), 1, 1);
-                } else if (column == 10) { // Hopper
+                } else if (column == 11) { // Hopper
                     String dv = dateView
                             ? ZStuff.dateTimeString(harv.getHopperFull())
                             : "";
@@ -1169,23 +1172,19 @@ final class SWGHarvestingTab extends JPanel {
                                 hu, hc, c >= 1000
                                         ? "k"
                                         : "", dv);
-                    } else {
-                    	double c = harv.getHopperCapacity();
-                        double u = harv.getHopperUnits();
-                        double vl = u / c * 100;
-                    	String pv = ZNumber.asText(vl, true, true);
-                        zs = ZString.fz("<center>%s %%<br/>%s</center>", pv, dv);
-                    }
+                    } else
+                        zs = ZString.fz("<center>%1.1f %%<br/>%s</center>",
+                                value, dv);
 
-                } else if (column == 11) {
+                } else if (column == 12)
                         return value;
-                }
 
                 return zs.pre("<html>", false).appnl("</html>").toString();
             }
         };
         activeHarvTable.setDefaultRenderer(String.class, tc);
         activeHarvTable.setDefaultRenderer(Number.class, tc);
+        activeHarvTable.setDefaultRenderer(Long.class, tc);
         activeHarvTable.setDefaultRenderer(SWGResource.class, tc);
 
         int w = SWGGuiUtils.fontWidth(activeHarvTable, "A ssigne e", activeHarvTable.getFont()) + 5;
@@ -1194,13 +1193,15 @@ final class SWGHarvestingTab extends JPanel {
         SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 2, 3, w, 5);
         w = SWGGuiUtils.fontWidth(activeHarvTable, "0123456789012345", activeHarvTable.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 4, 6, w, 90);
-        w = SWGGuiUtils.fontWidth(activeHarvTable, "100", activeHarvTable.getFont()) + 5;
+        w = SWGGuiUtils.fontWidth(activeHarvTable, " A g e ", activeHarvTable.getFont()) + 5;
         SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 7, 7, w, 5);
+        w = SWGGuiUtils.fontWidth(activeHarvTable, "100", activeHarvTable.getFont()) + 5;
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 8, 8, w, 5);
         w = SWGGuiUtils.fontWidth(activeHarvTable, "UBER", activeHarvTable.getFont()) + 5;
-        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 8, 9, w, 5);
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 9, 10, w, 5);
         w = SWGGuiUtils.fontWidth(activeHarvTable, "0123456789012345", activeHarvTable.getFont()) + 5;
-        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 10, 10, w, 90);
-        SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 11, 200, 300, 4000);
+        SWGGuiUtils.tableSetColumnWidths(activeHarvTable, 11, 11, w, 90);
+        SWGGuiUtils.tableColumnSetWidth(activeHarvTable, 12, 200, 300, 4000);
 
         activeHarvTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         activeHarvTable.setAutoCreateRowSorter(true);
@@ -1536,11 +1537,11 @@ final class SWGHarvestingTab extends JPanel {
                 if (size <= 0)
                     return; // nothing to do
 
-                // status, maint, power, hopper
+                // maint, power, hopper
                 for (int i = 0; i < size; i++) {
                     activeHarvModel.fireTableCellUpdated(i, 4);
                     activeHarvModel.fireTableCellUpdated(i, 5);
-                    activeHarvModel.fireTableCellUpdated(i, 6);
+                    activeHarvModel.fireTableCellUpdated(i, 7);
                     activeHarvModel.fireTableCellUpdated(i, 11);
                 }
             }
@@ -1741,7 +1742,7 @@ final class SWGHarvestingTab extends JPanel {
          */
         private final String[] colNames =
             { "Owner", "Updated", "Description", "Type", "Maintenance",
-                    "Power", "Resource", "%", "UBER", "AER", "Hopper", "Notes" };
+                    "Power", "Resource", "Age", "%", "UBER", "AER", "Hopper", "Notes" };
 
         /**
          * An array of column header tool tips for the table of owners.
@@ -1755,6 +1756,7 @@ final class SWGHarvestingTab extends JPanel {
                         "Remains of added amount and depletion date",
                         "Remains of added units and depletion date",
                         null,
+                        null,
                         "Concentration as read at the survey device",
                         "User Base Extraction Rate, adjusted for expertise, buff, and 50%",
                         "Actual Extraction Rate, UBER adjusted for concentration",
@@ -1766,7 +1768,7 @@ final class SWGHarvestingTab extends JPanel {
         public TableCellDecorations getCellDecor(int row, int column,
                 Object value) {
 
-            if (column < 4 || (column > 6 && column != 10))
+            if (column < 4 || (column > 7 && column != 11))
                 return null;
 
             SWGHarvester harv = activeHarvs().get(row);
@@ -1799,7 +1801,10 @@ final class SWGHarvestingTab extends JPanel {
             } else if (column == 6) { // resource
                 if (harv.getResource().isDepleted())
                     check = 2;
-            } else if (column == 10) { // hopper
+            } else if (column == 7) {
+                long l = ((Long) value).longValue();
+                return SWGResController.resourceAgeDecor(harv.getResource(), l, null);
+            } else if (column == 11) { // hopper
                 long full = harv.getHopperFull();
                 if (full < now)
                     check = 2;
@@ -1836,13 +1841,15 @@ final class SWGHarvestingTab extends JPanel {
             case 1:
             case 4:
             case 5:
-            case 7:
             case 8:
             case 9:
-            case 10: // fall through
+            case 10:
+            case 11: // fall through
                 return Number.class;
             case 6:
                 return SWGResource.class;
+            case 7:
+            	return Long.class;
             default:
                 return String.class;
             }
@@ -1882,18 +1889,20 @@ final class SWGHarvestingTab extends JPanel {
             case 6:
                 return harv.getResource();
             case 7:
-                return Integer.valueOf(harv.getConcentration());
+            	return harv.getResource().age();
             case 8:
-                return Double.valueOf(harv.ber * harv.getBerModifier());
+                return Integer.valueOf(harv.getConcentration());
             case 9:
+                return Double.valueOf(harv.ber * harv.getBerModifier());
+            case 10:
                 return Double.valueOf(harv.getAER());
-            case 10: {
-                float f = harv.getHopperUnits() / harv.getHopperCapacity();
+            case 11: {
+                float f = Float.valueOf(harv.getHopperUnits()) / Float.valueOf(harv.getHopperCapacity());
                 f = Math.min(1.0f, f);
-                Float value = Float.valueOf(100.0f * f);
+                Float value = 100.0f * f;
                 return value;
             }
-            case 11:
+            case 12:
                 return harv.getNotes();
             default:
                 return "ERROR";
@@ -1903,7 +1912,7 @@ final class SWGHarvestingTab extends JPanel {
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             // remember setValueAt if anything changes here
-            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 11)
+            if (columnIndex == 4 || columnIndex == 5 || columnIndex == 12)
                 return true;
             return false;
         }
@@ -1913,7 +1922,7 @@ final class SWGHarvestingTab extends JPanel {
         public void setValueAt(Object value, int row, int column) {
             SWGHarvester hv = activeHarvs().get(row);
 
-            if (column == 11)
+            if (column == 12)
                 hv.setNotes((String) value);
             else {
                 try {

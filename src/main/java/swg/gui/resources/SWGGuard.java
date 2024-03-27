@@ -8,6 +8,7 @@ import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceFilter;
+import swg.gui.SWGFrame;
 import swg.gui.common.SWGGui;
 import swg.tools.ZString;
 
@@ -135,7 +136,7 @@ public final class SWGGuard implements
      *        range [0.0 1000.0, otherwise 0.0
      * @param doAlarm {@code true} if this guard should alert the user when a
      *        resource match this instance
-     * @param acceptNoStats {@code true} if zero-values of the rsource are
+     * @param acceptNoStats {@code true} if zero-values of the resource are
      *        accepted
      * @throws IllegalArgumentException if an argument is invalid
      * @throws NullPointerException if an argument is {@code null}
@@ -210,8 +211,11 @@ public final class SWGGuard implements
      * @return {@code true} if the resource matches {@link #limit}
      */
     private boolean acceptWeighted(SWGKnownResource r, SWGWeights w) {
+        boolean useJTLCap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
+
         return w.rate(r, resourceClass,
-                acceptNoStats) >= limit;
+                acceptNoStats, useJTLCap) >= limit;
     }
 
     /**

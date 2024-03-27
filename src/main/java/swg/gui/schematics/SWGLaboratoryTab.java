@@ -69,6 +69,9 @@ import com.jidesoft.swing.StyledLabelBuilder;
 import swg.SWGAide;
 import swg.crafting.SWGWeights;
 import swg.crafting.Stat;
+import swg.crafting.UpdateNotification;
+import swg.crafting.UpdateSubscriber;
+import swg.crafting.resources.ResourceUpdate;
 import swg.crafting.resources.SWGKnownResource;
 import swg.crafting.resources.SWGResourceClass;
 import swg.crafting.resources.SWGResourceSet;
@@ -107,7 +110,7 @@ import swg.tools.ZNumber;
  *         Chimaera.Zimoon
  */
 @SuppressWarnings("serial")
-final class SWGLaboratoryTab extends JPanel {
+final class SWGLaboratoryTab extends JPanel implements UpdateSubscriber {
 
     /**
      * An action that if invoked saves the schematics notes field.
@@ -236,6 +239,12 @@ final class SWGLaboratoryTab extends JPanel {
 	private JComboBox<String> iFilterCombo;
 
     /**
+     * A flag to use throughout this panel to account for JTL resource
+     * capping adjustments
+     */
+    private boolean useJTLcap;
+
+    /**
      * Creates an instance of this GUI element. This constructor creates just a
      * stub of this type, its content is complemented lazily on demand.
      * 
@@ -243,6 +252,8 @@ final class SWGLaboratoryTab extends JPanel {
      */
     SWGLaboratoryTab(SWGSchematicTab parent) {
         this.schemTab = parent;
+        this.useJTLcap = ((Boolean) SWGFrame.getPrefsKeeper().get(
+                "optionUseJTLcaps", Boolean.FALSE)).booleanValue();
 
         helpPage = SWGAide.class.getResource(
                 "docs/help_schematics_laboratory_en.html");
@@ -375,7 +386,7 @@ final class SWGLaboratoryTab extends JPanel {
             
             List<SWGExperimentWrapper> ew = w.experiments();
             List<SWGExperimentWrapper> fw = new ArrayList<SWGExperimentWrapper>();
-            SWGExperimentWrapper.refresh(ew, spawn, inv);
+            SWGExperimentWrapper.refresh(ew, spawn, inv, useJTLcap);
             if(expGroups.size() > 1) {
             	for (SWGExperimentWrapper wr : ew) {
             		for (SWGExperimentWrapper g : expGroupsFiltered) {
@@ -495,7 +506,7 @@ final class SWGLaboratoryTab extends JPanel {
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 2) {
             Object o = schematicList.getSelectedValue();
             ERPair erp = resourceModel.getElement(cow);
-            SWGTestBench.update((SWGSchematic) o, erp.resource, erp.cpu);
+            SWGTestBench.update((SWGSchematic) o, erp.resource, erp.cpu, useJTLcap);
 
             return;
         }
@@ -614,7 +625,7 @@ final class SWGLaboratoryTab extends JPanel {
     private void actionSchematicsMouse(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 2) {
             Object o = schematicList.getSelectedValue();
-            SWGTestBench.update((SWGSchematic) o, null, 0.0);
+            SWGTestBench.update((SWGSchematic) o, null, 0.0, useJTLcap);
             return;
         }
 
@@ -833,6 +844,22 @@ final class SWGLaboratoryTab extends JPanel {
         return m.getElement(r);
     }
 
+	@Override
+	public void handleUpdate(UpdateNotification u) {
+		if (u instanceof ResourceUpdate) {
+			ResourceUpdate ru = (ResourceUpdate)u;
+			switch (ru.type) {
+			case JTL_RESOURCE_CAP:
+				useJTLcap = (boolean)ru.optional;
+				actionSchematicSelected(selectedSchem);
+				break;
+			default:
+				break;
+			}
+
+		}
+	}
+	
     /**
      * Helper method which creates the interior of this GUI element when the
      * user selects this element for the first time.
@@ -1125,7 +1152,7 @@ final class SWGLaboratoryTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object o = schematicList.getSelectedValue();
-                SWGTestBench.update((SWGSchematic) o, null, 0.0);
+                SWGTestBench.update((SWGSchematic) o, null, 0.0, useJTLcap);
             }
         });
         hb.add(tb);
@@ -1913,7 +1940,7 @@ final class SWGLaboratoryTab extends JPanel {
             rc = ww == SWGWeights.LQ_WEIGHTS
                             ? rc
                             : ew.rc();
-            double w = ww.rate(kr, rc, ww != SWGWeights.LQ_WEIGHTS);
+            double w = ww.rate(kr, rc, ww != SWGWeights.LQ_WEIGHTS, useJTLcap);
             return Double.valueOf(w);
         }
 

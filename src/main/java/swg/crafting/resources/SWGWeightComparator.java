@@ -31,6 +31,11 @@ public class SWGWeightComparator implements Comparator<SWGKnownResource> {
     private final boolean zeroIsMax;
 
     /**
+     * {@code true} if this object should adjust for JTL resource capping rules
+     */
+    private final boolean useJTLcap;
+
+    /**
      * Creates this instance.
      * 
      * @param ws a weight object
@@ -39,15 +44,16 @@ public class SWGWeightComparator implements Comparator<SWGKnownResource> {
      * @param zim {@code true} if zero-values that are in union with the
      *        specified weight should count as upper cap (zero-is-max)
      */
-    public SWGWeightComparator(SWGWeights ws, SWGResourceClass rc, boolean zim) {
+    public SWGWeightComparator(SWGWeights ws, SWGResourceClass rc, boolean zim, boolean useJTLcap) {
         this.weights = ws;
         this.capsFrom = rc;
         this.zeroIsMax = zim;
+        this.useJTLcap = useJTLcap;
     }
 
     public int compare(SWGKnownResource r1, SWGKnownResource r2) {
-        double d1 = weights.rate(r1, capsFrom, zeroIsMax);
-        double d2 = weights.rate(r2, capsFrom, zeroIsMax);
+        double d1 = weights.rate(r1, capsFrom, zeroIsMax, useJTLcap);
+        double d2 = weights.rate(r2, capsFrom, zeroIsMax, useJTLcap);
         return Double.compare(d2, d1);
     }
 }

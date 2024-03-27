@@ -492,10 +492,11 @@ final public class SWGSchemController implements UpdateSubscriber {
      * @param kr a resource
      * @param limit the minimum rate for inclusion
      * @param creature {@code true} to include creature for Organic
+     * @#param useJTLcap {@code true} to adjust for JTL resource capping rules
      * @return a sorted list of HQ schematics
      */
     List<SWGSac> schematics(
-            final SWGKnownResource kr, double limit, boolean creature, SWGCGalaxy gxy) {
+            final SWGKnownResource kr, double limit, boolean creature, boolean useJTLcap, SWGCGalaxy gxy) {
 
         List<SWGRCWPair> rl = rcwPairs(kr.rc(), true, gxy);
         if (rl.isEmpty()) return Collections.emptyList();
@@ -506,13 +507,13 @@ final public class SWGSchemController implements UpdateSubscriber {
                     iter.remove();
 
         // sort rcw-pairs on rate before iterating over schematics, best first
-        Collections.sort(rl, SWGRCWPair.comparator(kr));
+        Collections.sort(rl, SWGRCWPair.comparator(kr, useJTLcap));
         Collections.sort(rl, SWGRCWPair.comparatorRC(true));
 
         List<SWGSac> ret = new ArrayList<SWGSac>(rl.size());
         Object ex = new Object();
         for (SWGRCWPair r : rl) {
-            double w = ((SWGWeights) r.filter()).rate(kr, r.rc(), true);
+            double w = ((SWGWeights) r.filter()).rate(kr, r.rc(), true, useJTLcap);
             if (w < limit) continue;
 
             for (SWGSchematic s : r.schematics()) {
