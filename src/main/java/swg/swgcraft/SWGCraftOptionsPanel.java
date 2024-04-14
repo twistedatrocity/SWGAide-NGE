@@ -28,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import swg.SWGAide;
+import swg.crafting.resources.ResourceUpdate;
+import swg.crafting.resources.ResourceUpdate.UpdateType;
 import swg.gui.SWGFrame;
 import swg.gui.common.SWGGuiUtils;
 import swg.gui.common.SWGHelp;
@@ -52,6 +54,12 @@ public class SWGCraftOptionsPanel extends JDialog {
      */
     private JCheckBox autoUpdateGalaxyResources;
 
+    /**
+     * The GUI for the check-box to propagate the usage of JTL resource capping
+     * rules throughout the app
+     */
+    private JCheckBox useJTLResourceCaps;
+    
     /**
      * A GUI list of galaxies from which to select one main galaxy.
      */
@@ -217,7 +225,7 @@ public class SWGCraftOptionsPanel extends JDialog {
 
         value = value.substring(0, value.indexOf(' '));
         value = value.replace("+", "");
-        value = value.replace("½", ".5");
+        value = value.replace("Â½", ".5");
         Double zon = Double.parseDouble(value);
         SWGFrame.getPrefsKeeper().add("optionTimeZoneValue", zon);
     }
@@ -316,9 +324,9 @@ public class SWGCraftOptionsPanel extends JDialog {
         vec.add("-6 (CST) [MDT]");
         vec.add("-5 (EST) [CDT]");
         vec.add("-4 (AST) [EDT]");
-        vec.add("-3½ (NST)");
+        vec.add("-3Â½ (NST)");
         vec.add("-3 [ADT]");
-        vec.add("-2½ [NDT]");
+        vec.add("-2Â½ [NDT]");
         vec.add("-2 (AT)");
         vec.add("-1 (WAT)");
         vec.add("0 GMT, UTC (WET)");
@@ -327,16 +335,16 @@ public class SWGCraftOptionsPanel extends JDialog {
         vec.add("+3 (BT, ZP3) [EEDT]");
         vec.add("+4 (ZP4)");
         vec.add("+5 (ZP5)");
-        vec.add("+5½ (IST)");
+        vec.add("+5Â½ (IST)");
         vec.add("+6 (ZP6)");
         vec.add("+7 (CXT, ZP7)");
         vec.add("+8 (CCT, WST, ZP8) [WADT]");
         vec.add("+9 (JST, ZP9)");
-        vec.add("+9½ [ACST]");
+        vec.add("+9Â½ [ACST]");
         vec.add("+10 (EST, GST, ZP10)");
-        vec.add("+10½ [ACDT]");
+        vec.add("+10Â½ [ACDT]");
         vec.add("+11 [EADT]");
-        vec.add("+11½ (NFT)");
+        vec.add("+11Â½ (NFT)");
         vec.add("+12 (IDLE, NZT)");
         vec.add("+13 [NZDT]");
         vec.add("offset (standard time) [daylight time]");
@@ -366,6 +374,8 @@ public class SWGCraftOptionsPanel extends JDialog {
         galaxyList.setSelectedItem(glx);
         glxPanel.add(galaxyList);
 
+        
+        Box vertBox = Box.createVerticalBox();
         autoUpdateGalaxyResources = new JCheckBox("Auto-update");
         autoUpdateGalaxyResources
             .setToolTipText("Automatically download resource statistics "
@@ -379,8 +389,27 @@ public class SWGCraftOptionsPanel extends JDialog {
                 actionAutoUpdateGalaxyToggled();
             }
         });
-        glxPanel.add(autoUpdateGalaxyResources);
+        vertBox.add(autoUpdateGalaxyResources);
 
+        
+        useJTLResourceCaps = new JCheckBox("JTL Resource Caps");
+        useJTLResourceCaps.setToolTipText("Use JTL Resource Cap Rules for weights and schematics experimentation");
+        useJTLResourceCaps.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	boolean jtlCheckState = useJTLResourceCaps.isSelected();
+                SWGFrame.getPrefsKeeper().add("optionUseJTLcaps",
+                        Boolean.valueOf(jtlCheckState));
+                SWGResourceManager.notifySubscribers(new ResourceUpdate(
+                        UpdateType.JTL_RESOURCE_CAP, jtlCheckState));
+            }
+        });
+        useJTLResourceCaps.setSelected(((Boolean) SWGFrame.getPrefsKeeper().get(
+                        "optionUseJTLcaps", Boolean.FALSE)).booleanValue());
+        vertBox.add(useJTLResourceCaps);
+        
+        glxPanel.add(vertBox);
         glxPanel.add(Box.createGlue());
 
         return glxPanel;
