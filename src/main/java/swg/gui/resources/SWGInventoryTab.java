@@ -2693,8 +2693,8 @@ public final class SWGInventoryTab extends JPanel {
 
                     public int compare(SWGInventoryWrapper w1,
                             SWGInventoryWrapper w2) {
-                        double d1 = wgt.rate(w1.getResource(), cls, true, useJTLcap);
-                        double d2 = wgt.rate(w2.getResource(), cls, true, useJTLcap);
+                        double d1 = wgt.rate(w1.getResource(), cls, true, false);
+                        double d2 = wgt.rate(w2.getResource(), cls, true, false);
                         return Double.compare(d1, d2);
                     }
                 };

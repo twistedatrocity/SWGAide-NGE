@@ -843,6 +843,7 @@ public final class SWGHarvester implements Serializable, Comparable<SWGHarvester
      */
     void refreshHopperEmptied() {
     	hopperEmptied = System.currentTimeMillis();
+    	hopperFull = false;
     }
 
     /**
