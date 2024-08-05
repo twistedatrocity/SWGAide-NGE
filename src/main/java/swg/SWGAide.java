@@ -113,32 +113,7 @@ public final class SWGAide {
      * If there is an error this method writes the error to SWGAide's log file and
      *  displays a dialog with the options to exit SWGAide or continue at the users peril.
      */
-    /* XXX A more unified way of checking for elevation, will maybe make it cache the success sometime.
-    * XXX Even though launch4j wrapper takes care of windows elevation for us,
-    * XXX folks using the JAR by itself might still need this check in place. */
-    private static void checkWinAdminMode() {
-    	Preferences prefs = Preferences.systemRoot();
-        PrintStream systemErr = System.err;
-        synchronized(systemErr){    // better synchronize to avoid problems with other threads that access System.err
-            System.setErr(null);
-            try {
-            	prefs.put("foo", "bar"); // SecurityException on Windows
-            	prefs.remove("foo");
-            	prefs.flush(); // BackingStoreException on Linux
-            	return;
-            } catch (Throwable e) {
-            	ZString msg = ZString.fz("Error testing administrative elevation:%n" +
-            			"%s%nOS: %s%nSee Windows/Admin section in SWGAide_README.txt%n" +
-            			"If you continue SWGAide may crash or misbehave%n%n" +
-            			"Exit?", e, System.getProperty("os.name"));
-
-            	printMessage(msg);
-            	displayExitDialog(msg.toString(), "Confirm", true);
-            } finally {
-            	System.setErr(systemErr);
-            }
-        }
-    }
+    
 
     /**
      * Helper method which displays a dialog end potentially exits SWGAide. The
@@ -227,7 +202,6 @@ public final class SWGAide {
 
             if (!SWGConstants.DEV_DEBUG) setErrorFile();
             checkJavaVersion();
-            checkWinAdminMode();
 
             printStart();
             System.setProperty("javax.xml.soap.SAAJMetaFactory", "com.sun.xml.messaging.saaj.soap.SAAJMetaFactoryImpl");
