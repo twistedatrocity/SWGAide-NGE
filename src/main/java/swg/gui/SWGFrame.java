@@ -1541,6 +1541,7 @@ public class SWGFrame extends JFrame implements ComponentListener,
         JOptionPane.showMessageDialog(this, "SWGAide " + SWGConstants.version +
         		"\n\nForked and Maintained by Holmes @ SWG:Legends\n" +
         		"    (aka Mr-Miagi)\n\n" +
+        		"Code contributions:\n    Beloc\n\n" +
         		"Originally Created by Simon Gronlund\n" +
                 "Zimoon @ Chimaera\n" +
                 "Oarun @ Chilastra\n\n" +
